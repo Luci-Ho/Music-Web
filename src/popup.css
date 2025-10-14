@@ -1,0 +1,39 @@
+.Popup {
+  box-sizing: border-box;
+  padding: 1rem 1.5rem;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transform-origin: center;
+  transition: transform 150ms, opacity 150ms;
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes scaleOut {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+}
+
+.Popup[data-open] {
+  animation: scaleIn 250ms ease-out;
+}
+
+.Popup[data-closed] {
+  animation: scaleOut 250ms ease-in;
+}

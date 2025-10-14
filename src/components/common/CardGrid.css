@@ -1,0 +1,198 @@
+ /*SectionGrid  */
+ .section-grid {
+    margin-top: 32px;
+  }
+  
+  .section-grid-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+ 
+
+  
+  /* Responsive breakpoints */
+  @media (min-width: 640px) {
+    .section-grid-container {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .section-grid-container {
+      grid-template-columns: repeat(6, 1fr);
+    }
+  }
+  
+  /* Optional: hover effect on card */
+  .section-grid-container > * {
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+  }
+  
+  .section-grid-container > *:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  }
+  /*SectionGrid  */
+
+  .artist-scroll-wrapper {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    padding-top:8px;
+    padding-bottom: 8px;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE 10+ */
+  }
+  
+  .artist-scroll-wrapper::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Edge */
+  }
+  
+  /* Responsive max width nếu cần: */
+  @media (min-width: 768px) {
+    .artist-scroll-wrapper {
+      padding-left: 16px;
+    }
+  }
+  /*  */
+
+  .artist-card {
+    display: flex;
+    flex-direction: column;
+    width: 120px;
+    text-align: center;
+    align-items: center;
+  }
+  
+  .artist-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    transition: transform 0.3s ease;
+    align-items: center;
+   
+  }
+  
+  .artist-avatar:hover {
+    transform: scale(1.05);
+  }
+  
+  .artist-name {
+    margin-top: 8px;
+    font-weight: 500;
+    font-size: 14px;
+    color: #fff;
+  }
+  /*  */
+
+  .video-scroll-wrapper {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    padding-bottom: 12px;
+    align-items: flex-start;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  
+  .video-scroll-wrapper::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .video-scroll-wrapper > .view-all-button {
+    flex: 0 0 auto;
+    padding: 8px 16px;
+    margin-left: auto;
+    background: #ff26c2;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+  }
+  /*  */
+  .video-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+    width: 100%;
+    flex: 0 0 auto; /* hỗ trợ scroll ngang nếu cần */
+  }
+  
+  .video-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.12);
+  }
+  
+  .video-thumbnail img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    display: block;
+  }
+  
+  .video-info {
+    padding: 12px;
+  }
+  
+  .video-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .video-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: #888;
+  }
+
+
+  
+
+.JoinSection-group {
+  display: flex;
+  /* justify-content: space-between; */
+  align-items: center;
+  padding: 20px;
+  gap: 30px;
+  flex-wrap: wrap; /* 👉 giúp hiển thị responsive nếu không đủ width */
+}
+
+.JoinSection-group p{
+  width: 59%;
+  }
+
+.JoinSection-group-button{
+  display: flex;
+  gap: 30px;
+}
+
+.JoinSection-group-button button{
+  padding: 20px 50px;
+  border-radius: 10px;
+  border: none;
+  background-color: rgba(30, 30, 30, 1);
+  color: #EE10B0;
+  font-weight: 700;
+  font-size: 15pt;
+}
+
+.JoinSection-group-button button:hover {
+  background-color: #FF26C2;
+  box-shadow: 0 0 8px 2px #ee10b0;
+  opacity: 0.9;
+  cursor: pointer;
+  color: rgba(30, 30, 30, 1);
+}

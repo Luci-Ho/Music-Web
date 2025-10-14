@@ -1,0 +1,456 @@
+ 
+  .layout {
+    display: flex;
+    flex-grow: 1;
+  }
+  
+
+/* Reset và font */
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Vazirmatn", sans-serif;
+  }
+  
+  /* Toàn bộ trang */
+  .body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    width: 100%;
+    background-color: rgba(65, 44, 58, 1);
+  }
+  
+  /* Phần content chính bên phải dashboard */
+  .main-content {
+    flex-grow: 1;
+    padding: 30px;
+    color: white;
+    min-height: 100vh;
+    margin-left: 250px; /* để tránh bị dashboard che */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  /* Responsive cho mobile */
+  @media screen and (max-width: 430px) {
+    .body {
+      background: linear-gradient(90deg, rgba(14, 25, 32, 1), rgba(65, 44, 58, 1) 100%);
+      justify-content: center;
+      align-items: center;
+      padding: 5px;
+    }
+  
+    .main-content {
+      margin-left: 0;
+      padding: 20px 10px;
+    }
+  }
+  
+  .body-content{
+    padding: 30px;
+    color: white;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+.dashboard-menu-item-hover {
+  position: relative;
+  display: flex;
+  align-items: center; /* 👉 quan trọng để icon và chữ thẳng hàng */
+  gap: 12px;
+  padding-right: 25px;
+  /* tạo không gian cho glow bên phải */
+  width: 230px;
+  height: 42px;
+  border-radius: 9px;
+  font-size: 16px;
+  color: #fff;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  z-index: 1;
+  cursor: pointer;
+  flex-direction: row;
+}
+
+.dashboard-menu-item-hover:hover::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.7;
+  mix-blend-mode: hard-light;
+  border-radius: 9px;
+  border: 4.75px solid #FF26C2;
+  filter: blur(2.79px);
+  box-shadow:
+    0 3.6px 2.8px rgba(77, 0, 66, 0.7),
+    0 5.6px 7.2px rgba(153, 0, 153, 1),
+    inset -0.36px 0.72px 0.36px rgba(255, 255, 255, 0.5);
+  z-index: -1;
+}
+
+.dashboard-menu-item-hover p {
+  margin: 0;
+  padding-top: 4px ;
+  color: inherit; 
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.dashboard-menu-item-hover svg {
+  font-size: 18px;
+  color: white;
+  margin-right: 2px;
+  transition: color 0.3s ease;
+  text-align: center;
+}
+
+.footer {
+  background-image: url("https://res.cloudinary.com/da4y5zf5k/image/upload/v1751041343/backgroundfooter_pfjahg.svg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  width: 100%;
+  min-height: auto; /* hoặc theo chiều cao bạn mong muốn */
+  margin-top: auto;
+  position: relative;
+  z-index: 1;
+}
+
+
+/* .table_content th,
+.table_content td {
+  padding: 8px 12px;
+  text-align: left;
+} */
+
+.link img {
+  width: 24px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+/* === DASHBOARD CONTAINER === */
+.dashboard {
+  background: linear-gradient(to right, #0E1920, #0E1920 70%);
+  padding-bottom: 40px;
+  width: 350px;
+  min-height: 100vh;
+  /* 👈 đảm bảo luôn cao bằng chiều cao màn hình */
+  display: flex;
+  flex-direction: column;
+}
+
+
+/* === TIÊU ĐỀ CHÍNH === */
+.logo {
+  font-size: 40px;
+  font-weight: 800;
+  background: linear-gradient(to right, rgba(238, 16, 176, 1) 10%, rgba(14, 158, 239, 0.92) 90%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  margin-top: 50px;
+  margin-left: 26.6px;
+}
+
+/* === NHÓM MENU CHUNG === */
+.DashBoard-menu {
+  color: #FFFFFF;
+  margin-top: 35px;
+  margin-left: 26.6px;
+}
+
+.DashBoard-menu {
+  margin: 10px 30px;
+}
+
+/* === TIÊU ĐỀ NHỎ === */
+.Menu,
+.Library,
+.Play-list,
+.General {
+  font-size: 20px;
+  font-weight: 400;
+  color: #EE10B0;
+  opacity: 60%;
+  margin-bottom: 10px;
+}
+
+/* === ITEM MENU === */
+.Menu-part {
+  padding-bottom: 20px;
+  
+}
+
+.Menu-part div,
+.Library-part div,
+.Play-list-part div,
+.General-part div {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-top: 15px;
+  padding: 10px 12px;
+  border-radius: 9px;
+  transition: all 0.3s ease;
+}
+
+.Menu-part div:hover,
+.Library-part div:hover,
+.Play-list-part div:hover,
+.General-part div:hover {
+  background-color: #FF26C2;
+  box-shadow: 0 0 8px 3px #ff00ff;
+  cursor: pointer;
+  opacity: 0.85;
+}
+
+/* === ICON ===
+.Menu-part div i,
+.Library-part div i,
+.Play-list-part div i,
+.General-part div i {
+  width: 18.75px;
+  height: 18.75px;
+  font-size: 18px;
+} */
+
+/* === LINK TEXT === */
+.Menu-part {
+  font-size: 24px;
+  font-weight: 600;
+  color: #FFFFFF;
+  text-decoration: none;
+  text-align: center;
+}
+
+/* === SPECIAL TEXT === */
+/* .Add-playlist {
+  color: #0E9EEF !important;
+} */
+
+.Logout {
+  color: #EE10B0 !important;
+}
+
+.Logout:hover {
+  color: #FFFFFF !important;
+}
+
+.footer-content {
+  margin-top: 17%;
+  padding: 40px 40px;
+  width: 100%;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+}
+
+.footer-grid {
+  padding-top: 20%;
+  display: grid;
+  grid-template-columns: 2fr 2fr 1fr;
+  gap: 50px;
+  align-items: start;
+}
+
+.footer-about-heading {
+  padding-top: 0%;
+  font-size: 40px;
+  font-weight: 900;
+  font-family: 'Vazirmatn', sans-serif;
+  color: white;
+  letter-spacing: 0.4px;
+  word-wrap: break-word;
+}
+
+
+.footer-about p {
+  width: 100%;
+  height: 100px;
+  opacity: 0.90;
+  text-align: justify;
+  color: white;
+  font-Size: 18px;
+  font-Weight: 600;
+  word-Wrap: break-word;
+  text-Shadow: 0px 2px 4px rgba(0, 0, 0, 0.35);
+}
+
+.footer-about span {
+  color: #EE10B0;
+  font-weight: bold;
+}
+
+.footer-about a {
+  color: #0E9EEF;
+  text-decoration: none;
+}
+
+.footer-links h4 {
+  height: 10%;
+  width: 100%;
+  text-Align: center;
+  color: white;
+  font-Size: 36px;
+  font-Weight: 700;
+  word-Wrap: break-word;
+}
+
+.footer-links {
+  display: flex;
+  justify-content: space-between;
+}
+
+.line {
+  width: 100%;
+  height: 4px;
+  background-color: #f3eff2;
+  margin: 15px 0;
+  font-size: 14px;
+ }
+
+
+.footer-links ul {
+  list-style: none;
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.footer-links li {
+  text-Align: center;
+  margin-bottom: 8px;
+}
+
+.footer-links a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.footer-links a:hover {
+  text-decoration: underline;
+}
+
+.footer-social {
+  text-align: center;
+}
+
+.Logo {
+  font-size: 40px;
+  font-weight: 700;
+  background: linear-gradient(to right, #EE10B0, #0E9EEF);
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 20px;
+}
+
+.link {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.link img {
+  width: 28px;
+  cursor: pointer;
+}
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+  .footer-grid {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .footer-links {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.TopBar {
+  margin: 2%;
+  display: flex;
+  justify-content: space-between;
+  /* row-gap: 5px; */
+  align-items: center;
+  padding: 16px 16px;
+  background-color: #1e1e2f00;
+  color: white;
+
+}
+
+.TopBar-Search {
+  /* display: flex; */
+  position: relative;
+  width: 250px;
+  align-items: center;
+}
+
+.TopBar-Search input {
+  width: 100%;
+  padding: 10px 10px 10px 36px;
+  /* 👈 chừa khoảng cho icon trái */
+  border-radius: 10px;
+  border: none;
+  background-color: #a9a9a98a;
+  color: white;
+  width: 250px;
+}
+
+.TopBar-Search ::placeholder {
+  color: white;
+}
+
+.search-icon {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  transform: translateY(-50%);
+  color: white;
+  font-size: 16px;
+}
+
+.TopBar-Search input::placeholder {
+  color: #fffbfb;
+
+}
+
+.TopBar-Menu {
+  display: flex;
+  gap: 20px;
+}
+
+.TopBar-Menu p {
+  color: rgb(255, 255, 255);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.TopBar-Menu button {
+  padding: 10px 20px;
+  /* 👈 chừa khoảng cho icon trái */
+  border-radius: 10px;
+  border: none;
+  background-color: rgba(30, 30, 30, 1);
+  color: #EE10B0;
+  font-weight: 700;
+}
+
+.TopBar-Menu button:hover {
+  background-color: #FF26C2;
+  box-shadow: 0 0 8px 3px #ff00ff;
+  cursor: pointer;
+  opacity: 0.85;
+  color: rgba(30, 30, 30, 1)
+}
