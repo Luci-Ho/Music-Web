@@ -195,7 +195,7 @@
 .Play-list-part div,
 .General-part div {
   display: flex;
-  gap: 10px;
+  gap: 5px;
   align-items: center;
   margin-top: 15px;
   padding: 10px 12px;
