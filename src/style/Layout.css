@@ -103,6 +103,8 @@
   z-index: -1;
 }
 
+
+
 .dashboard-menu-item-hover p {
   margin: 0;
   padding-top: 4px ;
@@ -146,6 +148,81 @@
   /* 👈 đảm bảo luôn cao bằng chiều cao màn hình */
   display: flex;
   flex-direction: column;
+  position: relative; /* for collapse-toggle absolute positioning */
+}
+
+/* Collapsed dashboard state */
+.dashboard.collapsed {
+  width: 100px; /* narrow */
+}
+
+.dashboard .logoimg {
+  display: none; /* default hidden; shown when collapsed */
+}
+
+.dashboard.collapsed .logoimg {
+  display: inline-block;
+  width: 48px;
+  height: 48px;
+  margin-left: 12px;
+}
+.dashboard.dashboard.collapsed .logo {
+  margin-left: 12px;
+}
+
+.dashboard.collapsed .logot,
+.dashboard.collapsed .dashboard-menu-label, .Menu {
+  display: none; /* hide specific menu labels when collapsed */
+}
+
+/* hide any paragraph inside menu items when collapsed (covers Logout etc.) */
+.dashboard.collapsed .dashboard-menu-item-hover p {
+  display: none;
+}
+
+.collapse-toggle {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.06);
+  border-radius: 6px;
+  color: #fff;
+  cursor: pointer;
+  z-index: 5;
+}
+/* When collapsed, reduce/disable heavy hover visuals */
+.dashboard.collapsed .dashboard-menu-item-hover:hover::before {
+  border: none;
+  box-shadow: none;
+  filter: none;
+  opacity: 0; /* hide glow */
+}
+
+/* Prevent background color change on hover when collapsed */
+.dashboard.collapsed .Menu-part div:hover,
+.dashboard.collapsed .Library-part div:hover,
+.dashboard.collapsed .Play-list-part div:hover,
+.dashboard.collapsed .General-part div:hover {
+  box-shadow: none;
+  opacity: 1;
+}
+
+/* center icons when collapsed */
+.dashboard.collapsed .dashboard-menu-item-hover {
+  justify-content: center;
+  width: 100%;
+  padding-right: 0;
+}
+
+/* ensure icon spacing and size look correct when labels hidden */
+.dashboard.collapsed .dashboard-menu-item-hover svg {
+  font-size: 20px;
+  margin-right: 0;
 }
 
 
@@ -161,6 +238,13 @@
   margin-left: 26.6px;
 }
 
+.logoimg {
+  width: 70px;
+  height: 80px;
+  display: none;
+  margin-right: 10px;
+  vertical-align: middle;
+}
 /* === NHÓM MENU CHUNG === */
 .DashBoard-menu {
   color: #FFFFFF;

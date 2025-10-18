@@ -13,6 +13,7 @@ const HomePage = () => {
                 <Dashboard />
                 <div>
                     <Discover />
+
                 </div>
             </div>
         </div>

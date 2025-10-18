@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // ✅ Đừng quên import
 import '../../style/Layout.css';
 import {
@@ -16,10 +16,12 @@ import {
 
 import HomeContent from '../../pages/HomeContent';
 import Discover from '../../pages/Discover';
+import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem('user'));
+  const [collapsed, setCollapsed] = useState(false);
 
   useEffect(() => {
     const toggleSidebar = () => {
@@ -49,14 +51,18 @@ const Dashboard = () => {
   const MenuItem = ({ icon, label, to }) => (
     <div className="dashboard-menu-item-hover" onClick={() => navigate(to)}>
       {icon}
-      <p>{label}</p>
+      <p className="dashboard-menu-label">{label}</p>
     </div>
   );
 
   return (
-    <div className="dashboard" id="dashboard">
+    <div className={`dashboard ${collapsed ? 'collapsed' : ''}`} id="dashboard">
+      <div className="collapse-toggle" onClick={() => setCollapsed(!collapsed)} title={collapsed ? 'Expand' : 'Collapse'}>
+        {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+      </div>
       <div className="logo">
-        <p>Melodies</p>
+        <img src="../../public/Ảnh/eac87d338a32800109b78daee1589299b8812535.png" alt="" className="logoimg" />
+        <p className="logot">Melodies</p>
         {/* <small>{user ? `Xin chào ${user.username}! 🎶` : 'Cùng nghe nhạc vui nhé'}</small> */}
       </div>
 
