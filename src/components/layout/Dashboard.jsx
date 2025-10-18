@@ -14,6 +14,9 @@ import {
   LogoutOutlined
 } from '@ant-design/icons';
 
+import HomeContent from '../../pages/HomeContent';
+import Discover from '../../pages/Discover';
+
 const Dashboard = () => {
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem('user'));
@@ -63,7 +66,7 @@ const Dashboard = () => {
           <MenuItem icon={<HomeFilled />} label="Home" to="/home" />
           <MenuItem icon={<GlobalOutlined />} label="Discover" to="/discover" />
           <MenuItem icon={<CompassOutlined />} label="Albums" to="/album" />
-          <MenuItem icon={<UserOutlined />} label="Artists" to="/artist" />
+          <MenuItem icon={<UserOutlined />} label="Artists" to="/artist"  />
         </div>
       </div>
 

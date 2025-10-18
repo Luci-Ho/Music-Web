@@ -1,9 +1,11 @@
-export const genre = [
+export const genres = [
     { id: 1, title: 'Rap Tracks', img: '/path/to/rap.jpg' },
     { id: 2, title: 'Pop Tracks', img: '/path/to/pop.jpg' },
     { id: 3, title: 'Rock Tracks', img: '/path/to/rock.jpg' },
     { id: 4, title: 'Classic Tracks', img: '/path/to/jazz.jpg' },
 ];
+
+
 
 export const mood = [
     { id: 1, title: 'Sad Songs', img: '/path/to/sad.jpg' },

@@ -1,36 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import Dashboard from '../components/layout/Dashboard';
+import React from 'react';
+import D2CardRow from '../components/common/D2Card.jsx';
 import TopBar from '../components/layout/TopBar.jsx';
 import Footer from '../components/layout/Footer.jsx';
-import D2Card from '../components/common/D2Card.jsx';
-import '../App.css';
+import '../style/Dis.css';
+import { genres, mood, artist } from '../components/data/disdata.js';
+import ArtistRow from '../components/common/Artist.jsx';
+
 
 const Discover = () => {
-
+        
     return (
         <div className="body">
-            <div style={{ display: 'flex', width: '100%' }}>
-                <Dashboard />
-                <div className="container">
-                    <TopBar />
+            <TopBar />
+            <D2CardRow datas={genres} title1="Music" title2="Genres" />
+            <D2CardRow datas={mood} title1="Mood" title2="Playlist" />
+            <ArtistRow datas={artist} />
 
-                    <div className="content">
-                        <p>hello</p>
-                    </div>
-
-                    <Footer />
-
-                </div>
-
-                <div className='Genres'>
-                    <h1 className="tag">Music <span>Genres</span></h1>
-                    <ul>
-                        <D2Card title="Rock" img="rock.jpg" />
-                        <D2Card title="Pop" img="pop.jpg" />
-                        <D2Card title="Jazz" img="jazz.jpg" />
-                    </ul>
-                </div>
-            </div>
+            <Footer />
         </div>
     );
 };
