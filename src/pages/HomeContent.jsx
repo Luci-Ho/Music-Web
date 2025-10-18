@@ -1,6 +1,8 @@
 import React from "react";
 import Footer from '../components/layout/Footer';
 import TopBar from '../components/layout/TopBar';
+import Slider from '../components/common/Slider';
+import CardGrid from '../components/common/CardGrid';
 
 import "../style/Layout.css";
 
@@ -10,7 +12,16 @@ const HomeContent = () => {
             <TopBar />
 
             <div className="content">
-                <p>hello</p>
+                <div className="">
+                    <Slider />
+                </div>
+
+                <div className="">
+                    <CardGrid />
+                </div>
+                <div className="">
+
+                </div>
             </div>
 
             <Footer />
