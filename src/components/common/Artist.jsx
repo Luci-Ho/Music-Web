@@ -1,5 +1,7 @@
 import React from 'react';
 import './Artist.css';
+import SectionTitle from './SectionTitle';
+import useResponsiveCount from '../../hooks/useResponsiveCount';
 
 const ArtistItem = ({ artist }) => (
     <div className="artist-item">
@@ -10,20 +12,22 @@ const ArtistItem = ({ artist }) => (
     </div>
 );
 
-const ArtistRow = ({ datas = [], onViewAll, maxItems = 6 }) => {
-    const toShow = Array.isArray(datas) ? datas.slice(0, maxItems) : [];
+const ArtistRow = ({ datas,  maxItems }) => {
+    // cardWidth should match .artist-item width; gap should match .artist-row gap
+    const responsive = useResponsiveCount({ cardWidth: 130, gap: 20, min: 2, max: 10, containerSelector: '.acontainer .artist-row', cardSelector: '.artist-item' });
+    const effectiveMax = typeof maxItems === 'number' ? maxItems : responsive;
+    const toShow = Array.isArray(datas) ? datas.slice(0, effectiveMax) : [];
 
     return (
         <div className="w-full h-full flex flex-col mb-10">
             <div className="acontainer">
-                <h1 className="font-bold text-2xl text-white mb-10"> Popular <span className="text-[#ee10b0]">Artists</span></h1>
-            
+                <SectionTitle title1={"Popular"} title2={"Artists"} />
                 <div className="artist-row"> 
                     {toShow.map((a, i) => (
-                        <ArtistItem key={a.id ?? `${a.name}-${i}`} artist={a} />
+                        <ArtistItem artist={a} key={a.id ?? `${a.name}-${i}`} />
                     ))}
 
-                    <div className="aviewall" onClick={onViewAll} role={onViewAll ? 'button' : 'link'} tabIndex={0}>
+                    <div className="aviewall" tabIndex={0}>
                         <div className="avaplus">+</div>
                         <p className="avat">View All</p>
                     </div>

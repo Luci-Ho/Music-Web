@@ -12,8 +12,8 @@ const Discover = () => {
     return (
         <div className="body">
             <TopBar />
-            <D2CardRow datas={genres} title1="Music" title2="Genres" />
-            <D2CardRow datas={mood} title1="Mood" title2="Playlist" />
+            <D2CardRow datas={genres} title1="Music" title2="Genres" decolor="#ffffff" />
+            <D2CardRow datas={mood} title1="Mood" title2="Playlist" decolor="purple" />
             <ArtistRow datas={artist} />
 
             <Footer />

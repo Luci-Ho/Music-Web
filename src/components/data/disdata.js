@@ -3,6 +3,11 @@ export const genres = [
     { id: 2, title: 'Pop Tracks', img: '/path/to/pop.jpg' },
     { id: 3, title: 'Rock Tracks', img: '/path/to/rock.jpg' },
     { id: 4, title: 'Classic Tracks', img: '/path/to/jazz.jpg' },
+    { id: 5, title: 'EDM Tracks', img: '/path/to/edm.jpg' },
+    { id: 6, title: 'Country Tracks', img: '/path/to/country.jpg' },
+    { id: 7, title: 'Jazz Tracks', img: '/path/to/classic.jpg' },
+    { id: 8, title: 'Metal Tracks', img: '/path/to/metal.jpg' },
+    { id: 9, title: 'Blues Tracks', img: '/path/to/blues.jpg' },
 ];
 
 
