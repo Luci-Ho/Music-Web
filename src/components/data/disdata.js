@@ -86,4 +86,3 @@ export const newAlbum = [
     { id: 9, title: 'Who I Am', artists: 15 & 16, img: '/path/to/album9.jpg' },
     { id: 10, title: 'Baixo', artists: 17, img: '/path/to/album10.jpg' },
 ];
-

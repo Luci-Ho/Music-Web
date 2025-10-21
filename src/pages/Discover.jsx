@@ -9,9 +9,10 @@ import VideoGrid from '../components/common/Video.jsx';
 import SongsGrid from '../components/common/NewSong.jsx';
 
 const Discover = () => {
-        
+
     return (
-        <div className="body">
+        <div className="container">
+            <div>
             <TopBar />
             <D2CardRow datas={genres} title1="Music" title2="Genres" decolor="#ffffff" />
             <D2CardRow datas={mood} title1="Mood" title2="Playlist" decolor="purple" />
@@ -19,6 +20,7 @@ const Discover = () => {
             <VideoGrid datas={musicVideo} title1="Music" title2="Video" />
             <SongsGrid datas={songsList} title1="New" title2="Song" />
             <Footer />
+
         </div>
     );
 };
