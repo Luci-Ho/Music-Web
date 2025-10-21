@@ -17,12 +17,12 @@ export const D2Card = ({ title = 'Title', img, className = '', onClick }) => {
 
 export const D2CardRow = ({ datas, title1, title2, onViewAll, maxItems }) => {
     // calculate how many 230px cards fit (230 + gap)
-    const responsive = useResponsiveCount({ cardWidth: 230, gap: 20, min: 1, max: 8, containerSelector: '.dcontainer', cardSelector: '.d2card' });
+    const responsive = useResponsiveCount({ cardWidth: 230, gap: 20, min: 1, containerSelector: '.dcontainer', cardSelector: '.d2card' });
     const effectiveMax = typeof maxItems === 'number' ? maxItems : responsive;
     const toShow = Array.isArray(datas) ? datas.slice(0, effectiveMax) : [];
 
     return (
-        <div className="w-full h-full flex flex-col">
+        <div className="w-full h-full flex flex-col mb-10">
                 <div className="dcontainer">
                     <SectionTitle title1={title1} title2={title2} />
                     <ul className="flex row-auto justify-between w-full items-center list-none p-0 m-0"> 

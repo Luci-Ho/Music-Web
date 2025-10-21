@@ -8,9 +8,6 @@
 
 /* Reset và font */
 * {
-  
-    padding: 0;
-    margin: 0;
     box-sizing: border-box;
     font-family: "Vazirmatn", sans-serif;
   }
