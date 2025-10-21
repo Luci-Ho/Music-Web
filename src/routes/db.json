@@ -1,0 +1,270 @@
+{
+  "songs": [
+    {
+      "title": "Phép Màu",
+      "artist": "MAYDAYs & Minh Tốc",
+      "artist_avatar": "https://lh3.googleusercontent.com/ozsO4hId6yzw9WqIxwiEmCqfcwj3rz2JMarYtcy2BajMFyvyLFV697UNm3fGQBGp0604waYNJaippxoU=w544-h544-l90-rj",
+      "cover_url": "https://lh3.googleusercontent.com/ozsO4hId6yzw9WqIxwiEmCqfcwj3rz2JMarYtcy2BajMFyvyLFV697UNm3fGQBGp0604waYNJaippxoU=w544-h544-l90-rj",
+      "album": "Phép Màu (Single)",
+      "release_date": "2025-09-28",
+      "duration": "3:45",
+      "genre": "Pop Rock",
+      "video_url": "https://www.youtube.com/embed/jPjQJYKhhk4?si=Hfg86-umiZ90SOaG",
+      "lyrics": "Giữa đời nhiều bão dở, cố giữ trái tim mình an yên...",
+      "streaming_links": {
+        "youtube_music": "https://music.youtube.com/watch?v=ZxvL3bXJwNw"
+      },
+      "id": "66a7"
+    },
+    {
+      "title": "Tháp Drill Tự Do",
+      "artist": "MCK",
+      "artist_avatar": "https://lh3.googleusercontent.com/HA9RIYBGdXDtQ44S6SUpuUaw4vgw8giqSpqJBe7KYh9Rm6d4M6zUnwrqnCFQVX8B6UtUBkxHSZP4C_QWYw=w544-h544-l90-rj",
+      "cover_url": "https://lh3.googleusercontent.com/HA9RIYBGdXDtQ44S6SUpuUaw4vgw8giqSpqJBe7KYh9Rm6d4M6zUnwrqnCFQVX8B6UtUBkxHSZP4C_QWYw=w544-h544-l90-rj",
+      "album": "Drill Tự Do",
+      "release_date": "2025-08-15",
+      "duration": "3:12",
+      "genre": "Drill Rap",
+      "video_url": "https://www.youtube.com/embed/VLvBlG49BKA?si=pF8wqO7kN6K2nmz3",
+      "lyrics": "Tự do là thứ không ai cho, phải giành lấy...",
+      "streaming_links": {
+        "youtube_music": "https://music.youtube.com/watch?v=J0zU5zjvR8g"
+      },
+      "id": "877d"
+    },
+    {
+      "title": "Cay",
+      "artist": "Khắc Hưng x Jimmii Nguyễn",
+      "artist_avatar": "https://example.com/artists/khachung_jimmii.jpg",
+      "cover_url": "https://plus.unsplash.com/premium_photo-1701693533734-bc279bdd0c80?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=2832",
+      "album": "Cay (Single)",
+      "release_date": "2025-07-30",
+      "duration": "4:10",
+      "genre": "Ballad",
+      "video_url": "https://www.youtube.com/watch?v=Qv9xkFz9g6g",
+      "lyrics": "Cay đắng trong tim, chẳng ai hay...",
+      "streaming_links": {
+        "youtube_music": "https://music.youtube.com/watch?v=Qv9xkFz9g6g"
+      },
+      "id": "952b"
+    },
+    {
+      "title": "Ôm Em Thật Lâu",
+      "artist": "MONO",
+      "artist_avatar": "https://example.com/artists/mono.jpg",
+      "cover_url": "https://example.com/covers/om_em.jpg",
+      "album": "Ôm Em (EP)",
+      "release_date": "2025-06-21",
+      "duration": "3:33",
+      "genre": "Pop",
+      "video_url": "https://www.youtube.com/watch?v=Fz8xkRz7h9w",
+      "lyrics": "Anh chỉ muốn ôm em thật lâu, chẳng rời xa...",
+      "streaming_links": {
+        "youtube_music": "https://music.youtube.com/watch?v=Fz8xkRz7h9w"
+      },
+      "id": "76ff"
+    },
+    {
+      "title": "Đừng Làm Em Khóc",
+      "artist": "Myra Trần",
+      "artist_avatar": "https://example.com/artists/myra.jpg",
+      "cover_url": "https://example.com/covers/dung_lam_em_khoc.jpg",
+      "album": "Đừng Làm Em Khóc (Single)",
+      "release_date": "2025-05-10",
+      "duration": "4:00",
+      "genre": "Ballad",
+      "video_url": "https://www.youtube.com/watch?v=Kx7vLz8gW0c",
+      "lyrics": "Đừng làm em khóc, đừng để em đau...",
+      "streaming_links": {
+        "youtube_music": "https://music.youtube.com/watch?v=Kx7vLz8gW0c"
+      },
+      "id": "6963"
+    },
+    {
+      "title": "Nơi Này Có Anh",
+      "artist": "Sơn Tùng M-TP",
+      "artist_avatar": "https://example.com/artists/sontung.jpg",
+      "cover_url": "https://example.com/covers/noi_nay_co_anh.jpg",
+      "album": "Nơi Này Có Anh (Single)",
+      "release_date": "2025-03-14",
+      "duration": "4:05",
+      "genre": "Pop Ballad",
+      "video_url": "https://www.youtube.com/watch?v=FAu5fKzjYxM",
+      "lyrics": "Khi em đi qua anh như giấc mơ...",
+      "streaming_links": {
+        "youtube_music": "https://music.youtube.com/watch?v=FAu5fKzjYxM"
+      },
+      "id": "4e5c"
+    },
+    {
+      "title": "Em Là Kẻ Đáng Thương",
+      "artist": "Phát Huy T4",
+      "artist_avatar": "https://example.com/artists/phathuyt4.jpg",
+      "cover_url": "https://example.com/covers/em_la_ke_dang_thuong.jpg",
+      "album": "Em Là Kẻ Đáng Thương (Single)",
+      "release_date": "2025-04-02",
+      "duration": "3:58",
+      "genre": "Ballad",
+      "video_url": "https://www.youtube.com/watch?v=Gzv8kRz9hWc",
+      "lyrics": "Em là kẻ đáng thương trong cuộc tình này...",
+      "streaming_links": {
+        "youtube_music": "https://music.youtube.com/watch?v=Gzv8kRz9hWc"
+      },
+      "id": "4f7e"
+    },
+    {
+      "title": "Người Đáng Thương Là Anh",
+      "artist": "Only C",
+      "artist_avatar": "https://example.com/artists/onlyc.jpg",
+      "cover_url": "https://example.com/covers/nguoi_dang_thuong_la_anh.jpg",
+      "album": "Người Đáng Thương Là Anh (Single)",
+      "release_date": "2025-05-01",
+      "duration": "4:12",
+      "genre": "Pop",
+      "video_url": "https://www.youtube.com/watch?v=Hk9xkFz8gWw",
+      "lyrics": "Anh là người đáng thương khi em rời xa...",
+      "streaming_links": {
+        "youtube_music": "https://music.youtube.com/watch?v=Hk9xkFz8gWw"
+      },
+      "id": "2851"
+    },
+    {
+      "title": "Tình Đầu",
+      "artist": "Tăng Phúc",
+      "artist_avatar": "https://example.com/artists/tangphuc.jpg",
+      "cover_url": "https://example.com/covers/tinh_dau.jpg",
+      "album": "Tình Đầu (Single)",
+      "release_date": "2025-06-10",
+      "duration": "3:40",
+      "genre": "Ballad",
+      "video_url": "https://www.youtube.com/watch?v=Jv7xkFz9gWc",
+      "lyrics": "Tình đầu là mối tình không thể quên...",
+      "streaming_links": {
+        "youtube_music": "https://music.youtube.com/watch?v=Jv7xkFz9gWc"
+      },
+      "id": "b9c5"
+    },
+    {
+      "title": "Đừng Làm Bạn",
+      "artist": "Bích Phương",
+      "artist_avatar": "https://example.com/artists/bichphuong.jpg",
+      "cover_url": "https://example.com/covers/dung_lam_ban.jpg",
+      "album": "Đừng Làm Bạn (Single)",
+      "release_date": "2025-07-05",
+      "duration": "3:55",
+      "genre": "Pop",
+      "video_url": "https://www.youtube.com/watch?v=Kv8xkFz9gWc",
+      "lyrics": "Đừng làm bạn khi ta từng yêu nhau...",
+      "streaming_links": {
+        "youtube_music": "https://music.youtube.com/watch?v=Kv8xkFz9gWc"
+      },
+      "id": "4528"
+    },
+    {
+      "title": "Lặng",
+      "artist": "GREY D",
+      "artist_avatar": "https://example.com/artists/greyd.jpg",
+      "cover_url": "https://example.com/covers/lang.jpg",
+      "album": "Lặng (Single)",
+      "release_date": "2025-08-01",
+      "duration": "4:00",
+      "genre": "Indie Pop",
+      "video_url": "https://www.youtube.com/watch?v=Lz9xkFz9gWc",
+      "lyrics": "Lặng thầm nhìn em bước đi...",
+      "streaming_links": {
+        "youtube_music": "https://music.youtube.com/watch?v=Lz9xkFz9gWc"
+      },
+      "id": "995b"
+    },
+    {
+      "title": "Không Còn Gì",
+      "artist": "Chillies",
+      "artist_avatar": "https://example.com/artists/chillies.jpg",
+      "cover_url": "https://example.com/covers/khong_con_gi.jpg",
+      "album": "Không Còn Gì (EP)",
+      "release_date": "2025-08-20",
+      "duration": "3:48",
+      "genre": "Indie Rock",
+      "video_url": "https://www.youtube.com/watch?v=Mx7xkFz9gWc",
+      "lyrics": "Không còn gì để nói sau chia ly...",
+      "streaming_links": {
+        "youtube_music": "https://music.youtube.com/watch?v=Mx7xkFz9gWc"
+      },
+      "id": "ecd7"
+    },
+    {
+      "title": "Đêm Nay Anh Mơ",
+      "artist": "Trung Quân",
+      "artist_avatar": "https://example.com/artists/trungquan.jpg",
+      "cover_url": "https://example.com/covers/dem_nay_anh_mo.jpg",
+      "album": "Đêm Nay Anh Mơ (Single)",
+      "release_date": "2025-09-05",
+      "duration": "4:20",
+      "genre": "Ballad",
+      "video_url": "https://www.youtube.com/watch?v=Nv6xkFz9gWc",
+      "lyrics": "Đêm nay anh mơ về em...",
+      "streaming_links": {
+        "youtube_music": "https://music.youtube.com/watch?v=Nv6xkFz9gWc"
+      },
+      "id": "acb2"
+    },
+    {
+      "title": "Vỡ",
+      "artist": "Trúc Nhân",
+      "artist_avatar": "https://example.com/artists/trucnhan.jpg",
+      "cover_url": "https://example.com/covers/vo.jpg",
+      "album": "Vỡ (Single)",
+      "release_date": "2025-09-18",
+      "duration": "3:50",
+      "genre": "Pop",
+      "video_url": "https://www.youtube.com/watch?v=Ov5xkFz9gWc",
+      "lyrics": "Vỡ tan những giấc mơ ngày xưa...",
+      "streaming_links": {
+        "youtube_music": "https://music.youtube.com/watch?v=Ov5xkFz9gWc"
+      },
+      "id": "41ee"
+    },
+    {
+      "title": "Đừng Gọi Anh Là Idol",
+      "artist": "Obito",
+      "artist_avatar": "https://example.com/artists/obito.jpg",
+      "cover_url": "https://example.com/covers/dung_goi_anh_la_idol.jpg",
+      "album": "Idol (EP)",
+      "release_date": "2025-10-01",
+      "duration": "3:30",
+      "genre": "Rap",
+      "video_url": "https://www.youtube.com/watch?v=Pz4xkFz9gWc",
+      "lyrics": "Anh không phải idol, anh là người thật...",
+      "streaming_links": {
+        "youtube_music": "https://music.youtube.com/watch?v=Pz4xkFz9gWc"
+      },
+      "id": "73bf"
+    }
+  ],
+  "users": [
+    {
+      "id": "1",
+      "username": "Luci",
+      "email": "ho@example.com",
+      "password": "123456789*",
+      "phone": "0901234567"
+    },
+    {
+      "id": "67cd"
+    },
+    {
+      "id": "1224",
+      "username": "oanh oi",
+      "email": "2omg@xinh.com",
+      "password": "111111",
+      "phone": "01111111111"
+    },
+    {
+      "id": "89d7",
+      "username": "21102025",
+      "email": "21@gmail.com",
+      "password": "123456",
+      "phone": "0123456789"
+    }
+  ]
+}

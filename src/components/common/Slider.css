@@ -1,0 +1,145 @@
+.slider {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 5px;
+  width: 100%;
+  height: auto;
+}
+
+.slide {
+  position: relative;
+  text-align: left;
+  max-width: 100%;
+}
+
+.slide img {
+  width: 100%;
+  border-radius: 10px;
+  display: block;
+}
+
+.info {
+  margin-top: 10px;
+  padding: 10px;
+}
+
+.info h2,
+.info p {
+  margin: 5px 0;
+  color: #fff;
+}
+
+.actions {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+.actions button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 20px;
+  background-color: #ee10b0;
+  color: white;
+  cursor: pointer;
+}
+
+.nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(30, 30, 30, 1);
+  color: rgba(238, 16, 176, 1);
+  border: none;
+  font-size: 2rem;
+  cursor: pointer;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  z-index: 2;
+}
+
+.nav.left {
+  left: 10px;
+}
+
+.nav.right {
+  right: 10px;
+}
+
+.image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 500px;
+  aspect-ratio: 16 / 9;
+}
+
+.image-wrapper img {
+  border-radius: 10px;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.info {
+  position: absolute;
+  bottom: 10px;
+  left: 20px;
+  color: white;
+  padding: 10px;
+  border-radius: 10px;
+  z-index: 1;
+}
+
+.info h2,
+.info p {
+  margin: 5px 0;
+}
+
+.actions {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+.actions button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 10px;
+  background-color: #ee10b0;
+    color: white;
+  cursor: pointer;
+}
+
+/* Hover: trong suốt + viền neon hồng + phát sáng */
+.actions button:hover {
+  background-color: transparent;
+  border-color: #ee10b0;
+  color: #ee10b0;
+  box-shadow: 0 0 10px #ee10b0, 0 0 20px #ee10b0;
+}
+
+/* Click (active): giữ hiệu ứng neon nhưng giảm độ sáng */
+.actions button:active {
+  box-shadow: 0 0 6px #ee10b0, 0 0 12px #ee10b0;
+  transform: scale(0.98);
+}
+
+
+
+.gradient-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+  background: linear-gradient(to right, rgba(0,0,0,0.4), rgba(0,0,0,0));
+  z-index: 0;
+}
+
