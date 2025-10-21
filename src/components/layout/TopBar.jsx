@@ -4,9 +4,12 @@ import { Flex, Input } from 'antd';
 import {
   SearchOutlined,
 } from '@ant-design/icons';
+import { useNavigate } from 'react-router-dom';
 
 
 const TopBar = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="TopBar">
       {/* Phần Search */}
@@ -24,9 +27,10 @@ const TopBar = () => {
       </div>
 
       <div className="TopBar-Menu">
-        <button className=''>Login</button>
-        <button>Sign Up</button>
+        <button onClick={() => navigate('/login')}>Login</button>
+        <button onClick={() => navigate('/signup')}>Sign Up</button>
       </div>
+
     </div>
   );
 };

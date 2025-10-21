@@ -7,7 +7,8 @@ import CardGrid from '../components/common/CardGrid';
 import "../style/Layout.css";
 
 const HomeContent = () => {
-    return (
+
+      return (
         <div className="container">
             <TopBar />
 
@@ -18,6 +19,10 @@ const HomeContent = () => {
 
                 <div className="">
                     <CardGrid />
+                    <CardGrid title="Top 5 bài hát yêu thích" limit={5} />
+                    <CardGrid title="Nhạc mới phát hành" limit={5} />
+                    <CardGrid title="Gợi ý cho bạn" limit={5} />
+
                 </div>
                 <div className="">
 

@@ -1,0 +1,318 @@
+html, body {
+     height: 100%;
+    margin: 0;
+    padding: 0;
+}
+   
+.login-container,
+.login-background {
+    font-family: 'Vazirmatn', sans-serif;
+}
+
+.login-container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    /* canh giữa ngang */
+    align-items: center;
+    /* canh giữa dọc */
+    background: linear-gradient(rgba(65, 44, 58, 0.8), rgba(17, 12, 15, 0.8)),
+        url('https://res.cloudinary.com/da4y5zf5k/image/upload/v1751043871/top-view-hard-drive-with-blue-light_abu7eu.jpg');
+    background-position: center;
+    flex-wrap: wrap;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.login-background {
+    max-width: 430px;
+    margin: 0 auto;
+    padding: 24px;
+    width: 100%;
+    height: auto;
+    background: #412C3A;
+    border-radius: 20px;
+    padding-top: 0;
+    padding-bottom: 40px;
+}
+
+.login-header,
+.auth-header,
+.login-form,
+.input-group {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-header {
+    padding-top: 40px;
+}
+
+.logo-image {
+    width: 68px;
+    height: 77px;
+}
+
+/* Logo Melodies */
+.logo-text {
+    font-size: 24px;
+    font-weight: 700;
+    word-wrap: break-word;
+    background: linear-gradient(to right, rgba(238, 16, 176, 1) 10%, rgba(14, 158, 239, 0.92) 90%);
+    
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.auth-header {
+    display: flex;
+ 
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.back-icon {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    margin-right: auto;
+    transform: rotate(180deg); /* quay sang trái */
+    transition: transform 0.2s ease;
+}
+
+/* .back-icon:hover {
+    transform: scale(1.1);
+} */
+
+.auth-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: white;
+}
+
+
+/* Tiêu đề Login To Continue */
+.auth-header h3 {
+    color: white;
+    font-size: 24px;
+    font-weight: 700;
+    word-wrap: break-word;
+    padding-top: 40px;
+    padding-bottom: 15px;
+}
+
+/* .login-form{} */
+
+/* Email và Password label */
+.input-group input::placeholder {
+    color: rgba(219, 214, 214, 0.6);
+    font-family: 'Vazirmatn';
+    font-size: 14px;
+    font-weight: 400;
+
+    word-wrap: break-word;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.basic-input {
+    padding: 12px 14px;
+    background: #612C4F;
+    color: rgba(219, 214, 214, 0.6);
+    border: none;
+    width: 380px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-family: 'Vazirmatn', sans-serif;
+    font-weight: 500;
+    outline: none;
+
+    box-shadow: -1px 5px 3px rgb(84, 42, 70);
+    transition: box-shadow 0.2s ease;
+}
+
+.basic-input::placeholder {
+  color: #aaa; /* placeholder màu xám nhạt */
+}
+
+.basic-input:focus,
+.basic-input:hover {
+ background: #612C4F; /* nền khi focus hoặc hover */
+  color: white;              /* vẫn giữ chữ trắng */
+
+}
+  
+
+.toggle-password {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.eye-icon {
+    font-size: 18px;
+    color: #EE10B0;
+    transition: transform 0.2s ease;
+}
+
+.eye-icon:hover {
+    transform: scale(1.1);
+}
+
+
+/* Forgot password */
+.submit {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.forgot-password {
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    word-wrap: break-word;
+}
+
+/* Nút Login */
+.custom-submit-button,
+.signup-button {
+    width: 100px;
+    height: 32px;
+    background-color: #EE10B0;
+    border: none;
+    font-weight: 800;
+    font-family: 'Vazirmatn', sans-serif;
+    color: white;
+    padding: 0;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 6px;
+}
+
+.custom-submit-button span {
+padding: 5px 5px;
+}
+
+.submit-button-wrapper {
+  display: flex;
+  justify-content: flex-end;
+ 
+}
+
+
+/* Facebook/Google */
+.facebook-login,
+.google-login {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    gap: 7px;
+    color: white;
+    font-size: 14px;
+    font-weight: 400;
+    border-radius: 20px;
+    border: 2px solid white;
+    background: transparent;
+    padding: 10px 15px;
+}
+
+.social-login {
+    padding-top: 60px;
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    justify-content: space-between;
+}
+
+
+/* Don’t Have An Account + Sign Up Here */
+.signup-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 24px;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.signup-text p:first-child {
+    font-size: 20px;
+    font-weight: 700;
+    color: white;
+    word-wrap: break-word;
+}
+
+.signup-text p:last-child {
+    font-size: 16px;
+    font-weight: 500;
+    color: white;
+    word-wrap: break-word;
+}
+
+.signup-text {
+    flex-direction: row;
+}
+
+.signup-button {
+    background-color: #3585ee;
+}
+
+/* Đồng hồ (nếu có chèn thủ công) */
+.time-indicator {
+    font-size: 15px;
+    font-weight: 500;
+    font-family: 'Inter', sans-serif;
+    color: white;
+}
+
+@media (max-width: 768px) {
+    .logo-text {
+        font-size: 20px;
+    }
+
+    .login-background {
+        padding: 24px;
+        border-radius: 0;
+    }
+
+    .signup-text p {
+        font-size: 14px;
+    }
+
+    .login-background {
+        max-width: 430px;
+        margin: 0 auto;
+        width: 100%;
+        background: #412C3A;
+        border-radius: 15px;
+        padding-top: 0px;
+        padding-bottom: 40px;
+    }
+
+    .auth-header h3 {
+        font-size: 20px;
+        padding-top: 100px;
+        padding-bottom: 20px;
+    }
+
+    .signup-row {
+        padding-top: 100px;
+        padding-bottom: 100px;
+    }
+}

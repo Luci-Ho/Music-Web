@@ -13,7 +13,8 @@
       "lyrics": "Giữa đời nhiều bão dở, cố giữ trái tim mình an yên...",
       "streaming_links": {
         "youtube_music": "https://music.youtube.com/watch?v=ZxvL3bXJwNw"
-      }
+      },
+      "id": "66a7"
     },
     {
       "title": "Tháp Drill Tự Do",
@@ -28,7 +29,8 @@
       "lyrics": "Tự do là thứ không ai cho, phải giành lấy...",
       "streaming_links": {
         "youtube_music": "https://music.youtube.com/watch?v=J0zU5zjvR8g"
-      }
+      },
+      "id": "877d"
     },
     {
       "title": "Cay",
@@ -43,7 +45,8 @@
       "lyrics": "Cay đắng trong tim, chẳng ai hay...",
       "streaming_links": {
         "youtube_music": "https://music.youtube.com/watch?v=Qv9xkFz9g6g"
-      }
+      },
+      "id": "952b"
     },
     {
       "title": "Ôm Em Thật Lâu",
@@ -58,7 +61,8 @@
       "lyrics": "Anh chỉ muốn ôm em thật lâu, chẳng rời xa...",
       "streaming_links": {
         "youtube_music": "https://music.youtube.com/watch?v=Fz8xkRz7h9w"
-      }
+      },
+      "id": "76ff"
     },
     {
       "title": "Đừng Làm Em Khóc",
@@ -73,9 +77,9 @@
       "lyrics": "Đừng làm em khóc, đừng để em đau...",
       "streaming_links": {
         "youtube_music": "https://music.youtube.com/watch?v=Kx7vLz8gW0c"
-      }
+      },
+      "id": "6963"
     },
-
     {
       "title": "Nơi Này Có Anh",
       "artist": "Sơn Tùng M-TP",
@@ -89,7 +93,8 @@
       "lyrics": "Khi em đi qua anh như giấc mơ...",
       "streaming_links": {
         "youtube_music": "https://music.youtube.com/watch?v=FAu5fKzjYxM"
-      }
+      },
+      "id": "4e5c"
     },
     {
       "title": "Em Là Kẻ Đáng Thương",
@@ -104,7 +109,8 @@
       "lyrics": "Em là kẻ đáng thương trong cuộc tình này...",
       "streaming_links": {
         "youtube_music": "https://music.youtube.com/watch?v=Gzv8kRz9hWc"
-      }
+      },
+      "id": "4f7e"
     },
     {
       "title": "Người Đáng Thương Là Anh",
@@ -119,7 +125,8 @@
       "lyrics": "Anh là người đáng thương khi em rời xa...",
       "streaming_links": {
         "youtube_music": "https://music.youtube.com/watch?v=Hk9xkFz8gWw"
-      }
+      },
+      "id": "2851"
     },
     {
       "title": "Tình Đầu",
@@ -134,7 +141,8 @@
       "lyrics": "Tình đầu là mối tình không thể quên...",
       "streaming_links": {
         "youtube_music": "https://music.youtube.com/watch?v=Jv7xkFz9gWc"
-      }
+      },
+      "id": "b9c5"
     },
     {
       "title": "Đừng Làm Bạn",
@@ -149,7 +157,8 @@
       "lyrics": "Đừng làm bạn khi ta từng yêu nhau...",
       "streaming_links": {
         "youtube_music": "https://music.youtube.com/watch?v=Kv8xkFz9gWc"
-      }
+      },
+      "id": "4528"
     },
     {
       "title": "Lặng",
@@ -164,7 +173,8 @@
       "lyrics": "Lặng thầm nhìn em bước đi...",
       "streaming_links": {
         "youtube_music": "https://music.youtube.com/watch?v=Lz9xkFz9gWc"
-      }
+      },
+      "id": "995b"
     },
     {
       "title": "Không Còn Gì",
@@ -179,7 +189,8 @@
       "lyrics": "Không còn gì để nói sau chia ly...",
       "streaming_links": {
         "youtube_music": "https://music.youtube.com/watch?v=Mx7xkFz9gWc"
-      }
+      },
+      "id": "ecd7"
     },
     {
       "title": "Đêm Nay Anh Mơ",
@@ -194,7 +205,8 @@
       "lyrics": "Đêm nay anh mơ về em...",
       "streaming_links": {
         "youtube_music": "https://music.youtube.com/watch?v=Nv6xkFz9gWc"
-      }
+      },
+      "id": "acb2"
     },
     {
       "title": "Vỡ",
@@ -209,7 +221,8 @@
       "lyrics": "Vỡ tan những giấc mơ ngày xưa...",
       "streaming_links": {
         "youtube_music": "https://music.youtube.com/watch?v=Ov5xkFz9gWc"
-      }
+      },
+      "id": "41ee"
     },
     {
       "title": "Đừng Gọi Anh Là Idol",
@@ -224,7 +237,34 @@
       "lyrics": "Anh không phải idol, anh là người thật...",
       "streaming_links": {
         "youtube_music": "https://music.youtube.com/watch?v=Pz4xkFz9gWc"
-      }
+      },
+      "id": "73bf"
+    }
+  ],
+  "users": [
+    {
+      "id": "1",
+      "username": "Luci",
+      "email": "ho@example.com",
+      "password": "123456789*",
+      "phone": "0901234567"
+    },
+    {
+      "id": "67cd"
+    },
+    {
+      "id": "1224",
+      "username": "oanh oi",
+      "email": "2omg@xinh.com",
+      "password": "111111",
+      "phone": "01111111111"
+    },
+    {
+      "id": "89d7",
+      "username": "21102025",
+      "email": "21@gmail.com",
+      "password": "123456",
+      "phone": "0123456789"
     }
   ]
 }

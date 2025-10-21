@@ -1,12 +1,27 @@
 import React from 'react';
-// import Home from './pages/Homepage';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { Routes, Route } from 'react-router-dom';
+import Home from './pages/Homepage';
+import Login from './pages/Login';
+import SignUp from './pages/SignUp';
+import Loading from './pages/Loading';
 import './App.css';
-import HomePage from './pages/Homepage';
+import Discover from './pages/DiscoverPage';
+
 
 function App() {
   return (
     <>
-      <HomePage />
+      <Routes>
+        <Route path="/loading" element={<Loading />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/discover" element={<Discover />} />
+      </Routes>
+      <ToastContainer />
     </>
   );
 }

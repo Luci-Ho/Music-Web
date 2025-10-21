@@ -65,4 +65,3 @@ export const newAlbum = [
     { id: 4, title: 'All Quiet on the Eastern Esplanade', artists: '21', img: '/path/to/album4.jpg' },
     { id: 5, title: 'Little Rope', artists: '22', img: '/path/to/album5.jpg' },
 ];
-
