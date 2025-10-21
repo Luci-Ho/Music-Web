@@ -25,7 +25,7 @@ const Footer = () => {
                     {/* LINKS */}
                     <div className="footer-links">
                         <div>
-                            <h4>Melodi</h4>
+                            <h4>Melody</h4>
                             <div className="line" ></div>
                             <ul>
                                 <li><a href="#">Songs</a></li>
