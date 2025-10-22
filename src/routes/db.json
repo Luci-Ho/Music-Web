@@ -265,6 +265,13 @@
       "email": "21@gmail.com",
       "password": "123456",
       "phone": "0123456789"
+    },
+    {
+      "id": "c741",
+      "username": "ví dụ",
+      "email": "vidu@gmail.com",
+      "password": "123456",
+      "phone": "0123456789"
     }
   ]
 }
