@@ -8,6 +8,9 @@ import SignUp from './pages/SignUp';
 import Loading from './pages/Loading';
 import './App.css';
 import Discover from './pages/DiscoverPage';
+import SongPlayer from './pages/SongPlayerPage';
+import AddToPlaylist from './pages/AddToPlaylist';
+import PlaylistDetail from './pages/PlaylistDetail';
 
 
 function App() {
@@ -20,6 +23,9 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/discover" element={<Discover />} />
+        <Route path="/song/:id" element={<SongPlayer />} />
+        <Route path="/playlist/add/:id" element={<AddToPlaylist />} />
+        <Route path="/playlist/:id" element={<PlaylistDetail />} />
       </Routes>
       <ToastContainer />
     </>
