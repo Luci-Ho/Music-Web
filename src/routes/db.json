@@ -179,13 +179,13 @@
     {
       "title": "Không Còn Gì",
       "artist": "Chillies",
-      "artist_avatar": "https://example.com/artists/chillies.jpg",
-      "cover_url": "https://example.com/covers/khong_con_gi.jpg",
+      "artist_avatar": "https://trixie.com.vn/media/images/article/98645721/chillies-1586223837.jpg",
+      "cover_url": "https://i.ytimg.com/vi/oahqJdcwL1k/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLBFCsUv7L5eyWWvTMllZkxCzFM9Wg",
       "album": "Không Còn Gì (EP)",
       "release_date": "2025-08-20",
       "duration": "3:48",
       "genre": "Indie Rock",
-      "video_url": "https://www.youtube.com/watch?v=Mx7xkFz9gWc",
+      "video_url": "https://www.youtube.com/embed/oahqJdcwL1k?si=S6ZZatJ24uwjj8hD",
       "lyrics": "Không còn gì để nói sau chia ly...",
       "streaming_links": {
         "youtube_music": "https://music.youtube.com/watch?v=Mx7xkFz9gWc"
@@ -193,34 +193,34 @@
       "id": "ecd7"
     },
     {
-      "title": "Đêm Nay Anh Mơ",
+      "title": "Trót Yêu",
       "artist": "Trung Quân",
-      "artist_avatar": "https://example.com/artists/trungquan.jpg",
-      "cover_url": "https://example.com/covers/dem_nay_anh_mo.jpg",
+      "artist_avatar": "https://kenh14cdn.com/thumb_w/600/EFArAxSbfRMRi1CGjBAhXbItoobDMS/Image/2014/09/04/02/untitled-(4-of-9)-ef53f.JPG",
+      "cover_url": "https://i.ytimg.com/vi/2Bg_Bv9wp-0/maxresdefault.jpg",
       "album": "Đêm Nay Anh Mơ (Single)",
       "release_date": "2025-09-05",
       "duration": "4:20",
       "genre": "Ballad",
-      "video_url": "https://www.youtube.com/watch?v=Nv6xkFz9gWc",
-      "lyrics": "Đêm nay anh mơ về em...",
+      "video_url": "https://www.youtube.com/embed/60mS6c9rg0E?si=XG3N7gTyz0giJycM",
+      "lyrics": "Có chút bối rối chạm tay anh rồi...",
       "streaming_links": {
-        "youtube_music": "https://music.youtube.com/watch?v=Nv6xkFz9gWc"
+        "youtube_music": "https://www.youtube.com/embed/60mS6c9rg0E?si=XG3N7gTyz0giJycM"
       },
       "id": "acb2"
     },
     {
-      "title": "Vỡ",
+      "title": "Gió Mùa Về",
       "artist": "Trúc Nhân",
-      "artist_avatar": "https://example.com/artists/trucnhan.jpg",
+      "artist_avatar": "https://cdn.tienphong.vn/images/a6bf4f60924201126af6849ca45a39809fa2682ae9051c6e3d05c9d98d239974abc66d3450044e0a43759441f482269bc1be3847ccb630252aaa2cae912954077a3d1f547dca863507f5f1dfc4d7fc21ffa2ad3050d7a2191788b40b0bc9413af0ca7ea95604f1801b5908427e7f00fe/307713136-5391952470857772-562192952731703488-n-9032.jpg",
       "cover_url": "https://example.com/covers/vo.jpg",
       "album": "Vỡ (Single)",
       "release_date": "2025-09-18",
       "duration": "3:50",
       "genre": "Pop",
-      "video_url": "https://www.youtube.com/watch?v=Ov5xkFz9gWc",
+      "video_url": "https://www.youtube.com/embed/Kx0GmibUmRA?si=HxV_ag4_mr9OqH6N",
       "lyrics": "Vỡ tan những giấc mơ ngày xưa...",
       "streaming_links": {
-        "youtube_music": "https://music.youtube.com/watch?v=Ov5xkFz9gWc"
+        "youtube_music": "https://zingmp3.vn/embed/song/ZW667CWE?start=true"
       },
       "id": "41ee"
     },
@@ -265,6 +265,37 @@
       "email": "21@gmail.com",
       "password": "123456",
       "phone": "0123456789"
+    },
+    {
+      "id": "c741",
+      "username": "ví dụ",
+      "email": "vidu@gmail.com",
+      "password": "123456",
+      "phone": "0123456789"
+    }
+  ],
+  "playlists": [
+    {
+      "id": 1,
+      "name": "Yêu thích của ban",
+      "songs": []
+    },
+    {
+      "id": 2,
+      "name": "Nhạc chill",
+      "songs": []
+    },
+    {
+      "id": "274c",
+      "name": "album",
+      "songs": [
+        "66a7",
+        {
+          "id": "66a7",
+          "title": "Phép Màu",
+          "artist": "MAYDAYs & Minh Tốc"
+        }
+      ]
     }
   ]
 }

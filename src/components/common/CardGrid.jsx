@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./CardGrid.css";
 
 export default function CardGrid({ title = "Danh mục bài hát", limit = 5 }) {
   const [songs, setSongs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch("http://localhost:4000/songs")
@@ -31,7 +33,12 @@ export default function CardGrid({ title = "Danh mục bài hát", limit = 5 }) 
 
       <div className="grid-container">
         {songs.map((song, index) => (
-          <div className="card" key={index}>
+          <div 
+          className="card" 
+          key={index}
+          onClick={() => navigate(`/song/${song.id}`)}
+          style={{cursor: "pointer"}}
+          >
             <div className="card-image">
               <img src={song.cover_url} alt={song.title} />
               <div className="music-icon">

@@ -62,8 +62,10 @@ const Dashboard = () => {
       </div>
       <div className="logo">
         <img src="../../public/Ảnh/eac87d338a32800109b78daee1589299b8812535.png" alt="" className="logoimg" />
-        <p className="logot">Melodies</p>
-        {/* <small>{user ? `Xin chào ${user.username}! 🎶` : 'Cùng nghe nhạc vui nhé'}</small> */}
+        <p className="logo">Melodies</p>
+        <div className="welcome">
+          <small>{user ? `Hi, ${user.username}! 🎶` : 'Cùng nghe nhạc vui nhé!'}</small>
+        </div>
       </div>
 
       <div className="DashBoard-menu">
@@ -72,7 +74,7 @@ const Dashboard = () => {
           <MenuItem icon={<HomeFilled />} label="Home" to="/home" />
           <MenuItem icon={<GlobalOutlined />} label="Discover" to="/discover" />
           <MenuItem icon={<CompassOutlined />} label="Albums" to="/album" />
-          <MenuItem icon={<UserOutlined />} label="Artists" to="/artist"  />
+          <MenuItem icon={<UserOutlined />} label="Artists" to="/artist" />
         </div>
       </div>
 
