@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 .song-section {
-    margin-bottom: 10px;
+    margin-bottom: 40px;
     margin-left: 40px;
 }
 .song-section-title {

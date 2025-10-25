@@ -14,7 +14,7 @@ const ArtistItem = ({ artist }) => (
 
 const ArtistRow = ({ datas,  maxItems }) => {
     // cardWidth should match .artist-item width; gap should match .artist-row gap
-    const responsive = useResponsiveCount({ cardWidth: 130, gap: 20, min: 2, max: 5, containerSelector: '.acontainer .artist-row', cardSelector: '.artist-item' });
+    const responsive = useResponsiveCount({ cardWidth: 130, gap: 20, min: 2, max: 8 });
     const effectiveMax = typeof maxItems === 'number' ? maxItems : responsive;
     const toShow = Array.isArray(datas) ? datas.slice(0, effectiveMax) : [];
 

@@ -1,6 +1,7 @@
 import React from 'react';
 import './Video.css';
 import formatNumber from '../../hooks/formatNumber';
+import useResponsiveCount from '../../hooks/useResponsiveCount';
 import SectionTitle from './SectionTitle';
 import { artist as artistList } from '../data/disdata';
 
@@ -23,8 +24,12 @@ const VideoCard = ({ title, artist, img, views, onClick }) => {
     );
 };
 
-const VideoGrid = ({ datas = [], title1 = 'Music', title2 = 'Video', onViewAll }) => {
-    const viewCount = datas.view;
+const VideoGrid = ({ datas = [], title1 = 'Music', title2 = 'Video', onViewAll, maxItems }) => {
+    // compute responsive visible count, but cap to maxItems (default 8)
+    const responsive = useResponsiveCount({ cardWidth: 280, gap: 18, containerSelector: '.video-grid', cardSelector: '.video-card', min: 1, max: 8 });
+    const cap = typeof maxItems === 'number' ? maxItems : 8;
+    const effectiveMax = Math.max(1, Math.min(cap, responsive));
+    const toShow = Array.isArray(datas) ? datas.slice(0, effectiveMax) : [];
 
     return (
         <section className="video-section">
@@ -32,7 +37,7 @@ const VideoGrid = ({ datas = [], title1 = 'Music', title2 = 'Video', onViewAll }
 
             <div className="flex w-[96%] flex-row pr-4 justify-between items-center ">
                 <div className="video-grid">
-                    {datas.map((v, i) => {
+                    {toShow.map((v, i) => {
                         const artistName = typeof v.artist === 'number'
                             ? (artistList.find(a => a.id === v.artist)?.name ?? '')
                             : v.artist;

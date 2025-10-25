@@ -26,7 +26,7 @@ const SongCard = ({ title, artist, img, views, onClick }) => {
 
 const SongsGrid = ({ datas = [], title1 = 'New', title2 = 'Song', onViewAll, maxItems }) => {
 
-    const responsive = useResponsiveCount({ cardWidth: 230, gap: 20, min: 1, max: 8, containerSelector: '.dcontainer', cardSelector: '.d2card' });
+    const responsive = useResponsiveCount({ cardWidth: 230, gap: 20, min: 1, max: 5});
     const effectiveMax = typeof maxItems === 'number' ? maxItems : responsive;
     const toShow = Array.isArray(datas) ? datas.slice(0, effectiveMax) : [];
 
