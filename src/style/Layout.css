@@ -28,6 +28,8 @@
     flex-direction: column;
     min-height: 100vh;
     background-color: rgba(65, 44, 58, 1);
+    margin-left: 300px;
+      width: calc(100% - 350px);
   }
   
   .content {
@@ -113,7 +115,7 @@
 .dashboard-menu-item-hover svg {
   font-size: 18px;
   color: white;
-  margin-right: 2px;
+  margin-right: 0px;
   transition: color 0.3s ease;
   text-align: center;
 }
@@ -140,21 +142,30 @@
 .dashboard {
   background: linear-gradient(to right, #0E1920, #0E1920 70%);
   padding-bottom: 40px;
-  width: 350px;
-  min-height: 100vh;
+  width: 300px;
+  height: 100vh;
   /* 👈 đảm bảo luôn cao bằng chiều cao màn hình */
   display: flex;
   flex-direction: column;
-  position: relative; /* for collapse-toggle absolute positioning */
+  position: fixed; /* for collapse-toggle absolute positioning */
+  top: 0;
+  left: 0;
+  overflow-y: auto; /* 👈 Cho phép cuộn nếu nội dung dài */
+  z-index: 1000;
 }
 
 /* Collapsed dashboard state */
 .dashboard.collapsed {
   width: 100px; /* narrow */
+  
 }
 
 .dashboard .logoimg {
   display: none; /* default hidden; shown when collapsed */
+}
+
+.dashboard.collapsed .DashBoard-menu:first-child {
+  margin-top: 60px;
 }
 
 .dashboard.collapsed .logoimg {
@@ -167,10 +178,13 @@
   margin-left: 12px;
 }
 
-.dashboard.collapsed .logot,
+.dashboard.collapsed .logo,
 .dashboard.collapsed .dashboard-menu-label, .Menu {
   display: none; /* hide specific menu labels when collapsed */
 }
+
+
+
 
 /* hide any paragraph inside menu items when collapsed (covers Logout etc.) */
 .dashboard.collapsed .dashboard-menu-item-hover p {
@@ -212,27 +226,36 @@
 /* center icons when collapsed */
 .dashboard.collapsed .dashboard-menu-item-hover {
   justify-content: center;
+  align-items: center;
   width: 100%;
-  padding-right: 0;
+  height: 48px;                  /* 👈 chiều cao cố định cho đẹp */
+  padding: 20px;
+    position: relative;
 }
 
 /* ensure icon spacing and size look correct when labels hidden */
 .dashboard.collapsed .dashboard-menu-item-hover svg {
-  font-size: 20px;
-  margin-right: 0;
+  font-size: 24px;               /* 👈 icon to rõ hơn */
+  margin: 0 auto;  
+  
 }
+
+
 
 
 /* === TIÊU ĐỀ CHÍNH === */
 .logo {
+  display: flex;
+  flex-direction: column;
   font-size: 40px;
   font-weight: 800;
   background: linear-gradient(to right, rgba(238, 16, 176, 1) 10%, rgba(14, 158, 239, 0.92) 90%);
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;
-  margin-top: 50px;
-  margin-left: 26.6px;
+  margin:30px 10px 5px 10px;
+justify-content: center;
+align-items: center;
 }
 
 .logoimg {
@@ -253,6 +276,9 @@
   margin: 10px 30px;
 }
 
+
+
+
 /* === TIÊU ĐỀ NHỎ === */
 .Menu,
 .Library,
@@ -267,7 +293,7 @@
 
 /* === ITEM MENU === */
 .Menu-part {
-  padding-bottom: 20px;
+  padding-bottom: 7px;
   
 }
 
@@ -276,9 +302,9 @@
 .Play-list-part div,
 .General-part div {
   display: flex;
-  gap: 5px;
+  gap: 10px;
   align-items: center;
-  margin-top: 15px;
+  margin-top: 5px;
   padding: 10px 12px;
   border-radius: 9px;
   transition: all 0.3s ease;
@@ -303,6 +329,7 @@
   text-decoration: none;
   text-align: center;
 }
+
 
 /* === SPECIAL TEXT === */
 /* .Add-playlist {
@@ -424,7 +451,8 @@
   background: linear-gradient(to right, #EE10B0, #0E9EEF);
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  margin-bottom: 20px;
+  margin: 10px;
+  justify-content: center;
 }
 
 .link {
@@ -527,4 +555,10 @@
   cursor: pointer;
   opacity: 0.85;
   color: rgba(30, 30, 30, 1)
+}
+
+.welcome{
+  display:flex;
+  font-size: 10pt;
+  justify-content: center;
 }

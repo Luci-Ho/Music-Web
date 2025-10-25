@@ -17,7 +17,7 @@ export const D2Card = ({ title = 'Title', img, className = '', onClick }) => {
 
 export const D2CardRow = ({ datas, title1, title2, onViewAll, maxItems }) => {
     // calculate how many 230px cards fit (230 + gap)
-    const responsive = useResponsiveCount({ cardWidth: 230, gap: 20, min: 1, containerSelector: '.dcontainer', cardSelector: '.d2card' });
+    const responsive = useResponsiveCount({ cardWidth: 230, gap: 20, min: 1, max: 5, containerSelector: '.dcontainer', cardSelector: '.d2card' });
     const effectiveMax = typeof maxItems === 'number' ? maxItems : responsive;
     const toShow = Array.isArray(datas) ? datas.slice(0, effectiveMax) : [];
 
