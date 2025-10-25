@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Popover, Button, Input } from 'antd';
 import axios from 'axios';
+import { isLoggedIn } from '../../utils/auth';
 
 const PlaylistDropdown = ({ songId }) => {
+  
   const [visible, setVisible] = useState(false);
   const [playlists, setPlaylists] = useState([]);
   const [newPlaylistName, setNewPlaylistName] = useState('');
@@ -16,6 +18,10 @@ const PlaylistDropdown = ({ songId }) => {
   }, [visible]);
 
   const addToPlaylist = (playlistId) => {
+    if (!isLoggedIn()) {
+    toast.error('Bạn cần đăng nhập để thêm vào playlist!');
+    return;
+  }
     axios.get(`http://localhost:4000/songs/${songId}`)
       .then(res => {
         const songData = res.data;
@@ -75,7 +81,7 @@ const PlaylistDropdown = ({ songId }) => {
       <hr style={{ margin: '12px 0' }} />
 
       <Input
-        placeholder="Tạo playlist mới"
+        placeholder="New playlist"
         value={newPlaylistName}
         onChange={(e) => setNewPlaylistName(e.target.value)}
         onPressEnter={createPlaylist}
@@ -85,7 +91,7 @@ const PlaylistDropdown = ({ songId }) => {
         onClick={createPlaylist}
         style={{ paddingLeft: 0, marginTop: '6px' }}
       >
-        ✨ Tạo và thêm ngay
+        create
       </Button>
     </div>
   );
