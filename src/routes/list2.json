@@ -1,15 +1,15 @@
 {
   "genres": [
-    { "id": "g101", "title": "Pop",     "img": "https://via.placeholder.com/150?text=Genre+Pop"     },
-    { "id": "g102", "title": "Rock",    "img": "https://via.placeholder.com/150?text=Genre+Rock"    },
-    { "id": "g103", "title": "EDM",     "img": "https://via.placeholder.com/150?text=Genre+EDM"     },
-    { "id": "g104", "title": "R&B",     "img": "https://via.placeholder.com/150?text=Genre+R&B"     },
-    { "id": "g105", "title": "Hip-Hop", "img": "https://via.placeholder.com/150?text=Genre+HipHop" },
-    { "id": "g106", "title": "Jazz",    "img": "https://via.placeholder.com/150?text=Genre+Jazz"    },
-    { "id": "g107", "title": "Country", "img": "https://via.placeholder.com/150?text=Genre+Country" },
-    { "id": "g108", "title": "Indie",   "img": "https://via.placeholder.com/150?text=Genre+Indie"   },
-    { "id": "g109", "title": "Metal",   "img": "https://via.placeholder.com/150?text=Genre+Metal"   },
-    { "id": "g110", "title": "Dance",   "img": "https://via.placeholder.com/150?text=Genre+Dance"   }
+    { "id": "g101", "title": "Pop Track",     "img": "https://via.placeholder.com/150?text=Genre+Pop"     },
+    { "id": "g102", "title": "Rock Track",    "img": "https://via.placeholder.com/150?text=Genre+Rock"    },
+    { "id": "g103", "title": "EDM Track",     "img": "https://via.placeholder.com/150?text=Genre+EDM"     },
+    { "id": "g104", "title": "R&B Track",     "img": "https://via.placeholder.com/150?text=Genre+R&B"     },
+    { "id": "g105", "title": "Hip-Hop Track", "img": "https://via.placeholder.com/150?text=Genre+HipHop" },
+    { "id": "g106", "title": "Jazz Track",    "img": "https://via.placeholder.com/150?text=Genre+Jazz"    },
+    { "id": "g107", "title": "Country Track", "img": "https://via.placeholder.com/150?text=Genre+Country" },
+    { "id": "g108", "title": "Indie Track",   "img": "https://via.placeholder.com/150?text=Genre+Indie"   },
+    { "id": "g109", "title": "Metal Track",   "img": "https://via.placeholder.com/150?text=Genre+Metal"   },
+    { "id": "g110", "title": "Dance Track",   "img": "https://via.placeholder.com/150?text=Genre+Dance"   }
   ],
   
   "moods": [

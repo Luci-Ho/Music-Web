@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./CardGrid.css";
+import SectionTitle from "./SectionTitle.jsx";
 
-export default function CardGrid({ title = "Danh mục bài hát", limit = 5 }) {
+export default function CardGrid({ title = "Danh mục bài hát", title2 = "", limit = 6 , onViewAll}) {
   const [songs, setSongs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -26,7 +27,7 @@ export default function CardGrid({ title = "Danh mục bài hát", limit = 5 }) 
 
   return (
     <div className="card-grid">
-      <h2 className="grid-title">{title}</h2>
+      <SectionTitle title1={title} title2={title2} />
 
       {loading && <p className="loading">Đang tải bài hát...</p>}
       {error && <p className="error">Lỗi: {error}</p>}
@@ -51,6 +52,11 @@ export default function CardGrid({ title = "Danh mục bài hát", limit = 5 }) 
             </div>
           </div>
         ))}
+        <div className="cviewall" onClick={onViewAll} role={onViewAll ? 'button' : 'link'} tabIndex={0}>
+                <div className="cvaplus">+</div>
+                <div className="cvat">View All</div>
+        </div>
+
       </div>
     </div>
   );
