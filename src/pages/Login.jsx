@@ -93,12 +93,12 @@ const Login = () => {
                 <div className="social-login">
                     <button className="google-login">
                         <img src="https://res.cloudinary.com/da4y5zf5k/image/upload/v1751041194/devicon_google_be5zib.png" alt="Google" />
-                        Google Login
+                        Google
                     </button>
 
                     <button className="facebook-login">
                         <img src="https://res.cloudinary.com/da4y5zf5k/image/upload/v1751041193/logos_facebook_tyae02.png" alt="Facebook" />
-                        Facebook Login
+                        Facebook
                     </button>
                 </div>
 

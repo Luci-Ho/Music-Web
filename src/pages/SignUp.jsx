@@ -67,18 +67,18 @@ const SignUp = () => {
     return (
         <div className="login-container">
             <div className="login-background">
+                <img
+                        src={backIcon}
+                        alt="Back"
+                        className="back-icon"
+                        onClick={() => navigate(-1)}
+                    />
                 <div className="login-header">
                     <img src={logoImage} alt="Melodies Logo" className="logo-image" />
                     <h2 className="logo-text">Melodies</h2>
                 </div>
 
                 <div className="auth-header">
-                    <img
-                        src={backIcon}
-                        alt="Back"
-                        className="back-icon"
-                        onClick={() => navigate(-1)}
-                    />
                     <h2 className="auth-title">Sign Up To Join</h2>
                 </div>
 
