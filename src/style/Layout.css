@@ -30,6 +30,17 @@
     background-color: rgba(65, 44, 58, 1);
     margin-left: 300px;
       width: calc(100% - 350px);
+    transition: margin-left 0.25s ease, width 0.25s ease;
+  }
+
+  /* When the dashboard is collapsed we want the main container to move left
+     so there isn't an empty gap. Use sibling selector so the layout updates
+     automatically when `.dashboard` receives the `collapsed` class. */
+  .dashboard.collapsed ~ .container,
+  .dashboard.collapsed + .container {
+    margin-left: 100px; /* match the collapsed dashboard width */
+    width: calc(100% - 100px);
+    transition: margin-left 0.2s ease, width 0.2s ease;
   }
   
   .content {
@@ -152,13 +163,15 @@
   left: 0;
   overflow-y: auto; /* 👈 Cho phép cuộn nếu nội dung dài */
   z-index: 1000;
+  transition: width 0.2s ease, padding-top 0.2s ease;
 }
 
 /* Collapsed dashboard state */
 .dashboard.collapsed {
   width: 100px; /* narrow */
-  
+  padding-top: 50px;
 }
+
 
 .dashboard .logoimg {
   display: none; /* default hidden; shown when collapsed */
@@ -186,9 +199,22 @@
 
 
 
-/* hide any paragraph inside menu items when collapsed (covers Logout etc.) */
+/* animate label opacity/width when collapsed for a smooth transition */
+.dashboard .dashboard-menu-item-hover p {
+  margin: 0;
+  padding-top: 4px ;
+  color: inherit; 
+  font-size: 20px;
+  font-weight: 600;
+  transition: opacity 0.2s ease, max-width 0.25s ease;
+  max-width: 160px; /* keeps label on one line and allows shrinking */
+  overflow: hidden;
+  white-space: nowrap;
+}
+
 .dashboard.collapsed .dashboard-menu-item-hover p {
-  display: none;
+  opacity: 0;
+  max-width: 0;
 }
 
 .collapse-toggle {

@@ -3,6 +3,7 @@ import D2CardRow from '../components/common/D2Card.jsx';
 import TopBar from '../components/layout/TopBar.jsx';
 import Footer from '../components/layout/Footer.jsx';
 import '../style/Dis.css';
+import '../style/Layout.css'
 import ArtistRow from '../components/common/Artist.jsx';
 import VideoGrid from '../components/common/Video.jsx';
 import SongsGrid from '../components/common/NewSong.jsx';

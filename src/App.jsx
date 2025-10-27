@@ -11,6 +11,7 @@ import Discover from './pages/DiscoverPage';
 import SongPlayer from './pages/SongPlayerPage';
 import AddToPlaylist from './pages/AddToPlaylist';
 import PlaylistDetail from './pages/PlaylistDetail';
+import ViewAllPage from './pages/ViewAllPage';
 
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
         <Route path="/song/:id" element={<SongPlayer />} />
         <Route path="/playlist/add/:id" element={<AddToPlaylist />} />
         <Route path="/playlist/:id" element={<PlaylistDetail />} />
+        <Route path="/viewall" element={<ViewAllPage />} />
       </Routes>
       <ToastContainer />
     </>

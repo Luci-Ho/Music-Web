@@ -8,7 +8,7 @@ import Footer from '../components/layout/Footer';
 import PlaylistDropdown from '../components/common/PlaylistDropdown';
 
 import '../style/Layout.css';
-import './SongPlayer.css';
+import '../style/SongPlayer.css';
 
 const SongPlayer = () => {
     const { id } = useParams();
