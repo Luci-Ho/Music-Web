@@ -50,11 +50,12 @@
 
 .artist-name {
   margin-top: 8px;
-  font-size: 20px;
+  font-size: 15px;
+  
   color: #e6e6e6;
   white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+     word-break: break-word; /* Cho phép xuống dòng nếu tên dài */
+    text-align: center;  
 }
 
 /* View all circular button at end */
