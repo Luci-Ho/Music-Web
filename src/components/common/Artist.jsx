@@ -13,7 +13,7 @@ const ArtistItem = ({ artist }) => (
     </div>
 );
 
-const ArtistRow = ({ source,  limit = 8 }) => {
+const ArtistRow = ({ source,  limit = 6 }) => {
     const [artists, setArtists] = React.useState([]);
     const [loading, setLoading] = React.useState(true);
     const [error, setError] = React.useState(null);
@@ -35,7 +35,7 @@ const ArtistRow = ({ source,  limit = 8 }) => {
       }, [limit]);
 
     return (
-        <div className="w-full h-full flex flex-col mb-10">
+        <div className="w-full flex flex-col mb-10">
             <div className="acontainer">
                 <SectionTitle title1={"Popular"} title2={"Artists"} />
 

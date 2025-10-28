@@ -2,6 +2,7 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import './D2Card.css';
 import SectionTitle from './SectionTitle';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -22,6 +23,7 @@ export const D2CardRow = ({ source = '', title1, title2, onViewAll, limit = 5  }
     const [datas, setDatas] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetch(`http://localhost:4000/${source}`)
@@ -40,7 +42,7 @@ export const D2CardRow = ({ source = '', title1, title2, onViewAll, limit = 5  }
       }, [limit]);
 
     return (
-        <div className="w-full h-full flex flex-col mb-10">
+        <div className="w-full flex flex-col mb-10">
             <div className="dcontainer">
                 <SectionTitle title1={title1} title2={title2} />
 
@@ -54,7 +56,7 @@ export const D2CardRow = ({ source = '', title1, title2, onViewAll, limit = 5  }
                             </li>
                     ))}
                     <li style={{ listStyle: 'none' }}>
-                        <div className="dviewall" onClick={onViewAll} role={onViewAll ? 'button' : 'link'} tabIndex={0}>
+                        <div className="dviewall" onClick={() => navigate(`/viewall`)} tabIndex={0}>
                             <div className="dvaplus">+</div>
                             <p className="dvat">View All</p>
                         </div>

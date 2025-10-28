@@ -39,11 +39,11 @@
   ],
   
   "musicVideos": [
-    { "id": "v401", "title": "Perfect",           "artistId": "a301", "views": 1200000, "videoUrl": "https://www.youtube.com/watch?v=2Vv-BfVoq4g", "img": "https://img.youtube.com/vi/2Vv-BfVoq4g/sddefault.jpg" },
-    { "id": "v402", "title": "Levitating",        "artistId": "a302", "views": 950000,  "videoUrl": "https://www.youtube.com/watch?v=TUVcZfQe-Kw", "img": "https://img.youtube.com/vi/TUVcZfQe-Kw/sddefault.jpg" },
-    { "id": "v403", "title": "Believer",          "artistId": "a303", "views": 1450000, "videoUrl": "https://www.youtube.com/watch?v=7wtfhZwyrcc", "img": "https://img.youtube.com/vi/7wtfhZwyrcc/sddefault.jpg" },
-    { "id": "v404", "title": "Bad Guy",           "artistId": "a304", "views": 1780000, "videoUrl": "https://www.youtube.com/watch?v=DyDfgMOUjCI", "img": "https://img.youtube.com/vi/DyDfgMOUjCI/sddefault.jpg" },
-    { "id": "v405", "title": "God's Plan",        "artistId": "a305", "views": 2100000, "videoUrl": "https://www.youtube.com/watch?v=xpVfcZ0ZcFM", "img": "https://img.youtube.com/vi/xpVfcZ0ZcFM/sddefault.jpg" },
+    { "id": "v401", "title": "Perfect",           "artistId": "a301", "views": 1200000, "videoUrl": "https://www.youtube.com/watch?v=2Vv-BfVoq4g", "img": "https://m.media-amazon.com/images/I/71fqFyMSaNL._AC_UF1000,1000_QL80_.jpg" },
+    { "id": "v402", "title": "Levitating",        "artistId": "a302", "views": 950000,  "videoUrl": "https://www.youtube.com/watch?v=TUVcZfQe-Kw", "img": "https://i.scdn.co/image/ab67616d0000b2734bc66095f8a70bc4e6593f4f" },
+    { "id": "v403", "title": "Believer",          "artistId": "a303", "views": 1450000, "videoUrl": "https://www.youtube.com/watch?v=7wtfhZwyrcc", "img": "https://i1.sndcdn.com/artworks-s3zOCWcV8XQVtQcv-0emq8A-t500x500.jpg" },
+    { "id": "v404", "title": "Bad Guy",           "artistId": "a304", "views": 1780000, "videoUrl": "https://www.youtube.com/watch?v=DyDfgMOUjCI", "img": "https://i1.sndcdn.com/artworks-000537584385-41r6ld-t1080x1080.jpg" },
+    { "id": "v405", "title": "God's Plan",        "artistId": "a305", "views": 2100000, "videoUrl": "https://www.youtube.com/watch?v=xpVfcZ0ZcFM", "img": "https://i1.sndcdn.com/artworks-000373673898-th71uv-t500x500.jpg" },
     { "id": "v406", "title": "Blank Space",       "artistId": "a306", "views": 1980000, "videoUrl": "https://www.youtube.com/watch?v=e-ORhEE9VVg", "img": "https://img.youtube.com/vi/e-ORhEE9VVg/sddefault.jpg" },
     { "id": "v407", "title": "Save Your Tears",   "artistId": "a307", "views": 1750000, "videoUrl": "https://www.youtube.com/watch?v=XXYlFuWEuKI", "img": "https://img.youtube.com/vi/XXYlFuWEuKI/sddefault.jpg" },
     { "id": "v408", "title": "Hello",             "artistId": "a308", "views": 2500000, "videoUrl": "https://www.youtube.com/watch?v=YQHsXMglC9A", "img": "https://img.youtube.com/vi/YQHsXMglC9A/sddefault.jpg" },

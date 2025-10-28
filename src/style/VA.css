@@ -11,10 +11,15 @@
 }
 
 .bluebox {
-    background-color: LinerGrandie ;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    /* background-color: linear-gradient(to right, #f0f0f0 0%, #0070ff); */
+    /* background-color: #0070FF; */
+    border-radius: 10px;
 }
 
-.TopPart{
+.top1{
     display: flex;
     width: auto;
     justify-content: space-between;
@@ -26,7 +31,7 @@
         display: flex;
         font-size: 20px;
         font-weight: bold;
-        gap:20px;
+        gap: 20px;
         color: #f0f0f0
     }
 }
@@ -35,13 +40,49 @@
     width: 24px;
     height: 24px;
     cursor: pointer;
-    transform: rotate(180deg); 
     /* quay sang trái */
     transition: transform 0.1s ease;
+    transform: scale(1.3);
     z-index: 10;
     top: 24px;
     left: 24px;
 }
 .iconback:hover {
-    transform: scale(1.1) rotate(180deg);
+    transform: scale(1.1);
+}
+
+.BannerPart {
+    position: relative;
+    display: flex;
+    justify-content: space-around;
+    gap: 20px;
+    margin: 20px 20px;
+}
+.BannerText {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    gap: 10px;
+}
+
+.playbutton {
+    margin: 20px;
+    display: flex;
+    flex-direction: row;
+    color: #FF26C2;
+    align-items: flex-end;
+    gap: 10px;
+    font-weight: 500;
+    font-size: 24px;
+    transition: transform 0.2s ease;
+}
+.playbutton:hover {
+    transform: scale(1.05);
+}
+.playicon {
+    font-size: 40px;
+    color: #FF26C2;
+    cursor: pointer;
+    font-weight: 24px;
+    transition: transform 0.2s ease;
 }

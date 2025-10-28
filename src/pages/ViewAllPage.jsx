@@ -3,6 +3,7 @@ import Dashboard from '../components/layout/Dashboard';
 import '../App.css';
 import '../style/Layout.css'
 import ViewAll from './VA';
+import Footer from '../components/layout/Footer';
 
 
 const ViewAllPage = () => {
@@ -11,10 +12,13 @@ const ViewAllPage = () => {
         <div className="body">
             <div style={{ display: 'flex', width: '100%' }}>
                 <Dashboard />
-                <div>
+                <div className='container'>
                     <ViewAll />
+                    <Footer />
                 </div>
+                
             </div>
+            
         </div>
     );
 };

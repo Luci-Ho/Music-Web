@@ -52,7 +52,7 @@ export default function CardGrid({ title = "Danh mục bài hát", title2 = "", 
             </div>
           </div>
         ))}
-        <div className="cviewall" onClick={onViewAll} role={onViewAll ? 'button' : 'link'} tabIndex={0}>
+        <div className="cviewall" onClick={() => navigate(`/viewall`)} role={onViewAll ? 'button' : 'link'} tabIndex={0}>
                 <div className="cvaplus">+</div>
                 <div className="cvat">View All</div>
         </div>

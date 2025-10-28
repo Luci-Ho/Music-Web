@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './NewSong.css';
 import SectionTitle from './SectionTitle';
 import formatNumber from '../../hooks/formatNumber';
@@ -30,6 +31,7 @@ const SongsGrid = ({ source, title1 = 'New', title2 = 'Song', onViewAll, limit =
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const { getArtistName } = useMatchingInfo();
+    const navigate = useNavigate();
 
     useEffect(() => {
         // fetch the main data (e.g., videos) from the provided source
@@ -68,7 +70,7 @@ const SongsGrid = ({ source, title1 = 'New', title2 = 'Song', onViewAll, limit =
                             <SongCard key={v.id ?? `${v.title}-${i}`} title={v.title} artist={artistName} img={v.img} views={v.views} />);
                     })}
                 </div>
-                <div className="sviewall" onClick={onViewAll} role={onViewAll ? 'button' : 'link'} tabIndex={0}>
+                <div className="sviewall" onClick={() => navigate(`/viewall`)} tabIndex={0}>
                         <div className="svaplus">+</div>
                         <div className="svat">View All</div>
                 </div>

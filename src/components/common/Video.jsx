@@ -70,7 +70,7 @@ const VideoGrid = ({ source = '', title1 = 'Music', title2 = 'Video', onViewAll,
                             );
                         })}
                 </div>
-                <div className="vviewall" onClick={onViewAll} role={onViewAll ? 'button' : 'link'} tabIndex={0}>
+                <div className="vviewall" onClick={() => navigate(`/viewall`)} tabIndex={0}>
                         <div className="vvaplus">+</div>
                         <div className="vvat">View All</div>
                 </div>

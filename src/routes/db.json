@@ -296,6 +296,84 @@
           "artist": "MAYDAYs & Minh Tốc"
         }
       ]
-    }
+    }  
+  ],
+
+  "genres": [
+    { "id": "g101", "title": "Rap Track",     "img": "https://www.figma.com/file/AEUVpdyAHpK7f5uEQAeace/image/86741ed4ba6e51993e58e470a4ff86015fafeb5b"     },
+    { "id": "g102", "title": "Pop Track",    "img": "https://www.figma.com/file/AEUVpdyAHpK7f5uEQAeace/image/37e75fd87d7750f6ceb1f43b72846d8adb85b90b"    },
+    { "id": "g103", "title": "Rock Track",     "img": "https://www.figma.com/file/AEUVpdyAHpK7f5uEQAeace/image/577e76484f3df9db4393442fe0c48a6ca095140b"     },
+    { "id": "g104", "title": "Classic Track",     "img": "https://www.figma.com/file/AEUVpdyAHpK7f5uEQAeace/image/ab75b0ca6a2f6cf18024695044d49ab735628d83"     },
+    { "id": "g105", "title": "Hip-Hop Track", "img": "https://images.wsj.net/im-630911?width=540&size=1.936" },
+    { "id": "g106", "title": "Jazz Track",    "img": "https://via.placeholder.com/150?text=Genre+Jazz"    },
+    { "id": "g107", "title": "Country Track", "img": "https://via.placeholder.com/150?text=Genre+Country" },
+    { "id": "g108", "title": "Indie Track",   "img": "https://via.placeholder.com/150?text=Genre+Indie"   },
+    { "id": "g109", "title": "Metal Track",   "img": "https://via.placeholder.com/150?text=Genre+Metal"   },
+    { "id": "g110", "title": "Dance Track",   "img": "https://via.placeholder.com/150?text=Genre+Dance"   }
+  ],
+  
+  "moods": [
+    { "id": "m201", "title": "Chill",     "img": "https://www.figma.com/file/AEUVpdyAHpK7f5uEQAeace/image/ef724f7cfedaac00309cbdbfabad69a52150ff34"     },
+    { "id": "m202", "title": "Workout",   "img": "https://www.figma.com/file/AEUVpdyAHpK7f5uEQAeace/image/527f07a5f4d25682ab26153eb9735f8b2d4f8085"   },
+    { "id": "m203", "title": "Love",      "img": "https://www.figma.com/file/AEUVpdyAHpK7f5uEQAeace/image/5e2ce24e59a26590d7635fa955f7942d7244b115"      },
+    { "id": "m204", "title": "Happy",     "img": "https://www.figma.com/file/AEUVpdyAHpK7f5uEQAeace/image/3e25adf85c394ecf2a9f441756af9687e99bce9e"     },
+    { "id": "m205", "title": "Sad",       "img": "https://www.figma.com/file/AEUVpdyAHpK7f5uEQAeace/image/1bb972fe7bba4e5702d3446bdd59f3fe5da21c3e"       },
+    { "id": "m206", "title": "Focus",     "img": "https://via.placeholder.com/150?text=Mood+Focus"     },
+    { "id": "m207", "title": "Party",     "img": "https://via.placeholder.com/150?text=Mood+Party"     },
+    { "id": "m208", "title": "Romantic",  "img": "https://via.placeholder.com/150?text=Mood+Romantic"  },
+    { "id": "m209", "title": "Dark",      "img": "https://via.placeholder.com/150?text=Mood+Dark"      },
+    { "id": "m210", "title": "Motivated", "img": "https://via.placeholder.com/150?text=Mood+Motivated" }
+  ],
+  
+  "artists": [
+    { "id": "a301", "name": "Ed Sheeran",       "img": "https://i1-giaitri.vnecdn.net/2017/08/19/Ed-Sheeran-6062-1503123919.jpg?w=680&h=0&q=100&dpr=1&fit=crop&s=ID1HGrjEkeXf1Gj7iXa66Q"       },
+    { "id": "a302", "name": "Dua Lipa",         "img": "https://vcdn1-giaitri.vnecdn.net/2018/05/09/dua-lipa-1-5054-1525832500.jpg?w=460&h=0&q=100&dpr=2&fit=crop&s=BpXNVgV5xe4s5ZSh-kNgPg"         },
+    { "id": "a303", "name": "Imagine Dragons",  "img": "https://www.billboard.com/wp-content/uploads/2022/12/imagine-dragons-Press-Photo-Credit-Eric-Ray-Davidson-2022-billboard-1548.jpg?w=942&h=628&crop=1"  },
+    { "id": "a304", "name": "Billie Eilish",    "img": "https://m.media-amazon.com/images/I/91UUbDedB1S._UF1000,1000_QL80_.jpg"    },
+    { "id": "a305", "name": "Drake",            "img": "https://i.scdn.co/image/ab6761610000e5eb4293385d324db8558179afd9"            },
+    { "id": "a306", "name": "Taylor Swift",     "img": "https://media.daidoanket.vn/w1280/uploaded/images/2025/09/08/6886d19a-ee24-4ade-98a4-ef7eb4341e11.png"     },
+    { "id": "a307", "name": "The Weeknd",       "img": "https://via.placeholder.com/150?text=The+Weeknd"       },
+    { "id": "a308", "name": "Adele",            "img": "https://via.placeholder.com/150?text=Adele"            },
+    { "id": "a309", "name": "Bruno Mars",       "img": "https://via.placeholder.com/150?text=Bruno+Mars"       },
+    { "id": "a310", "name": "Kendrick Lamar",   "img": "https://via.placeholder.com/150?text=Kendrick+Lamar"   }
+  ],
+  
+  "musicVideos": [
+    { "id": "v401", "title": "Perfect",           "artistId": "a301", "views": 1200000, "videoUrl": "https://www.youtube.com/watch?v=2Vv-BfVoq4g", "img": "https://img.youtube.com/vi/2Vv-BfVoq4g/sddefault.jpg" },
+    { "id": "v402", "title": "Levitating",        "artistId": "a302", "views": 950000,  "videoUrl": "https://www.youtube.com/watch?v=TUVcZfQe-Kw", "img": "https://img.youtube.com/vi/TUVcZfQe-Kw/sddefault.jpg" },
+    { "id": "v403", "title": "Believer",          "artistId": "a303", "views": 1450000, "videoUrl": "https://www.youtube.com/watch?v=7wtfhZwyrcc", "img": "https://img.youtube.com/vi/7wtfhZwyrcc/sddefault.jpg" },
+    { "id": "v404", "title": "Bad Guy",           "artistId": "a304", "views": 1780000, "videoUrl": "https://www.youtube.com/watch?v=DyDfgMOUjCI", "img": "https://img.youtube.com/vi/DyDfgMOUjCI/sddefault.jpg" },
+    { "id": "v405", "title": "God's Plan",        "artistId": "a305", "views": 2100000, "videoUrl": "https://www.youtube.com/watch?v=xpVfcZ0ZcFM", "img": "https://img.youtube.com/vi/xpVfcZ0ZcFM/sddefault.jpg" },
+    { "id": "v406", "title": "Blank Space",       "artistId": "a306", "views": 1980000, "videoUrl": "https://www.youtube.com/watch?v=e-ORhEE9VVg", "img": "https://img.youtube.com/vi/e-ORhEE9VVg/sddefault.jpg" },
+    { "id": "v407", "title": "Save Your Tears",   "artistId": "a307", "views": 1750000, "videoUrl": "https://www.youtube.com/watch?v=XXYlFuWEuKI", "img": "https://img.youtube.com/vi/XXYlFuWEuKI/sddefault.jpg" },
+    { "id": "v408", "title": "Hello",             "artistId": "a308", "views": 2500000, "videoUrl": "https://www.youtube.com/watch?v=YQHsXMglC9A", "img": "https://img.youtube.com/vi/YQHsXMglC9A/sddefault.jpg" },
+    { "id": "v409", "title": "Uptown Funk",       "artistId": "a309", "views": 2300000, "videoUrl": "https://www.youtube.com/watch?v=OPf0YbXqDm0", "img": "https://img.youtube.com/vi/OPf0YbXqDm0/sddefault.jpg" },
+    { "id": "v410", "title": "Humble",            "artistId": "a310", "views": 1900000, "videoUrl": "https://www.youtube.com/watch?v=gt3j86K5K7Q", "img": "https://img.youtube.com/vi/gt3j86K5K7Q/sddefault.jpg" }
+  ],
+  
+  "songsList": [
+    { "id": "s501", "title": "Perfect",         "artistId": "a301", "genreId": "g101", "moodId": "m203", "musicVideoId": "v401", "duration": "4:23", "releaseYear": 2017, "img": "https://m.media-amazon.com/images/I/71fqFyMSaNL._AC_UF1000,1000_QL80_.jpg"        },
+    { "id": "s502", "title": "Levitating",      "artistId": "a302", "genreId": "g103", "moodId": "m201", "musicVideoId": "v402", "duration": "3:24", "releaseYear": 2020, "img": "https://i.scdn.co/image/ab67616d0000b2734bc66095f8a70bc4e6593f4f"     },
+    { "id": "s503", "title": "Believer",        "artistId": "a303", "genreId": "g102", "moodId": "m202", "musicVideoId": "v403", "duration": "3:36", "releaseYear": 2017, "img": "https://i1.sndcdn.com/artworks-s3zOCWcV8XQVtQcv-0emq8A-t500x500.jpg"       },
+    { "id": "s504", "title": "Bad Guy",         "artistId": "a304", "genreId": "g105", "moodId": "m209", "musicVideoId": "v404", "duration": "3:14", "releaseYear": 2019, "img": "https://i1.sndcdn.com/artworks-000537584385-41r6ld-t1080x1080.jpg"        },
+    { "id": "s505", "title": "God's Plan",      "artistId": "a305", "genreId": "g105", "moodId": "m210", "musicVideoId": "v405", "duration": "3:18", "releaseYear": 2018, "img": "https://i1.sndcdn.com/artworks-000373673898-th71uv-t500x500.jpg"     },
+    { "id": "s506", "title": "Blank Space",     "artistId": "a306", "genreId": "g101", "moodId": "m208", "musicVideoId": "v406", "duration": "4:33", "releaseYear": 2014, "img": "https://upload.wikimedia.org/wikipedia/vi/7/7c/Taylor_Swift_-_Blank_Space_%28Official_Single_Cover%29.png"    },
+    { "id": "s507", "title": "Save Your Tears",  "artistId": "a307", "genreId": "g104", "moodId": "m205", "musicVideoId": "v407", "duration": "3:35", "releaseYear": 2021, "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRI_stKIUr0H5rbzEnDY7mwdO9K7lxApg3HPQ&s" },
+    { "id": "s508", "title": "Hello",           "artistId": "a308", "genreId": "g101", "moodId": "m205", "musicVideoId": "v408", "duration": "4:55", "releaseYear": 2015, "img": "https://i.scdn.co/image/ab67616d00001e022118bf9b198b05a95ded6300"        },
+    { "id": "s509", "title": "Uptown Funk",     "artistId": "a309", "genreId": "g110", "moodId": "m207", "musicVideoId": "v409", "duration": "4:30", "releaseYear": 2014, "img": "https://i1.sndcdn.com/artworks-000111694035-qybs4a-t500x500.jpg"  },
+    { "id": "s510", "title": "HUMBLE.",          "artistId": "a310", "genreId": "g105", "moodId": "m210", "musicVideoId": "v410", "duration": "2:57", "releaseYear": 2017, "img": "https://i.scdn.co/image/ab67616d00001e028b52c6b9bc4e43d873869699"       }
+  ],
+  
+  "albums": [
+    { "id": "al601", "title": "÷ (Divide)",                "artistId": "a301", "songs": ["s501"],           "img": "https://via.placeholder.com/150?text=Album+Divide"           },
+    { "id": "al602", "title": "Future Nostalgia",          "artistId": "a302", "songs": ["s502"],           "img": "https://via.placeholder.com/150?text=Album+Future+Nostalgia" },
+    { "id": "al603", "title": "Evolve",                    "artistId": "a303", "songs": ["s503"],           "img": "https://via.placeholder.com/150?text=Album+Evolve"           },
+    { "id": "al604", "title": "When We All Fall Asleep",   "artistId": "a304", "songs": ["s504"],           "img": "https://via.placeholder.com/150?text=Album+WWAFAS"          },
+    { "id": "al605", "title": "Scorpion",                  "artistId": "a305", "songs": ["s505"],           "img": "https://via.placeholder.com/150?text=Album+Scorpion"        },
+    { "id": "al606", "title": "1989",                      "artistId": "a306", "songs": ["s506"],           "img": "https://via.placeholder.com/150?text=Album+1989"            },
+    { "id": "al607", "title": "After Hours",               "artistId": "a307", "songs": ["s507"],           "img": "https://via.placeholder.com/150?text=Album+After+Hours"     },
+    { "id": "al608", "title": "25",                        "artistId": "a308", "songs": ["s508"],           "img": "https://via.placeholder.com/150?text=Album+25"              },
+    { "id": "al609", "title": "Uptown Special",            "artistId": "a309", "songs": ["s509"],           "img": "https://via.placeholder.com/150?text=Album+Uptown+Special" },
+    { "id": "al610", "title": "DAMN.",                     "artistId": "a310", "songs": ["s510"],           "img": "https://via.placeholder.com/150?text=Album+DAMN"             }
   ]
 }

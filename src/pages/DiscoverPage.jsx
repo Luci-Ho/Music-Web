@@ -11,7 +11,7 @@ const HomePage = () => {
         <div className="body">
             <div style={{ display: 'flex', width: '100%' }}>
                 <Dashboard />
-                <div>
+                <div className='container'>
                     <Discover />
                 </div>
             </div>
