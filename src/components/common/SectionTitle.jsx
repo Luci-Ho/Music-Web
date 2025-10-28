@@ -1,13 +1,10 @@
 import React from 'react';
-import './CardGrid.css';
 
-const SectionTitle = ({ title, title1 }) => {
+const SectionTitle = ({ title1, title2}) => {
   return (
-    <h2 className="title-SectionTitle">
-      <span className="title-main">{title}</span> 
-      <span> </span>
-      <span className="title-sub">{title1}</span>
-    </h2>
+    <h1 className="font-bold text-2xl text-white mb-24 "  >
+      {title1} <span className={`text-[#ee10b0]`}>{title2}</span>
+    </h1>
   );
 };
 
