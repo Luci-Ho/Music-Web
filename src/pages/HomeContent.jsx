@@ -8,7 +8,7 @@ import "../style/Layout.css";
 
 const HomeContent = () => {
 
-      return (
+    return (
         <div className="container">
             <TopBar />
 
@@ -22,7 +22,7 @@ const HomeContent = () => {
                     <CardGrid title="Top 5 bài hát yêu thích" limit={5} />
                     <CardGrid title="Nhạc mới phát hành" limit={5} />
                     <CardGrid title="Gợi ý cho bạn" limit={5} />
-
+                    <Artist source={'artists'} />
                 </div>
                 <div className="">
 
