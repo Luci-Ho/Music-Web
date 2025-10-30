@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import data from '../../routes/db.json';
 import '../../style/VA.css';
 import '../../style/Layout.css'
@@ -33,8 +33,8 @@ const FilteredSongsTable = ({ filterType = 'genre', filterId, title }) => {
     }
 
     // build maps for quick lookup
-    const artistMap = React.useMemo(() => Object.fromEntries(artists.map(a => [a.id, a.name])), [artists]);
-    const albumMap = React.useMemo(() => Object.fromEntries(albums.map(a => [a.id, a.title])), [albums]);
+    const artistMap = useMemo(() => Object.fromEntries(artists.map(a => [a.id, a.name])), [artists]);
+    const albumMap = useMemo(() => Object.fromEntries(albums.map(a => [a.id, a.title])), [albums]);
 
     // auth
     const { user, isLoggedIn, login } = useAuth();
@@ -142,7 +142,6 @@ const FilteredSongsTable = ({ filterType = 'genre', filterId, title }) => {
                                 const rollbackUser = { ...(user || {}), favorites: prev, favorite: prev };
                                 login(rollbackUser);
                                 try { window.dispatchEvent(new Event('userUpdated')); } catch (e) { /* ignore */ }
-                                console.error('Failed to persist favorite to API', err);
                                 toast.error('Không thể cập nhật yêu thích. Vui lòng thử lại.');
                             }
                         };

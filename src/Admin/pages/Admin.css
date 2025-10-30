@@ -1,0 +1,103 @@
+:root{ --bg:#472f36; --sidebar:#0f1720; --card:#1f1720; }
+body{ 
+    margin:0; 
+    font-family: Inter, 
+    system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; 
+}
+
+.admin{ 
+    display:flex; 
+    min-height:100vh; 
+}
+.sidebar{ 
+    width:260px; 
+    background:var(--sidebar); 
+    color:#fff; padding:24px; 
+    display:flex; 
+    flex-direction:column; 
+}
+.sidebar .logo-wrap{ 
+    display:flex; 
+    gap:12px; 
+    align-items:center; 
+    margin-bottom:18px; 
+    
+}
+.sidebar-menu{ 
+    display:flex; 
+    flex-direction:column; 
+    gap:8px; 
+}
+.sidebar-menu button{ 
+    background:transparent; 
+    color:#d1d5db; 
+    border:none; 
+    padding:10px; 
+    text-align:left; 
+    display:flex; 
+    gap:10px; 
+    align-items:center; 
+    cursor:pointer; 
+}
+.sidebar-menu button.active{ 
+    color:#fff; 
+    background:rgba(255,255,255,0.03); 
+    border-radius:8px; 
+}
+.sidebar-menu button:hover{ 
+    color:#fff; 
+    background:rgba(255,255,255,0.03); 
+    border-radius:8px; 
+}
+
+.sidebar .logo-wrap .brand{ font-weight:700; margin-left:8px; }
+
+/* collapsed styles */
+.sidebar.collapsed{ width:72px; padding:12px; }
+.sidebar.collapsed .logo-wrap { justify-content: center; }
+.sidebar.collapsed .logo-wrap .brand{ display:none;  }
+.sidebar.collapsed .sidebar-header{ justify-content:center; }
+.sidebar.collapsed .sidebar-menu button{ justify-content:center; padding:12px; }
+.sidebar.collapsed .sidebar-menu button .label{ display:none; }
+.sidebar.collapsed .mt-auto{ margin-top:auto !important; }
+.sidebar.collapsed .logout{ width:100%; }
+
+/* smooth transitions */
+.sidebar, .admin-area{ transition: all 200ms ease; }
+
+.admin-area{ 
+    flex:1; 
+    background:var(--bg); 
+    color:#fff; 
+    display:flex; 
+    flex-direction:column; 
+}
+.admin-header{ 
+    display:flex; 
+    gap:16px; 
+    padding:20px; 
+    align-items:center; 
+    justify-content:space-evenly;
+
+    .right {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+
+    }
+}
+.admin-container{ 
+    padding:20px; 
+}
+.stat-card .title{ 
+    color: #000;; 
+    font-weight: 500;
+}
+.stat-card .value{ 
+    font-size:1.6rem; 
+    font-weight: 700; 
+}
+.card{ 
+    background:var(--card); 
+    border-radius:12px; 
+}

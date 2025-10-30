@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Form } from 'antd';
+import { LeftOutlined } from '@ant-design/icons';
 
 import InputField from '../components/UserAccess/InputField';
 import SubmitButton from '../components/UserAccess/SubmitButton';
@@ -8,7 +9,7 @@ import AuthForm from '../components/UserAccess/AuthForm';
 import '../style/LogInAndSignUp.css';
 
 const logoImage = "https://res.cloudinary.com/da4y5zf5k/image/upload/v1751044695/logo-no-background_1_z7njh8.png";
-const backIcon = "https://res.cloudinary.com/da4y5zf5k/image/upload/v1751041190/ooui_next-ltr_np1svd.png";
+// const backIcon = "https://res.cloudinary.com/da4y5zf5k/image/upload/v1751041190/ooui_next-ltr_np1svd.png";
 const API_URL = 'http://localhost:4000/users';
 
 const SignUp = () => {
@@ -67,12 +68,13 @@ const SignUp = () => {
     return (
         <div className="login-container">
             <div className="login-background">
-                <img
+                {/* <img
                         src={backIcon}
                         alt="Back"
                         className="back-icon"
                         onClick={() => navigate(-1)}
-                    />
+                    /> */}
+                <LeftOutlined className="back-icon" onClick={() => navigate(-1)} />
                 <div className="login-header">
                     <img src={logoImage} alt="Melodies Logo" className="logo-image" />
                     <h2 className="logo-text">Melodies</h2>

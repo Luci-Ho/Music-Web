@@ -241,13 +241,28 @@
       "id": "73bf"
     }
   ],
+  "levels": [
+    {
+      "id": "l1",
+      "name": "Admin"
+    },
+    {
+      "id": "l2",
+      "name": "Moderator"
+    },
+    {
+      "id": "l3",
+      "name": "User"
+    }
+  ],
   "users": [
     {
       "id": "1",
       "username": "Luci",
       "email": "ho@example.com",
       "password": "123456789*",
-      "phone": "0901234567"
+      "phone": "0901234567",
+      "level": "l3"
     },
     {
       "id": "67cd"
@@ -257,31 +272,35 @@
       "username": "oanh oi",
       "email": "2omg@xinh.com",
       "password": "111111",
-      "phone": "01111111111"
+      "phone": "01111111111", 
+      "level": "l3"
     },
     {
       "id": "89d7",
       "username": "21102025",
       "email": "21@gmail.com",
       "password": "123456",
-      "phone": "0123456789"
+      "phone": "0123456789",
+      "level": "l3"
     },
     {
       "id": "c741",
       "username": "ví dụ",
       "email": "vidu@gmail.com",
       "password": "123456",
-      "phone": "0123456789"
+      "phone": "0123456789",
+      "level": "l3"
     },
     {
       "id": "daf8",
-      "username": "minhquang9909",
+      "username": "Quang",
       "email": "minhquang9909@gmail.com",
       "password": "q",
-      "phone": "0123456789",
+      "phone": "0010990088",
+      "level": "l1",
       "favorites": [
-        "s501",
-        "s506"
+        "s508",
+        "s516"
       ]
     }
   ],

@@ -84,7 +84,9 @@ html, body {
     width: 24px;
     height: 24px;
     cursor: pointer;
-    transform: rotate(180deg); 
+    font-size: 1.25rem;
+    color: white;
+    /* transform: rotate(180deg);  */
     /* quay sang trái */
     transition: transform 0.1s ease;
     position: absolute;
@@ -94,7 +96,7 @@ html, body {
 }
 
 .back-icon:hover {
-    transform: scale(1.1) rotate(180deg);
+    transform: scale(1.2);
 }
 
 .auth-title {

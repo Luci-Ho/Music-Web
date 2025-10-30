@@ -7,22 +7,6 @@ function readUserFromStorage() {
     const raw = localStorage.getItem(LS_KEY);
     if (!raw) return null;
     const obj = JSON.parse(raw);
-
-    // Normalize favorites: some records use `favorite`, others `favorites`.
-    const a = Array.isArray(obj.favorite) ? obj.favorite : null;
-    const b = Array.isArray(obj.favorites) ? obj.favorites : null;
-    if (a || b) {
-      const merged = Array.from(new Set([...(a || []), ...(b || [])]));
-      // Only persist back if changed
-      const sameAsExisting = Array.isArray(obj.favorites) && obj.favorites.length === merged.length && obj.favorites.every((v, i) => v === merged[i]);
-      if (!sameAsExisting) {
-        obj.favorites = merged;
-      }
-      // remove old key to avoid duplication
-      if (obj.favorite) delete obj.favorite;
-      try { localStorage.setItem(LS_KEY, JSON.stringify(obj)); } catch (e) { /* ignore */ }
-    }
-
     return obj;
   } catch (e) {
     return null;

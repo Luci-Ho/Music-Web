@@ -1,22 +1,25 @@
-import React from 'react';
-import { ToastContainer } from 'react-toastify';
+import React, { Suspense }                 from 'react';
+import { ToastContainer }                  from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Routes, Route } from 'react-router-dom';
-import Home from './pages/Homepage';
-import Login from './pages/Login';
-import SignUp from './pages/SignUp';
-import Loading from './pages/Loading';
+import { Routes, Route }                   from 'react-router-dom';
+import Home                                from './pages/Homepage';
+import Login                               from './pages/Login';
+import SignUp                              from './pages/SignUp';
+import Loading                             from './pages/Loading';
 import './App.css';
-import Discover from './pages/DiscoverPage';
-import AddToPlaylist from './pages/AddToPlaylist';
-import PlaylistDetail from './pages/PlaylistDetail';
-import ProtectedRoute from './components/layout/ProtectedRoute';
-import ListPage from './pages/ListPage';
-import BrowseRedirect from './components/layout/BrowseRedirect';
-import MusicPlayer from './components/layout/MusicPlayer';
+import Discover                            from './pages/DiscoverPage';
+import AddToPlaylist                       from './pages/AddToPlaylist';
+import PlaylistDetail                      from './pages/PlaylistDetail';
+import ProtectedRoute                      from './components/layout/ProtectedRoute';
+// import AdminProtectedRoute                 from './components/layout/AdminProtectedRoute';
+import ListPage                            from './pages/ListPage';
+import BrowseRedirect                      from './components/layout/BrowseRedirect';
+import MusicPlayer                         from './components/layout/MusicPlayer';
 
 import { AppProvider } from './components/common/AppContext';
-import { source } from 'framer-motion/client';
+
+// lazy-load admin bundle so the main app doesn't break if admin imports have missing deps
+const AdminPage = React.lazy(() => import('./Admin/pages/AdminPage'));
 
 function App() {
   return (
@@ -28,7 +31,15 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/discover" element={<Discover />} />  
-        
+        <Route path="/Admin" element={
+            <Suspense 
+              fallback={<div>Loading Admin...</div>}
+            >
+              {/* <AdminProtectedRoute> */}
+                <AdminPage />
+              {/* </AdminProtectedRoute> */}
+            </Suspense>
+          } />
         <Route path="/:source/listpage" element={<ListPage />} />
 
         {/* dynamic pages for genres, moods, and artists */}
