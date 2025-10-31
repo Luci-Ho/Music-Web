@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Form } from 'antd';
+import { LeftOutlined } from '@ant-design/icons';
 
 import AuthHeader from '../components/UserAccess/AuthHeader';
 import InputField from '../components/UserAccess/InputField';
 import SubmitButton from '../components/UserAccess/SubmitButton';
 import AuthForm from '../components/UserAccess/AuthForm';
 import '../style/LoginAndSignUp.css';
+import use10Clicks from '../hooks/use10Clicks';
+import AdminLogin from './AdminLogin';
 
 const logoImage = "https://res.cloudinary.com/da4y5zf5k/image/upload/v1751044695/logo-no-background_1_z7njh8.png";
 const API_URL = 'http://localhost:4000/users';
@@ -17,6 +20,20 @@ const Login = () => {
     const [form] = Form.useForm();
     const location = useLocation();
     const redirectTo = location.state?.redirectTo || '/';
+    
+    // Nhấp Liên Tục Kích Hoạt Admin
+    const [showAdminLogin, setShowAdminLogin] = useState(false);
+    const onTenClick = use10Clicks(() => {
+        setShowAdminLogin(true);
+        toast.info('Chào Admin! Vui lòng nhập mã để đăng nhập.');
+    }, { threshold: 10, resetMs: 800 });
+
+    // Mở modal admin nếu được điều hướng với state.openAdmin
+    useEffect(() => {
+        if (location.state?.openAdmin) {
+            setShowAdminLogin(true);
+        }
+    }, [location.state]);
 
     const handleSubmit = async (values) => {
   const { email, password } = values;
@@ -64,6 +81,7 @@ const Login = () => {
     return (
         <div className="login-container">
             <div className="login-background">
+                <LeftOutlined className="back-icon" onClick={() => navigate(-1)} />
                 <div className="login-header">
                     <img src={logoImage} alt="Melodies Logo" className="logo-image" />
                     <h2 className="logo-text">Melodies</h2>
@@ -86,19 +104,21 @@ const Login = () => {
 
                     <div className="submit">
                         <div className="forgot-password">Forgot password &gt;</div>
-                        <SubmitButton text="Login" htmlType="submit" />
+                        <SubmitButton text="Login" htmlType="submit" onClick={onTenClick} />
                     </div>
                 </AuthForm>
+
+                {showAdminLogin && <AdminLogin onClose={() => setShowAdminLogin(false)} />}
 
                 <div className="social-login">
                     <button className="google-login">
                         <img src="https://res.cloudinary.com/da4y5zf5k/image/upload/v1751041194/devicon_google_be5zib.png" alt="Google" />
-                        Google Login
+                        Google
                     </button>
 
                     <button className="facebook-login">
                         <img src="https://res.cloudinary.com/da4y5zf5k/image/upload/v1751041193/logos_facebook_tyae02.png" alt="Facebook" />
-                        Facebook Login
+                        Facebook
                     </button>
                 </div>
 

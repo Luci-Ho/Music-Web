@@ -9,3 +9,4 @@ export const song = list.songs || [];
 export const newAlbums = list.newAlbums || [];
 
 export default list;
+

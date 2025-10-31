@@ -1,11 +1,11 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import SectionTitle from '../common/SectionTitle';
 import "./CardGrid.css";
+import SectionTitle from "./SectionTitle.jsx";
 
 import { AppContext } from "./AppContext";
 
-export default function CardGrid({ title1 = "", title2 = "", limit = 5, filterBy, filterByYear }) {
+export default function CardGrid({ title1 = "", title2 = "", limit = 5, filterBy, filterByYear, onViewAll }) {
   const [songs, setSongs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -73,6 +73,11 @@ export default function CardGrid({ title1 = "", title2 = "", limit = 5, filterBy
             </div>
           </div>
         ))}
+  <div className="cviewall" onClick={() => navigate(`/albums/listpage`)} role={onViewAll ? 'button' : 'link'} tabIndex={0}>
+                <div className="cvaplus">+</div>
+                <div className="cvat">View All</div>
+        </div>
+
       </div>
     </div>
   );

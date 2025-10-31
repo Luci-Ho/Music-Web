@@ -1,74 +1,65 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { useEffect, useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import './Artist.css';
 import SectionTitle from './SectionTitle';
+// Removed useResponsiveCount hook — use a simple default fallback instead
 
-import { AppContext } from "./AppContext";
-
-
-const ArtistItem = ({ artist }) => (
-  <div className="artist-item">
-    <div className="artist-avatar">
-      <img src={artist.img} alt={artist.name} />
+const ArtistItem = ({ artist, onClick }) => (
+    <div className="artist-item" onClick={onClick} role={onClick ? 'button' : undefined} tabIndex={onClick ? 0 : undefined}>
+        <div className="artist-avatar">
+            <img src={artist.img} alt={artist.name} />
+        </div>
+        <div className="artist-name">{artist.name}</div>
     </div>
-    <div className="artist-name">{artist.name}</div>
-  </div>
 );
 
-const ArtistRow = ({ limit = 5 }) => {
-  const [artists, setArtists] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+const ArtistRow = ({ source,  limit = 6 }) => {
+    const [artists, setArtists] = React.useState([]);
+    const [loading, setLoading] = React.useState(true);
+    const [error, setError] = React.useState(null);
 
-  useEffect(() => {
-    fetch("http://localhost:4000/songs")
-      .then((res) => {
-        if (!res.ok) throw new Error("Không thể lấy dữ liệu");
-        return res.json();
-      })
-      .then((data) => {
-        const uniqueArtists = [];
-        const seen = new Set();
+    const navigate = useNavigate();
 
-        data.forEach((song) => {
-          if (!seen.has(song.artist)) {
-            seen.add(song.artist);
-            uniqueArtists.push({
-              name: song.artist,
-              img: song.artist_avatar,
-            });
-          }
-        });
+        useEffect(() => {
+                fetch(`http://localhost:4000/${source}`)
+                    .then((res) => {
+                        if (!res.ok) throw new Error("Không thể lấy dữ liệu");
+                        return res.json();
+                    })
+                    .then((data) => {
+                        setArtists(data.slice(0, limit)); // giới hạn số bài
+                        setLoading(false);
+                    })
+                    .catch((err) => {
+                        setError(err.message);
+                        setLoading(false);
+                    });
+            }, [limit, source]);
 
-        setArtists(uniqueArtists.slice(0, limit));
-        setLoading(false);
-      })
-      .catch((err) => {
-        setError(err.message);
-        setLoading(false);
-      });
-  }, [limit]);
+    return (
+        <div className="w-full flex flex-col mb-10">
+            <div className="acontainer">
+                <SectionTitle title1={"Popular"} title2={"Artists"} />
 
-  return (
-    <div className="w-full h-full flex flex-col mb-10">
-      <div className="acontainer">
-        <SectionTitle title1={"Popular"} title2={"Artists"} />
-        
-        {loading && <p className="loading">Đang tải ca sĩ...</p>}
-        {error && <p className="error">Lỗi: {error}</p>}
+                {loading && <p className="loading">Đang tải bài hát...</p>}
+                {error && <p className="error">Lỗi: {error}</p>}
 
-        <div className="artist-row">
-          {artists.map((a, i) => (
-            <ArtistItem artist={a} key={`${a.name}-${i}`} />
-          ))}
+                <div className="artist-row"> 
+                    {artists.map((a, i) => (
+                        <Link to={`/artist/${a.id}`} key={a.id ?? `${a.name}-${i}`} style={{ textDecoration: 'none' }}>
+                            <ArtistItem artist={a} />
+                        </Link>
+                    ))}
 
-          <div className="aviewall" tabIndex={0}>
-            <div className="avaplus">+</div>
-            <p className="avat">View All</p>
-          </div>
+                    <Link to={`/${source.replace(/s$/,'')}/listpage`} className="aviewall" tabIndex={0}>
+                        <div className="avaplus">+</div>
+                        <p className="avat">View All</p>
+                    </Link>
+            </div>
+            </div>
         </div>
-      </div>
-    </div>
-  );
+    );
 };
 
 export default ArtistRow;

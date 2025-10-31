@@ -18,6 +18,8 @@
   height: 100%;
   object-fit: cover;
   display: block;
+  transition: transform 0.35s ease; /* smooth zoom */
+  transform-origin: center center;
 }
 
 .d2card-overlay {
@@ -62,6 +64,11 @@
   left: 8px;
 }
 
+/* Zoom on hover */
+.d2card:hover .d2card-thumb img {
+  transform: scale(1.06);
+}
+
 
 
 
@@ -72,7 +79,7 @@
     flex-direction: column;
     justify-content: space-between;
     margin-left: 40px;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
 }
 
 .dviewall {

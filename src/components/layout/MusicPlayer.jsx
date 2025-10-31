@@ -1,6 +1,7 @@
 import React, { useContext, useRef, useEffect, useState } from "react";
 import { AppContext } from "../common/AppContext";
 import "./MusicPlayer.css";
+import formatTimes from '../../hooks/formatTimes';
 
 export default function MusicPlayer() {
   const { currentSong } = useContext(AppContext);
@@ -59,10 +60,9 @@ export default function MusicPlayer() {
   };
 
   const formatTime = (time) => {
-    if (isNaN(time)) return "00:00";
-    const minutes = Math.floor(time / 60);
-    const seconds = Math.floor(time % 60);
-    return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+    // Music player works in seconds; if invalid show zeros
+    if (isNaN(time)) return "D:0 H:0 M:00 S:00";
+    return formatTimes(time, { unit: 's' });
   };
 
   if (!currentSong) return null;

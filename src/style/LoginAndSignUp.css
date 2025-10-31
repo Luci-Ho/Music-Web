@@ -26,6 +26,10 @@ html, body {
 }
 
 .login-background {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
     max-width: 430px;
     margin: 0 auto;
     padding: 24px;
@@ -35,6 +39,7 @@ html, body {
     border-radius: 20px;
     padding-top: 0;
     padding-bottom: 40px;
+    position: relative;
 }
 
 .login-header,
@@ -79,14 +84,20 @@ html, body {
     width: 24px;
     height: 24px;
     cursor: pointer;
-    margin-right: auto;
-    transform: rotate(180deg); /* quay sang trái */
-    transition: transform 0.2s ease;
+    font-size: 1.25rem;
+    color: white;
+    /* transform: rotate(180deg);  */
+    /* quay sang trái */
+    transition: transform 0.1s ease;
+    position: absolute;
+    z-index: 10;
+    top: 24px;
+    left: 24px;
 }
 
-/* .back-icon:hover {
-    transform: scale(1.1);
-} */
+.back-icon:hover {
+    transform: scale(1.2);
+}
 
 .auth-title {
     font-size: 20px;
@@ -174,7 +185,7 @@ html, body {
 /* Forgot password */
 .submit {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
     margin-top: 30px;
 }
@@ -228,13 +239,14 @@ padding: 5px 5px;
     border: 2px solid white;
     background: transparent;
     padding: 10px 15px;
+    padding-inline: 20px;
 }
 
 .social-login {
     padding-top: 60px;
     display: flex;
     flex-direction: row;
-    gap: 16px;
+    gap: 50px;
     justify-content: space-between;
 }
 
