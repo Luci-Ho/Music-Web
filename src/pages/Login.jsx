@@ -7,7 +7,7 @@ import AuthHeader from '../components/UserAccess/AuthHeader';
 import InputField from '../components/UserAccess/InputField';
 import SubmitButton from '../components/UserAccess/SubmitButton';
 import AuthForm from '../components/UserAccess/AuthForm';
-import '../style/LogInAndSignUp.css';
+import '../style/LoginAndSignUp.css';
 
 const logoImage = "https://res.cloudinary.com/da4y5zf5k/image/upload/v1751044695/logo-no-background_1_z7njh8.png";
 const API_URL = 'http://localhost:4000/users';
