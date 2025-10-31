@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal, Form, Input } from 'antd';
 import { toast } from 'react-toastify';
-import '../style/LogInAndSignUp.css';
+import '../style/LoginAndSignUp.css';
 import { useNavigate } from "react-router-dom";
 
 export default function AdminLogin({ visible = true, onClose }) {
