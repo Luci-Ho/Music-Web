@@ -8,7 +8,7 @@ import AuthHeader from '../components/UserAccess/AuthHeader';
 import InputField from '../components/UserAccess/InputField';
 import SubmitButton from '../components/UserAccess/SubmitButton';
 import AuthForm from '../components/UserAccess/AuthForm';
-import '../style/LogInAndSignUp.css';
+import '../style/LoginAndSignUp.css';
 import use10Clicks from '../hooks/use10Clicks';
 import AdminLogin from './AdminLogin';
 
