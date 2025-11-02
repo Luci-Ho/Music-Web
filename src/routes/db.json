@@ -687,221 +687,301 @@
       "id": "s501",
       "title": "Perfect",
       "artistId": "a301",
+      "albumId": "al601",
       "genreId": "g101",
       "moodId": "m203",
       "musicVideoId": "v401",
       "duration": "4:23",
       "releaseYear": 2017,
-      "img": "https://m.media-amazon.com/images/I/71fqFyMSaNL._AC_UF1000,1000_QL80_.jpg"
+      "img": "https://m.media-amazon.com/images/I/71fqFyMSaNL._AC_UF1000,1000_QL80_.jpg",
+      "streaming_links": {
+        "audio_url": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3"
+      }
     },
     {
       "id": "s502",
       "title": "Levitating",
       "artistId": "a302",
+      "albumId": "al602",
       "genreId": "g103",
       "moodId": "m201",
       "musicVideoId": "v402",
       "duration": "3:24",
       "releaseYear": 2020,
-      "img": "https://i.scdn.co/image/ab67616d0000b2734bc66095f8a70bc4e6593f4f"
+      "img": "https://i.scdn.co/image/ab67616d0000b2734bc66095f8a70bc4e6593f4f",
+      "streaming_links": {
+        "audio_url": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3"
+      }
     },
     {
       "id": "s503",
       "title": "Believer",
       "artistId": "a303",
+      "albumId": "al603",
       "genreId": "g102",
       "moodId": "m202",
       "musicVideoId": "v403",
       "duration": "3:36",
       "releaseYear": 2017,
-      "img": "https://i1.sndcdn.com/artworks-s3zOCWcV8XQVtQcv-0emq8A-t500x500.jpg"
+      "img": "https://i1.sndcdn.com/artworks-s3zOCWcV8XQVtQcv-0emq8A-t500x500.jpg",
+      "streaming_links": {
+        "audio_url": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3"
+      }
     },
     {
       "id": "s504",
       "title": "Bad Guy",
       "artistId": "a304",
+      "albumId": "al604",
       "genreId": "g105",
       "moodId": "m209",
       "musicVideoId": "v404",
       "duration": "3:14",
       "releaseYear": 2019,
-      "img": "https://i1.sndcdn.com/artworks-000537584385-41r6ld-t1080x1080.jpg"
+      "img": "https://i1.sndcdn.com/artworks-000537584385-41r6ld-t1080x1080.jpg",
+      "streaming_links": {
+        "audio_url": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3"
+      }
     },
     {
       "id": "s505",
       "title": "God's Plan",
       "artistId": "a305",
+      "albumId": "al605",
       "genreId": "g105",
       "moodId": "m210",
       "musicVideoId": "v405",
       "duration": "3:18",
       "releaseYear": 2018,
-      "img": "https://i1.sndcdn.com/artworks-000373673898-th71uv-t500x500.jpg"
+      "img": "https://i1.sndcdn.com/artworks-000373673898-th71uv-t500x500.jpg",
+      "streaming_links": {
+        "audio_url": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3"
+      }
     },
     {
       "id": "s506",
       "title": "Blank Space",
       "artistId": "a306",
+      "albumId": "al606",
       "genreId": "g101",
       "moodId": "m208",
       "musicVideoId": "v406",
       "duration": "4:33",
       "releaseYear": 2014,
-      "img": "https://upload.wikimedia.org/wikipedia/vi/7/7c/Taylor_Swift_-_Blank_Space_%28Official_Single_Cover%29.png"
+      "img": "https://upload.wikimedia.org/wikipedia/vi/7/7c/Taylor_Swift_-_Blank_Space_%28Official_Single_Cover%29.png",
+      "streaming_links": {
+        "audio_url": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3"
+      }
     },
     {
       "id": "s507",
       "title": "Save Your Tears",
       "artistId": "a307",
+      "albumId": "al607",
       "genreId": "g104",
       "moodId": "m205",
       "musicVideoId": "v407",
       "duration": "3:35",
       "releaseYear": 2021,
-      "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRI_stKIUr0H5rbzEnDY7mwdO9K7lxApg3HPQ&s"
+      "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRI_stKIUr0H5rbzEnDY7mwdO9K7lxApg3HPQ&s",
+      "streaming_links": {
+        "audio_url": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3"
+      }
     },
     {
       "id": "s508",
       "title": "Hello",
       "artistId": "a308",
+      "albumId": "al608",
       "genreId": "g101",
       "moodId": "m205",
       "musicVideoId": "v408",
       "duration": "4:55",
       "releaseYear": 2015,
-      "img": "https://i.scdn.co/image/ab67616d00001e022118bf9b198b05a95ded6300"
+      "img": "https://i.scdn.co/image/ab67616d00001e022118bf9b198b05a95ded6300",
+      "streaming_links": {
+        "audio_url": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3"
+      }
     },
     {
       "id": "s509",
       "title": "Uptown Funk",
       "artistId": "a309",
+      "albumId": "al609",
       "genreId": "g110",
       "moodId": "m207",
       "musicVideoId": "v409",
       "duration": "4:30",
       "releaseYear": 2014,
-      "img": "https://i1.sndcdn.com/artworks-000111694035-qybs4a-t500x500.jpg"
+      "img": "https://i1.sndcdn.com/artworks-000111694035-qybs4a-t500x500.jpg",
+      "streaming_links": {
+        "audio_url": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3"
+      }
     },
     {
       "id": "s510",
       "title": "HUMBLE.",
       "artistId": "a310",
+      "albumId": "al610",
       "genreId": "g105",
       "moodId": "m210",
       "musicVideoId": "v410",
       "duration": "2:57",
       "releaseYear": 2017,
-      "img": "https://i.scdn.co/image/ab67616d00001e028b52c6b9bc4e43d873869699"
+      "img": "https://i.scdn.co/image/ab67616d00001e028b52c6b9bc4e43d873869699",
+      "streaming_links": {
+        "audio_url": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3"
+      }
     },
     {
       "id": "s511",
       "title": "Sunset Drive",
       "artistId": "a301",
+      "albumId": "al601",
       "genreId": "g103",
       "moodId": "m201",
       "musicVideoId": "v401",
       "duration": "3:50",
       "releaseYear": 2022,
-      "img": "https://via.placeholder.com/300?text=Sunset+Drive"
+      "img": "https://via.placeholder.com/300?text=Sunset+Drive",
+      "streaming_links": {
+        "audio_url": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3"
+      }
     },
     {
       "id": "s512",
       "title": "Neon Nights",
       "artistId": "a302",
+      "albumId": "al602",
       "genreId": "g110",
       "moodId": "m207",
       "musicVideoId": "v402",
       "duration": "3:05",
       "releaseYear": 2023,
-      "img": "https://via.placeholder.com/300?text=Neon+Nights"
+      "img": "https://via.placeholder.com/300?text=Neon+Nights",
+      "streaming_links": {
+        "audio_url": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3"
+      }
     },
     {
       "id": "s513",
       "title": "Broken Compass",
       "artistId": "a303",
+      "albumId": "al603",
       "genreId": "g102",
       "moodId": "m205",
       "musicVideoId": "v403",
       "duration": "4:02",
       "releaseYear": 2021,
-      "img": "https://via.placeholder.com/300?text=Broken+Compass"
+      "img": "https://via.placeholder.com/300?text=Broken+Compass",
+      "streaming_links": {
+        "audio_url": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3"
+      }
     },
     {
       "id": "s514",
       "title": "Golden Echoes",
       "artistId": "a304",
+      "albumId": "al604",
       "genreId": "g104",
       "moodId": "m203",
       "musicVideoId": "v404",
       "duration": "3:42",
       "releaseYear": 2020,
-      "img": "https://via.placeholder.com/300?text=Golden+Echoes"
+      "img": "https://via.placeholder.com/300?text=Golden+Echoes",
+      "streaming_links": {
+        "audio_url": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3"
+      }
     },
     {
       "id": "s515",
       "title": "Midnight Run",
       "artistId": "a305",
+      "albumId": "al605",
       "genreId": "g105",
       "moodId": "m210",
       "musicVideoId": "v405",
       "duration": "2:58",
       "releaseYear": 2019,
-      "img": "https://via.placeholder.com/300?text=Midnight+Run"
+      "img": "https://via.placeholder.com/300?text=Midnight+Run",
+      "streaming_links": {
+        "audio_url": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3"
+      }
     },
     {
       "id": "s516",
       "title": "Paper Boats",
       "artistId": "a306",
+      "albumId": "al606",
       "genreId": "g101",
       "moodId": "m204",
       "musicVideoId": "v406",
       "duration": "4:15",
       "releaseYear": 2018,
-      "img": "https://via.placeholder.com/300?text=Paper+Boats"
+      "img": "https://via.placeholder.com/300?text=Paper+Boats",
+      "streaming_links": {
+        "audio_url": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3"
+      }
     },
     {
       "id": "s517",
       "title": "Harbor Lights",
       "artistId": "a307",
+      "albumId": "al607",
       "genreId": "g106",
       "moodId": "m201",
       "musicVideoId": "v407",
       "duration": "3:33",
       "releaseYear": 2024,
-      "img": "https://via.placeholder.com/300?text=Harbor+Lights"
+      "img": "https://via.placeholder.com/300?text=Harbor+Lights",
+      "streaming_links": {
+        "audio_url": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3"
+      }
     },
     {
       "id": "s518",
       "title": "Velvet Streets",
       "artistId": "a308",
+      "albumId": "al608",
       "genreId": "g109",
       "moodId": "m209",
       "musicVideoId": "v408",
       "duration": "3:47",
       "releaseYear": 2022,
-      "img": "https://via.placeholder.com/300?text=Velvet+Streets"
+      "img": "https://via.placeholder.com/300?text=Velvet+Streets",
+      "streaming_links": {
+        "audio_url": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3"
+      }
     },
     {
       "id": "s519",
       "title": "Pixel Heart",
       "artistId": "a309",
+      "albumId": "al609",
       "genreId": "g108",
       "moodId": "m206",
       "musicVideoId": "v409",
       "duration": "3:20",
       "releaseYear": 2023,
-      "img": "https://via.placeholder.com/300?text=Pixel+Heart"
+      "img": "https://via.placeholder.com/300?text=Pixel+Heart",
+      "streaming_links": {
+        "audio_url": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3"
+      }
     },
     {
       "id": "s520",
       "title": "Cloud Atlas",
       "artistId": "a310",
+      "albumId": "al610",
       "genreId": "g107",
       "moodId": "m202",
       "musicVideoId": "v410",
       "duration": "5:01",
       "releaseYear": 2016,
-      "img": "https://via.placeholder.com/300?text=Cloud+Atlas"
+      "img": "https://via.placeholder.com/300?text=Cloud+Atlas",
+      "streaming_links": {
+        "audio_url": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3"
+      }
     },
     {
       "id": "66a7",
