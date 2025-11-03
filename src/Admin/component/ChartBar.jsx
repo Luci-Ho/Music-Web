@@ -2,9 +2,9 @@ import React from 'react';
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, Cell, CartesianGrid } from 'recharts';
 
 
-export default function ChartBar({ data, dataKey }) {
+export default function ChartBar({ data }) {
       // Lấy giá trị lớn nhất trong dữ liệu để chuẩn hoá màu
-    const maxValue = Math.max(...data.map((d) => d.value));
+    const maxValue = Math.max(...data.map((d) => d.listens));
 
   // Hàm tính màu hồng tuỳ theo value (đậm dần theo giá trị)
     const getPinkShade = (value) => {
@@ -21,24 +21,26 @@ export default function ChartBar({ data, dataKey }) {
     };
   
     return (
-        <ResponsiveContainer width="100%" height={240}>
-            <BarChart data={data}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#444" />
-                <XAxis dataKey="day" />
-                <YAxis />
-                <Tooltip
-                    contentStyle={{
-                        backgroundColor: "#1f1f1f",
-                        border: "1px solid #333",
-                        color: "#fff",
-                    }}
-                />
-                <Bar dataKey="value" radius={[8, 8, 0, 0]}>
-                    {data.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={getPinkShade(entry.value)} />
-                    ))}
-                </Bar>
-            </BarChart>
-        </ResponsiveContainer>
+        <div className="flex justify-center items-center w-full h-full mt-10">
+            <ResponsiveContainer width="100%" height={240}>
+                <BarChart data={data}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#444" />
+                    <XAxis dataKey="day" />
+                    <YAxis />
+                    <Tooltip
+                        contentStyle={{
+                            backgroundColor: "#1f1f1f",
+                            border: "1px solid #333",
+                            color: "#fff",
+                        }}
+                    />
+                    <Bar dataKey="listens" radius={[8, 8, 0, 0]}>
+                        {data.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={getPinkShade(entry.listens)} />
+                        ))}
+                    </Bar>
+                </BarChart>
+            </ResponsiveContainer>
+        </div>
     );
 }

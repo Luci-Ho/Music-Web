@@ -10,7 +10,11 @@ export default function SongsView() {
 
     useEffect(() => { load(); }, []);
 
-    async function load() { const s = await getSongs(); setSongs(s); }
+    async function load() { 
+        const s = await getSongs(); 
+        console.log('SongsView - loaded songs:', s);
+        setSongs(s); 
+    }
 
 
     async function handleDelete(id) {
@@ -21,12 +25,37 @@ export default function SongsView() {
 
 
     async function handleEdit(song) {
-    // open modal (omitted for brevity). Here we'll just update title for demo
-        await updateSong(song.id, { ...song, title: song.title + ' (edited)' });
+        try {
+            await updateSong(song.id, song);
             message.success('Updated');
             load();
+        } catch (error) {
+            message.error('Failed to update song');
+        }
     }
 
+    async function handleAdd(newSong) {
+        try {
+            // Add to songsList endpoint
+            const response = await fetch(`${API_URL}/songsList`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(newSong),
+            });
+            
+            if (response.ok) {
+                load();
+                return true;
+            } else {
+                throw new Error('Failed to add song');
+            }
+        } catch (error) {
+            message.error('Failed to add song');
+            throw error;
+        }
+    }
 
     async function handleCreate() {
         const newSong = { title: 'New Song', artist: 'Unknown', album: 'Single', listens: 0, date: '2025-10-29' };
@@ -39,11 +68,10 @@ export default function SongsView() {
     return (
         <section>
             <div className="flex items-center justify-between mb-4">
-                <h2>Songs</h2>
-                <Button type="primary" onClick={handleCreate}>Add Song</Button>
+                <h2>Songs Management</h2>
             </div>
             <Card>
-                <SongsTable songs={songs} onEdit={handleEdit} onDelete={handleDelete} />
+                <SongsTable songs={songs} onEdit={handleEdit} onDelete={handleDelete} onAdd={handleAdd} />
             </Card>
         </section>
     );

@@ -5,6 +5,7 @@ import DashboardView from './DashBoardView';
 import SongsView from './SongsView';
 import UsersView from './UserView';
 import AnalyticsView from './AnalyticsView';
+import { AuthProvider } from '../context/AuthContext';
 import './Admin.css';
 
 export default function AdminPage() {
@@ -12,17 +13,19 @@ export default function AdminPage() {
     const [query, setQuery] = useState('');
 
     return (
-        <div className={"admin"}>
-            <Sidebar active={active} setActive={setActive} />
-            <div className="admin-area">
-                <Header query={query} setQuery={setQuery} />
-                <div className="admin-container">
-                    {active === 'dashboard' && <DashboardView />}
-                    {active === 'songs' && <SongsView />}
-                    {active === 'users' && <UsersView />}
-                    {active === 'analytics' && <AnalyticsView />}
+        <AuthProvider>
+            <div className={"admin"}>
+                <Sidebar active={active} setActive={setActive} />
+                <div className="admin-area">
+                    <Header query={query} setQuery={setQuery} />
+                    <div className="admin-container">
+                        {active === 'dashboard' && <DashboardView />}
+                        {active === 'songs' && <SongsView />}
+                        {active === 'users' && <UsersView />}
+                        {active === 'analytics' && <AnalyticsView />}
+                    </div>
                 </div>
             </div>
-        </div>
+        </AuthProvider>
     );
 }

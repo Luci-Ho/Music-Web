@@ -10,6 +10,11 @@ import './App.css';
 import Discover                            from './pages/DiscoverPage';
 import AddToPlaylist                       from './pages/AddToPlaylist';
 import PlaylistDetail                      from './pages/PlaylistDetail';
+import PlaylistsPage                       from './pages/PlaylistsPage';
+import ArtistsPage                         from './pages/ArtistsPage';
+import ArtistDetailPage                    from './pages/ArtistDetailPage';
+import AlbumsPage                          from './pages/AlbumsPage';
+import AlbumDetailPage                     from './pages/AlbumDetailPage';
 import ProtectedRoute                      from './components/layout/ProtectedRoute';
 // import AdminProtectedRoute                 from './components/layout/AdminProtectedRoute';
 import ListPage                            from './pages/ListPage';
@@ -45,7 +50,7 @@ function App() {
         {/* dynamic pages for genres, moods, and artists */}
         <Route path="/genre/:id" element={<ListPage pageType={'genre'} />} />
         <Route path="/mood/:id" element={<ListPage pageType={'mood'} />} />
-        <Route path="/artist/:id" element={<ListPage pageType={'artist'} />} />
+        <Route path="/artist/:id" element={<ArtistDetailPage />} />
 
         {/* redirect old /browse/:type/:id to canonical routes */}
         <Route path="/browse/:type/:id" element={<BrowseRedirect />} />
@@ -54,6 +59,12 @@ function App() {
         <Route path="/genre/listpage" element={<ListPage source={"genres"} />} />
         <Route path="/mood/listpage" element={<ListPage source={"moods"} />} />
         <Route path="/artist/listpage" element={<ListPage source={"artists"} />} />
+
+        {/* New pages for playlists, artists and albums */}
+        <Route path="/playlist" element={<ProtectedRoute><PlaylistsPage /></ProtectedRoute>} />
+        <Route path="/artist" element={<ArtistsPage />} />
+        <Route path="/album" element={<AlbumsPage />} />
+        <Route path="/album/:id" element={<AlbumDetailPage />} />
 
         <Route path="/playlist/add/:id" element={<ProtectedRoute>   <AddToPlaylist />                     </ProtectedRoute>} />
         <Route path="/playlist/:id"     element={<ProtectedRoute>   <PlaylistDetail />                    </ProtectedRoute>} />

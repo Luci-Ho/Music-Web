@@ -5,7 +5,6 @@ import Dashboard from '../components/layout/Dashboard';
 import Slider from '../components/common/Slider';
 import CardGrid from '../components/common/CardGrid';
 import Artist from '../components/common/Artist';
-import MusicPlayer from "../components/layout/MusicPlayer";
 
 
 import "../style/Layout.css";
@@ -32,7 +31,6 @@ const HomePage = () => {
               <Artist source={'artists'} />
 
             </div>
-            <MusicPlayer />
           </div>
 
           <Footer />

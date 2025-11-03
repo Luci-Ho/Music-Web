@@ -61,7 +61,7 @@ const Dashboard = () => {
         {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
       </div>
       <div className="logo">
-        <img src="../../public/Ảnh/eac87d338a32800109b78daee1589299b8812535.png" alt="" className="logoimg" />
+        <img src="/Ảnh/eac87d338a32800109b78daee1589299b8812535.png" alt="" className="logoimg" />
         <p className="logo">Melodies</p>
         <div className="welcome">
           <small>{user ? `Hi, ${user.username}! 🎶` : 'Cùng nghe nhạc vui nhé!'}</small>
@@ -81,7 +81,7 @@ const Dashboard = () => {
       <div className="DashBoard-menu">
         <p className="Menu">Library</p>
         <div className="Menu-part">
-          <MenuItem icon={<AppstoreAddOutlined />} label="Recently Added" to="/recent" />
+          <MenuItem icon={<AppstoreAddOutlined />} label="Recently" to="/recent" />
           <MenuItem icon={<PlayCircleOutlined />} label="Most Played" to="/most-played" />
         </div>
       </div>

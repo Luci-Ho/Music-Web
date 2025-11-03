@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Form } from 'antd';
 import { LeftOutlined } from '@ant-design/icons';
+import { toast } from 'react-toastify';
 
 import InputField from '../components/UserAccess/InputField';
 import SubmitButton from '../components/UserAccess/SubmitButton';
@@ -35,11 +36,27 @@ const SignUp = () => {
             }
 
 
-            // Gửi dữ liệu đăng ký
+            // Gửi dữ liệu đăng ký với favorites và playlists mặc định
+            const newUser = {
+                username, 
+                email, 
+                password, 
+                phone,
+                level: 'l3', // User level mặc định
+                favorites: [],
+                playlists: [
+                    {
+                        id: `${Date.now()}_1`,
+                        name: "Yêu thích của tôi",
+                        songs: []
+                    }
+                ]
+            };
+
             const res = await fetch(API_URL, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username, email, password, phone }),
+                body: JSON.stringify(newUser),
             });
 
             console.log("Kết quả trả về từ API:", res);
@@ -52,14 +69,11 @@ const SignUp = () => {
             const result = await res.json();
             console.log("Kết quả trả về từ API:", result);
 
-            alert('Đăng ký thành công!');
+            toast.success('Tạo tài khoản thành công!');
             navigate('/login', { state: { redirectTo: '/' } });
         } catch (err) {
-            alert(`Lỗi: ${err.message}`);
+            toast.error(`Lỗi: ${err.message}`);
         }
-
-        toast.success('Tạo tài khoản thành công!');
-        navigate('/loading');
 
 
         setLoading(false);
