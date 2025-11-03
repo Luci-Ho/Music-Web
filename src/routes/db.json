@@ -4,7 +4,7 @@
       "title": "Phép Màu",
       "artist": "MAYDAYs & Minh Tốc",
       "artist_avatar": "https://lh3.googleusercontent.com/ozsO4hId6yzw9WqIxwiEmCqfcwj3rz2JMarYtcy2BajMFyvyLFV697UNm3fGQBGp0604waYNJaippxoU=w544-h544-l90-rj",
-      "cover_url": "https://lh3.googleusercontent.com/ozsO4hId6yzw9WqIxwiEmCqfcwj3rz2JMarYtcy2BajMFyvyLFV697UNm3fGQBGp0604waYNJaippxoU=w544-h544-l90-rj",
+      "cover_url": "https://i.ytimg.com/vi/JqTrYasCwNo/maxresdefault.jpg",
       "album": "Phép Màu (Single)",
       "release_date": "2024-09-28",
       "duration": "3:45",
@@ -147,8 +147,8 @@
     {
       "title": "Đừng Làm Bạn",
       "artist": "Bích Phương",
-      "artist_avatar": "https://example.com/artists/bichphuong.jpg",
-      "cover_url": "https://example.com/covers/dung_lam_ban.jpg",
+      "artist_avatar": "https://scontent.fsgn2-10.fna.fbcdn.net/v/t39.30808-6/429949504_955184519296597_9115556556751807744_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=a5f93a&_nc_eui2=AeFVzeXkj0FyQNw-plYIgG4iKDYKPIGeVckoNgo8gZ5VyY7pY14kXM9DCWi-YW_14oNU7D0S_7khcyPgGZUTnX9L&_nc_ohc=MuZizi3wIJkQ7kNvwHrI7FO&_nc_oc=Admc9YOd10EtQX3wYOTy9854mLn8JSwQdXkEZZo2PllDeFimTa1WXgHnDdmKWpO8ATzGFrjOQFro1esZwhUEee_y&_nc_zt=23&_nc_ht=scontent.fsgn2-10.fna&_nc_gid=Uy7nlL2OMZ3Py5U8DmH7mw&oh=00_Affs38UIasHcuaiLeZRdFizR_HqBnoah4XW-QBC-KVkP-A&oe=690AA15D",
+      "cover_url": "https://vstatic.vietnam.vn/vietnam/resource/IMAGE/2025/10/23/1761228782403_qmg-5221-4932-3201-jpg.webp",
       "album": "Đừng Làm Bạn (Single)",
       "release_date": "2025-07-05",
       "duration": "3:55",
@@ -163,8 +163,8 @@
     {
       "title": "Lặng",
       "artist": "GREY D",
-      "artist_avatar": "https://example.com/artists/greyd.jpg",
-      "cover_url": "https://example.com/covers/lang.jpg",
+      "artist_avatar": "https://cdn2.tuoitre.vn/zoom/700_438/471584752817336320/data/teen360/news/2022/11/28/69383/1669616220_grey.jpg",
+      "cover_url": "https://cdn2.tuoitre.vn/zoom/700_438/471584752817336320/data/teen360/news/2022/11/28/69383/1669616220_grey.jpg",
       "album": "Lặng (Single)",
       "release_date": "2024-08-01",
       "duration": "4:00",
@@ -212,7 +212,7 @@
       "title": "Gió Mùa Về",
       "artist": "Trúc Nhân",
       "artist_avatar": "https://cdn.tienphong.vn/images/a6bf4f60924201126af6849ca45a39809fa2682ae9051c6e3d05c9d98d239974abc66d3450044e0a43759441f482269bc1be3847ccb630252aaa2cae912954077a3d1f547dca863507f5f1dfc4d7fc21ffa2ad3050d7a2191788b40b0bc9413af0ca7ea95604f1801b5908427e7f00fe/307713136-5391952470857772-562192952731703488-n-9032.jpg",
-      "cover_url": "https://example.com/covers/vo.jpg",
+      "cover_url": "https://i.ytimg.com/vi/zvedq0Tc9gw/sddefault.jpg",
       "album": "Vỡ (Single)",
       "release_date": "2024-09-18",
       "duration": "3:50",
@@ -228,7 +228,7 @@
       "title": "Đừng Gọi Anh Là Idol",
       "artist": "Obito",
       "artist_avatar": "https://example.com/artists/obito.jpg",
-      "cover_url": "https://example.com/covers/dung_goi_anh_la_idol.jpg",
+      "cover_url": "https://thegioidienanh.vn/stores/news_dataimages/thanhtan/072018/22/10/0419_re-DSC09992.jpg",
       "album": "Idol (EP)",
       "release_date": "2024-10-01",
       "duration": "3:30",
@@ -272,8 +272,12 @@
       "username": "oanh oi",
       "email": "2omg@xinh.com",
       "password": "111111",
-      "phone": "01111111111", 
-      "level": "l3"
+      "phone": "01111111111",
+      "level": "l3",
+      "favorites": [
+        "s520",
+        "73bf"
+      ]
     },
     {
       "id": "89d7",
@@ -1102,7 +1106,7 @@
       "id": "41ee",
       "title": "Gió Mùa Về",
       "artistId": "a414",
-      "img": "https://example.com/covers/vo.jpg",
+      "img": "https://i.ytimg.com/vi/zvedq0Tc9gw/sddefault.jpg",
       "albumId": "al714",
       "release_date": "2024-09-18",
       "duration": "3:50",

@@ -59,24 +59,24 @@ export default function CardGrid({ title1 = "", title2 = "", limit = 5, filterBy
               <img
                 src={song.cover_url}
                 alt={song.title}
-                onClick={() => setCurrentSong(song)} 
+                onClick={() => setCurrentSong(song)}
                 style={{ width: "100%", borderRadius: "8px" }}
               />
-              
+
             </div>
 
-            <div className="card-info" 
-            onClick={() => setCurrentSong(song)} >
+            <div className="card-info"
+              onClick={() => setCurrentSong(song)} >
               <h3>{song.title}</h3>
               <p>{song.artist}</p>
-              
+
             </div>
           </div>
         ))}
-  <div className="cviewall" onClick={() => navigate(`/albums/listpage`)} role={onViewAll ? 'button' : 'link'} tabIndex={0}>
-                <div className="cvaplus">+</div>
-                <div className="cvat">View All</div>
-        </div>
+        {/* <div className="cviewall" onClick={() => navigate(`/albums/listpage`)} role={onViewAll ? 'button' : 'link'} tabIndex={0}>
+          <div className="cvaplus">+</div>
+          <div className="cvat">View All</div>
+        </div> */}
 
       </div>
     </div>
