@@ -10,11 +10,18 @@ import {
   DoubleRightOutlined,
   PlayCircleOutlined,
   PauseCircleOutlined,
-  PlusCircleOutlined ,
+  PlusCircleOutlined,
 } from '@ant-design/icons';
 
 export default function MusicPlayer() {
-  const { currentSong } = useContext(AppContext);
+  const {
+    playlist,
+    currentSong,
+    selectSong,
+    currentIndex,
+    setCurrentIndex
+  } = useContext(AppContext);
+
   const audioRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0);
@@ -27,6 +34,7 @@ export default function MusicPlayer() {
   const [favorites, setFavorites] = useState(() =>
     user && Array.isArray(user.favorites) ? user.favorites : []
   );
+
 
   useEffect(() => {
     setFavorites(user && Array.isArray(user.favorites) ? user.favorites : []);
@@ -50,41 +58,48 @@ export default function MusicPlayer() {
 
   // Load bài hát mới, không tự động phát
   useEffect(() => {
-  const audio = audioRef.current;
-  if (!audio || !currentSong) return;
+    const audio = audioRef.current;
+    if (!audio || !currentSong) return;
 
-  const handleLoadedMetadata = () => {
-    setDuration(audio.duration || 0);
-    setCanSeek(true);
-  };
+    const handleLoadedMetadata = () => {
+      setDuration(audio.duration || 0);
+      setCanSeek(true);
+    };
 
-  const updateProgress = () => {
-    setProgress(audio.currentTime);
-  };
+    const updateProgress = () => {
+      setProgress(audio.currentTime);
+    };
 
-  const handleEnded = () => {
+    const handleEnded = () => {
+      setIsPlaying(false);
+      setProgress(0);
+    };
+
+    audio.pause();
+    audio.src = currentSong.streaming_links.audio_url;
+    audio.load();
+
+    // audio.play()
+    //   .then(() => setIsPlaying(true))
+    //   .catch((err) => {
+    //     console.warn("⚠️ Không thể tự động phát:", err);
+    //     setIsPlaying(false);
+    //   });
+
+    audio.addEventListener("loadedmetadata", handleLoadedMetadata);
+    audio.addEventListener("timeupdate", updateProgress);
+    audio.addEventListener("ended", handleEnded);
+
     setIsPlaying(false);
     setProgress(0);
-  };
+    setCanSeek(false);
 
-  audio.pause();
-  audio.src = currentSong.streaming_links.audio_url;
-  audio.load();
-
-  audio.addEventListener("loadedmetadata", handleLoadedMetadata);
-  audio.addEventListener("timeupdate", updateProgress);
-  audio.addEventListener("ended", handleEnded);
-
-  setIsPlaying(false);
-  setProgress(0);
-  setCanSeek(false);
-
-  return () => {
-    audio.removeEventListener("loadedmetadata", handleLoadedMetadata);
-    audio.removeEventListener("timeupdate", updateProgress);
-    audio.removeEventListener("ended", handleEnded);
-  };
-}, [currentSong]);
+    return () => {
+      audio.removeEventListener("loadedmetadata", handleLoadedMetadata);
+      audio.removeEventListener("timeupdate", updateProgress);
+      audio.removeEventListener("ended", handleEnded);
+    };
+  }, [currentSong]);
 
 
   // Cập nhật trạng thái và tiến trình
@@ -174,9 +189,19 @@ export default function MusicPlayer() {
 
       <div className="player-center">
         <div className="controls">
-          <button><DoubleLeftOutlined /></button>
-          <button onClick={togglePlay}>{isPlaying ? <PauseCircleOutlined /> : <PlayCircleOutlined />}</button>
-          <button><DoubleRightOutlined /></button>
+          <button onClick={() => {
+            if (currentIndex > 0) setCurrentIndex(currentIndex - 1);
+          }}><DoubleLeftOutlined /></button>
+          <button className="" onClick={togglePlay}>
+            {isPlaying ? (
+              <PauseCircleOutlined style={{ fontSize: '30px' }} />
+            ) : (
+              <PlayCircleOutlined style={{ fontSize: '30px' }} />
+            )}
+          </button>
+          <button onClick={() => {
+            if (currentIndex < playlist.length - 1) setCurrentIndex(currentIndex + 1);
+          }}><DoubleRightOutlined /></button>
         </div>
         <div className="progress-bar">
           <span>{formatTime(progress)}</span>
@@ -185,9 +210,13 @@ export default function MusicPlayer() {
             min="0"
             max={duration || 0}
             value={Number(progress)}
-            step="1"
+            step="0.1"
             onInput={handleSeek}
+            style={{
+              backgroundSize: `${(progress / duration) * 100}% 100%`
+            }}
           />
+
           <span>{formatTime(duration)}</span>
         </div>
       </div>
@@ -198,7 +227,7 @@ export default function MusicPlayer() {
             onClick={handleToggleFavorite} />
         )}
         <button><PlusCircleOutlined /></button>
-        
+
       </div>
 
       <audio ref={audioRef} style={{ display: "none" }} />

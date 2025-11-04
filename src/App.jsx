@@ -1,20 +1,25 @@
-import React, { Suspense }                 from 'react';
-import { ToastContainer }                  from 'react-toastify';
+import React, { Suspense } from 'react';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Routes, Route }                   from 'react-router-dom';
-import Home                                from './pages/Homepage';
-import Login                               from './pages/Login';
-import SignUp                              from './pages/SignUp';
-import Loading                             from './pages/Loading';
+import { Routes, Route } from 'react-router-dom';
+import Home from './pages/Homepage';
+import Login from './pages/Login';
+import SignUp from './pages/SignUp';
+import Loading from './pages/Loading';
 import './App.css';
-import Discover                            from './pages/DiscoverPage';
-import AddToPlaylist                       from './pages/AddToPlaylist';
-import PlaylistDetail                      from './pages/PlaylistDetail';
-import ProtectedRoute                      from './components/layout/ProtectedRoute';
+import Discover from './pages/DiscoverPage';
+
+
+import AddToPlaylist from './pages/AddToPlaylist';
+import PlaylistDetail from './pages/PlaylistDetail';
+import ProtectedRoute from './components/layout/ProtectedRoute';
 // import AdminProtectedRoute                 from './components/layout/AdminProtectedRoute';
-import ListPage                            from './pages/ListPage';
-import BrowseRedirect                      from './components/layout/BrowseRedirect';
-import MusicPlayer                         from './components/layout/MusicPlayer';
+import ListPage from './pages/ListPage';
+import BrowseRedirect from './components/layout/BrowseRedirect';
+import MusicPlayer from './components/layout/MusicPlayer';
+import SearchPage from './pages/SearchPage';
+// import FilteredSongsTable2 from './components/common/FilteredSongsTable2'; test layout
+import ListPage2 from './pages/ListPage2';
 
 import { AppProvider } from './components/common/AppContext';
 
@@ -27,19 +32,24 @@ function App() {
       <Routes>
         <Route path="/loading" element={<Loading />} />
         <Route path="/" element={<Home />} />
+        <Route path="/search" element={<SearchPage />} />
+        <Route path="/album" element={<ListPage2 />} />
+
         <Route path="/home" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/discover" element={<Discover />} />  
+        <Route path="/discover" element={<Discover />} />
+
+
         <Route path="/Admin" element={
-            <Suspense 
-              fallback={<div>Loading Admin...</div>}
-            >
-              {/* <AdminProtectedRoute> */}
-                <AdminPage />
-              {/* </AdminProtectedRoute> */}
-            </Suspense>
-          } />
+          <Suspense
+            fallback={<div>Loading Admin...</div>}
+          >
+            {/* <AdminProtectedRoute> */}
+            <AdminPage />
+            {/* </AdminProtectedRoute> */}
+          </Suspense>
+        } />
         <Route path="/:source/listpage" element={<ListPage />} />
 
         {/* dynamic pages for genres, moods, and artists */}
@@ -56,8 +66,8 @@ function App() {
         <Route path="/artist/listpage" element={<ListPage source={"artists"} />} />
 
         <Route path="/playlist/add/:id" element={<ProtectedRoute>   <AddToPlaylist />                     </ProtectedRoute>} />
-        <Route path="/playlist/:id"     element={<ProtectedRoute>   <PlaylistDetail />                    </ProtectedRoute>} />
-        <Route path="/favorites"        element={<ProtectedRoute>   <ListPage pageType={'favorites'} />   </ProtectedRoute>} />
+        <Route path="/playlist/:id" element={<ProtectedRoute>   <PlaylistDetail />                    </ProtectedRoute>} />
+        <Route path="/favorites" element={<ProtectedRoute>   <ListPage pageType={'favorites'} />   </ProtectedRoute>} />
 
       </Routes>
       <MusicPlayer />

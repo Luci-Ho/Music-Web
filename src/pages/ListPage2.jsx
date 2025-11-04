@@ -4,11 +4,11 @@ import Dashboard from '../components/layout/Dashboard';
 import '../App.css';
 import '../style/Layout.css'
 import Footer from '../components/layout/Footer';
-import FilteredSongsTable from '../components/common/FilteredSongsTable';
+import FilteredSongsTable2 from '../components/common/FilteredSongsTable2';
 import data from '../routes/db.json';
 
 
-const ListPage = ({ source: propSource, pageType }) => {
+const ListPage2 = ({ source: propSource, pageType }) => {
     // Read params for different route types
     const params = useParams();
     const initialSource = propSource || params.source || '';
@@ -34,7 +34,7 @@ const ListPage = ({ source: propSource, pageType }) => {
                 <div style={{ display: 'flex', width: '100%' }}>
                     <Dashboard />
                     <div className='container'>
-                        <FilteredSongsTable filterType={'favorites'} title={'Your'} />
+                        <FilteredSongsTable2 filterType={'favorites'} title={'Your'} />
                         <Footer />
                     </div>
                 </div>
@@ -54,7 +54,7 @@ const ListPage = ({ source: propSource, pageType }) => {
                 <div style={{ display: 'flex', width: '100%' }}>
                     <Dashboard />
                     <div className='container'>
-                        <FilteredSongsTable filterType={effectiveType} filterId={effectiveId} title={title} />
+                        <FilteredSongsTable2 filterType={effectiveType} filterId={effectiveId} title={title} />
                         <Footer />
                     </div>
                 </div>
@@ -68,7 +68,7 @@ const ListPage = ({ source: propSource, pageType }) => {
             <div style={{ display: 'flex', width: '100%' }}>
                 <Dashboard />
                 <div className='container'>
-                    {/* <List source={source} /> */}
+                    <p>hello</p>
                     <Footer />
                 </div>
                 
@@ -78,4 +78,4 @@ const ListPage = ({ source: propSource, pageType }) => {
     );
 };
 
-export default ListPage;
+export default ListPage2;
