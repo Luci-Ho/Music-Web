@@ -2,12 +2,16 @@ import React, { useState, useEffect, useMemo } from 'react';
 import data from '../../routes/db.json';
 import '../../style/VA.css';
 import '../../style/Layout.css'
-import {  PlayCircleOutlined, HeartFilled, HeartTwoTone } from '@ant-design/icons';
+import { PlayCircleOutlined, HeartFilled, HeartTwoTone } from '@ant-design/icons';
 import { useNavigate, useLocation } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 import { toast } from 'react-toastify';
 import SectionTitle from './SectionTitle';
 import TopBar from '../layout/TopBar';
+import { removeVietnameseTones } from '../../utils/StringUtils';
+import { useContext } from 'react';
+import { AppContext } from '../common/AppContext'; // đường dẫn đúng tới AppContext
+
 
 /**
  * FilteredSongsTable
@@ -21,6 +25,8 @@ const FilteredSongsTable = ({ filterType = 'genre', filterId, title }) => {
     const artists = data.artists || [];
     const albums = data.albums || [];
     const navigate = useNavigate();
+    const { selectSong } = useContext(AppContext);
+    const { playAll } = useContext(AppContext);
 
     // banner image depends on the selected filter entry
     let bannerImg = null;
@@ -33,13 +39,15 @@ const FilteredSongsTable = ({ filterType = 'genre', filterId, title }) => {
     }
 
     // build maps for quick lookup
-    const artistMap = useMemo(() => Object.fromEntries(artists.map(a => [a.id, a.name])), [artists]);
+    const artistMap = useMemo(() => Object.fromEntries((artists || []).map(a => [a.id, a.name])), [artists]);
     const albumMap = useMemo(() => Object.fromEntries(albums.map(a => [a.id, a.title])), [albums]);
+
 
     // auth
     const { user, isLoggedIn, login } = useAuth();
     const location = useLocation();
     const [favorites, setFavorites] = useState(() => (user && Array.isArray(user.favorites) ? user.favorites : []));
+
 
     useEffect(() => {
         setFavorites(user && Array.isArray(user.favorites) ? user.favorites : []);
@@ -60,31 +68,64 @@ const FilteredSongsTable = ({ filterType = 'genre', filterId, title }) => {
                 return songs.filter(s => s.moodId === filterId);
             case 'artist':
                 return songs.filter(s => s.artistId === filterId || String(s.artist).toLowerCase() === String(filterId).toLowerCase());
+            case 'search':
+
+            case 'search':
+                const normalizedKeyword = removeVietnameseTones(String(filterId).toLowerCase());
+
+                return songs.filter(s => {
+                    const title = removeVietnameseTones(String(s.title || '').toLowerCase());
+                    const artistName = removeVietnameseTones(String(artistMap[s.artistId] || '').toLowerCase());
+                    return title.includes(normalizedKeyword) || artistName.includes(normalizedKeyword);
+                });
+
+
             default:
                 return [];
         }
     }, [songs, filterType, filterId, user]);
 
     return (
-        <div className="bg-[#1171E2] rounded-lg bg-gradient-to-r from-blue-600 to-gray-700 p-0 content">
+        <div className="bg-[#2576d2]  bg-gradient-to-r from-blue-900 to-gray-700 p-0 content">
             <div className="bluebox ">
                 <div className="TopPart bg-gradient-to-r from-blue-400 to-gray-600 rounded-lg">
-                <TopBar />
-                <div className="top2">
+                    <TopBar />
+                    <div className="top2">
                         <div className="BannerPart">
-                            <img src={bannerImg || "https://www.freeiconspng.com/uploads/valentine-heart-icon-6.png"} alt="Banner" className="w-[268px] h-[268px] object-cover p-5" />
+                            {bannerImg ? (
+                                <img
+                                    src={bannerImg}
+                                    alt="Banner"
+                                    className="w-[268px] h-[268px] object-cover p-0"
+                                    style={{
+                                        borderRadius: '8px',
+                                        boxShadow: "1px 2px 3px rgba(30, 30, 30, 1)"
+                                    }}
+                                />
+                            ) : (
+                                <img
+                                    src="https://www.freeiconspng.com/uploads/valentine-heart-icon-6.png"
+                                    alt="Default Banner"
+                                    className="w-[268px] h-[268px] object-contain p-0"
+                                />
+                            )}
+
                             <div className="BannerText">
-                                <SectionTitle title1={title || "Trending Song"} title2={filterType} />
+                                {typeof title === 'string'
+                                    ? <SectionTitle title1={title} title2={filterType} />
+                                    : title}
+
                                 <p className="btext">Discover the latest hits and timeless classics.</p>
                                 <p className="bts">{filtered.length} songs</p>
                             </div>
-                            <div className="playbutton">
-                                <p className="playall"> Play All</p>
+                            <div className="playbutton" onClick={() => playAll(filtered)}>
+                                <p className="playall">Play All</p>
                                 <PlayCircleOutlined className="playicon" />
                             </div>
+
                         </div>
+                    </div>
                 </div>
-            </div> 
                 <div className="SongList mt-5">
                     <table className="table-auto w-full text-left text-white">
                         <thead>
@@ -104,47 +145,47 @@ const FilteredSongsTable = ({ filterType = 'genre', filterId, title }) => {
                                 const artistName = artistMap[s.artistId] || s.artist || '-';
                                 const isFav = favorites.includes(s.id);
 
-                        const toggleFavorite = async (e) => {
-                            e.preventDefault();
-                            e.stopPropagation();
+                                const toggleFavorite = async (e) => {
+                                    e.preventDefault();
+                                    e.stopPropagation();
 
-                            if (!isLoggedIn) {
-                                // require login; send user to login page and preserve return location
-                                navigate('/login', { state: { from: location } });
-                                return;
-                            }
+                                    if (!isLoggedIn) {
+                                        // require login; send user to login page and preserve return location
+                                        navigate('/login', { state: { from: location } });
+                                        return;
+                                    }
 
-                            // optimistic update
-                            const updated = isFav ? favorites.filter(id => id !== s.id) : [...favorites, s.id];
-                            const prev = favorites;
-                            setFavorites(updated);
+                                    // optimistic update
+                                    const updated = isFav ? favorites.filter(id => id !== s.id) : [...favorites, s.id];
+                                    const prev = favorites;
+                                    setFavorites(updated);
 
-                            // update local user copy and persist locally
+                                    // update local user copy and persist locally
                                     const updatedUser = { ...(user || {}), favorites: updated };
                                     login(updatedUser);
-                            try { window.dispatchEvent(new Event('userUpdated')); } catch (err) { /* ignore */ }
+                                    try { window.dispatchEvent(new Event('userUpdated')); } catch (err) { /* ignore */ }
 
-                            // persist to backend (json-server style)
-                            const API_USERS = 'http://localhost:4000/users';
-                            try {
+                                    // persist to backend (json-server style)
+                                    const API_USERS = 'http://localhost:4000/users';
+                                    try {
                                         const res = await fetch(`${API_USERS}/${user.id}`, {
                                             method: 'PATCH',
                                             headers: { 'Content-Type': 'application/json' },
                                             body: JSON.stringify({ favorites: updated }),
                                         });
 
-                                if (!res.ok) throw new Error(`Server responded ${res.status}`);
+                                        if (!res.ok) throw new Error(`Server responded ${res.status}`);
 
-                                toast.success(isFav ? 'Removed from favorites' : 'Added to favorites');
-                            } catch (err) {
-                                // rollback
-                                setFavorites(prev);
-                                const rollbackUser = { ...(user || {}), favorites: prev, favorite: prev };
-                                login(rollbackUser);
-                                try { window.dispatchEvent(new Event('userUpdated')); } catch (e) { /* ignore */ }
-                                toast.error('Không thể cập nhật yêu thích. Vui lòng thử lại.');
-                            }
-                        };
+                                        toast.success(isFav ? 'Removed from favorites' : 'Added to favorites');
+                                    } catch (err) {
+                                        // rollback
+                                        setFavorites(prev);
+                                        const rollbackUser = { ...(user || {}), favorites: prev, favorite: prev };
+                                        login(rollbackUser);
+                                        try { window.dispatchEvent(new Event('userUpdated')); } catch (e) { /* ignore */ }
+                                        toast.error('Không thể cập nhật yêu thích. Vui lòng thử lại.');
+                                    }
+                                };
 
                                 return (
                                     <tr key={s.id || i} className={"hover:bg-gray-800/30"}>
@@ -158,17 +199,28 @@ const FilteredSongsTable = ({ filterType = 'genre', filterId, title }) => {
                                                 </div>
                                             </div>
                                         </td>
-                                        <td className="py-2 text-gray-300">{s.release_date || s.releaseYear || '-'}</td>
+                                        <td className="py-2 text-gray-300 ">{s.release_date || s.releaseYear || '-'}</td>
                                         <td className="py-2 text-gray-300">{albumTitle}</td>
-                                        <td className="py-2 text-gray-300">{s.duration || '-'}</td>
+                                        <td className="py-2 text-gray-300 ">{s.duration || '-'}</td>
                                         <td className="py-2 text-gray-300">
-                                            <button onClick={toggleFavorite} title={isFav ? 'Remove from favorites' : 'Add to favorites'} style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}>
+                                            <button
+                                                onClick={toggleFavorite}
+                                                title={isFav ? 'Remove from favorites' : 'Add to favorites'}
+                                                style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}>
                                                 {isFav ? <HeartFilled style={{ color: 'red', fontSize: '1.25rem' }} /> : <HeartTwoTone twoToneColor="#eb2f96" style={{ fontSize: '1.25rem' }} />}
                                             </button>
                                         </td>
+
                                         <td className="py-2 text-right pr-4">
-                                            <PlayCircleOutlined color={"#f63391a"} style={{ fontSize: '1.25rem' }} />
+                                            <button
+                                                onClick={() => selectSong(s)}
+                                                title="Play song"
+                                                style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}
+                                            >
+                                                <PlayCircleOutlined style={{ fontSize: '1.25rem', color: '#f63391' }} />
+                                            </button>
                                         </td>
+
                                     </tr>
                                 );
                             })}
