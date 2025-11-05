@@ -414,27 +414,27 @@
     {
       "id": "g106",
       "title": "Jazz Track",
-      "img": "https://via.placeholder.com/150?text=Genre+Jazz"
+      "img": "https://www.liveabout.com/thmb/xPsvdyPPm0kPBT1Q5_t8NsVXfGg=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/silhouette-of-five-players-in-jazz-band--white-background-808891-005-59fcba5a4e4f7d001a6818a3.jpg"
     },
     {
       "id": "g107",
       "title": "Country Track",
-      "img": "https://via.placeholder.com/150?text=Genre+Country"
+      "img": "https://staticctf.ubisoft.com/J3yJr34U2pZ2Ieem48Dwy9uqj5PNUQTn/1AZgNIKJ4yJsofzZHVDWJC/5f0f2c02f02d7586210842e01ff79ce2/8_country_songs_960x540.png"
     },
     {
       "id": "g108",
       "title": "Indie Track",
-      "img": "https://via.placeholder.com/150?text=Genre+Indie"
+      "img": "https://www.billboard.com/wp-content/uploads/media/Ngot-bb-international-2019-billboard-1548.jpg"
     },
     {
       "id": "g109",
       "title": "Metal Track",
-      "img": "https://via.placeholder.com/150?text=Genre+Metal"
+      "img": "https://cdn-asia.uniteasia.org/uploads/2023/07/23adf0ec-unnamed-2-1024x683.jpg"
     },
     {
       "id": "g110",
       "title": "Dance Track",
-      "img": "https://via.placeholder.com/150?text=Genre+Dance"
+      "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0j6RvHZH9wFd4It9phN1G1s5LYn-7uLfK_g&s"
     }
   ],
   "moods": [
@@ -466,27 +466,27 @@
     {
       "id": "m206",
       "title": "Focus",
-      "img": "https://via.placeholder.com/150?text=Mood+Focus"
+      "img": "https://i.ytimg.com/vi/O4AnyCM6Dsc/maxresdefault.jpg"
     },
     {
       "id": "m207",
       "title": "Party",
-      "img": "https://via.placeholder.com/150?text=Mood+Party"
+      "img": "https://blog-admin.siriusxm.com/wp-content/uploads/2024/05/GettyImages-486420378-1.jpg"
     },
     {
       "id": "m208",
       "title": "Romantic",
-      "img": "https://via.placeholder.com/150?text=Mood+Romantic"
+      "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8uNr49CQpGDpd-e8DB3nlUWSalOJsvrhghQ&s"
     },
     {
       "id": "m209",
       "title": "Dark",
-      "img": "https://via.placeholder.com/150?text=Mood+Dark"
+      "img": "https://images.unsplash.com/uploads/1412282232015a06e258a/4bdd2a58?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZGFyayUyMGJhY2tncm91bmQlMjBtdXNpY3xlbnwwfHwwfHx8MA%3D%3D&fm=jpg&q=60&w=3000"
     },
     {
       "id": "m210",
       "title": "Motivated",
-      "img": "https://via.placeholder.com/150?text=Mood+Motivated"
+      "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ6PSi2B7vQgV1cLis68Z0yoGTpIbW0XxHrlQ&s"
     }
   ],
   "artists": [
@@ -538,27 +538,27 @@
     {
       "id": "a310",
       "name": "Kendrick Lamar",
-      "img": "https://i.scdn.co/image/ab6761610000e5eb437b9e2a82505b3d93ff1022"
+      "img": "https://images.sk-static.com/images/media/profile_images/artists/3277856/huge_avatar"
     },
     {
       "id": "a311",
       "name": "Ariana Grande",
-      "img": "https://i.scdn.co/image/ab6761610000e5ebcdce7620dc940db079bf4952"
+      "img": "https://www.billboard.com/wp-content/uploads/2022/08/Ariana-Grande-the-voice-2021-billboard-1548.jpg?w=875&h=583&crop=1"
     },
     {
       "id": "a312",
       "name": "Post Malone",
-      "img": "https://i.scdn.co/image/ab6761610000e5eb99e4fca7c0b7cb166d915789"
+      "img": "https://photo-resize-zmp3.zmdcdn.me/w240_r1x1_jpeg/avatars/e/0/6/6/e066b9b7af0105cbdf497dbb0505949e.jpg"
     },
     {
       "id": "a313",
       "name": "Lady Gaga",
-      "img": "https://i.scdn.co/image/ab6761610000e5eb2ecf4c07f652b850a41b42a8"
+      "img": "https://media.allure.com/photos/5d7043b0419f380008be6d23/master/w_1600%2Cc_limit/1019-allure-cover-lady-gaga-aura-tout-vu-dress-closeup.png"
     },
     {
       "id": "a314",
       "name": "Justin Bieber",
-      "img": "https://i.scdn.co/image/ab6761610000e5eb8ae7f2aaa9817a704a87ea36"
+      "img": "https://static.wikia.nocookie.net/celebrityverse/images/7/71/GxAQGKx.jpg/revision/latest?cb=20170617125513"
     },
     {
       "id": "a315",
@@ -588,7 +588,7 @@
     {
       "id": "a405",
       "name": "Myra Trần",
-      "img": "https://i1.sndcdn.com/avatars-000632235730-0i4vq6-t500x500.jpg"
+      "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMMgohczaJs7XoLn1Mz4WwGJWlKj7JAyVNww&s"
     },
     {
       "id": "a406",
@@ -613,12 +613,12 @@
     {
       "id": "a410",
       "name": "Bích Phương",
-      "img": "https://i1.sndcdn.com/avatars-kCq7wgKgXqKOX4pe-rWi1Qw-t500x500.jpg"
+      "img": "https://giadinh.mediacdn.vn/zoom/740_463/2019/10/11/photo-4-1570764247264236459643-crop-1570764493767720021434.jpg"
     },
     {
       "id": "a411",
       "name": "GREY D",
-      "img": "https://photo-resize-zmp3.zmdcdn.me/w600_r1x1_jpeg/avatars/1/6/8/d/168d3df88aa13d58bf44fb8f3d2ebfeb.jpg"
+      "img": "https://bazaarvietnam.vn/wp-content/uploads/2023/05/Harpers-Bazaar-GREY-D-tai-show-Lyrics-Story_02.jpg"
     },
     {
       "id": "a412",
@@ -638,7 +638,7 @@
     {
       "id": "a415",
       "name": "Obito",
-      "img": "https://photo-resize-zmp3.zmdcdn.me/w600_r1x1_jpeg/avatars/9/4/c/3/94c3a855d8de4bb4b3f3a53ed6a66151.jpg"
+      "img": "https://i.pinimg.com/736x/54/4a/b4/544ab4be1001745f7235d786ecfda66c.jpg"
     }
   ],
   "musicVideos": [
