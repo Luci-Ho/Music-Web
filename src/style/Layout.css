@@ -18,6 +18,16 @@
 html, body {
   max-width: none !important;
   overflow-x: auto;
+  /* Ẩn thanh scroll dọc */
+  overflow-y: auto;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+/* Ẩn thanh scroll cho WebKit browsers (Chrome, Safari, Edge) */
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
 }
   
   /* Toàn bộ trang */
@@ -45,8 +55,17 @@ html, body {
   min-width: calc(100vw - 300px);
   max-width: none;
   overflow-x: auto;
+  /* Ẩn thanh scroll dọc cho container */
+  overflow-y: auto;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
   box-sizing: border-box;
   transition: margin-left 0.25s ease, width 0.25s ease;
+}
+
+/* Ẩn thanh scroll cho WebKit browsers trong container */
+.container::-webkit-scrollbar {
+  display: none;
 }
 
 
@@ -72,6 +91,15 @@ html, body {
     display: flex;
     flex-direction: column;
     overflow-x: auto;
+    /* Ẩn thanh scroll dọc cho content */
+    overflow-y: auto;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+  }
+
+  /* Ẩn thanh scroll cho WebKit browsers trong content */
+  .content::-webkit-scrollbar {
+    display: none;
   }
 
   /* Content placeholder styling */
@@ -215,6 +243,11 @@ html, body {
   overflow-y: auto; /* 👈 Cho phép cuộn nếu nội dung dài */
   z-index: 1000;
   transition: width 0.2s ease, padding-top 0.2s ease;
+}
+
+/* Ẩn thanh scroll cho WebKit browsers trong dashboard */
+.dashboard::-webkit-scrollbar {
+  display: none;
 }
 
 /* Collapsed dashboard state */
@@ -717,4 +750,29 @@ text-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
   display:flex;
   font-size: 10pt;
   justify-content: center;
+}
+
+/* Ẩn thanh scroll cho tất cả elements */
+* {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+/* Ẩn thanh scroll cho WebKit browsers */
+*::-webkit-scrollbar {
+  display: none;
+}
+
+/* Đảm bảo vẫn có thể scroll */
+div[style*="overflow-y"],
+div[style*="overflow: auto"],
+.scrollable {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+div[style*="overflow-y"]::-webkit-scrollbar,
+div[style*="overflow: auto"]::-webkit-scrollbar,
+.scrollable::-webkit-scrollbar {
+  display: none;
 }
