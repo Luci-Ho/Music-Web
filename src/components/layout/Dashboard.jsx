@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // ✅ Đừng quên import
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import '../../style/Layout.css';
 import {
   HomeFilled,
@@ -13,15 +13,13 @@ import {
   SettingOutlined,
   LogoutOutlined
 } from '@ant-design/icons';
-
-// import HomeContent from '../../pages/HomeContent';
-// import Discover from '../../pages/Discover';
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
+import { useDashboard } from '../../App';
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem('user'));
-  const [collapsed, setCollapsed] = useState(false);
+  const { dashboardCollapsed, setDashboardCollapsed } = useDashboard();
 
   useEffect(() => {
     const toggleSidebar = () => {
@@ -48,17 +46,23 @@ const Dashboard = () => {
     navigate('/login');
   };
 
-  const MenuItem = ({ icon, label, to }) => (
-    <div className="dashboard-menu-item-hover" onClick={() => navigate(to)}>
+  const MenuItem = ({ icon, label, to, onClick }) => (
+    <div className="dashboard-menu-item-hover" onClick={() => {
+      if (onClick) {
+        onClick();
+      } else {
+        navigate(to);
+      }
+    }}>
       {icon}
       <p className="dashboard-menu-label">{label}</p>
     </div>
   );
 
   return (
-    <div className={`dashboard ${collapsed ? 'collapsed' : ''}`} id="dashboard">
-      <div className="collapse-toggle" onClick={() => setCollapsed(!collapsed)} title={collapsed ? 'Expand' : 'Collapse'}>
-        {collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+    <div className={`dashboard ${dashboardCollapsed ? 'collapsed' : ''}`} id="dashboard">
+      <div className="collapse-toggle" onClick={() => setDashboardCollapsed(!dashboardCollapsed)} title={dashboardCollapsed ? 'Expand' : 'Collapse'}>
+        {dashboardCollapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
       </div>
       <div className="logo">
         <img src="/Ảnh/eac87d338a32800109b78daee1589299b8812535.png" alt="" className="logoimg" />
@@ -99,10 +103,12 @@ const Dashboard = () => {
         <p className="Menu">General</p>
         <div className="Menu-part">
           <MenuItem icon={<SettingOutlined />} label="Setting" to="/settings" />
-          <div className="dashboard-menu-item-hover" onClick={handleLogout}>
+          <MenuItem icon={<LogoutOutlined />} label="Log Out" to="/login" onClick={handleLogout} />
+          {/* <div className="dashboard-menu-item-hover" onClick={handleLogout}>
             <LogoutOutlined />
             <p className="Logout">Log Out</p>
-          </div>
+          </div> */}
+          
         </div>
       </div>
     </div>

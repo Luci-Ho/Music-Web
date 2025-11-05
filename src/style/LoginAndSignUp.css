@@ -66,7 +66,7 @@ html, body {
     font-size: 24px;
     font-weight: 700;
     word-wrap: break-word;
-    background: linear-gradient(to right, rgba(238, 16, 176, 1) 10%, rgba(14, 158, 239, 0.92) 90%);
+    background: linear-gradient(to right, #EE10B0 10%, #764ba2 90%);
     
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -282,7 +282,7 @@ padding: 5px 5px;
 }
 
 .signup-button {
-    background-color: #3585ee;
+    background-color: #EE10B0;
 }
 
 /* Đồng hồ (nếu có chèn thủ công) */

@@ -10,7 +10,6 @@ import {
 } from '@ant-design/icons';
 import { toast } from 'react-toastify';
 
-import Dashboard from '../components/layout/Dashboard';
 import TopBar from '../components/layout/TopBar';
 import Footer from '../components/layout/Footer';
 import SectionTitle from '../components/common/SectionTitle';
@@ -137,7 +136,6 @@ const PlaylistsPage = () => {
     return (
       <div className="body">
         <div style={{ display: 'flex', width: '100%' }}>
-          <Dashboard />
           <div className="container">
             <TopBar />
             <div className="content">
@@ -155,7 +153,6 @@ const PlaylistsPage = () => {
   return (
     <div className="body">
       <div style={{ display: 'flex', width: '100%' }}>
-        <Dashboard />
         <div className="container">
           <TopBar />
           <div className="content bg-[#1171E2] rounded-lg bg-gradient-to-r from-blue-600 to-gray-700 p-0">

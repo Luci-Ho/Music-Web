@@ -41,8 +41,7 @@ return (
         <Avatar icon={<PlayCircleOutlined />} />
         <div className="brand">Melodies</div>
       </div>
-      <button className="collapse-toggle" onClick={() => setCollapsed(!collapsed)} aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'} style={{background:'transparent', border:'none', color:'#d1d5db', cursor:'pointer'}}>
-      </button>
+      {/* Collapse toggle hidden in admin */}
     </div>
 
 

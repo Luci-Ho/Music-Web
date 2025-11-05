@@ -1,7 +1,7 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useState, createContext, useContext } from 'react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import Home from './pages/Homepage';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
@@ -20,8 +20,8 @@ import ProtectedRoute                      from './components/layout/ProtectedRo
 import ListPage from './pages/ListPage';
 import BrowseRedirect from './components/layout/BrowseRedirect';
 import MusicPlayer from './components/layout/MusicPlayer';
+import Dashboard from './components/layout/Dashboard';
 import SearchPage from './pages/SearchPage';
-// import FilteredSongsTable2 from './components/common/FilteredSongsTable2'; test layout
 import ListPage2 from './pages/ListPage2';
 import AllSongsPage from './pages/AllSongsPage';
 
@@ -30,59 +30,80 @@ import { AppProvider } from './components/common/AppContext';
 // lazy-load admin bundle so the main app doesn't break if admin imports have missing deps
 const AdminPage = React.lazy(() => import('./Admin/pages/AdminPage'));
 
+// Dashboard Context to share collapsed state
+const DashboardContext = createContext();
+export const useDashboard = () => useContext(DashboardContext);
+
 function App() {
+  const [dashboardCollapsed, setDashboardCollapsed] = useState(false);
+  const location = useLocation();
+  
+  // Hide dashboard and music player for login/signup/loading/admin pages
+  const hideLayout = ['/login', '/signup', '/loading'].includes(location.pathname) || location.pathname.startsWith('/admin');
+
   return (
     <AppProvider>
-      <Routes>
-        <Route path="/loading" element={<Loading />} />
-        <Route path="/" element={<Home />} />
-        <Route path="/search" element={<SearchPage />} />
-        <Route path="/albums" element={<AlbumsPage />} />
+      <DashboardContext.Provider value={{ dashboardCollapsed, setDashboardCollapsed }}>
+        <div className="body">
+          <div style={{ display: 'flex', width: '100%' }}>
+            {!hideLayout && <Dashboard />}
+            
+            <div className={`container ${hideLayout ? 'no-dashboard' : ''}`}>
+              <Routes>
+                <Route path="/loading" element={<Loading />} />
+                <Route path="/" element={<Home />} />
+                <Route path="/search" element={<SearchPage />} />
+                <Route path="/albums" element={<AlbumsPage />} />
 
-        <Route path="/home" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/discover" element={<Discover />} />
+                <Route path="/home" element={<Home />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<SignUp />} />
+                <Route path="/discover" element={<Discover />} />
 
+                <Route path="/admin" element={
+                  <Suspense
+                    fallback={<div>Loading Admin...</div>}
+                  >
+                    {/* <AdminProtectedRoute> */}
+                    <AdminPage />
+                    {/* </AdminProtectedRoute> */}
+                  </Suspense>
+                } />
 
-        <Route path="/Admin" element={
-          <Suspense
-            fallback={<div>Loading Admin...</div>}
-          >
-            {/* <AdminProtectedRoute> */}
-            <AdminPage />
-            {/* </AdminProtectedRoute> */}
-          </Suspense>
-        } />
-        <Route path="/:source/listpage" element={<ListPage />} />
+                <Route path="/:source/listpage" element={<ListPage />} />
 
-        {/* dynamic pages for genres, moods, and artists */}
-        <Route path="/genre/:id" element={<ListPage pageType={'genre'} />} />
-        <Route path="/mood/:id" element={<ListPage pageType={'mood'} />} />
-        <Route path="/artist/:id" element={<ArtistDetailPage />} />
+                {/* dynamic pages for genres, moods, and artists */}
+                <Route path="/genre/:id" element={<ListPage pageType={'genre'} />} />
+                <Route path="/mood/:id" element={<ListPage pageType={'mood'} />} />
+                <Route path="/artist/:id" element={<ArtistDetailPage />} />
 
-        {/* redirect old /browse/:type/:id to canonical routes */}
-        <Route path="/browse/:type/:id" element={<BrowseRedirect />} />
+                {/* redirect old /browse/:type/:id to canonical routes */}
+                <Route path="/browse/:type/:id" element={<BrowseRedirect />} />
 
-        {/* singular listpage routes (View All) mapped to ListPage with source prop */}
-        <Route path="/genre/listpage" element={<ListPage source={"genres"} />} />
-        <Route path="/mood/listpage" element={<ListPage source={"moods"} />} />
-        <Route path="/artist/listpage" element={<ListPage source={"artists"} />} />
+                {/* singular listpage routes (View All) mapped to ListPage with source prop */}
+                <Route path="/genre/listpage" element={<ListPage source={"genres"} />} />
+                <Route path="/mood/listpage" element={<ListPage source={"moods"} />} />
+                <Route path="/artist/listpage" element={<ListPage source={"artists"} />} />
 
-        {/* New pages for playlists, artists and albums */}
-        <Route path="/playlist" element={<ProtectedRoute><PlaylistsPage /></ProtectedRoute>} />
-        <Route path="/artist" element={<ArtistsPage />} />
-        <Route path="/album" element={<AlbumsPage />} />
-        <Route path="/album/:id" element={<AlbumDetailPage />} />
+                {/* New pages for playlists, artists and albums */}
+                <Route path="/playlist" element={<ProtectedRoute><PlaylistsPage /></ProtectedRoute>} />
+                <Route path="/artist" element={<ArtistsPage />} />
+                <Route path="/album" element={<AlbumsPage />} />
+                <Route path="/album/:id" element={<AlbumDetailPage />} />
 
-        <Route path="/playlist/add/:id" element={<ProtectedRoute>   <AddToPlaylist />                     </ProtectedRoute>} />
-        <Route path="/playlist/:id" element={<ProtectedRoute>   <PlaylistDetail />                    </ProtectedRoute>} />
-        <Route path="/favorites" element={<ProtectedRoute>   <ListPage pageType={'favorites'} />   </ProtectedRoute>} />
-        <Route path="/allsongs" element={<AllSongsPage />} />
+                <Route path="/playlist/add/:id" element={<ProtectedRoute>   <AddToPlaylist />                     </ProtectedRoute>} />
+                <Route path="/playlist/:id" element={<ProtectedRoute>   <PlaylistDetail />                    </ProtectedRoute>} />
+                <Route path="/favorites" element={<ProtectedRoute>   <ListPage pageType={'favorites'} />   </ProtectedRoute>} />
+                <Route path="/allsongs" element={<AllSongsPage />} />
 
-      </Routes>
-      <MusicPlayer />
-      <ToastContainer />
+              </Routes>
+            </div>
+          </div>
+        </div>
+        
+        {!hideLayout && <MusicPlayer />}
+        <ToastContainer />
+      </DashboardContext.Provider>
     </AppProvider>
   );
 }

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import Dashboard from '../components/layout/Dashboard';
 import '../App.css';
 import '../style/Layout.css'
 import Footer from '../components/layout/Footer';
@@ -30,15 +29,10 @@ const ListPage2 = ({ source: propSource, pageType }) => {
     // If this is a favorites page, render the filtered table using the user's favorites
     if (effectiveType === 'favorites') {
         return (
-            <div className="body">
-                <div style={{ display: 'flex', width: '100%' }}>
-                    <Dashboard />
-                    <div className='container'>
-                        <FilteredSongsTable2 filterType={'favorites'} title={'Your'} />
-                        <Footer />
-                    </div>
-                </div>
-            </div>
+            <>
+                <FilteredSongsTable2 filterType={'favorites'} title={'Your'} />
+                <Footer />
+            </>
         );
     }
 
@@ -50,31 +44,19 @@ const ListPage2 = ({ source: propSource, pageType }) => {
         if (effectiveType === 'artist') title = (data.artists.find(a => a.id === effectiveId) || {}).name || '';
 
         return (
-            <div className="body">
-                <div style={{ display: 'flex', width: '100%' }}>
-                    <Dashboard />
-                    <div className='container'>
-                        <FilteredSongsTable2 filterType={effectiveType} filterId={effectiveId} title={title} />
-                        <Footer />
-                    </div>
-                </div>
-            </div>
+            <>
+                <FilteredSongsTable2 filterType={effectiveType} filterId={effectiveId} title={title} />
+                <Footer />
+            </>
         );
     }
 
     // Otherwise render the listpage as before
     return (
-        <div className="body">
-            <div style={{ display: 'flex', width: '100%' }}>
-                <Dashboard />
-                <div className='container'>
-                    <p>hello</p>
-                    <Footer />
-                </div>
-                
-            </div>
-            
-        </div>
+        <>
+            <p>hello</p>
+            <Footer />
+        </>
     );
 };
 

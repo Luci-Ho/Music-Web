@@ -8,7 +8,6 @@ import useDataLoader from '../hooks/useDataLoader';
 import useFormatViews from '../hooks/useFormatViews';
 import useImageFallback from '../hooks/useImageFallback';
 
-import Dashboard from '../components/layout/Dashboard';
 import TopBar from '../components/layout/TopBar';
 import Footer from '../components/layout/Footer';
 import SectionTitle from '../components/common/SectionTitle';
@@ -102,20 +101,17 @@ const AlbumsPage = () => {
   }
 
   return (
-    <div className="body">
-      <div style={{ display: 'flex', width: '100%' }}>
-        <Dashboard />
-        <div className="container">
-          <TopBar />
-          <div className="content albums-content">
-            <div className="bluebox">
-              <div className="TopPart albums-header">
-                <div className="top2">
-                  <div className="BannerPart">
-                    <img 
-                      src="https://img.freepik.com/free-vector/realistic-music-record-label-disk-mockup_1017-33906.jpg?semt=ais_hybrid&w=740&q=80" 
-                      alt="Albums" 
-                      className="albums-banner-image" 
+    <>
+      <TopBar />
+      <div className="content albums-content">
+        <div className="bluebox">
+          <div className="TopPart albums-header">
+            <div className="top2">
+              <div className="BannerPart">
+                <img 
+                  src="https://img.freepik.com/free-vector/realistic-music-record-label-disk-mockup_1017-33906.jpg?semt=ais_hybrid&w=740&q=80" 
+                  alt="Albums" 
+                  className="albums-banner-image" 
                     />
                     <div className="BannerText">
                       <SectionTitle title1="All Albums" title2="" />
@@ -216,9 +212,7 @@ const AlbumsPage = () => {
             </div>
           </div>
           <Footer />
-        </div>
-      </div>
-    </div>
+    </>
   );
 };
 

@@ -5,6 +5,7 @@ import LikeButton from '../common/LikeButton';
 import { handleFavoriteToggle } from '../../utils/handleFavoriteToggle';
 import { useNavigate, useLocation } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
+import { useDashboard } from '../../App';
 import {
   DoubleLeftOutlined,
   DoubleRightOutlined,
@@ -28,44 +29,21 @@ export default function MusicPlayer() {
   const [duration, setDuration] = useState(0);
   const [canSeek, setCanSeek] = useState(false);
   const [shouldAutoPlay, setShouldAutoPlay] = useState(false);
-  const [dashboardCollapsed, setDashboardCollapsed] = useState(false);
 
   const { user, login, isLoggedIn } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const { dashboardCollapsed } = useDashboard();
   const [favorites, setFavorites] = useState(() =>
     user && Array.isArray(user.favorites) ? user.favorites : []
   );
 
+  // Hide music player in admin routes and login/signup pages
+  const hidePlayer = ['/login', '/signup', '/loading'].includes(location.pathname);
 
   useEffect(() => {
     setFavorites(user && Array.isArray(user.favorites) ? user.favorites : []);
   }, [user]);
-
-  // Detect dashboard collapsed state
-  useEffect(() => {
-    const checkDashboardState = () => {
-      const dashboard = document.querySelector('.dashboard');
-      if (dashboard) {
-        setDashboardCollapsed(dashboard.classList.contains('collapsed'));
-      }
-    };
-
-    // Check immediately
-    checkDashboardState();
-
-    // Create observer to watch for class changes
-    const dashboard = document.querySelector('.dashboard');
-    if (dashboard) {
-      const observer = new MutationObserver(checkDashboardState);
-      observer.observe(dashboard, { 
-        attributes: true, 
-        attributeFilter: ['class'] 
-      });
-
-      return () => observer.disconnect();
-    }
-  }, []);
 
   const isFav = currentSong?.id && favorites.includes(currentSong.id);
 
@@ -88,6 +66,12 @@ export default function MusicPlayer() {
     const audio = audioRef.current;
     if (!audio || !currentSong) return;
 
+    // Validate song data
+    if (!currentSong.streaming_links?.audio_url) {
+      console.error('Song missing audio URL:', currentSong);
+      return;
+    }
+
     const handleLoadedMetadata = () => {
       setDuration(audio.duration || 0);
       setCanSeek(true);
@@ -106,6 +90,11 @@ export default function MusicPlayer() {
       setProgress(audio.currentTime);
     };
 
+    const handleError = (e) => {
+      console.error('Audio loading error:', e);
+      setIsPlaying(false);
+    };
+
     // Dừng audio hiện tại trước
     audio.pause();
     setIsPlaying(false);
@@ -117,6 +106,7 @@ export default function MusicPlayer() {
     // Đăng ký event listeners
     audio.addEventListener("loadedmetadata", handleLoadedMetadata);
     audio.addEventListener("timeupdate", updateProgress);
+    audio.addEventListener("error", handleError);
 
     // Reset trạng thái
     setProgress(0);
@@ -125,8 +115,9 @@ export default function MusicPlayer() {
     return () => {
       audio.removeEventListener("loadedmetadata", handleLoadedMetadata);
       audio.removeEventListener("timeupdate", updateProgress);
+      audio.removeEventListener("error", handleError);
     };
-  }, [currentSong]);
+  }, [currentSong, shouldAutoPlay]);
 
   // Xử lý khi bài hát kết thúc
   useEffect(() => {
@@ -198,6 +189,9 @@ export default function MusicPlayer() {
   };
 
   if (!currentSong) return null;
+
+  // Hide music player for login/signup pages
+  if (hidePlayer) return null;
 
   const playerStyle = {
     left: dashboardCollapsed ? '100px' : '300px',

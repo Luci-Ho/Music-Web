@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import Dashboard from '../components/layout/Dashboard';
 import '../App.css';
 import '../style/Layout.css'
 import Footer from '../components/layout/Footer';
@@ -31,15 +30,10 @@ const ListPage = ({ source: propSource, pageType }) => {
     // If this is a favorites page, render the filtered table using the user's favorites
     if (effectiveType === 'favorites') {
         return (
-            <div className="body">
-                <div style={{ display: 'flex', width: '100%' }}>
-                    <Dashboard />
-                    <div className='container'>
-                        <FilteredSongsTable filterType={'favorites'} title={'Your'} />
-                        <Footer />
-                    </div>
-                </div>
-            </div>
+            <>
+                <FilteredSongsTable filterType={'favorites'} title={'Your'} />
+                <Footer />
+            </>
         );
     }
 
@@ -51,39 +45,27 @@ const ListPage = ({ source: propSource, pageType }) => {
         if (effectiveType === 'artist') title = (data.artists.find(a => a.id === effectiveId) || {}).name || '';
 
         return (
-            <div className="body">
-                <div style={{ display: 'flex', width: '100%' }}>
-                    <Dashboard />
-                    <div className='container'>
-                        <FilteredSongsTable filterType={effectiveType} filterId={effectiveId} title={title} />
-                        <Footer />
-                    </div>
-                </div>
-            </div>
+            <>
+                <FilteredSongsTable filterType={effectiveType} filterId={effectiveId} title={title} />
+                <Footer />
+            </>
         );
     }
 
     // Otherwise render the listpage as before
     return (
-        <div className="body">
-            <div style={{ display: 'flex', width: '100%' }}>
-                <Dashboard />
-                <div className='container'>
-                    <div className="content-placeholder">
-                        <FilteredSongsTable filterType={'all'} title={`All Songs from ${source}`} />
-                        {!source && (
-                            <div>
-                                <p>This page displays lists based on the source parameter.</p>
-                                <p>Please provide a valid source to see content.</p>
-                            </div>
-                        )}
+        <>
+            <div className="content-placeholder">
+                <FilteredSongsTable filterType={'all'} title={`All Songs from ${source}`} />
+                {!source && (
+                    <div>
+                        <p>This page displays lists based on the source parameter.</p>
+                        <p>Please provide a valid source to see content.</p>
                     </div>
-                    <Footer />
-                </div>
-                
+                )}
             </div>
-            
-        </div>
+            <Footer />
+        </>
     );
 };
 

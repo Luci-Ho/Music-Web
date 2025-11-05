@@ -19,7 +19,6 @@ import useFormatViews from '../hooks/useFormatViews';
 import useFormatDuration from '../hooks/useFormatDuration';
 import useMusicPlayer from '../hooks/useMusicPlayer';
 
-import Dashboard from '../components/layout/Dashboard';
 import TopBar from '../components/layout/TopBar';
 import Footer from '../components/layout/Footer';
 import SectionTitle from '../components/common/SectionTitle';
@@ -103,22 +102,18 @@ const AlbumDetailPage = () => {
   }
 
   return (
-    <div className="body">
-      <div style={{ display: 'flex', width: '100%' }}>
-        <Dashboard />
-        <div className="container">
-          
-          <div className="content bg-[#1171E2] rounded-lg bg-gradient-to-r from-blue-600 to-gray-700 p-0">
-            <div className="bluebox">
-              {/* Album Header */}
-              <TopBar />
-              <div className="TopPart bg-gradient-to-r from-blue-400 to-gray-600 rounded-lg">
-                <div className="top2">
-                  <div className="BannerPart">
-                    <img 
-                      src="https://media.istockphoto.com/id/1090820484/photo/singer-singing-silhouette.jpg?s=612x612&w=0&k=20&c=VIqPcdZ7M12jJFiO44AxT-hUSRKlNchJbwEGUC8MUIY="
-                      alt={album.title} 
-                      className="w-[268px] h-[268px] object-cover p-5 rounded-lg" 
+    <>
+      <div className="content bg-[#1171E2] rounded-lg bg-gradient-to-r from-blue-600 to-gray-700 p-0">
+        <div className="bluebox">
+          {/* Album Header */}
+          <TopBar />
+          <div className="TopPart bg-gradient-to-r from-blue-400 to-gray-600 rounded-lg">
+            <div className="top2">
+              <div className="BannerPart">
+                <img 
+                  src="https://media.istockphoto.com/id/1090820484/photo/singer-singing-silhouette.jpg?s=612x612&w=0&k=20&c=VIqPcdZ7M12jJFiO44AxT-hUSRKlNchJbwEGUC8MUIY="
+                  alt={album.title} 
+                  className="w-[268px] h-[268px] object-cover p-5 rounded-lg" 
                     />
                     <div className="BannerText">
                       <button 
@@ -321,10 +316,8 @@ const AlbumDetailPage = () => {
               </div>
             </div>
           </div>
-          <Footer />
-        </div>
-      </div>
-    </div>
+      <Footer />
+    </>
   );
 };
 

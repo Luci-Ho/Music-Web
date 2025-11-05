@@ -1,14 +1,13 @@
 import React, { useEffect, useState, useContext  } from "react";
 import "./Slider.css";
-
 import { AppContext } from "./AppContext";
-
+import useMusicPlayer from "../../hooks/useMusicPlayer";
 
 export default function Slider() {
   const [current, setCurrent] = useState(0);
   const [slides, setSlides] = useState([]);
   const [isPaused, setIsPaused] = useState(false);
-  const { setCurrentSong } = useContext(AppContext);
+  const { playSong } = useMusicPlayer();
 
 
   useEffect(() => {
@@ -46,7 +45,7 @@ export default function Slider() {
   const song = slides[current];
 
   const handleListen = () => {
-    setCurrentSong(song);
+    playSong(song);
   }
 
   const getPrevIndex = () => (current - 1 + slides.length) % slides.length;

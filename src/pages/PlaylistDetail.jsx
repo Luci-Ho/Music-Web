@@ -12,7 +12,6 @@ import { toast } from 'react-toastify';
 import useAuth from "../hooks/useAuth";
 import Footer from "../components/layout/Footer";
 import TopBar from "../components/layout/TopBar";
-import Dashboard from "../components/layout/Dashboard";
 import SectionTitle from "../components/common/SectionTitle";
 
 import "../style/Layout.css";
@@ -91,7 +90,6 @@ const PlaylistDetail = () => {
     return (
       <div className="body">
         <div style={{ display: "flex", width: "100%" }}>
-          <Dashboard />
           <div className="container">
             <TopBar />
             <div className="content">
@@ -110,7 +108,6 @@ const PlaylistDetail = () => {
     return (
       <div className="body">
         <div style={{ display: "flex", width: "100%" }}>
-          <Dashboard />
           <div className="container">
             <TopBar />
             <div className="content">
@@ -134,7 +131,6 @@ const PlaylistDetail = () => {
   return (
     <div className="body">
       <div style={{ display: "flex", width: "100%" }}>
-        <Dashboard />
         <div className="container">
           <TopBar />
           <div className="content bg-[#1171E2] rounded-lg bg-gradient-to-r from-blue-600 to-gray-700 p-0">
