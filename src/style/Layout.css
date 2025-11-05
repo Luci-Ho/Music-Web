@@ -24,14 +24,17 @@
   
   /* Phần content chính bên phải dashboard */
   .container {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    background-color: rgba(65, 44, 58, 1);
-    margin-left: 300px;
-      width: calc(100% - 350px);
-    transition: margin-left 0.25s ease, width 0.25s ease;
-  }
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: rgba(65, 44, 58, 1);
+  margin-left: 300px;
+  width: calc(100% - 300px); /* khớp với margin-left */
+  overflow-x: hidden; /* chặn tràn ngang */
+  box-sizing: border-box;
+  transition: margin-left 0.25s ease, width 0.25s ease;
+}
+
 
   /* When the dashboard is collapsed we want the main container to move left
      so there isn't an empty gap. Use sibling selector so the layout updates
@@ -45,7 +48,7 @@
   
   .content {
     flex: 1;
-    padding: 10px;
+    padding: 10px 30px 10px 30px;
     color: white;
     min-height: 100vh;
     display: flex;
@@ -372,7 +375,7 @@ align-items: center;
 
 .footer-content {
   margin-top: 1%;
-  padding: 20px 20px;
+  padding: 10px 40px 40px 40px;
   width: 100%;
   color: white;
   display: flex;
@@ -528,15 +531,18 @@ align-items: center;
   width: 100%;
   padding: 10px 10px 10px 36px;
   /* 👈 chừa khoảng cho icon trái */
-  border-radius: 10px;
-  border: none;
+  border-radius: 6px;
+  border-color: #a9a9a98a;
   background-color: #a9a9a98a;
-  color: white;
+  /* color: white; */
   width: 250px;
+  outline: none;
+  border: none;
+  box-shadow: none;
 }
 
 .TopBar-Search ::placeholder {
-  color: white;
+  color: rgba(255, 255, 255, 0.277);
 }
 
 .search-icon {
@@ -546,16 +552,41 @@ align-items: center;
   transform: translateY(-50%);
   color: white;
   font-size: 16px;
+   outline: none;
+}
+
+.search-icon:focus {
+  outline: none;
+  border: none;
+  box-shadow: none;
 }
 
 .TopBar-Search input::placeholder {
-  color: #fffbfb;
+  color: white;
 
+}
+
+.Search-Suggestions {
+  position: absolute;
+  background: rgba(9, 5, 9, 0.418);
+  border: 5px solid #cccccc00;
+  border-radius: 5px;
+  width: 100%;
+  z-index: 10;
+}
+
+.Search-Suggestions div {
+  padding: 8px;
+  cursor: pointer;
+}
+
+.Search-Suggestions div:hover {
+  /* background: #fffdfd00; */
 }
 
 .TopBar-Menu {
   display: flex;
-  gap: 20px;
+  gap: 40px;
 }
 
 .TopBar-Menu p {

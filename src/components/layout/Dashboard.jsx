@@ -14,8 +14,8 @@ import {
   LogoutOutlined
 } from '@ant-design/icons';
 
-import HomeContent from '../../pages/HomeContent';
-import Discover from '../../pages/Discover';
+// import HomeContent from '../../pages/HomeContent';
+// import Discover from '../../pages/Discover';
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 
 const Dashboard = () => {
