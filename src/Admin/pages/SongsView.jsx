@@ -7,6 +7,7 @@ const API_URL = 'http://localhost:4000';
 
 export default function SongsView() {
     const [songs, setSongs] = useState([]);
+    const [showUndefined, setShowUndefined] = useState(false);
 
     useEffect(() => { load(); }, []);
 
@@ -64,14 +65,63 @@ export default function SongsView() {
             load();
     }
 
+    // Filter songs based on undefined/hidden status
+    const filteredSongs = showUndefined 
+        ? songs.filter(song => song.isHidden || song.genreId === 'undefined' || song.artistId === 'undefined' || song.albumId === 'undefined')
+        : songs.filter(song => !song.isHidden);
+
+    const restoreHiddenSong = async (songId) => {
+        try {
+            await fetch(`${API_URL}/songsList/${songId}`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ 
+                    isHidden: false,
+                    genreId: null,
+                    artistId: null,
+                    albumId: null,
+                    genre: '',
+                    artist: '',
+                    album: ''
+                })
+            });
+            message.success('Song restored');
+            load();
+        } catch (error) {
+            message.error('Failed to restore song');
+        }
+    };
+
 
     return (
         <section>
             <div className="flex items-center justify-between mb-4">
                 <h2>Songs Management</h2>
+                <div style={{ display: 'flex', gap: '8px' }}>
+                    <Button 
+                        type={showUndefined ? "default" : "primary"}
+                        onClick={() => setShowUndefined(false)}
+                    >
+                        Active Songs ({songs.filter(song => !song.isHidden).length})
+                    </Button>
+                    <Button 
+                        type={showUndefined ? "primary" : "default"}
+                        onClick={() => setShowUndefined(true)}
+                        danger={showUndefined}
+                    >
+                        Undefined/Hidden ({songs.filter(song => song.isHidden || song.genreId === 'undefined' || song.artistId === 'undefined' || song.albumId === 'undefined').length})
+                    </Button>
+                </div>
             </div>
             <Card>
-                <SongsTable songs={songs} onEdit={handleEdit} onDelete={handleDelete} onAdd={handleAdd} />
+                <SongsTable 
+                    songs={filteredSongs} 
+                    onEdit={handleEdit} 
+                    onDelete={handleDelete} 
+                    onAdd={handleAdd}
+                    showUndefined={showUndefined}
+                    onRestore={restoreHiddenSong}
+                />
             </Card>
         </section>
     );

@@ -52,10 +52,10 @@ const ArtistRow = ({ source,  limit = 6 }) => {
                         </Link>
                     ))}
 
-                    {/* <Link to={`/${source.replace(/s$/,'')}/listpage`} className="aviewall" tabIndex={0}>
+                    <Link to={`/${source.replace(/s$/,'')}/listpage`} className="aviewall" tabIndex={0}>
                         <div className="avaplus">+</div>
                         <p className="avat">View All</p>
-                    </Link> */}
+                    </Link>
             </div>
             </div>
         </div>

@@ -581,7 +581,7 @@ align-items: center;
 }
 
 .Search-Suggestions div:hover {
-  /* background: #fffdfd00; */
+  background: #fffdfd00;
 }
 
 .TopBar-Menu {
@@ -612,6 +612,19 @@ align-items: center;
   cursor: pointer;
   opacity: 0.85;
   color: rgba(30, 30, 30, 1)
+}
+
+/* User info styles */
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.username {
+  color: white;
+  font-weight: 500;
+  font-size: 14px;
 }
 
 .welcome{

@@ -27,6 +27,8 @@ export default function MusicPlayer() {
   const [progress, setProgress] = useState(0);
   const [duration, setDuration] = useState(0);
   const [canSeek, setCanSeek] = useState(false);
+  const [shouldAutoPlay, setShouldAutoPlay] = useState(false);
+  const [dashboardCollapsed, setDashboardCollapsed] = useState(false);
 
   const { user, login, isLoggedIn } = useAuth();
   const navigate = useNavigate();
@@ -39,6 +41,31 @@ export default function MusicPlayer() {
   useEffect(() => {
     setFavorites(user && Array.isArray(user.favorites) ? user.favorites : []);
   }, [user]);
+
+  // Detect dashboard collapsed state
+  useEffect(() => {
+    const checkDashboardState = () => {
+      const dashboard = document.querySelector('.dashboard');
+      if (dashboard) {
+        setDashboardCollapsed(dashboard.classList.contains('collapsed'));
+      }
+    };
+
+    // Check immediately
+    checkDashboardState();
+
+    // Create observer to watch for class changes
+    const dashboard = document.querySelector('.dashboard');
+    if (dashboard) {
+      const observer = new MutationObserver(checkDashboardState);
+      observer.observe(dashboard, { 
+        attributes: true, 
+        attributeFilter: ['class'] 
+      });
+
+      return () => observer.disconnect();
+    }
+  }, []);
 
   const isFav = currentSong?.id && favorites.includes(currentSong.id);
 
@@ -56,7 +83,7 @@ export default function MusicPlayer() {
     });
   };
 
-  // Load bài hát mới, không tự động phát
+  // Load bài hát mới
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio || !currentSong) return;
@@ -64,45 +91,44 @@ export default function MusicPlayer() {
     const handleLoadedMetadata = () => {
       setDuration(audio.duration || 0);
       setCanSeek(true);
+      // Auto-play chỉ khi user đã từng nhấn play
+      if (shouldAutoPlay && audio.paused) {
+        audio.play()
+          .then(() => setIsPlaying(true))
+          .catch((err) => {
+            console.warn("⚠️ Không thể tự động phát:", err);
+            setIsPlaying(false);
+          });
+      }
     };
 
     const updateProgress = () => {
       setProgress(audio.currentTime);
     };
 
-    const handleEnded = () => {
-      setIsPlaying(false);
-      setProgress(0);
-    };
-
+    // Dừng audio hiện tại trước
     audio.pause();
+    setIsPlaying(false);
+    
+    // Load bài hát mới
     audio.src = currentSong.streaming_links.audio_url;
     audio.load();
 
-    // audio.play()
-    //   .then(() => setIsPlaying(true))
-    //   .catch((err) => {
-    //     console.warn("⚠️ Không thể tự động phát:", err);
-    //     setIsPlaying(false);
-    //   });
-
+    // Đăng ký event listeners
     audio.addEventListener("loadedmetadata", handleLoadedMetadata);
     audio.addEventListener("timeupdate", updateProgress);
-    audio.addEventListener("ended", handleEnded);
 
-    setIsPlaying(false);
+    // Reset trạng thái
     setProgress(0);
     setCanSeek(false);
 
     return () => {
       audio.removeEventListener("loadedmetadata", handleLoadedMetadata);
       audio.removeEventListener("timeupdate", updateProgress);
-      audio.removeEventListener("ended", handleEnded);
     };
   }, [currentSong]);
 
-
-  // Cập nhật trạng thái và tiến trình
+  // Xử lý khi bài hát kết thúc
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
@@ -110,21 +136,18 @@ export default function MusicPlayer() {
     const handleEnded = () => {
       setIsPlaying(false);
       setProgress(0);
-    };
-
-    const updateProgress = () => {
-      console.log("⏱️ currentTime:", audio.currentTime);
-      setProgress(audio.currentTime);
+      // Tự động chuyển bài tiếp theo chỉ khi user đã cho phép auto-play
+      if (shouldAutoPlay && currentIndex < playlist.length - 1) {
+        setCurrentIndex(currentIndex + 1);
+      }
     };
 
     audio.addEventListener("ended", handleEnded);
-    audio.addEventListener("timeupdate", updateProgress);
 
     return () => {
       audio.removeEventListener("ended", handleEnded);
-      audio.removeEventListener("timeupdate", updateProgress);
     };
-  }, []);
+  }, [currentIndex, playlist.length, setCurrentIndex]);
 
 
   // Phát hoặc tạm dừng
@@ -133,12 +156,13 @@ export default function MusicPlayer() {
     if (!audio || !currentSong) return;
 
     if (audio.paused) {
+      setShouldAutoPlay(true); // Đánh dấu user muốn auto-play
       audio.play()
         .then(() => setIsPlaying(true))
         .catch((err) => console.error("Không thể phát nhạc:", err));
     } else {
       audio.pause();
-      setIsPlaying(false); // ép cập nhật ngay
+      setIsPlaying(false);
     }
   };
 
@@ -146,23 +170,20 @@ export default function MusicPlayer() {
   // Tua thời gian
   const handleSeek = (e) => {
     const audio = audioRef.current;
-    if (!audio || !duration) return; // Add safety check
+    if (!audio || !duration || !canSeek) return;
     
     const newTime = parseFloat(e.target.value);
-    if (!audio || isNaN(newTime)) return;
+    if (isNaN(newTime)) return;
 
-    // Chỉ tua nếu audio đã có dữ liệu
-    if (canSeek) {
-      audio.currentTime = newTime;
-      setProgress(newTime);
+    audio.currentTime = newTime;
+    setProgress(newTime);
 
-      if (!audio.paused) {
-        audio.play().catch((err) => {
-          console.error("Không thể phát sau khi tua:", err);
-        });
-      }
+    // Nếu đang phát thì tiếp tục phát sau khi tua
+    if (!audio.paused) {
+      audio.play().catch((err) => {
+        console.error("Không thể phát sau khi tua:", err);
+      });
     }
-
   };
 
 
@@ -178,9 +199,14 @@ export default function MusicPlayer() {
 
   if (!currentSong) return null;
 
+  const playerStyle = {
+    left: dashboardCollapsed ? '100px' : '300px',
+    transition: 'left 0.2s ease'
+  };
+
   return (
 
-    <div className="music-player">
+    <div className="music-player" style={playerStyle}>
       <div className="player-left">
         <img src={currentSong.cover_url} alt={currentSong.title} />
         <div className="song-info">

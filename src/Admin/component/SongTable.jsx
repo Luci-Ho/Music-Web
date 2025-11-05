@@ -7,7 +7,7 @@ import AddSongModal from './AddSongModal';
 import EditSongModal from './EditSongModal';
 import { useAuth } from '../context/AuthContext';
 
-export default function SongsTable({ songs = [], onEdit, onDelete, onAdd }) {
+export default function SongsTable({ songs = [], onEdit, onDelete, onAdd, showUndefined = false, onRestore }) {
     // Auth context for permissions
     const { canEditSongs, canDeleteSongs, canAddSongs } = useAuth();
     
@@ -150,11 +150,27 @@ export default function SongsTable({ songs = [], onEdit, onDelete, onAdd }) {
             )
         },
         { title: 'Date', dataIndex: 'date', sorter: (a, b) => String(a.date || '').localeCompare(String(b.date || '')) },
+        ...(showUndefined ? [{
+            title: 'Status',
+            key: 'status',
+            render: (_, record) => {
+                if (record.isHidden) return <span style={{ color: 'red' }}>Hidden</span>;
+                if (record.genreId === 'undefined') return <span style={{ color: 'orange' }}>Genre Undefined</span>;
+                if (record.artistId === 'undefined') return <span style={{ color: 'orange' }}>Artist Undefined</span>;
+                if (record.albumId === 'undefined') return <span style={{ color: 'orange' }}>Album Undefined</span>;
+                return <span style={{ color: 'green' }}>Active</span>;
+            }
+        }] : []),
         {
             title: 'Actions',
             key: 'actions',
             render: (_, record) => (
                 <Space>
+                    {showUndefined && onRestore && (
+                        <Button size="small" type="primary" onClick={() => onRestore(record.id)}>
+                            Restore
+                        </Button>
+                    )}
                     {canEditSongs() && (
                         <Button size="small" onClick={() => handleEditClick(record)}>Edit</Button>
                     )}
@@ -164,7 +180,7 @@ export default function SongsTable({ songs = [], onEdit, onDelete, onAdd }) {
                 </Space>
             )
         }
-    ], [artistFilters, albumFilters, genreFilters, debouncedFilters, onEdit, onDelete, canEditSongs, canDeleteSongs]);
+    ], [artistFilters, albumFilters, genreFilters, debouncedFilters, onEdit, onDelete, onRestore, showUndefined, canEditSongs, canDeleteSongs]);
     const handleTableChange = (pagination, filters, sorter) => {
         setTableState((prev) => ({
             ...prev,

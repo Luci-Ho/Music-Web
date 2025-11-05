@@ -107,6 +107,31 @@ const AlbumsPage = () => {
     return views.toString();
   };
 
+  const getAlbumImage = (album) => {
+    // Check if album has a valid image
+    if (album.img && typeof album.img === 'string' && album.img.trim() !== '') {
+      // Filter out problematic domains
+      const problematicDomains = [
+        'via.placeholder.com',
+        'placeholder.com',
+        'example.com',
+        'test.com',
+        'dummy.com'
+      ];
+      
+      const hasProblematicDomain = problematicDomains.some(domain => 
+        album.img.includes(domain)
+      );
+      
+      if (!hasProblematicDomain) {
+        return album.img;
+      }
+    }
+    
+    // Fallback to UI Avatars service with album name
+    return `https://ui-avatars.com/api/?name=${encodeURIComponent(album.title || 'Album')}&size=200&background=ef4444&color=ffffff&bold=true`;
+  };
+
   const handleAlbumClick = (album) => {
     // Navigate to album detail page with filtered songs
     navigate(`/album/${album.id}`, { 
@@ -207,11 +232,22 @@ const AlbumsPage = () => {
                         <div className="album-image-container">
                           <div className="album-image-wrapper">
                             <img
-                              src={album.img || "https://via.placeholder.com/200x200?text=Album"}
+                              src={getAlbumImage(album)}
                               alt={album.title}
                               className="album-image"
                               onError={(e) => {
-                                e.target.src = "https://via.placeholder.com/200x200?text=Album";
+                                // First fallback - try UI Avatars with different color
+                                if (!e.target.src.includes('ui-avatars.com')) {
+                                  e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(album.title)}&size=200&background=10b981&color=ffffff&bold=true`;
+                                } else {
+                                  // Second fallback - simple colored placeholder
+                                  e.target.src = `data:image/svg+xml;base64,${btoa(`
+                                    <svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
+                                      <rect width="200" height="200" fill="#1f2937"/>
+                                      <text x="50%" y="50%" font-family="Arial" font-size="16" fill="white" text-anchor="middle" dy=".3em">${album.title}</text>
+                                    </svg>
+                                  `)}`;
+                                }
                               }}
                             />
                           </div>

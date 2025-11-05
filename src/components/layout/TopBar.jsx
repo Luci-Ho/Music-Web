@@ -116,7 +116,10 @@ const TopBar = () => {
             <button onClick={() => navigate('/signup')}>Sign Up</button>
           </>
         ) : (
-          <Avatar size="large" src={user?.avatar} icon={!user?.avatar && <UserOutlined />} />
+          <div className="user-info">
+            <Avatar size="large" src={user?.avatar} icon={!user?.avatar && <UserOutlined />} />
+            <span className="username">{user?.username || user?.name || 'User'}</span>
+          </div>
         )}
       </div>
     </div>

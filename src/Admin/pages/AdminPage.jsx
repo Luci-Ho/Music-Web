@@ -4,7 +4,7 @@ import Header from '../component/Header';
 import DashboardView from './DashBoardView';
 import SongsView from './SongsView';
 import UsersView from './UserView';
-import AnalyticsView from './AnalyticsView';
+import TagsView from './TagsView';
 import { AuthProvider } from '../context/AuthContext';
 import './Admin.css';
 
@@ -22,7 +22,7 @@ export default function AdminPage() {
                         {active === 'dashboard' && <DashboardView />}
                         {active === 'songs' && <SongsView />}
                         {active === 'users' && <UsersView />}
-                        {active === 'analytics' && <AnalyticsView />}
+                        {active === 'tags' && <TagsView />}
                     </div>
                 </div>
             </div>

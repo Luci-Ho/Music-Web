@@ -36,7 +36,7 @@ function App() {
         <Route path="/loading" element={<Loading />} />
         <Route path="/" element={<Home />} />
         <Route path="/search" element={<SearchPage />} />
-        <Route path="/album" element={<ListPage2 />} />
+        <Route path="/albums" element={<AlbumsPage />} />
 
         <Route path="/home" element={<Home />} />
         <Route path="/login" element={<Login />} />

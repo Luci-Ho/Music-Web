@@ -158,8 +158,6 @@
       "artist": "Bích Phương",
       "artist_avatar": "https://scontent.fsgn2-10.fna.fbcdn.net/v/t39.30808-6/429949504_955184519296597_9115556556751807744_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=a5f93a&_nc_eui2=AeFVzeXkj0FyQNw-plYIgG4iKDYKPIGeVckoNgo8gZ5VyY7pY14kXM9DCWi-YW_14oNU7D0S_7khcyPgGZUTnX9L&_nc_ohc=MuZizi3wIJkQ7kNvwHrI7FO&_nc_oc=Admc9YOd10EtQX3wYOTy9854mLn8JSwQdXkEZZo2PllDeFimTa1WXgHnDdmKWpO8ATzGFrjOQFro1esZwhUEee_y&_nc_zt=23&_nc_ht=scontent.fsgn2-10.fna&_nc_gid=Uy7nlL2OMZ3Py5U8DmH7mw&oh=00_Affs38UIasHcuaiLeZRdFizR_HqBnoah4XW-QBC-KVkP-A&oe=690AA15D",
       "cover_url": "https://vstatic.vietnam.vn/vietnam/resource/IMAGE/2025/10/23/1761228782403_qmg-5221-4932-3201-jpg.webp",
-      "artist_avatar": "https://i1.sndcdn.com/avatars-kCq7wgKgXqKOX4pe-rWi1Qw-t500x500.jpg",
-      "cover_url": "https://example.com/covers/dung_lam_ban.jpg",
       "album": "Đừng Làm Bạn (Single)",
       "release_date": "2025-07-05",
       "duration": "3:55",
@@ -177,8 +175,6 @@
       "artist": "GREY D",
       "artist_avatar": "https://cdn2.tuoitre.vn/zoom/700_438/471584752817336320/data/teen360/news/2022/11/28/69383/1669616220_grey.jpg",
       "cover_url": "https://cdn2.tuoitre.vn/zoom/700_438/471584752817336320/data/teen360/news/2022/11/28/69383/1669616220_grey.jpg",
-      "artist_avatar": "https://photo-resize-zmp3.zmdcdn.me/w600_r1x1_jpeg/avatars/1/6/8/d/168d3df88aa13d58bf44fb8f3d2ebfeb.jpg",
-      "cover_url": "https://example.com/covers/lang.jpg",
       "album": "Lặng (Single)",
       "release_date": "2024-08-01",
       "duration": "4:00",
@@ -247,8 +243,6 @@
       "artist": "Obito",
       "artist_avatar": "https://example.com/artists/obito.jpg",
       "cover_url": "https://thegioidienanh.vn/stores/news_dataimages/thanhtan/072018/22/10/0419_re-DSC09992.jpg",
-      "artist_avatar": "https://photo-resize-zmp3.zmdcdn.me/w600_r1x1_jpeg/avatars/9/4/c/3/94c3a855d8de4bb4b3f3a53ed6a66151.jpg",
-      "cover_url": "https://example.com/covers/dung_goi_anh_la_idol.jpg",
       "album": "Idol (EP)",
       "release_date": "2024-10-01",
       "duration": "3:30",
@@ -361,7 +355,8 @@
       "level": "l1",
       "favorites": [
         "s516",
-        "73bf"
+        "73bf",
+        "ecd7"
       ],
       "playlists": [
         {

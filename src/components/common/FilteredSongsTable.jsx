@@ -25,8 +25,7 @@ const FilteredSongsTable = ({ filterType = 'genre', filterId, title }) => {
     const artists = data.artists || [];
     const albums = data.albums || [];
     const navigate = useNavigate();
-    const { selectSong } = useContext(AppContext);
-    const { playAll } = useContext(AppContext);
+    const { selectSong, playAll, playSong } = useContext(AppContext);
 
     // banner image depends on the selected filter entry
     let bannerImg = null;
@@ -213,7 +212,7 @@ const FilteredSongsTable = ({ filterType = 'genre', filterId, title }) => {
 
                                         <td className="py-2 text-right pr-4">
                                             <button
-                                                onClick={() => selectSong(s)}
+                                                onClick={() => playSong(s, filtered)}
                                                 title="Play song"
                                                 style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}
                                             >
