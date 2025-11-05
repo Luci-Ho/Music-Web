@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
-import { AppContext } from '../components/common/AppContext';
 import { 
   PlayCircleOutlined, 
   PauseCircleOutlined,
@@ -10,13 +9,18 @@ import {
   ShareAltOutlined
 } from '@ant-design/icons';
 import { toast } from 'react-toastify';
-import useAuth from '../hooks/useAuth';
+import useDataLoader from '../hooks/useDataLoader';
+import useFavorites from '../hooks/useFavorites';
+import useFormatViews from '../hooks/useFormatViews';
+import useFormatDuration from '../hooks/useFormatDuration';
+import useMusicPlayer from '../hooks/useMusicPlayer';
 
 import Dashboard from '../components/layout/Dashboard';
 import TopBar from '../components/layout/TopBar';
 import Footer from '../components/layout/Footer';
 import SectionTitle from '../components/common/SectionTitle';
-import data from '../routes/db.json';
+import LoadingPage from '../components/common/LoadingPage';
+import EmptyStatePage from '../components/common/EmptyStatePage';
 
 import '../style/Layout.css';
 import '../style/VA.css';
@@ -25,36 +29,26 @@ const ArtistDetailPage = () => {
   const { id } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
-  const { setCurrentSong } = useContext(AppContext);
-  const { user, login, isLoggedIn } = useAuth();
+  
+  // Custom hooks
+  const { artists, allSongs, loading } = useDataLoader();
+  const { favorites, toggleFavorite, isFavorite } = useFavorites();
+  const { formatViews } = useFormatViews();
+  const { formatDuration } = useFormatDuration();
+  const { playSong, playArtistSongs } = useMusicPlayer();
   
   const [artist, setArtist] = useState(null);
   const [artistSongs, setArtistSongs] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [favorites, setFavorites] = useState([]);
-
-  useEffect(() => {
-    // Get favorites from user
-    if (user && Array.isArray(user.favorites)) {
-      setFavorites(user.favorites);
-    }
-  }, [user]);
 
   useEffect(() => {
     // If artist data is passed through navigation state
     if (location.state?.artist && location.state?.songs) {
       setArtist(location.state.artist);
       setArtistSongs(location.state.songs);
-      setLoading(false);
       return;
     }
 
     // Otherwise, find artist and songs from data
-    const artists = data.artists || [];
-    const songs = data.songs || [];
-    const songsList = data.songsList || [];
-    const allSongs = [...songs, ...songsList];
-
     const foundArtist = artists.find(a => a.id === id);
     if (foundArtist) {
       const artistSongsData = allSongs.filter(song => 
@@ -69,124 +63,20 @@ const ArtistDetailPage = () => {
       toast.error('Không tìm thấy nghệ sĩ!');
       navigate('/artist');
     }
-
-    setLoading(false);
-  }, [id, location.state, navigate]);
-
-  const playSong = (song) => {
-    setCurrentSong(song);
-    toast.success(`Đang phát: ${song.title}`);
-  };
-
-  const toggleFavorite = async (songId) => {
-    if (!isLoggedIn) {
-      toast.error('Bạn cần đăng nhập để thêm vào yêu thích!');
-      return;
-    }
-
-    const isFav = favorites.includes(songId);
-    const updated = isFav ? favorites.filter(id => id !== songId) : [...favorites, songId];
-    const prev = favorites;
-    
-    // Optimistic update
-    setFavorites(updated);
-
-    // Update user
-    const updatedUser = { ...user, favorites: updated };
-    login(updatedUser);
-
-    try {
-      window.dispatchEvent(new Event('userUpdated'));
-    } catch (err) {
-      /* ignore */
-    }
-
-    // Update backend
-    try {
-      const res = await fetch(`http://localhost:4000/users/${user.id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ favorites: updated }),
-      });
-
-      if (!res.ok) throw new Error(`Server responded ${res.status}`);
-
-      toast.success(isFav ? 'Đã xóa khỏi yêu thích' : 'Đã thêm vào yêu thích');
-    } catch (err) {
-      // Rollback
-      setFavorites(prev);
-      const rollbackUser = { ...user, favorites: prev };
-      login(rollbackUser);
-      
-      try {
-        window.dispatchEvent(new Event('userUpdated'));
-      } catch (e) {
-        /* ignore */
-      }
-      
-      toast.error('Không thể cập nhật yêu thích. Vui lòng thử lại.');
-    }
-  };
-
-  const formatViews = (views) => {
-    if (views >= 1000000) {
-      return `${(views / 1000000).toFixed(1)}M`;
-    } else if (views >= 1000) {
-      return `${(views / 1000).toFixed(1)}K`;
-    }
-    return views?.toString() || '0';
-  };
-
-  const formatDuration = (duration) => {
-    if (!duration) return '--:--';
-    if (duration.includes(':')) return duration;
-    
-    const minutes = Math.floor(duration / 60);
-    const seconds = duration % 60;
-    return `${minutes}:${seconds.toString().padStart(2, '0')}`;
-  };
+  }, [id, location.state, navigate, artists, allSongs]);
 
   if (loading) {
-    return (
-      <div className="body">
-        <div style={{ display: 'flex', width: '100%' }}>
-          <Dashboard />
-          <div className="container">
-            <TopBar />
-            <div className="content">
-              <div style={{ textAlign: 'center', color: 'white', marginTop: '50px' }}>
-                <h2>Đang tải thông tin nghệ sĩ...</h2>
-              </div>
-            </div>
-            <Footer />
-          </div>
-        </div>
-      </div>
-    );
+    return <LoadingPage message="Đang tải thông tin nghệ sĩ..." />;
   }
 
   if (!artist) {
     return (
-      <div className="body">
-        <div style={{ display: 'flex', width: '100%' }}>
-          <Dashboard />
-          <div className="container">
-            <TopBar />
-            <div className="content">
-              <div style={{ textAlign: 'center', color: 'white', marginTop: '50px' }}>
-                <h2>Không tìm thấy nghệ sĩ</h2>
-                <button 
-                  onClick={() => navigate('/artist')}
-                  className="bg-green-500 text-white px-6 py-3 rounded-full font-semibold hover:bg-green-600 transition-colors mt-4"
-                >
-                  Quay lại danh sách nghệ sĩ
-                </button>
-              </div>
-            </div>
-            <Footer />
-          </div>
-        </div>
-      </div>
+      <EmptyStatePage 
+        title="Không tìm thấy nghệ sĩ"
+        buttonText="Quay lại danh sách nghệ sĩ"
+        onButtonClick={() => navigate('/artist')}
+        buttonClassName="bg-green-500 text-white px-6 py-3 rounded-full font-semibold hover:bg-green-600 transition-colors mt-4"
+      />
     );
   }
 
@@ -215,7 +105,7 @@ const ArtistDetailPage = () => {
                       <div className="flex gap-4 mt-4">
                         <button 
                           className="bg-green-500 text-white px-6 py-3 rounded-full font-semibold hover:bg-green-600 transition-colors"
-                          onClick={() => artistSongs.length > 0 && playSong(artistSongs[0])}
+                          onClick={() => playArtistSongs(artistSongs)}
                           disabled={artistSongs.length === 0}
                         >
                           <PlayCircleOutlined /> Phát tất cả
@@ -265,7 +155,7 @@ const ArtistDetailPage = () => {
                       </thead>
                       <tbody className="divide-y divide-gray-700/30">
                         {artistSongs.map((song, index) => {
-                          const isFav = favorites.includes(song.id);
+                          const isFav = isFavorite(song.id);
                           
                           return (
                             <tr 

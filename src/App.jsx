@@ -23,6 +23,7 @@ import MusicPlayer from './components/layout/MusicPlayer';
 import SearchPage from './pages/SearchPage';
 // import FilteredSongsTable2 from './components/common/FilteredSongsTable2'; test layout
 import ListPage2 from './pages/ListPage2';
+import AllSongsPage from './pages/AllSongsPage';
 
 import { AppProvider } from './components/common/AppContext';
 
@@ -77,6 +78,7 @@ function App() {
         <Route path="/playlist/add/:id" element={<ProtectedRoute>   <AddToPlaylist />                     </ProtectedRoute>} />
         <Route path="/playlist/:id" element={<ProtectedRoute>   <PlaylistDetail />                    </ProtectedRoute>} />
         <Route path="/favorites" element={<ProtectedRoute>   <ListPage pageType={'favorites'} />   </ProtectedRoute>} />
+        <Route path="/allsongs" element={<AllSongsPage />} />
 
       </Routes>
       <MusicPlayer />

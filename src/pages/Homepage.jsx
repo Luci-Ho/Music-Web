@@ -2,7 +2,6 @@ import React from "react";
 import Footer from '../components/layout/Footer';
 import TopBar from '../components/layout/TopBar';
 import Dashboard from '../components/layout/Dashboard';
-import MusicPlayer from '../components/layout/MusicPlayer';
 import Slider from '../components/common/Slider';
 import CardGrid from '../components/common/CardGrid';
 import Artist from '../components/common/Artist';
@@ -38,7 +37,6 @@ const HomePage = () => {
           </div>
         </div>
       </div>
-      <MusicPlayer />
     </>
   );
 };

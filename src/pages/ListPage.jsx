@@ -5,6 +5,7 @@ import '../App.css';
 import '../style/Layout.css'
 import Footer from '../components/layout/Footer';
 import FilteredSongsTable from '../components/common/FilteredSongsTable';
+// import List from './List'; // Component này bị comment out
 import data from '../routes/db.json';
 
 
@@ -68,7 +69,15 @@ const ListPage = ({ source: propSource, pageType }) => {
             <div style={{ display: 'flex', width: '100%' }}>
                 <Dashboard />
                 <div className='container'>
-                    {/* <List source={source} /> */}
+                    <div className="content-placeholder">
+                        <FilteredSongsTable filterType={'all'} title={`All Songs from ${source}`} />
+                        {!source && (
+                            <div>
+                                <p>This page displays lists based on the source parameter.</p>
+                                <p>Please provide a valid source to see content.</p>
+                            </div>
+                        )}
+                    </div>
                     <Footer />
                 </div>
                 

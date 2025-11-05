@@ -157,9 +157,9 @@ const ArtistsPage = () => {
                 <div className="top2">
                   <div className="BannerPart">
                     <img 
-                      src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=300&h=300&fit=crop" 
+                      src="https://img.freepik.com/premium-photo/caucasian-female-singer-portrait-isolated-purple-studio-background-neon-light_489646-14844.jpg?semt=ais_hybrid&w=740&q=80" 
                       alt="Artists" 
-                      className="w-[268px] h-[268px] object-cover p-5 rounded-lg" 
+                      className="w-[268px] h-[268px] object-cover p-5 rounded-[2rem]" 
                     />
                     <div className="BannerText">
                       <SectionTitle title1="All Artists" title2="" />

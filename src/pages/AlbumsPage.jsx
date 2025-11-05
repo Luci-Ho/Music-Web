@@ -1,15 +1,18 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
   PlayCircleOutlined, 
   SoundOutlined
 } from '@ant-design/icons';
+import useDataLoader from '../hooks/useDataLoader';
+import useFormatViews from '../hooks/useFormatViews';
+import useImageFallback from '../hooks/useImageFallback';
 
 import Dashboard from '../components/layout/Dashboard';
 import TopBar from '../components/layout/TopBar';
 import Footer from '../components/layout/Footer';
 import SectionTitle from '../components/common/SectionTitle';
-import data from '../routes/db.json';
+import LoadingPage from '../components/common/LoadingPage';
 
 import '../style/Layout.css';
 import '../style/VA.css';
@@ -17,23 +20,13 @@ import '../style/AlbumsPage.css';
 
 const AlbumsPage = () => {
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [sortBy, setSortBy] = useState('title'); // 'title', 'artist', 'songCount', 'year'
 
-  // Get all albums, artists and songs from data
-  const albums = data.albums || [];
-  const artists = data.artists || [];
-  const songs = data.songs || [];
-  const songsList = data.songsList || [];
-
-  // Combine songs from both arrays
-  const allSongs = [...songs, ...songsList];
-
-  // Create artist name map for quick lookup
-  const artistMap = useMemo(() => {
-    return Object.fromEntries(artists.map(artist => [artist.id, artist.name]));
-  }, [artists]);
+  // Custom hooks
+  const { albums, artists, allSongs, artistMap, loading } = useDataLoader();
+  const { formatViews } = useFormatViews();
+  const { getImageWithFallback, handleImageError } = useImageFallback();
 
   // Calculate album statistics
   const albumsWithStats = useMemo(() => {
@@ -94,44 +87,6 @@ const AlbumsPage = () => {
     return filtered;
   }, [albumsWithStats, searchTerm, sortBy]);
 
-  useEffect(() => {
-    setLoading(false);
-  }, []);
-
-  const formatViews = (views) => {
-    if (views >= 1000000) {
-      return `${(views / 1000000).toFixed(1)}M`;
-    } else if (views >= 1000) {
-      return `${(views / 1000).toFixed(1)}K`;
-    }
-    return views.toString();
-  };
-
-  const getAlbumImage = (album) => {
-    // Check if album has a valid image
-    if (album.img && typeof album.img === 'string' && album.img.trim() !== '') {
-      // Filter out problematic domains
-      const problematicDomains = [
-        'via.placeholder.com',
-        'placeholder.com',
-        'example.com',
-        'test.com',
-        'dummy.com'
-      ];
-      
-      const hasProblematicDomain = problematicDomains.some(domain => 
-        album.img.includes(domain)
-      );
-      
-      if (!hasProblematicDomain) {
-        return album.img;
-      }
-    }
-    
-    // Fallback to UI Avatars service with album name
-    return `https://ui-avatars.com/api/?name=${encodeURIComponent(album.title || 'Album')}&size=200&background=ef4444&color=ffffff&bold=true`;
-  };
-
   const handleAlbumClick = (album) => {
     // Navigate to album detail page with filtered songs
     navigate(`/album/${album.id}`, { 
@@ -143,22 +98,7 @@ const AlbumsPage = () => {
   };
 
   if (loading) {
-    return (
-      <div className="body">
-        <div style={{ display: 'flex', width: '100%' }}>
-          <Dashboard />
-          <div className="container">
-            <TopBar />
-            <div className="content">
-              <div style={{ textAlign: 'center', color: 'white', marginTop: '50px' }}>
-                <h2>Đang tải danh sách albums...</h2>
-              </div>
-            </div>
-            <Footer />
-          </div>
-        </div>
-      </div>
-    );
+    return <LoadingPage message="Đang tải danh sách albums..." />;
   }
 
   return (
@@ -173,7 +113,7 @@ const AlbumsPage = () => {
                 <div className="top2">
                   <div className="BannerPart">
                     <img 
-                      src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=300&h=300&fit=crop" 
+                      src="https://img.freepik.com/free-vector/realistic-music-record-label-disk-mockup_1017-33906.jpg?semt=ais_hybrid&w=740&q=80" 
                       alt="Albums" 
                       className="albums-banner-image" 
                     />
@@ -232,23 +172,10 @@ const AlbumsPage = () => {
                         <div className="album-image-container">
                           <div className="album-image-wrapper">
                             <img
-                              src={getAlbumImage(album)}
+                              src={getImageWithFallback(album, 'album')}
                               alt={album.title}
                               className="album-image"
-                              onError={(e) => {
-                                // First fallback - try UI Avatars with different color
-                                if (!e.target.src.includes('ui-avatars.com')) {
-                                  e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(album.title)}&size=200&background=10b981&color=ffffff&bold=true`;
-                                } else {
-                                  // Second fallback - simple colored placeholder
-                                  e.target.src = `data:image/svg+xml;base64,${btoa(`
-                                    <svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
-                                      <rect width="200" height="200" fill="#1f2937"/>
-                                      <text x="50%" y="50%" font-family="Arial" font-size="16" fill="white" text-anchor="middle" dy=".3em">${album.title}</text>
-                                    </svg>
-                                  `)}`;
-                                }
-                              }}
+                              onError={(e) => handleImageError(e, album.title, 'album')}
                             />
                           </div>
                           

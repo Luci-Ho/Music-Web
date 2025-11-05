@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, useLocation, useNavigate } from 'react-router-dom';
-import { AppContext } from '../components/common/AppContext';
 import { 
   PlayCircleOutlined, 
   PauseCircleOutlined,
@@ -14,13 +13,18 @@ import {
   ArrowLeftOutlined
 } from '@ant-design/icons';
 import { toast } from 'react-toastify';
-import useAuth from '../hooks/useAuth';
+import useDataLoader from '../hooks/useDataLoader';
+import useFavorites from '../hooks/useFavorites';
+import useFormatViews from '../hooks/useFormatViews';
+import useFormatDuration from '../hooks/useFormatDuration';
+import useMusicPlayer from '../hooks/useMusicPlayer';
 
 import Dashboard from '../components/layout/Dashboard';
 import TopBar from '../components/layout/TopBar';
 import Footer from '../components/layout/Footer';
 import SectionTitle from '../components/common/SectionTitle';
-import data from '../routes/db.json';
+import LoadingPage from '../components/common/LoadingPage';
+import EmptyStatePage from '../components/common/EmptyStatePage';
 
 import '../style/Layout.css';
 import '../style/VA.css';
@@ -29,21 +33,17 @@ const AlbumDetailPage = () => {
   const { id } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
-  const { setCurrentSong } = useContext(AppContext);
-  const { user, login, isLoggedIn } = useAuth();
+  
+  // Custom hooks
+  const { albums, artists, allSongs, loading } = useDataLoader();
+  const { favorites, toggleFavorite, isFavorite } = useFavorites();
+  const { formatViews } = useFormatViews();
+  const { formatDuration, formatTotalDuration } = useFormatDuration();
+  const { playSong, playAlbum } = useMusicPlayer();
   
   const [album, setAlbum] = useState(null);
   const [albumSongs, setAlbumSongs] = useState([]);
   const [artist, setArtist] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [favorites, setFavorites] = useState([]);
-
-  useEffect(() => {
-    // Get favorites from user
-    if (user && Array.isArray(user.favorites)) {
-      setFavorites(user.favorites);
-    }
-  }, [user]);
 
   useEffect(() => {
     // If album data is passed through navigation state
@@ -52,21 +52,13 @@ const AlbumDetailPage = () => {
       setAlbumSongs(location.state.songs);
       
       // Find artist info
-      const artists = data.artists || [];
       const foundArtist = artists.find(a => a.id === location.state.album.artistId);
       setArtist(foundArtist);
       
-      setLoading(false);
       return;
     }
 
     // Otherwise, find album and songs from data
-    const albums = data.albums || [];
-    const artists = data.artists || [];
-    const songs = data.songs || [];
-    const songsList = data.songsList || [];
-    const allSongs = [...songs, ...songsList];
-
     const foundAlbum = albums.find(a => a.id === id);
     if (foundAlbum) {
       // Get songs in this album
@@ -84,132 +76,7 @@ const AlbumDetailPage = () => {
       toast.error('Không tìm thấy album!');
       navigate('/album');
     }
-
-    setLoading(false);
-  }, [id, location.state, navigate]);
-
-  const playSong = (song) => {
-    setCurrentSong(song);
-    toast.success(`Đang phát: ${song.title}`);
-  };
-
-  const playAlbum = () => {
-    if (albumSongs.length > 0) {
-      playSong(albumSongs[0]);
-    }
-  };
-
-  const toggleFavorite = async (songId) => {
-    if (!isLoggedIn) {
-      toast.error('Bạn cần đăng nhập để thêm vào yêu thích!');
-      return;
-    }
-
-    const isFav = favorites.includes(songId);
-    const updated = isFav ? favorites.filter(id => id !== songId) : [...favorites, songId];
-    const prev = favorites;
-    
-    // Optimistic update
-    setFavorites(updated);
-
-    // Update user
-    const updatedUser = { ...user, favorites: updated };
-    login(updatedUser);
-
-    try {
-      window.dispatchEvent(new Event('userUpdated'));
-    } catch (err) {
-      /* ignore */
-    }
-
-    // Update backend
-    try {
-      const res = await fetch(`http://localhost:4000/users/${user.id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ favorites: updated }),
-      });
-
-      if (!res.ok) throw new Error(`Server responded ${res.status}`);
-
-      toast.success(isFav ? 'Đã xóa khỏi yêu thích' : 'Đã thêm vào yêu thích');
-    } catch (err) {
-      // Rollback
-      setFavorites(prev);
-      const rollbackUser = { ...user, favorites: prev };
-      login(rollbackUser);
-      
-      try {
-        window.dispatchEvent(new Event('userUpdated'));
-      } catch (e) {
-        /* ignore */
-      }
-      
-      toast.error('Không thể cập nhật yêu thích. Vui lòng thử lại.');
-    }
-  };
-
-  const formatViews = (views) => {
-    if (views >= 1000000) {
-      return `${(views / 1000000).toFixed(1)}M`;
-    } else if (views >= 1000) {
-      return `${(views / 1000).toFixed(1)}K`;
-    }
-    return views?.toString() || '0';
-  };
-
-  const formatDuration = (duration) => {
-    if (!duration) return '--:--';
-    if (duration.includes(':')) return duration;
-    
-    const minutes = Math.floor(duration / 60);
-    const seconds = duration % 60;
-    return `${minutes}:${seconds.toString().padStart(2, '0')}`;
-  };
-
-  if (loading) {
-    return (
-      <div className="body">
-        <div style={{ display: 'flex', width: '100%' }}>
-          <Dashboard />
-          <div className="container">
-            <TopBar />
-            <div className="content">
-              <div style={{ textAlign: 'center', color: 'white', marginTop: '50px' }}>
-                <h2>Đang tải thông tin album...</h2>
-              </div>
-            </div>
-            <Footer />
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  if (!album) {
-    return (
-      <div className="body">
-        <div style={{ display: 'flex', width: '100%' }}>
-          <Dashboard />
-          <div className="container">
-            <TopBar />
-            <div className="content">
-              <div style={{ textAlign: 'center', color: 'white', marginTop: '50px' }}>
-                <h2>Không tìm thấy album</h2>
-                <button 
-                  onClick={() => navigate('/album')}
-                  className="bg-[#1db954] text-white px-6 py-3 rounded-full font-semibold hover:bg-[#1ed760] transition-colors mt-4"
-                >
-                  Quay lại danh sách albums
-                </button>
-              </div>
-            </div>
-            <Footer />
-          </div>
-        </div>
-      </div>
-    );
-  }
+  }, [id, location.state, navigate, albums, artists, allSongs]);
 
   const totalViews = albumSongs.reduce((sum, song) => sum + (song.viewCount || 0), 0);
   const totalDuration = albumSongs.reduce((sum, song) => {
@@ -221,29 +88,35 @@ const AlbumDetailPage = () => {
     return sum + (parseInt(song.duration) || 0);
   }, 0);
 
-  const formatTotalDuration = (seconds) => {
-    const hours = Math.floor(seconds / 3600);
-    const minutes = Math.floor((seconds % 3600) / 60);
-    if (hours > 0) {
-      return `${hours}h ${minutes}m`;
-    }
-    return `${minutes}m`;
-  };
+  if (loading) {
+    return <LoadingPage message="Đang tải thông tin album..." />;
+  }
+
+  if (!album) {
+    return (
+      <EmptyStatePage 
+        title="Không tìm thấy album"
+        buttonText="Quay lại danh sách albums"
+        onButtonClick={() => navigate('/album')}
+      />
+    );
+  }
 
   return (
     <div className="body">
       <div style={{ display: 'flex', width: '100%' }}>
         <Dashboard />
         <div className="container">
-          <TopBar />
+          
           <div className="content bg-[#1171E2] rounded-lg bg-gradient-to-r from-blue-600 to-gray-700 p-0">
             <div className="bluebox">
               {/* Album Header */}
+              <TopBar />
               <div className="TopPart bg-gradient-to-r from-blue-400 to-gray-600 rounded-lg">
                 <div className="top2">
                   <div className="BannerPart">
                     <img 
-                      src={album.img || "https://via.placeholder.com/268x268?text=Album"}
+                      src="https://media.istockphoto.com/id/1090820484/photo/singer-singing-silhouette.jpg?s=612x612&w=0&k=20&c=VIqPcdZ7M12jJFiO44AxT-hUSRKlNchJbwEGUC8MUIY="
                       alt={album.title} 
                       className="w-[268px] h-[268px] object-cover p-5 rounded-lg" 
                     />
@@ -265,7 +138,7 @@ const AlbumDetailPage = () => {
                       <div className="flex gap-4 mt-4">
                         <button 
                           className="bg-[#1db954] text-white px-6 py-3 rounded-full font-semibold hover:bg-[#1ed760] transition-colors"
-                          onClick={playAlbum}
+                          onClick={() => playAlbum(albumSongs)}
                           disabled={albumSongs.length === 0}
                         >
                           <PlayCircleOutlined /> Phát album
@@ -315,7 +188,7 @@ const AlbumDetailPage = () => {
                       </thead>
                       <tbody className="divide-y divide-gray-700/30">
                         {albumSongs.map((song, index) => {
-                          const isFav = favorites.includes(song.id);
+                          const isFav = isFavorite(song.id);
                           
                           return (
                             <tr 
