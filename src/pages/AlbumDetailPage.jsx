@@ -103,7 +103,7 @@ const AlbumDetailPage = () => {
 
   return (
     <>
-      <div className="content bg-[#1171E2] rounded-lg bg-gradient-to-r from-blue-600 to-gray-700 p-0">
+      <div className="content" style={{ background: 'linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%)' }}>
         <div className="bluebox">
           {/* Album Header */}
           <TopBar />
@@ -132,7 +132,10 @@ const AlbumDetailPage = () => {
                       </p>
                       <div className="flex gap-4 mt-4">
                         <button 
-                          className="bg-[#1db954] text-white px-6 py-3 rounded-full font-semibold hover:bg-[#1ed760] transition-colors"
+                          className="px-6 py-3 rounded-full font-semibold text-white transition-colors"
+                          style={{ background: 'linear-gradient(135deg, #EE10B0, #EE10B0)' }}
+                          onMouseEnter={(e) => e.target.style.background = 'linear-gradient(135deg, #d60e9e, #d60e9e)'}
+                          onMouseLeave={(e) => e.target.style.background = 'linear-gradient(135deg, #EE10B0, #EE10B0)'}
                           onClick={() => playAlbum(albumSongs)}
                           disabled={albumSongs.length === 0}
                         >
@@ -140,14 +143,20 @@ const AlbumDetailPage = () => {
                         </button>
                         
                         <button 
-                          className="bg-gray-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-gray-500 transition-colors"
+                          className="px-6 py-3 rounded-full font-semibold text-white transition-colors"
+                          style={{ background: 'linear-gradient(135deg, #EE10B0, #EE10B0)' }}
+                          onMouseEnter={(e) => e.target.style.background = 'linear-gradient(135deg, #d60e9e, #d60e9e)'}
+                          onMouseLeave={(e) => e.target.style.background = 'linear-gradient(135deg, #EE10B0, #EE10B0)'}
                           onClick={() => toast.info('Chức năng thêm album vào yêu thích sẽ được cập nhật!')}
                         >
                           <HeartOutlined /> Thích
                         </button>
                         
                         <button 
-                          className="bg-gray-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-gray-500 transition-colors"
+                          className="px-6 py-3 rounded-full font-semibold text-white transition-colors"
+                          style={{ background: 'linear-gradient(135deg, #EE10B0, #EE10B0)' }}
+                          onMouseEnter={(e) => e.target.style.background = 'linear-gradient(135deg, #d60e9e, #d60e9e)'}
+                          onMouseLeave={(e) => e.target.style.background = 'linear-gradient(135deg, #EE10B0, #EE10B0)'}
                           onClick={() => toast.info('Chức năng chia sẻ sẽ được cập nhật!')}
                         >
                           <ShareAltOutlined /> Chia sẻ
@@ -224,7 +233,8 @@ const AlbumDetailPage = () => {
                                 <div className="flex items-center justify-center gap-2">
                                   <button
                                     onClick={() => playSong(song)}
-                                    className="text-[#1db954] hover:text-[#1ed760] transition-colors p-1"
+                                    style={{ background: 'linear-gradient(135deg, #EE10B0, #EE10B0)', color: 'white' }}
+                                    className="hover:opacity-80 transition-opacity p-1 rounded"
                                     title="Phát bài hát"
                                   >
                                     <PlayCircleOutlined style={{ fontSize: '1.25rem' }} />
@@ -304,7 +314,10 @@ const AlbumDetailPage = () => {
                         <h5 className="text-white font-semibold text-lg">{artist.name}</h5>
                         <p className="text-gray-400 text-sm">Nghệ sĩ</p>
                         <button 
-                          className="mt-2 bg-[#1db954] text-white px-4 py-2 rounded-lg hover:bg-[#1ed760] transition-colors text-sm"
+                          className="px-4 py-2 rounded-lg text-white font-semibold transition-colors text-sm"
+                          style={{ background: 'linear-gradient(135deg, #EE10B0, #EE10B0)' }}
+                          onMouseEnter={(e) => e.target.style.background = 'linear-gradient(135deg, #d60e9e, #d60e9e)'}
+                          onMouseLeave={(e) => e.target.style.background = 'linear-gradient(135deg, #EE10B0, #EE10B0)'}
                           onClick={() => navigate(`/artist/${artist.id}`)}
                         >
                           Xem thêm

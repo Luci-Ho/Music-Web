@@ -97,7 +97,7 @@ const FilteredSongsTable = ({ filterType = 'genre', filterId, title }) => {
     }, [songs, filterType, filterId, user, artistMap]);
 
     return (
-        <div className="bg-[#2576d2]  bg-gradient-to-r from-blue-900 to-gray-700 p-0 content">
+        <div className="content" style={{ background: 'linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%)' }}>
             <div className="bluebox ">
                 <div className="TopPart bg-gradient-to-r from-blue-400 to-gray-600 rounded-lg">
                     <TopBar />
@@ -129,8 +129,24 @@ const FilteredSongsTable = ({ filterType = 'genre', filterId, title }) => {
                                 <p className="btext">Discover the latest hits and timeless classics.</p>
                                 <p className="bts">{filtered.length} songs</p>
                             </div>
-                            <div className="playbutton" onClick={() => playAll(filtered)}>
-                                <p className="playall">Play All</p>
+                            <div className="playbutton" 
+                                onClick={() => playAll(filtered)}
+                                style={{ 
+                                    background: 'linear-gradient(135deg, #EE10B0, #EE10B0)',
+                                    cursor: 'pointer',
+                                    padding: '12px 24px',
+                                    borderRadius: '50px',
+                                    color: 'white',
+                                    fontWeight: 'bold',
+                                    transition: 'all 0.3s ease',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '8px'
+                                }}
+                                onMouseEnter={(e) => e.target.style.background = 'linear-gradient(135deg, #d60e9e, #d60e9e)'}
+                                onMouseLeave={(e) => e.target.style.background = 'linear-gradient(135deg, #EE10B0, #EE10B0)'}
+                            >
+                                <p className="playall" style={{ margin: 0 }}>Play All</p>
                                 <PlayCircleOutlined className="playicon" />
                             </div>
 
@@ -228,9 +244,18 @@ const FilteredSongsTable = ({ filterType = 'genre', filterId, title }) => {
                                             <button
                                                 onClick={() => playSong(s, filtered)}
                                                 title="Play song"
-                                                style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}
+                                                style={{ 
+                                                    background: 'linear-gradient(135deg, #EE10B0, #EE10B0)', 
+                                                    border: 'none', 
+                                                    cursor: 'pointer',
+                                                    padding: '8px',
+                                                    borderRadius: '4px',
+                                                    color: 'white'
+                                                }}
+                                                onMouseEnter={(e) => e.target.style.background = 'linear-gradient(135deg, #d60e9e, #d60e9e)'}
+                                                onMouseLeave={(e) => e.target.style.background = 'linear-gradient(135deg, #EE10B0, #EE10B0)'}
                                             >
-                                                <PlayCircleOutlined style={{ fontSize: '1.25rem', color: '#f63391' }} />
+                                                <PlayCircleOutlined style={{ fontSize: '1.25rem' }} />
                                             </button>
                                         </td>
 

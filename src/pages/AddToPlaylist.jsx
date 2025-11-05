@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import useAuth from '../hooks/useAuth';
 
-import Dashboard from '../components/layout/Dashboard';
 import TopBar from '../components/layout/TopBar';
 import Footer from '../components/layout/Footer';
 
@@ -90,14 +89,9 @@ const AddToPlaylist = () => {
   if (!song) return <p>Đang tải dữ liệu...</p>;
 
   return (
-    <div className="body">
-      <div style={{ display: 'flex', width: '100%' }}>
-        <Dashboard />
-
-        <div className="container">
-          <TopBar />
-
-          <div className="content">
+    <>
+      <TopBar />
+      <div className="content" style={{ background: 'linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%)' }}>
             <h2 style={{ color: 'white', marginBottom: '20px' }}>Thêm bài hát vào playlist</h2>
 
             <div className="song-info" style={{
@@ -149,22 +143,23 @@ const AddToPlaylist = () => {
                 style={{
                   marginTop: '20px',
                   padding: '10px 20px',
-                  backgroundColor: '#4caf50',
+                  background: 'linear-gradient(135deg, #EE10B0, #EE10B0)',
                   color: 'white',
                   border: 'none',
                   borderRadius: '8px',
-                  cursor: 'pointer'
+                  cursor: 'pointer',
+                  fontWeight: 'bold',
+                  transition: 'all 0.3s ease'
                 }}
+                onMouseEnter={(e) => e.target.style.background = 'linear-gradient(135deg, #d60e9e, #d60e9e)'}
+                onMouseLeave={(e) => e.target.style.background = 'linear-gradient(135deg, #EE10B0, #EE10B0)'}
               >
                 ➕ Thêm vào playlist
               </button>
             </div>
-          </div>
-
-          <Footer />
-        </div>
       </div>
-    </div>
+      <Footer />
+    </>
   );
 };
 

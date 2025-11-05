@@ -134,29 +134,23 @@ const PlaylistsPage = () => {
 
   if (loading) {
     return (
-      <div className="body">
-        <div style={{ display: 'flex', width: '100%' }}>
-          <div className="container">
-            <TopBar />
-            <div className="content">
-              <div style={{ textAlign: 'center', color: 'white', marginTop: '50px' }}>
-                <h2>Đang tải playlists...</h2>
-              </div>
-            </div>
-            <Footer />
+      <>
+        <TopBar />
+        <div className="content">
+          <div style={{ textAlign: 'center', color: 'white', marginTop: '50px' }}>
+            <h2>Đang tải playlists...</h2>
           </div>
         </div>
-      </div>
+        <Footer />
+      </>
     );
   }
 
   return (
-    <div className="body">
-      <div style={{ display: 'flex', width: '100%' }}>
-        <div className="container">
-          <TopBar />
-          <div className="content bg-[#1171E2] rounded-lg bg-gradient-to-r from-blue-600 to-gray-700 p-0">
-            <div className="bluebox">
+    <>
+      <TopBar />
+      <div className="content" style={{ background: 'linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%)' }}>
+          <div className="bluebox">
               <div className="TopPart bg-gradient-to-r from-blue-400 to-gray-600 rounded-lg">
                 <div className="top2">
                   <div className="BannerPart">
@@ -172,7 +166,10 @@ const PlaylistsPage = () => {
                     </div>
                     <div className="playbutton">
                       <button 
-                        className="bg-[#1db954] text-white px-6 py-3 rounded-full font-semibold hover:bg-[#1ed760] transition-colors"
+                        className="px-6 py-3 rounded-full font-semibold text-white transition-colors"
+                        style={{ background: 'linear-gradient(135deg, #EE10B0, #EE10B0)' }}
+                        onMouseEnter={(e) => e.target.style.background = 'linear-gradient(135deg, #d60e9e, #d60e9e)'}
+                        onMouseLeave={(e) => e.target.style.background = 'linear-gradient(135deg, #EE10B0, #EE10B0)'}
                         onClick={() => setShowCreateModal(true)}
                       >
                         <PlusOutlined /> Tạo Playlist Mới
@@ -188,7 +185,10 @@ const PlaylistsPage = () => {
                     <h3>Bạn chưa có playlist nào</h3>
                     <p>Hãy tạo playlist đầu tiên để bắt đầu!</p>
                     <button 
-                      className="bg-[#1db954] text-white px-6 py-3 rounded-full font-semibold hover:bg-[#1ed760] transition-colors mt-4"
+                      className="px-6 py-3 rounded-full font-semibold text-white transition-colors mt-4"
+                      style={{ background: 'linear-gradient(135deg, #EE10B0, #EE10B0)' }}
+                      onMouseEnter={(e) => e.target.style.background = 'linear-gradient(135deg, #d60e9e, #d60e9e)'}
+                      onMouseLeave={(e) => e.target.style.background = 'linear-gradient(135deg, #EE10B0, #EE10B0)'}
                       onClick={() => setShowCreateModal(true)}
                     >
                       <PlusOutlined /> Tạo Playlist Đầu Tiên
@@ -231,7 +231,10 @@ const PlaylistsPage = () => {
                         <div className="flex gap-2">
                           <button
                             onClick={() => playPlaylist(playlist)}
-                            className="flex-1 bg-[#1db954] text-white py-2 px-4 rounded-lg hover:bg-[#1ed760] transition-colors text-sm"
+                            className="flex-1 text-white py-2 px-4 rounded-lg transition-colors text-sm"
+                            style={{ background: 'linear-gradient(135deg, #EE10B0, #EE10B0)' }}
+                            onMouseEnter={(e) => e.target.style.background = 'linear-gradient(135deg, #d60e9e, #d60e9e)'}
+                            onMouseLeave={(e) => e.target.style.background = 'linear-gradient(135deg, #EE10B0, #EE10B0)'}
                           >
                             <PlayCircleOutlined /> Phát
                           </button>
@@ -251,8 +254,6 @@ const PlaylistsPage = () => {
             </div>
           </div>
           <Footer />
-        </div>
-      </div>
 
       {/* Create Playlist Modal */}
       {showCreateModal && (
@@ -283,7 +284,10 @@ const PlaylistsPage = () => {
               
               <button
                 onClick={createPlaylist}
-                className="flex-1 bg-[#1db954] text-white py-2 px-4 rounded-lg hover:bg-[#1ed760] transition-colors"
+                className="flex-1 text-white py-2 px-4 rounded-lg transition-colors"
+                style={{ background: 'linear-gradient(135deg, #EE10B0, #EE10B0)' }}
+                onMouseEnter={(e) => e.target.style.background = 'linear-gradient(135deg, #d60e9e, #d60e9e)'}
+                onMouseLeave={(e) => e.target.style.background = 'linear-gradient(135deg, #EE10B0, #EE10B0)'}
               >
                 Tạo Playlist
               </button>
@@ -291,7 +295,7 @@ const PlaylistsPage = () => {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 };
 

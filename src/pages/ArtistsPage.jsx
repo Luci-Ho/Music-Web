@@ -5,7 +5,6 @@ import {
   UserOutlined
 } from '@ant-design/icons';
 
-import Dashboard from '../components/layout/Dashboard';
 import TopBar from '../components/layout/TopBar';
 import Footer from '../components/layout/Footer';
 import SectionTitle from '../components/common/SectionTitle';
@@ -128,31 +127,23 @@ const ArtistsPage = () => {
 
   if (loading) {
     return (
-      <div className="body">
-        <div style={{ display: 'flex', width: '100%' }}>
-          <Dashboard />
-          <div className="container">
-            <TopBar />
-            <div className="content">
-              <div style={{ textAlign: 'center', color: 'white', marginTop: '50px' }}>
-                <h2>Đang tải danh sách nghệ sĩ...</h2>
-              </div>
-            </div>
-            <Footer />
+      <>
+        <TopBar />
+        <div className="content">
+          <div style={{ textAlign: 'center', color: 'white', marginTop: '50px' }}>
+            <h2>Đang tải danh sách nghệ sĩ...</h2>
           </div>
         </div>
-      </div>
+        <Footer />
+      </>
     );
   }
 
   return (
-    <div className="body">
-      <div style={{ display: 'flex', width: '100%' }}>
-        <Dashboard />
-        <div className="container">
-          <TopBar />
-          <div className="content bg-gradient-to-r from-blue-600 to-gray-700 rounded-lg p-0">
-            <div className="bluebox">
+    <>
+      <TopBar />
+      <div className="content" style={{ background: 'linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%)' }}>
+          <div className="bluebox">
               <div className="TopPart bg-gradient-to-r from-blue-400 to-gray-600 rounded-lg">
                 <div className="top2">
                   <div className="BannerPart">
@@ -255,7 +246,10 @@ const ArtistsPage = () => {
                               e.stopPropagation();
                               handleArtistClick(artist);
                             }}
-                            className="artist-view-button"
+                            className="px-4 py-2 rounded-lg font-semibold text-white transition-colors text-sm"
+                            style={{ background: 'linear-gradient(135deg, #EE10B0, #EE10B0)' }}
+                            onMouseEnter={(e) => e.target.style.background = 'linear-gradient(135deg, #d60e9e, #d60e9e)'}
+                            onMouseLeave={(e) => e.target.style.background = 'linear-gradient(135deg, #EE10B0, #EE10B0)'}
                           >
                             <PlayCircleOutlined /> Xem tất cả
                           </button>
@@ -268,9 +262,7 @@ const ArtistsPage = () => {
             </div>
           </div>
           <Footer />
-        </div>
-      </div>
-    </div>
+    </>
   );
 };
 

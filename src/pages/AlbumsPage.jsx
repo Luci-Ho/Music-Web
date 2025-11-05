@@ -103,7 +103,7 @@ const AlbumsPage = () => {
   return (
     <>
       <TopBar />
-      <div className="content albums-content">
+      <div className="content albums-content" style={{ background: 'linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%)' }}>
         <div className="bluebox">
           <div className="TopPart albums-header">
             <div className="top2">
@@ -199,7 +199,10 @@ const AlbumsPage = () => {
                               e.stopPropagation();
                               handleAlbumClick(album);
                             }}
-                            className="album-view-button"
+                            className="px-4 py-2 rounded-lg font-semibold text-white transition-colors text-sm"
+                            style={{ background: 'linear-gradient(135deg, #EE10B0, #EE10B0)' }}
+                            onMouseEnter={(e) => e.target.style.background = 'linear-gradient(135deg, #d60e9e, #d60e9e)'}
+                            onMouseLeave={(e) => e.target.style.background = 'linear-gradient(135deg, #EE10B0, #EE10B0)'}
                           >
                             <PlayCircleOutlined /> Xem tất cả
                           </button>

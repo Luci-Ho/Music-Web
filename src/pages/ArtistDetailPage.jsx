@@ -15,7 +15,6 @@ import useFormatViews from '../hooks/useFormatViews';
 import useFormatDuration from '../hooks/useFormatDuration';
 import useMusicPlayer from '../hooks/useMusicPlayer';
 
-import Dashboard from '../components/layout/Dashboard';
 import TopBar from '../components/layout/TopBar';
 import Footer from '../components/layout/Footer';
 import SectionTitle from '../components/common/SectionTitle';
@@ -83,13 +82,10 @@ const ArtistDetailPage = () => {
   const totalViews = artistSongs.reduce((sum, song) => sum + (song.viewCount || 0), 0);
 
   return (
-    <div className="body">
-      <div style={{ display: 'flex', width: '100%' }}>
-        <Dashboard />
-        <div className="container">
-          <TopBar />
-          <div className="content bg-gradient-to-r from-blue-600 to-gray-700 rounded-lg p-0">
-            <div className="bluebox">
+    <>
+      <TopBar />
+      <div className="content" style={{ background: 'linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%)' }}>
+          <div className="bluebox">
               {/* Artist Header */}
               <div className="TopPart bg-gradient-to-r from-blue-400 to-gray-600 rounded-lg">
                 <div className="top2">
@@ -104,7 +100,10 @@ const ArtistDetailPage = () => {
                       <p className="btext">{artistSongs.length} bài hát • {formatViews(totalViews)} lượt nghe</p>
                       <div className="flex gap-4 mt-4">
                         <button 
-                          className="bg-green-500 text-white px-6 py-3 rounded-full font-semibold hover:bg-green-600 transition-colors"
+                          className="px-6 py-3 rounded-full font-semibold text-white transition-colors"
+                          style={{ background: 'linear-gradient(135deg, #EE10B0, #EE10B0)' }}
+                          onMouseEnter={(e) => e.target.style.background = 'linear-gradient(135deg, #d60e9e, #d60e9e)'}
+                          onMouseLeave={(e) => e.target.style.background = 'linear-gradient(135deg, #EE10B0, #EE10B0)'}
                           onClick={() => playArtistSongs(artistSongs)}
                           disabled={artistSongs.length === 0}
                         >
@@ -112,14 +111,20 @@ const ArtistDetailPage = () => {
                         </button>
                         
                         <button 
-                          className="bg-gray-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-gray-500 transition-colors"
+                          className="px-6 py-3 rounded-full font-semibold text-white transition-colors"
+                          style={{ background: 'linear-gradient(135deg, #EE10B0, #EE10B0)' }}
+                          onMouseEnter={(e) => e.target.style.background = 'linear-gradient(135deg, #d60e9e, #d60e9e)'}
+                          onMouseLeave={(e) => e.target.style.background = 'linear-gradient(135deg, #EE10B0, #EE10B0)'}
                           onClick={() => toast.info('Chức năng theo dõi sẽ được cập nhật!')}
                         >
                           <HeartOutlined /> Theo dõi
                         </button>
                         
                         <button 
-                          className="bg-gray-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-gray-500 transition-colors"
+                          className="px-6 py-3 rounded-full font-semibold text-white transition-colors"
+                          style={{ background: 'linear-gradient(135deg, #EE10B0, #EE10B0)' }}
+                          onMouseEnter={(e) => e.target.style.background = 'linear-gradient(135deg, #d60e9e, #d60e9e)'}
+                          onMouseLeave={(e) => e.target.style.background = 'linear-gradient(135deg, #EE10B0, #EE10B0)'}
                           onClick={() => toast.info('Chức năng chia sẻ sẽ được cập nhật!')}
                         >
                           <ShareAltOutlined /> Chia sẻ
@@ -200,7 +205,8 @@ const ArtistDetailPage = () => {
                                 <div className="flex items-center justify-center gap-2">
                                   <button
                                     onClick={() => playSong(song)}
-                                    className="text-green-500 hover:text-green-600 transition-colors p-1"
+                                    style={{ background: 'linear-gradient(135deg, #EE10B0, #EE10B0)', color: 'white' }}
+                                    className="hover:opacity-80 transition-opacity p-1 rounded"
                                     title="Phát bài hát"
                                   >
                                     <PlayCircleOutlined style={{ fontSize: '1.25rem' }} />
@@ -267,9 +273,7 @@ const ArtistDetailPage = () => {
             </div>
           </div>
           <Footer />
-        </div>
-      </div>
-    </div>
+    </>
   );
 };
 

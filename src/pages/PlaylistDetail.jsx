@@ -88,53 +88,43 @@ const PlaylistDetail = () => {
 
   if (loading) {
     return (
-      <div className="body">
-        <div style={{ display: "flex", width: "100%" }}>
-          <div className="container">
-            <TopBar />
-            <div className="content">
-              <div style={{ textAlign: 'center', color: 'white', marginTop: '50px' }}>
-                <h2>Đang tải playlist...</h2>
-              </div>
-            </div>
-            <Footer />
+      <>
+        <TopBar />
+        <div className="content">
+          <div style={{ textAlign: 'center', color: 'white', marginTop: '50px' }}>
+            <h2>Đang tải playlist...</h2>
           </div>
         </div>
-      </div>
+        <Footer />
+      </>
     );
   }
 
   if (!playlist) {
     return (
-      <div className="body">
-        <div style={{ display: "flex", width: "100%" }}>
-          <div className="container">
-            <TopBar />
-            <div className="content">
-              <div style={{ textAlign: 'center', color: 'white', marginTop: '50px' }}>
-                <h2>Không tìm thấy playlist</h2>
-                <button 
-                  onClick={() => navigate('/playlist')}
-                  className="bg-[#1db954] text-white px-6 py-3 rounded-full font-semibold hover:bg-[#1ed760] transition-colors mt-4"
-                >
-                  Quay lại danh sách playlist
-                </button>
-              </div>
-            </div>
-            <Footer />
+      <>
+        <TopBar />
+        <div className="content">
+          <div style={{ textAlign: 'center', color: 'white', marginTop: '50px' }}>
+            <h2>Không tìm thấy playlist</h2>
+            <button 
+              onClick={() => navigate('/playlist')}
+              className="bg-[#1db954] text-white px-6 py-3 rounded-full font-semibold hover:bg-[#1ed760] transition-colors mt-4"
+            >
+              Quay lại danh sách playlist
+            </button>
           </div>
         </div>
-      </div>
+        <Footer />
+      </>
     );
   }
 
   return (
-    <div className="body">
-      <div style={{ display: "flex", width: "100%" }}>
-        <div className="container">
-          <TopBar />
-          <div className="content bg-[#1171E2] rounded-lg bg-gradient-to-r from-blue-600 to-gray-700 p-0">
-            <div className="bluebox">
+    <>
+      <TopBar />
+      <div className="content" style={{ background: 'linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%)' }}>
+          <div className="bluebox">
               <div className="TopPart bg-gradient-to-r from-blue-400 to-gray-600 rounded-lg">
                 <div className="top2">
                   <div className="BannerPart">
@@ -256,9 +246,7 @@ const PlaylistDetail = () => {
             </div>
           </div>
           <Footer />
-        </div>
-      </div>
-    </div>
+    </>
   );
 };
 
