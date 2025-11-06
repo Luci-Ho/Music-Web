@@ -20,8 +20,10 @@ import MusicPlayer from './components/layout/MusicPlayer';
 import SearchPage from './pages/SearchPage';
 // import FilteredSongsTable2 from './components/common/FilteredSongsTable2'; test layout
 import ListPage2 from './pages/ListPage2';
+import UserSettingsPage from './pages/UserSettingsPage';
 
 import { AppProvider } from './components/common/AppContext';
+import SettingsPage from './pages/UserSettingsPage';
 
 // lazy-load admin bundle so the main app doesn't break if admin imports have missing deps
 const AdminPage = React.lazy(() => import('./Admin/pages/AdminPage'));
@@ -38,6 +40,7 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
+        <Route path="/settings" element={<UserSettingsPage />} />
         <Route path="/discover" element={<Discover />} />
 
 

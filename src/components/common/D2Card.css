@@ -111,3 +111,14 @@
         text-align: center;
     }
 }
+
+.d2card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 20px;
+  padding: 10px 0;
+}
+
+.dviewall {
+  min-width: 0;
+}

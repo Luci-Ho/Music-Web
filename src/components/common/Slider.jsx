@@ -1,19 +1,16 @@
-import React, { useEffect, useState, useContext  } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import "./Slider.css";
-
 import { AppContext } from "./AppContext";
-
 
 export default function Slider() {
   const [current, setCurrent] = useState(0);
   const [slides, setSlides] = useState([]);
-  const { setCurrentSong } = useContext(AppContext);
-
+  const { playAll } = useContext(AppContext); // ✅ dùng playAll thay vì setCurrentSong
 
   useEffect(() => {
     fetch("http://localhost:4000/songs")
       .then((res) => res.json())
-      .then((data) => setSlides(data.slice(0, 5))) 
+      .then((data) => setSlides(data.slice(0, 5)))
       .catch((err) => console.error("Lỗi khi gọi API:", err));
   }, []);
 
@@ -30,8 +27,8 @@ export default function Slider() {
   const song = slides[current];
 
   const handleListen = () => {
-    setCurrentSong(song);
-  }
+    playAll([song]); // ✅ phát bài hát hiện tại
+  };
 
   return (
     <div className="slider">
@@ -41,12 +38,12 @@ export default function Slider() {
         <div className="image-wrapper">
           <img src={song.cover_url} alt={song.title} />
 
-          <div className="gradient-overlay"></div> {/* lớp phủ gradient */}
+          <div className="gradient-overlay"></div>
           <div className="info">
             <h2>{song.title}</h2>
             <p>{song.artist}</p>
             <div className="actions">
-              <button className="listen"onClick={handleListen} >Listen Now</button>
+              <button className="listen" onClick={handleListen}>Listen Now</button>
               <button className="follow">Follow</button>
             </div>
           </div>
@@ -55,7 +52,5 @@ export default function Slider() {
 
       <button className="nav right" onClick={nextSlide}>❯</button>
     </div>
-
-
   );
 }

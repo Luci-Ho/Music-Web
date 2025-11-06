@@ -180,7 +180,14 @@ export default function MusicPlayer() {
 
     <div className="music-player">
       <div className="player-left">
-        <img src={currentSong.cover_url} alt={currentSong.title} />
+        <img
+          src={
+            currentSong.cover_url?.trim()
+              ? currentSong.cover_url
+              : 'https://img.freepik.com/premium-vector/white-music-icon-round-isolated-button-vector-illustration_541075-1027.jpg'
+          } 
+          alt={currentSong.title}
+        />
         <div className="song-info">
           <h4>{currentSong.title}</h4>
           <p>{currentSong.artist}</p>
