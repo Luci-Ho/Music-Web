@@ -202,7 +202,13 @@ export default function MusicPlayer() {
 
     <div className="music-player" style={playerStyle}>
       <div className="player-left">
-        <img src={currentSong.cover_url} alt={currentSong.title} />
+        <img 
+          src={currentSong.img || currentSong.cover_url || currentSong.cover || "https://via.placeholder.com/64x64?text=No+Image"} 
+          alt={currentSong.title}
+          onError={(e) => {
+            e.target.src = "https://via.placeholder.com/64x64?text=No+Image";
+          }}
+        />
         <div className="song-info">
           <h4>{currentSong.title}</h4>
           <p>{currentSong.artist}</p>

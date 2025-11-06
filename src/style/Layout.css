@@ -247,7 +247,7 @@ body::-webkit-scrollbar {
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
   border-right: 1px solid rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(15px);
-  padding-bottom: 40px;
+  padding-top: 40px;
   width: 300px;
   min-width: 300px;
   max-width: 300px;
@@ -262,6 +262,7 @@ body::-webkit-scrollbar {
   z-index: 1000; /* 👈 Tăng z-index để đảm bảo luôn ở trên */
   transition: width 0.2s ease, padding-top 0.2s ease;
   flex-shrink: 0; /* 👈 Không cho Dashboard co lại */
+  gap: 10px;
 }
 
 /* Ẩn thanh scroll cho WebKit browsers trong dashboard */
@@ -404,9 +405,9 @@ body::-webkit-scrollbar {
   -webkit-background-clip: text;
   color: transparent;
   margin:30px 10px 5px 10px;
-justify-content: center;
-align-items: center;
-text-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
+  justify-content: center;
+  align-items: center;
+  text-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
 }
 
 .logoimg {
@@ -424,9 +425,12 @@ text-shadow: 0 0 30px rgba(255, 255, 255, 0.5);
 }
 
 .DashBoard-menu {
-  margin: 10px 10px;
+  margin: 10px 30px;
 }
 
+.dashboard.collapsed .DashBoard-menu {
+  margin: 10px 10px;
+}
 
 
 

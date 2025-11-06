@@ -18,18 +18,35 @@
   gap: 20px;
   width: 100%;
   max-width: 1200px;
+  /* transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94); */
+}
+
+/* Transitioning state improvements */
+.slider.transitioning .slides-container {
   transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
+.slider.transitioning .slide {
+  transition: 
+    transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+    opacity 0.6s ease-in-out,
+    filter 0.5s ease,
+    box-shadow 0.4s ease;
+}
+
+/* Navigation button disabled state */
+.nav.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+  transform: translateY(-50%) scale(0.9);
+}
+
+/* Enhanced slide transitions */
 .slide {
   position: relative;
   text-align: left;
   cursor: pointer;
-  transition: 
-    transform 0.7s cubic-bezier(0.34, 1.56, 0.64, 1),
-    opacity 0.5s ease-in-out,
-    filter 0.4s ease,
-    box-shadow 0.3s ease;
   border-radius: 15px;
   overflow: hidden;
 }
@@ -60,6 +77,11 @@
   opacity: 0.85;
   transform: scale(0.95) rotateY(0deg);
   filter: brightness(0.9) saturate(1) blur(0px);
+}
+
+/* Only apply hover transitions when not transitioning */
+.slider:not(.transitioning) .slide.prev:hover,
+.slider:not(.transitioning) .slide.next:hover {
   transition: 
     transform 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55),
     opacity 0.3s ease,
@@ -143,10 +165,14 @@
 .image-wrapper {
   position: relative;
   width: 100%;
+  transform-style: preserve-3d;
+}
+
+/* Only apply image wrapper transitions when not transitioning */
+.slider:not(.transitioning) .image-wrapper {
   transition: 
     height 0.6s cubic-bezier(0.4, 0, 0.2, 1),
     transform 0.5s ease-out;
-  transform-style: preserve-3d;
 }
 
 .slide.active .image-wrapper {
@@ -164,6 +190,10 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+/* Only apply image transitions when not transitioning */
+.slider:not(.transitioning) .image-wrapper img {
   transition: 
     transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94),
     filter 0.5s ease-in-out,
@@ -188,10 +218,14 @@
   padding: 10px;
   border-radius: 10px;
   z-index: 1;
+  transform: translateY(0px);
+}
+
+/* Only apply info transitions when not transitioning */
+.slider:not(.transitioning) .info {
   transition: 
     transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55),
     opacity 0.4s ease;
-  transform: translateY(0px);
 }
 
 .slide:not(.active) .info {
@@ -217,6 +251,10 @@
   background-color: #ee10b0;
   color: white;
   cursor: pointer;
+}
+
+/* Only apply button transitions when not transitioning */
+.slider:not(.transitioning) .actions button {
   transition: 
     background-color 0.3s ease,
     transform 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55),
@@ -247,7 +285,7 @@
   width: 100%;
   height: 100%;
   border-radius: 10px;
-  background: linear-gradient(to right, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0));
+  /* background: linear-gradient(to right, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0)); */
   z-index: 0;
 }
 
@@ -308,7 +346,37 @@
   }
 }
 
+/* Slide exit animation */
+@keyframes slideOut {
+  from {
+    opacity: 1;
+    transform: translateX(0) rotateY(0deg);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(-100px) rotateY(-45deg);
+  }
+}
+
+/* Smooth slide transition */
+@keyframes slideTransition {
+  0% {
+    transform: translateX(0) scale(1);
+  }
+  50% {
+    transform: translateX(20px) scale(1.05);
+  }
+  100% {
+    transform: translateX(0) scale(1);
+  }
+}
+
 /* Add entrance animation to slides */
 .slide {
   animation: slideIn 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+/* Transition animation for active slide changes */
+.slider.transitioning .slide.active {
+  animation: slideTransition 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
 }

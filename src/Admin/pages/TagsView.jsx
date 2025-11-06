@@ -432,6 +432,49 @@ export default function TagsView() {
 
     return (
         <div className="p-6">
+            <style jsx>{`
+                .white-tabs .ant-tabs-tab {
+                    color: white !important;
+                    transition: all 0.3s ease;
+                }
+                
+                .white-tabs .ant-tabs-tab:hover {
+                    color: #EE10B0 !important;
+                    text-shadow: 0 0 8px #EE10B0, 0 0 16px #EE10B0;
+                    transform: translateY(-2px);
+                }
+                
+                .white-tabs .ant-tabs-tab-active {
+                    color: #EE10B0 !important;
+                    text-shadow: 0 0 10px #EE10B0, 0 0 20px #EE10B0;
+                }
+                
+                .white-tabs .ant-tabs-tab-active .ant-tabs-tab-btn {
+                    color: #EE10B0 !important;
+                    text-shadow: 0 0 10px #EE10B0, 0 0 20px #EE10B0;
+                }
+                
+                .white-tabs .ant-tabs-tab .ant-tabs-tab-btn {
+                    color: inherit;
+                    transition: all 0.3s ease;
+                }
+                
+                .white-tabs .ant-tabs-tab:hover .ant-tabs-tab-btn {
+                    color: #EE10B0 !important;
+                }
+                
+                .white-tabs .ant-tabs-ink-bar {
+                    background: linear-gradient(90deg, #EE10B0, #ff69b4) !important;
+                    box-shadow: 0 0 10px #EE10B0;
+                    height: 3px !important;
+                }
+                
+                .white-tabs .ant-tabs-tab-btn:active {
+                    color: #EE10B0 !important;
+                    text-shadow: 0 0 15px #EE10B0, 0 0 30px #EE10B0;
+                    transform: scale(0.95);
+                }
+            `}</style>
             <h2 className="text-2xl font-bold mb-2">Tags Management</h2>
             <p className="text-gray-600 mb-6">Manage genres, albums, and artists. Each tag must have at least 3 songs.</p>
 
@@ -441,6 +484,15 @@ export default function TagsView() {
                 tabBarGutter={24}
                 size="large"
                 className="white-tabs"
+                tabBarStyle={{
+                    color: 'white',
+                    borderBottom: '1px solid rgba(255, 255, 255, 0.2)'
+                }}
+                style={{
+                    '--tab-text-color': 'white',
+                    '--tab-hover-color': '#EE10B0',
+                    '--tab-active-color': '#EE10B0'
+                }}
             />
 
             {/* Modal for Add/Edit */}

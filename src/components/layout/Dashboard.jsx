@@ -82,13 +82,13 @@ const Dashboard = () => {
         </div>
       </div>
 
-      <div className="DashBoard-menu">
+      {/* <div className="DashBoard-menu">
         <p className="Menu">Library</p>
         <div className="Menu-part">
           <MenuItem icon={<AppstoreAddOutlined />} label="Recently" to="/recent" />
           <MenuItem icon={<PlayCircleOutlined />} label="Most Played" to="/most-played" />
         </div>
-      </div>
+      </div> */}
 
       <div className="DashBoard-menu">
         <p className="Menu">Playlist and Favorite</p>

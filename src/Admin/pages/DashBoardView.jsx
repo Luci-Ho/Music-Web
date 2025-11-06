@@ -136,28 +136,6 @@ const userActivity = [
 
     return (
         <section>
-            {/* Current User Info */}
-            {/* <Card className="mb-6 display-none">
-                <div className="flex items-center justify-between">
-                    <div>
-                        <h3 className="mb-2">Current User Role</h3>
-                        <Tag color={getLevelColor(userLevel)} className="text-lg px-3 py-1">
-                            {getLevelName(userLevel)}
-                        </Tag>
-                    </div>
-                    <div>
-                        <h4 className="mb-2">Permissions for {getLevelName(userLevel)}</h4>
-                        <Table 
-                            columns={permissionColumns}
-                            dataSource={permissionsData}
-                            pagination={false}
-                            size="small"
-                            className="max-w-lg"
-                        />
-                    </div>
-                </div>
-            </Card> */}
-
             <div className="grid grid-cols-4 gap-4 mb-6 ">
                 {stats.map(s => <StartCard key={s.id} title={s.title} value={s.value} />)}
             </div>

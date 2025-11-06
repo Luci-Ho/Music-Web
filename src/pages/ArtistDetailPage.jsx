@@ -205,7 +205,7 @@ const ArtistDetailPage = () => {
                                 <div className="flex items-center justify-center gap-2">
                                   <button
                                     onClick={() => playSong(song)}
-                                    style={{ background: 'linear-gradient(135deg, #EE10B0, #EE10B0)', color: 'white' }}
+                                    // style={{ background: 'linear-gradient(135deg, #EE10B0, #EE10B0)', color: 'white' }}
                                     className="hover:opacity-80 transition-opacity p-1 rounded"
                                     title="Phát bài hát"
                                   >

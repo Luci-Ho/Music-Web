@@ -257,8 +257,8 @@ const PlaylistsPage = () => {
 
       {/* Create Playlist Modal */}
       {showCreateModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-gray-800 rounded-lg p-6 w-96">
+        <div className="fixed inset-0 bg-gray-400/50 backdrop-blur-md flex items-center justify-center z-50">
+          <div className="bg-gray-800 rounded-lg p-6 w-96 shadow-2xl">
             <h3 className="text-white text-xl font-semibold mb-4">Tạo Playlist Mới</h3>
             
             <input

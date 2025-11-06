@@ -132,7 +132,6 @@ const FilteredSongsTable = ({ filterType = 'genre', filterId, title }) => {
                             <div className="playbutton" 
                                 onClick={() => playAll(filtered)}
                                 style={{ 
-                                    background: 'linear-gradient(135deg, #EE10B0, #EE10B0)',
                                     cursor: 'pointer',
                                     padding: '12px 24px',
                                     borderRadius: '50px',
@@ -141,10 +140,9 @@ const FilteredSongsTable = ({ filterType = 'genre', filterId, title }) => {
                                     transition: 'all 0.3s ease',
                                     display: 'flex',
                                     alignItems: 'center',
-                                    gap: '8px'
+                                    gap: '8px',
+                                    border: '2px solid white'
                                 }}
-                                onMouseEnter={(e) => e.target.style.background = 'linear-gradient(135deg, #d60e9e, #d60e9e)'}
-                                onMouseLeave={(e) => e.target.style.background = 'linear-gradient(135deg, #EE10B0, #EE10B0)'}
                             >
                                 <p className="playall" style={{ margin: 0 }}>Play All</p>
                                 <PlayCircleOutlined className="playicon" />
@@ -245,15 +243,13 @@ const FilteredSongsTable = ({ filterType = 'genre', filterId, title }) => {
                                                 onClick={() => playSong(s, filtered)}
                                                 title="Play song"
                                                 style={{ 
-                                                    background: 'linear-gradient(135deg, #EE10B0, #EE10B0)', 
+                                                    background: 'transparent', 
                                                     border: 'none', 
                                                     cursor: 'pointer',
                                                     padding: '8px',
                                                     borderRadius: '4px',
                                                     color: 'white'
                                                 }}
-                                                onMouseEnter={(e) => e.target.style.background = 'linear-gradient(135deg, #d60e9e, #d60e9e)'}
-                                                onMouseLeave={(e) => e.target.style.background = 'linear-gradient(135deg, #EE10B0, #EE10B0)'}
                                             >
                                                 <PlayCircleOutlined style={{ fontSize: '1.25rem' }} />
                                             </button>

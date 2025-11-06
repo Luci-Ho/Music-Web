@@ -7,6 +7,7 @@ export default function Slider() {
   const [current, setCurrent] = useState(0);
   const [slides, setSlides] = useState([]);
   const [isPaused, setIsPaused] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(false);
   const { playSong } = useMusicPlayer();
 
 
@@ -29,15 +30,25 @@ export default function Slider() {
   }, [slides.length, isPaused]);
 
   const nextSlide = () => {
+    if (isTransitioning) return;
+    setIsTransitioning(true);
     setCurrent((prev) => (prev + 1) % slides.length);
     setIsPaused(true);
-    setTimeout(() => setIsPaused(false), 5000); // Resume auto-slide after 5 seconds
+    setTimeout(() => {
+      setIsTransitioning(false);
+      setIsPaused(false);
+    }, 800); // Match transition duration
   };
 
   const prevSlide = () => {
+    if (isTransitioning) return;
+    setIsTransitioning(true);
     setCurrent((prev) => (prev - 1 + slides.length) % slides.length);
     setIsPaused(true);
-    setTimeout(() => setIsPaused(false), 5000); // Resume auto-slide after 5 seconds
+    setTimeout(() => {
+      setIsTransitioning(false);
+      setIsPaused(false);
+    }, 800); // Match transition duration
   };
 
   if (slides.length === 0) return <div>Đang tải dữ liệu...</div>;
@@ -52,9 +63,14 @@ export default function Slider() {
   const getNextIndex = () => (current + 1) % slides.length;
 
   const handleDotClick = (index) => {
+    if (isTransitioning || index === current) return;
+    setIsTransitioning(true);
     setCurrent(index);
     setIsPaused(true);
-    setTimeout(() => setIsPaused(false), 5000); // Resume auto-slide after 5 seconds
+    setTimeout(() => {
+      setIsTransitioning(false);
+      setIsPaused(false);
+    }, 800); // Match transition duration
   };
 
   const handleMouseEnter = () => setIsPaused(true);
@@ -62,11 +78,11 @@ export default function Slider() {
 
   return (
     <div 
-      className="slider"
+      className={`slider ${isTransitioning ? 'transitioning' : ''}`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
-      <button className="nav left" onClick={prevSlide}>❮</button>
+      <button className={`nav left ${isTransitioning ? 'disabled' : ''}`} onClick={prevSlide} disabled={isTransitioning}>❮</button>
 
       <div className="slides-container">
         {/* Slide trước (mờ) */}
@@ -102,7 +118,7 @@ export default function Slider() {
         </div>
       </div>
 
-      <button className="nav right" onClick={nextSlide}>❯</button>
+      <button className={`nav right ${isTransitioning ? 'disabled' : ''}`} onClick={nextSlide} disabled={isTransitioning}>❯</button>
 
       {/* Dots indicator */}
       <div className="dots-container">

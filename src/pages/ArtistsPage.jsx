@@ -246,7 +246,7 @@ const ArtistsPage = () => {
                               e.stopPropagation();
                               handleArtistClick(artist);
                             }}
-                            className="px-4 py-2 rounded-lg font-semibold text-white transition-colors text-sm"
+                            className="w-full px-4 py-2 rounded-lg font-semibold text-white transition-colors text-sm"
                             style={{ background: 'linear-gradient(135deg, #EE10B0, #EE10B0)' }}
                             onMouseEnter={(e) => e.target.style.background = 'linear-gradient(135deg, #d60e9e, #d60e9e)'}
                             onMouseLeave={(e) => e.target.style.background = 'linear-gradient(135deg, #EE10B0, #EE10B0)'}
