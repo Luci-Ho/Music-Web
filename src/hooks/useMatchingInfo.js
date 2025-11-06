@@ -104,7 +104,7 @@ export default function useMatchingInfo() {
         (id) => {
             if (id == null) return '';
             const found = genres.find((g) => g && (g.id === id || String(g.id) === String(id)));
-            return found?.name ?? '';
+            return found?.title ?? found?.name ?? ''; // sử dụng title trước, fallback name
         },
         [genres]
     );

@@ -2,7 +2,7 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Avatar } from 'antd';
-import { PlayCircleOutlined, HomeOutlined, TeamOutlined, PieChartOutlined, SettingOutlined, LogoutOutlined, AppstoreOutlined, UserOutlined  } from '@ant-design/icons';
+import { PlayCircleOutlined, HomeOutlined, TeamOutlined, TagsOutlined, SettingOutlined, LogoutOutlined, AppstoreOutlined, UserOutlined  } from '@ant-design/icons';
 
 
 export default function Sidebar({ active, setActive }) {
@@ -41,8 +41,7 @@ return (
         <Avatar icon={<PlayCircleOutlined />} />
         <div className="brand">Melodies</div>
       </div>
-      <button className="collapse-toggle" onClick={() => setCollapsed(!collapsed)} aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'} style={{background:'transparent', border:'none', color:'#d1d5db', cursor:'pointer'}}>
-      </button>
+      {/* Collapse toggle hidden in admin */}
     </div>
 
 
@@ -56,8 +55,8 @@ return (
       <button onClick={() => setActive('users')} className={active === 'users' ? 'active' : ''}>
         <TeamOutlined /> <span className="label">Users</span>
       </button>
-      <button onClick={() => setActive('analytics')} className={active === 'analytics' ? 'active' : ''}>
-        <PieChartOutlined /> <span className="label">Analytics</span>
+      <button onClick={() => setActive('tags')} className={active === 'tags' ? 'active' : ''}>
+        <TagsOutlined /> <span className="label">Tags</span>
       </button>
       <button onClick={() => setActive('settings')} className={active === 'settings' ? 'active' : ''}>
         <SettingOutlined /> <span className="label">Settings</span>

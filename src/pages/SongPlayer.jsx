@@ -61,7 +61,7 @@ const SongPlayer = () => {
     if (!song) return <p>Đang tải bài hát...</p>;
 
     return (
-        <div className="container">
+        <>
             <TopBar />
 
             <div className="content">
@@ -143,7 +143,7 @@ const SongPlayer = () => {
             </div>
 
             <Footer />
-        </div>
+        </>
     );
 };
 

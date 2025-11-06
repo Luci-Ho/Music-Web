@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import Dashboard from '../components/layout/Dashboard';
 import '../App.css';
 import '../style/Layout.css'
 import ViewAll from './List';
@@ -16,17 +15,10 @@ const ViewAllPage = ({ source: initialSource }) => {
     }, [initialSource]);
 
     return (
-        <div className="body">
-            <div style={{ display: 'flex', width: '100%' }}>
-                <Dashboard />
-                <div className='container'>
-                    <ViewAll source={source} />
-                    <Footer />
-                </div>
-                
-            </div>
-            
-        </div>
+        <>
+            <ViewAll source={source} />
+            <Footer />
+        </>
     );
 };
 

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import useAuth from '../hooks/useAuth';
 
-import Dashboard from '../components/layout/Dashboard';
 import TopBar from '../components/layout/TopBar';
 import Footer from '../components/layout/Footer';
 
@@ -11,15 +11,17 @@ import '../App.css';
 
 const AddToPlaylist = () => {
   const { id } = useParams();
+  const { user, login } = useAuth();
   const [playlists, setPlaylists] = useState([]);
   const [selectedPlaylistId, setSelectedPlaylistId] = useState(null);
   const [song, setSong] = useState(null);
 
   useEffect(() => {
-    axios.get('http://localhost:4000/playlists')
-      .then(res => setPlaylists(res.data))
-      .catch(err => console.error('Lỗi khi lấy playlist:', err));
-  }, []);
+    // Get playlists from current user instead of global endpoint
+    if (user && user.playlists) {
+      setPlaylists(user.playlists);
+    }
+  }, [user]);
 
   useEffect(() => {
     axios.get(`http://localhost:4000/songs/${id}`)
@@ -27,27 +29,69 @@ const AddToPlaylist = () => {
       .catch(err => console.error('Lỗi khi lấy bài hát:', err));
   }, [id]);
 
-  const handleAdd = () => {
-    if (!selectedPlaylistId) return;
+  const handleAdd = async () => {
+    if (!selectedPlaylistId || !user) return;
 
-    axios.post(`http://localhost:4000/playlists/${selectedPlaylistId}/songs`, {
-      songId: id
-    })
-    .then(() => alert('✅ Đã thêm vào playlist!'))
-    .catch(err => console.error('Lỗi khi thêm bài hát:', err));
+    try {
+      // Find the playlist in user's playlists
+      const userPlaylists = user.playlists || [];
+      const playlist = userPlaylists.find(p => p.id === selectedPlaylistId);
+      
+      if (!playlist) {
+        alert('Không tìm thấy playlist!');
+        return;
+      }
+
+      // Check if song already exists in playlist
+      const songExists = playlist.songs.some(s => 
+        (typeof s === 'string' ? s : s.id) === id
+      );
+
+      if (songExists) {
+        alert('Bài hát đã có trong playlist này!');
+        return;
+      }
+
+      // Create updated playlists array
+      const updatedPlaylists = userPlaylists.map(p => {
+        if (p.id === selectedPlaylistId) {
+          return {
+            ...p,
+            songs: [...p.songs, {
+              id: song.id,
+              title: song.title,
+              artist: song.artist
+            }]
+          };
+        }
+        return p;
+      });
+
+      // Update user with new playlists
+      const updatedUser = { ...user, playlists: updatedPlaylists };
+
+      // Update backend
+      await axios.patch(`http://localhost:4000/users/${user.id}`, {
+        playlists: updatedPlaylists
+      });
+
+      // Update local state
+      login(updatedUser);
+      setPlaylists(updatedPlaylists);
+      
+      alert('✅ Đã thêm vào playlist!');
+    } catch (err) {
+      console.error('Lỗi khi thêm bài hát:', err);
+      alert('❌ Có lỗi xảy ra khi thêm bài hát!');
+    }
   };
 
   if (!song) return <p>Đang tải dữ liệu...</p>;
 
   return (
-    <div className="body">
-      <div style={{ display: 'flex', width: '100%' }}>
-        <Dashboard />
-
-        <div className="container">
-          <TopBar />
-
-          <div className="content">
+    <>
+      <TopBar />
+      <div className="content" style={{ background: 'linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%)' }}>
             <h2 style={{ color: 'white', marginBottom: '20px' }}>Thêm bài hát vào playlist</h2>
 
             <div className="song-info" style={{
@@ -99,22 +143,23 @@ const AddToPlaylist = () => {
                 style={{
                   marginTop: '20px',
                   padding: '10px 20px',
-                  backgroundColor: '#4caf50',
+                  background: 'linear-gradient(135deg, #EE10B0, #EE10B0)',
                   color: 'white',
                   border: 'none',
                   borderRadius: '8px',
-                  cursor: 'pointer'
+                  cursor: 'pointer',
+                  fontWeight: 'bold',
+                  transition: 'all 0.3s ease'
                 }}
+                onMouseEnter={(e) => e.target.style.background = 'linear-gradient(135deg, #d60e9e, #d60e9e)'}
+                onMouseLeave={(e) => e.target.style.background = 'linear-gradient(135deg, #EE10B0, #EE10B0)'}
               >
                 ➕ Thêm vào playlist
               </button>
             </div>
-          </div>
-
-          <Footer />
-        </div>
       </div>
-    </div>
+      <Footer />
+    </>
   );
 };
 

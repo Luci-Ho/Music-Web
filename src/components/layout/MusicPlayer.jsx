@@ -1,10 +1,11 @@
-import React, { useContext, useRef, useEffect, useState } from "react";
+import React, { useContext, useRef, useEffect, useState, useCallback } from "react";
 import { AppContext } from "../common/AppContext";
 import "./MusicPlayer.css";
 import LikeButton from '../common/LikeButton';
 import { handleFavoriteToggle } from '../../utils/handleFavoriteToggle';
 import { useNavigate, useLocation } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
+import { useDashboard } from '../../App';
 import {
   DoubleLeftOutlined,
   DoubleRightOutlined,
@@ -27,14 +28,18 @@ export default function MusicPlayer() {
   const [progress, setProgress] = useState(0);
   const [duration, setDuration] = useState(0);
   const [canSeek, setCanSeek] = useState(false);
+  const [shouldAutoPlay, setShouldAutoPlay] = useState(false);
 
   const { user, login, isLoggedIn } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const { dashboardCollapsed } = useDashboard();
   const [favorites, setFavorites] = useState(() =>
     user && Array.isArray(user.favorites) ? user.favorites : []
   );
 
+  // Hide music player in admin routes and login/signup pages
+  const hidePlayer = ['/login', '/signup', '/loading'].includes(location.pathname);
 
   useEffect(() => {
     setFavorites(user && Array.isArray(user.favorites) ? user.favorites : []);
@@ -56,53 +61,65 @@ export default function MusicPlayer() {
     });
   };
 
-  // Load bài hát mới, không tự động phát
+  // Load bài hát mới
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio || !currentSong) return;
 
+    // Validate song data
+    if (!currentSong.streaming_links?.audio_url) {
+      console.error('Song missing audio URL:', currentSong);
+      return;
+    }
+
     const handleLoadedMetadata = () => {
       setDuration(audio.duration || 0);
       setCanSeek(true);
+      // Auto-play chỉ khi user đã từng nhấn play
+      if (shouldAutoPlay && audio.paused) {
+        audio.play()
+          .then(() => setIsPlaying(true))
+          .catch((err) => {
+            console.warn("⚠️ Không thể tự động phát:", err);
+            setIsPlaying(false);
+          });
+      }
     };
 
     const updateProgress = () => {
       setProgress(audio.currentTime);
     };
 
-    const handleEnded = () => {
+    const handleError = (e) => {
+      console.error('Audio loading error:', e);
       setIsPlaying(false);
-      setProgress(0);
     };
 
+    // Dừng audio hiện tại trước
     audio.pause();
+    setIsPlaying(false);
+    
+    // Load bài hát mới
     audio.src = currentSong.streaming_links.audio_url;
     audio.load();
 
-    // audio.play()
-    //   .then(() => setIsPlaying(true))
-    //   .catch((err) => {
-    //     console.warn("⚠️ Không thể tự động phát:", err);
-    //     setIsPlaying(false);
-    //   });
-
+    // Đăng ký event listeners
     audio.addEventListener("loadedmetadata", handleLoadedMetadata);
     audio.addEventListener("timeupdate", updateProgress);
-    audio.addEventListener("ended", handleEnded);
+    audio.addEventListener("error", handleError);
 
-    setIsPlaying(false);
+    // Reset trạng thái
     setProgress(0);
     setCanSeek(false);
 
     return () => {
       audio.removeEventListener("loadedmetadata", handleLoadedMetadata);
       audio.removeEventListener("timeupdate", updateProgress);
-      audio.removeEventListener("ended", handleEnded);
+      audio.removeEventListener("error", handleError);
     };
-  }, [currentSong]);
+  }, [currentSong, shouldAutoPlay]);
 
-
-  // Cập nhật trạng thái và tiến trình
+  // Xử lý khi bài hát kết thúc
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
@@ -110,35 +127,33 @@ export default function MusicPlayer() {
     const handleEnded = () => {
       setIsPlaying(false);
       setProgress(0);
-    };
-
-    const updateProgress = () => {
-      console.log("⏱️ currentTime:", audio.currentTime);
-      setProgress(audio.currentTime);
+      // Tự động chuyển bài tiếp theo chỉ khi user đã cho phép auto-play
+      if (shouldAutoPlay && currentIndex < playlist.length - 1) {
+        setCurrentIndex(currentIndex + 1);
+      }
     };
 
     audio.addEventListener("ended", handleEnded);
-    audio.addEventListener("timeupdate", updateProgress);
 
     return () => {
       audio.removeEventListener("ended", handleEnded);
-      audio.removeEventListener("timeupdate", updateProgress);
     };
-  }, []);
+  }, [currentIndex, playlist.length, setCurrentIndex]);
 
 
   // Phát hoặc tạm dừng
   const togglePlay = () => {
     const audio = audioRef.current;
-    if (!audio) return;
+    if (!audio || !currentSong) return;
 
     if (audio.paused) {
+      setShouldAutoPlay(true); // Đánh dấu user muốn auto-play
       audio.play()
         .then(() => setIsPlaying(true))
         .catch((err) => console.error("Không thể phát nhạc:", err));
     } else {
       audio.pause();
-      setIsPlaying(false); // ép cập nhật ngay
+      setIsPlaying(false);
     }
   };
 
@@ -146,21 +161,20 @@ export default function MusicPlayer() {
   // Tua thời gian
   const handleSeek = (e) => {
     const audio = audioRef.current;
+    if (!audio || !duration || !canSeek) return;
+    
     const newTime = parseFloat(e.target.value);
-    if (!audio || isNaN(newTime)) return;
+    if (isNaN(newTime)) return;
 
-    // Chỉ tua nếu audio đã có dữ liệu
-    if (canSeek) {
-      audio.currentTime = newTime;
-      setProgress(newTime);
+    audio.currentTime = newTime;
+    setProgress(newTime);
 
-      if (!audio.paused) {
-        audio.play().catch((err) => {
-          console.error("Không thể phát sau khi tua:", err);
-        });
-      }
+    // Nếu đang phát thì tiếp tục phát sau khi tua
+    if (!audio.paused) {
+      audio.play().catch((err) => {
+        console.error("Không thể phát sau khi tua:", err);
+      });
     }
-
   };
 
 
@@ -176,11 +190,25 @@ export default function MusicPlayer() {
 
   if (!currentSong) return null;
 
+  // Hide music player for login/signup pages
+  if (hidePlayer) return null;
+
+  const playerStyle = {
+    left: dashboardCollapsed ? '100px' : '300px',
+    transition: 'left 0.2s ease'
+  };
+
   return (
 
-    <div className="music-player">
+    <div className="music-player" style={playerStyle}>
       <div className="player-left">
-        <img src={currentSong.cover_url} alt={currentSong.title} />
+        <img 
+          src={currentSong.img || currentSong.cover_url || currentSong.cover || "https://via.placeholder.com/64x64?text=No+Image"} 
+          alt={currentSong.title}
+          onError={(e) => {
+            e.target.src = "https://via.placeholder.com/64x64?text=No+Image";
+          }}
+        />
         <div className="song-info">
           <h4>{currentSong.title}</h4>
           <p>{currentSong.artist}</p>

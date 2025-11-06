@@ -11,6 +11,7 @@ import TopBar from '../layout/TopBar';
 import { removeVietnameseTones } from '../../utils/StringUtils';
 import { useContext } from 'react';
 import { AppContext } from '../common/AppContext'; // đường dẫn đúng tới AppContext
+import formatNumber from '../../hooks/formatNumber';
 
 
 /**
@@ -25,8 +26,7 @@ const FilteredSongsTable = ({ filterType = 'genre', filterId, title }) => {
     const artists = data.artists || [];
     const albums = data.albums || [];
     const navigate = useNavigate();
-    const { selectSong } = useContext(AppContext);
-    const { playAll } = useContext(AppContext);
+    const { selectSong, playAll, playSong } = useContext(AppContext);
 
     // banner image depends on the selected filter entry
     let bannerImg = null;
@@ -54,39 +54,50 @@ const FilteredSongsTable = ({ filterType = 'genre', filterId, title }) => {
     }, [user]);
 
     const filtered = React.useMemo(() => {
+        let result = [];
+        
         // favorites doesn't require a filterId — it uses the current user's favorites
         if (filterType === 'favorites') {
-            return songs.filter(s => Array.isArray(user?.favorites) && user.favorites.includes(s.id));
+            result = songs.filter(s => Array.isArray(user?.favorites) && user.favorites.includes(s.id));
+        } else if (filterType === 'all') {
+            // Show all songs
+            result = songs;
+        } else {
+            if (!filterId) return [];
+
+            switch (filterType) {
+                case 'genre':
+                    result = songs.filter(s => s.genreId === filterId || String(s.genre).toLowerCase() === String(filterId).toLowerCase());
+                    break;
+                case 'mood':
+                    result = songs.filter(s => s.moodId === filterId);
+                    break;
+                case 'artist':
+                    result = songs.filter(s => s.artistId === filterId || String(s.artist).toLowerCase() === String(filterId).toLowerCase());
+                    break;
+                case 'search':
+                    const normalizedKeyword = removeVietnameseTones(String(filterId).toLowerCase());
+                    result = songs.filter(s => {
+                        const title = removeVietnameseTones(String(s.title || '').toLowerCase());
+                        const artistName = removeVietnameseTones(String(artistMap[s.artistId] || '').toLowerCase());
+                        return title.includes(normalizedKeyword) || artistName.includes(normalizedKeyword);
+                    });
+                    break;
+                default:
+                    result = [];
+            }
         }
 
-        if (!filterId) return [];
-
-        switch (filterType) {
-            case 'genre':
-                return songs.filter(s => s.genreId === filterId || String(s.genre).toLowerCase() === String(filterId).toLowerCase());
-            case 'mood':
-                return songs.filter(s => s.moodId === filterId);
-            case 'artist':
-                return songs.filter(s => s.artistId === filterId || String(s.artist).toLowerCase() === String(filterId).toLowerCase());
-            case 'search':
-
-            case 'search':
-                const normalizedKeyword = removeVietnameseTones(String(filterId).toLowerCase());
-
-                return songs.filter(s => {
-                    const title = removeVietnameseTones(String(s.title || '').toLowerCase());
-                    const artistName = removeVietnameseTones(String(artistMap[s.artistId] || '').toLowerCase());
-                    return title.includes(normalizedKeyword) || artistName.includes(normalizedKeyword);
-                });
-
-
-            default:
-                return [];
+        // Sort by views (highest first) if filterType is 'all'
+        if (filterType === 'all') {
+            result = result.sort((a, b) => (parseInt(b.views) || 0) - (parseInt(a.views) || 0));
         }
-    }, [songs, filterType, filterId, user]);
+
+        return result;
+    }, [songs, filterType, filterId, user, artistMap]);
 
     return (
-        <div className="bg-[#2576d2]  bg-gradient-to-r from-blue-900 to-gray-700 p-0 content">
+        <div className="content" style={{ background: 'linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%)' }}>
             <div className="bluebox ">
                 <div className="TopPart bg-gradient-to-r from-blue-400 to-gray-600 rounded-lg">
                     <TopBar />
@@ -104,9 +115,9 @@ const FilteredSongsTable = ({ filterType = 'genre', filterId, title }) => {
                                 />
                             ) : (
                                 <img
-                                    src="https://www.freeiconspng.com/uploads/valentine-heart-icon-6.png"
+                                    src="https://media.istockphoto.com/id/1827161900/vector/black-man-with-headphones-guy-profile-avatar-african-man-listen-to-music-on-headphones.jpg?s=612x612&w=0&k=20&c=_t2-yhOSi4yt6IrFo1SYriRjiBqjYkk_YyYpZogmW50="
                                     alt="Default Banner"
-                                    className="w-[268px] h-[268px] object-contain p-0"
+                                    className="w-[268px] h-[268px] object-contain p-0 rounded-[8px] square-img"
                                 />
                             )}
 
@@ -118,8 +129,22 @@ const FilteredSongsTable = ({ filterType = 'genre', filterId, title }) => {
                                 <p className="btext">Discover the latest hits and timeless classics.</p>
                                 <p className="bts">{filtered.length} songs</p>
                             </div>
-                            <div className="playbutton" onClick={() => playAll(filtered)}>
-                                <p className="playall">Play All</p>
+                            <div className="playbutton" 
+                                onClick={() => playAll(filtered)}
+                                style={{ 
+                                    cursor: 'pointer',
+                                    padding: '12px 24px',
+                                    borderRadius: '50px',
+                                    color: 'white',
+                                    fontWeight: 'bold',
+                                    transition: 'all 0.3s ease',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '8px',
+                                    border: '2px solid white'
+                                }}
+                            >
+                                <p className="playall" style={{ margin: 0 }}>Play All</p>
                                 <PlayCircleOutlined className="playicon" />
                             </div>
 
@@ -134,6 +159,7 @@ const FilteredSongsTable = ({ filterType = 'genre', filterId, title }) => {
                                 <th>Song</th>
                                 <th>Release</th>
                                 <th>Album</th>
+                                {filterType === 'all' && <th>Views</th>}
                                 <th>Time</th>
                                 <th>Like</th>
                                 <th></th>
@@ -201,6 +227,7 @@ const FilteredSongsTable = ({ filterType = 'genre', filterId, title }) => {
                                         </td>
                                         <td className="py-2 text-gray-300 ">{s.release_date || s.releaseYear || '-'}</td>
                                         <td className="py-2 text-gray-300">{albumTitle}</td>
+                                        {filterType === 'all' && <td className="py-2 text-gray-300">{formatNumber(s.views || 0)}</td>}
                                         <td className="py-2 text-gray-300 ">{s.duration || '-'}</td>
                                         <td className="py-2 text-gray-300">
                                             <button
@@ -213,11 +240,18 @@ const FilteredSongsTable = ({ filterType = 'genre', filterId, title }) => {
 
                                         <td className="py-2 text-right pr-4">
                                             <button
-                                                onClick={() => selectSong(s)}
+                                                onClick={() => playSong(s, filtered)}
                                                 title="Play song"
-                                                style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}
+                                                style={{ 
+                                                    background: 'transparent', 
+                                                    border: 'none', 
+                                                    cursor: 'pointer',
+                                                    padding: '8px',
+                                                    borderRadius: '4px',
+                                                    color: 'white'
+                                                }}
                                             >
-                                                <PlayCircleOutlined style={{ fontSize: '1.25rem', color: '#f63391' }} />
+                                                <PlayCircleOutlined style={{ fontSize: '1.25rem' }} />
                                             </button>
                                         </td>
 

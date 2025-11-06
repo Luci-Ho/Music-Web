@@ -1,5 +1,9 @@
 const API_URL = 'http://localhost:4000';
 
+// Local fallback data
+let songs = [];
+let users = [];
+
 
 async function fetchJson(path) {
   try {
@@ -13,12 +17,17 @@ async function fetchJson(path) {
 }
 
 export async function getSongs() {
-  // Try API /songs
-  const apiRes = await fetchJson('/songsList');
+  // Try API /songsList first (this is the correct endpoint)
+  const songsListRes = await fetchJson('/songsList');
+  if (Array.isArray(songsListRes)) return songsListRes.slice();
+
+  // Try API /songs as fallback
+  const apiRes = await fetchJson('/songs');
   if (Array.isArray(apiRes)) return apiRes.slice();
 
   // Try API root returning whole DB
   const root = await fetchJson('/');
+  if (root && Array.isArray(root.songsList)) return root.songsList.slice();
   if (root && Array.isArray(root.songs)) return root.songs.slice();
 
   // Fallback to bundled data

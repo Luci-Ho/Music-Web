@@ -1,34 +1,108 @@
 import React, { useEffect, useState } from 'react';
-import { Card } from 'antd';
+import { Card, Table, Tag } from 'antd';
 import StartCard from '../component/StartCard';
 import ChartBar from '../component/ChartBar';
 import ChartPie from '../component/ChartPie';
 import ChartLine from '../component/ChartLine';
+import { useAuth } from '../context/AuthContext';
 import formatTimes from '../../hooks/formatTimes';
 
 const API_URL = 'http://localhost:4000';
 
 
 export default function DashboardView() {
-const [songsCount, setSongsCount] = useState(0);
-const [usersCount, setUsersCount] = useState(0);
-const [artistsCount, setArtistsCount] = useState(0);
-const [streamingCount, setStreamingCount] = useState(0);
+    const { userLevel, isAdmin, isModerator, isUser, canEditSongs, canDeleteSongs, canAddSongs, canManageUsers } = useAuth();
+    const [songsCount, setSongsCount] = useState(0);
+    const [usersCount, setUsersCount] = useState(0);
+    const [artistsCount, setArtistsCount] = useState(0);
+    const [streamingCount, setStreamingCount] = useState(0);
 
-useEffect(() => {
-    async function load() {
-        const songs = await fetch(`${API_URL}/songs`).then(res => res.json());
-        const users = await fetch(`${API_URL}/users`).then(res => res.json());
-        const artists = await fetch(`${API_URL}/artists`).then(res => res.json());
-        const streaming = 4512500; // Giả sử giá trị tĩnh cho tổng số lượt phát
-        setStreamingCount(streaming);
-        setSongsCount(songs.length);
-        setUsersCount(users.length);
-        setArtistsCount(artists.length);
-    }
-    load();
-    
-}, []);
+    useEffect(() => {
+        async function load() {
+            const songs = await fetch(`${API_URL}/songs`).then(res => res.json());
+            const users = await fetch(`${API_URL}/users`).then(res => res.json());
+            const artists = await fetch(`${API_URL}/artists`).then(res => res.json());
+            const streaming = 4512500; // Giả sử giá trị tĩnh cho tổng số lượt phát
+            setStreamingCount(streaming);
+            setSongsCount(songs.length);
+            setUsersCount(users.length);
+            setArtistsCount(artists.length);
+        }
+        load();
+        
+    }, []);
+
+    const getLevelName = (level) => {
+        switch (level) {
+            case 'l1': return 'Admin';
+            case 'l2': return 'Moderator';
+            case 'l3': return 'User';
+            default: return 'Unknown';
+        }
+    };
+
+    const getLevelColor = (level) => {
+        switch (level) {
+            case 'l1': return 'red';
+            case 'l2': return 'orange';
+            case 'l3': return 'blue';
+            default: return 'gray';
+        }
+    };
+
+    // Permissions data for display
+    const permissionsData = [
+        {
+            key: '1',
+            action: 'View Songs',
+            permission: '✅',
+            description: 'Can view all songs in the system'
+        },
+        {
+            key: '2',
+            action: 'Edit Songs',
+            permission: canEditSongs() ? '✅' : '❌',
+            description: 'Can modify song information'
+        },
+        {
+            key: '3',
+            action: 'Delete Songs',
+            permission: canDeleteSongs() ? '✅' : '❌',
+            description: 'Can remove songs from the system'
+        },
+        {
+            key: '4',
+            action: 'Add Songs',
+            permission: canAddSongs() ? '✅' : '❌',
+            description: 'Can add new songs to the system'
+        },
+        {
+            key: '5',
+            action: 'Manage Users',
+            permission: canManageUsers() ? '✅' : '❌',
+            description: 'Can promote/demote user levels'
+        }
+    ];
+
+    const permissionColumns = [
+        {
+            title: 'Action',
+            dataIndex: 'action',
+            key: 'action',
+        },
+        {
+            title: 'Permission',
+            dataIndex: 'permission',
+            key: 'permission',
+            width: 100,
+            align: 'center'
+        },
+        {
+            title: 'Description',
+            dataIndex: 'description',
+            key: 'description',
+        }
+    ];
 
 const stats = [
     { id: 1, title: 'Total Songs', value: songsCount },
@@ -49,14 +123,6 @@ const listensByDay = [
 ];
 
 
-const vongtronsomenh = [ 
-    { name: 'so1', value: 400 }, 
-    { name: 'so2', value: 300 }, 
-    { name: 'so3', value: 200 }, 
-    { name: 'so4', value: 100 } 
-];
-
-
 const userActivity = [ 
     { date: '2025-10-23', users: 1200 }, 
     { date: '2025-10-24', users: 1350 }, 
@@ -74,18 +140,16 @@ const userActivity = [
                 {stats.map(s => <StartCard key={s.id} title={s.title} value={s.value} />)}
             </div>
 
-
             <div className="grid grid-cols-3 gap-6 mb-6">
             <Card className="col-span-2">
                 <h3>Listens by day</h3>
                 <ChartBar data={listensByDay} />
             </Card>
             <Card>
-                <h3>Vòng Tròn Số Mệnh</h3>
-                <ChartPie data={vongtronsomenh} />
+                <h3>Top 10 Bài Hát Được Nghe Nhiều Nhất</h3>
+                <ChartPie />
             </Card>
             </div>
-
 
             <Card>
                 <h3>User activity (weekly)</h3>

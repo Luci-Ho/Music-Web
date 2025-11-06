@@ -16,7 +16,7 @@ export default function CardGrid({
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const { playAll, selectSong } = useContext(AppContext);
+  const { playAll, selectSong, playSong } = useContext(AppContext);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -54,8 +54,7 @@ export default function CardGrid({
   }, [limit, filterBy, filterByYear]);
 
   const handlePlaySong = (song) => {
-    playAll(songs);      // set playlist
-    selectSong(song);    // phát bài được chọn
+    playSong(song, songs);   // phát bài được chọn và set playlist
   };
 
   return (

@@ -70,7 +70,7 @@ const SongsGrid = ({ source, title1 = 'New', title2 = 'Song', onViewAll, limit =
                             <SongCard key={v.id ?? `${v.title}-${i}`} title={v.title} artist={artistName} img={v.img} views={v.views} />);
                     })}
                 </div>
-                <div className="sviewall" onClick={() => navigate(`/viewall`)} tabIndex={0}>
+                <div className="sviewall" onClick={() => navigate(`/allsongs`)} role="button" tabIndex={0}>
                         <div className="svaplus">+</div>
                         <div className="svat">View All</div>
                 </div>

@@ -1,9 +1,16 @@
 import React, { useMemo, useState, useEffect } from 'react';
-import { Table, Space, Button } from 'antd';
+import { Table, Space, Button, message } from 'antd';
 import useMatchingInfo from '../../hooks/useMatchingInfo';
 import useDebounce from '../../hooks/useDebounce';
+import formatNumber from '../../hooks/formatNumber';
+import AddSongModal from './AddSongModal';
+import EditSongModal from './EditSongModal';
+import { useAuth } from '../context/AuthContext';
 
-export default function SongsTable({ songs = [], onEdit, onDelete }) {
+export default function SongsTable({ songs = [], onEdit, onDelete, onAdd, showUndefined = false, onRestore, suggestions = { artists: [], albums: [], genres: [] } }) {
+    // Auth context for permissions
+    const { canEditSongs, canDeleteSongs, canAddSongs } = useAuth();
+    
     // use hook to fetch artists, albums and genres together
     const {
         artists = [],
@@ -13,7 +20,13 @@ export default function SongsTable({ songs = [], onEdit, onDelete }) {
         getAlbumTitle,
         getGenreName,
         loading,
+        refresh,
     } = useMatchingInfo();
+
+    // Modal state
+    const [isAddModalVisible, setIsAddModalVisible] = useState(false);
+    const [isEditModalVisible, setIsEditModalVisible] = useState(false);
+    const [editingRecord, setEditingRecord] = useState(null);
 
     // table state (filters, sorter, pagination) persisted to localStorage
     const [tableState, setTableState] = useState(() => {
@@ -36,31 +49,53 @@ export default function SongsTable({ songs = [], onEdit, onDelete }) {
     }, [tableState]);
 
     const dataSource = useMemo(() => {
-        const artistsList = artists || [];
-        const albumsList = albums || [];
-        const genresList = genres || [];
-
-        return (songs || []).map((s) => {
-            const matchedArtist = artistsList.find((a) => a && (a.id === s.artist || String(a.id) === String(s.artist)));
-            const artistName = matchedArtist?.name ?? getArtistName(s.artist) ?? s.artist ?? s.artist_name ?? '';
-
-            const matchedAlbum = albumsList.find((a) => a && (a.id === s.album || String(a.id) === String(s.album)));
-            const albumName = matchedAlbum?.title ?? matchedAlbum?.name ?? getAlbumTitle(s.album) ?? s.album ?? s.album_title ?? '';
-
-            const matchedGenre = genresList.find((g) => g && (g.id === s.genre || String(g.id) === String(s.genre)));
-            const genreName = matchedGenre?.name ?? getGenreName(s.genre) ?? s.genre ?? s.genre_name ?? '';
-
-            return {
-                ...s,
-                title: s.title ?? s.name ?? '',
-                artist: artistName,
-                album: albumName,
-                listens: s.listens ?? s.play_count ?? 0,
-                date: s.release_date ?? s.releaseYear ?? s.date ?? '',
-                genre: genreName,
-            };
+        console.log('SongsTable - songs received:', songs);
+        console.log('SongsTable - artists:', artists);
+        console.log('SongsTable - albums:', albums);
+        console.log('SongsTable - genres:', genres);
+        
+        // Check if we have songsList format (with IDs) or songs format (with names)
+        const hasSongsListFormat = songs.length > 0 && songs[0].artistId;
+        
+        const result = (songs || []).map((s) => {
+            if (hasSongsListFormat) {
+                // songsList format - need to map IDs to names
+                const matchedArtist = artists.find((a) => a && (a.id === s.artistId));
+                const matchedAlbum = albums.find((a) => a && (a.id === s.albumId));
+                const matchedGenre = genres.find((g) => g && (g.id === s.genreId));
+                
+                console.log(`Mapping song ${s.title}:`, {
+                    genreId: s.genreId,
+                    matchedGenre: matchedGenre,
+                    genreTitle: matchedGenre?.title
+                });
+                
+                return {
+                    ...s,
+                    title: s.title ?? s.name ?? '',
+                    artist: matchedArtist?.name ?? s.artist ?? '',
+                    album: matchedAlbum?.title ?? matchedAlbum?.name ?? s.album ?? '',
+                    listens: s.viewCount ?? s.listens ?? s.play_count ?? 0,
+                    date: s.releaseYear ?? s.release_date ?? s.date ?? '',
+                    genre: matchedGenre?.title ?? matchedGenre?.name ?? s.genre ?? '', // sử dụng title từ genres
+                };
+            } else {
+                // songs format - direct string names
+                return {
+                    ...s,
+                    title: s.title ?? s.name ?? '',
+                    artist: s.artist ?? '',
+                    album: s.album ?? '',
+                    listens: s.viewCount ?? s.listens ?? s.play_count ?? 0,
+                    date: s.release_date ?? s.releaseYear ?? s.date ?? '',
+                    genre: s.genre ?? '',
+                };
+            }
         });
-    }, [songs, artists, albums, genres, getArtistName, getAlbumTitle, getGenreName]);
+        
+        console.log('SongsTable - dataSource:', result);
+        return result;
+    }, [songs, artists, albums, genres]);
 
     // build simple filters from current rows
     const artistFilters = useMemo(() => {
@@ -79,7 +114,7 @@ export default function SongsTable({ songs = [], onEdit, onDelete }) {
     }, [dataSource]);
 
     const columns = useMemo(() => [
-        { title: '#', dataIndex: 'index', width: 60, render: (_, __, idx) => idx + 1 },
+        { title: 'Song ID', dataIndex: 'id', width: 100, sorter: (a, b) => String(a.id || '').localeCompare(String(b.id || '')) },
         { title: 'Title', dataIndex: 'title', sorter: (a, b) => String(a.title || '').localeCompare(String(b.title || '')) },
         {
             title: 'Artist',
@@ -104,19 +139,48 @@ export default function SongsTable({ songs = [], onEdit, onDelete }) {
             filteredValue: debouncedFilters?.genre ?? null,
             onFilter: (value, record) => record.genre === value
         },
-        { title: 'Listens', dataIndex: 'listens', sorter: (a, b) => (a.listens || 0) - (b.listens || 0) },
+        { 
+            title: 'View Count', 
+            dataIndex: 'listens', 
+            sorter: (a, b) => (a.listens || 0) - (b.listens || 0),
+            render: (listens) => (
+                <span className="font-medium text-blue-600">
+                    {formatNumber(listens || 0)}
+                </span>
+            )
+        },
         { title: 'Date', dataIndex: 'date', sorter: (a, b) => String(a.date || '').localeCompare(String(b.date || '')) },
+        ...(showUndefined ? [{
+            title: 'Status',
+            key: 'status',
+            render: (_, record) => {
+                if (record.isHidden) return <span style={{ color: 'red' }}>Hidden</span>;
+                if (record.genreId === 'undefined') return <span style={{ color: 'orange' }}>Genre Undefined</span>;
+                if (record.artistId === 'undefined') return <span style={{ color: 'orange' }}>Artist Undefined</span>;
+                if (record.albumId === 'undefined') return <span style={{ color: 'orange' }}>Album Undefined</span>;
+                return <span style={{ color: 'green' }}>Active</span>;
+            }
+        }] : []),
         {
             title: 'Actions',
             key: 'actions',
             render: (_, record) => (
                 <Space>
-                    <Button size="small" onClick={() => onEdit && onEdit(record)}>Edit</Button>
-                    <Button danger size="small" onClick={() => onDelete && onDelete(record.id)}>Delete</Button>
+                    {showUndefined && onRestore && (
+                        <Button size="small" type="primary" onClick={() => onRestore(record.id)}>
+                            Restore
+                        </Button>
+                    )}
+                    {canEditSongs() && (
+                        <Button size="small" onClick={() => handleEditClick(record)}>Edit</Button>
+                    )}
+                    {canDeleteSongs() && (
+                        <Button danger size="small" onClick={() => onDelete && onDelete(record.id)}>Delete</Button>
+                    )}
                 </Space>
             )
         }
-    ], [artistFilters, albumFilters, genreFilters, debouncedFilters, onEdit, onDelete]);
+    ], [artistFilters, albumFilters, genreFilters, debouncedFilters, onEdit, onDelete, onRestore, showUndefined, canEditSongs, canDeleteSongs]);
     const handleTableChange = (pagination, filters, sorter) => {
         setTableState((prev) => ({
             ...prev,
@@ -130,14 +194,71 @@ export default function SongsTable({ songs = [], onEdit, onDelete }) {
         }));
     };
 
+    // Modal handlers
+    const handleAddClick = () => {
+        setIsAddModalVisible(true);
+    };
+
+    const handleEditClick = (record) => {
+        setEditingRecord(record);
+        setIsEditModalVisible(true);
+    };
+
+    const handleAddSuccess = () => {
+        setIsAddModalVisible(false);
+        if (refresh) refresh();
+    };
+
+    const handleEditSuccess = () => {
+        setIsEditModalVisible(false);
+        setEditingRecord(null);
+        if (refresh) refresh();
+    };
+
     return (
-        <Table
-            columns={columns}
-            dataSource={dataSource}
-            rowKey={(record) => record.id ?? record.key}
-            pagination={tableState.pagination ?? { pageSize: 10 }}
-            loading={loading}
-            onChange={handleTableChange}
-        />
+        <>
+            {canAddSongs() && (
+                <div className="mb-4">
+                    <Button type="primary" onClick={handleAddClick}>
+                        Add Song
+                    </Button>
+                </div>
+            )}
+            
+            <Table
+                columns={columns}
+                dataSource={dataSource}
+                rowKey={(record) => record.id ?? record.key}
+                pagination={tableState.pagination ?? { pageSize: 10 }}
+                loading={loading}
+                onChange={handleTableChange}
+            />
+
+            {/* Modal Components */}
+            {canAddSongs() && (
+                <AddSongModal
+                    visible={isAddModalVisible}
+                    onCancel={() => setIsAddModalVisible(false)}
+                    onSuccess={handleAddSuccess}
+                    artists={artists}
+                    albums={albums}
+                    genres={genres}
+                    suggestions={suggestions}
+                    refresh={refresh}
+                />
+            )}
+
+            {canEditSongs() && (
+                <EditSongModal
+                    visible={isEditModalVisible}
+                    onCancel={() => setIsEditModalVisible(false)}
+                    onSuccess={handleEditSuccess}
+                    editingRecord={editingRecord}
+                    artists={artists}
+                    albums={albums}
+                    genres={genres}
+                />
+            )}
+        </>
     );
 }

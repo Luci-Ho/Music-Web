@@ -60,10 +60,10 @@ const Footer = () => {
                     <div className="footer-social">
                         <p className="Logo">Melodies</p>
                         <div className="link">
-                            <FacebookOutlined style={{ fontSize: '35px' }} />
-                            <InstagramOutlined style={{ fontSize: '35px' }} />
-                            <TwitterOutlined style={{ fontSize: '35px' }} />
-                            <PhoneOutlined style={{ fontSize: '35px' }} />
+                            <FacebookOutlined style={{ fontSize: '24px' }} />
+                            <InstagramOutlined style={{ fontSize: '24px' }} />
+                            <TwitterOutlined style={{ fontSize: '24px' }} />
+                            <PhoneOutlined style={{ fontSize: '24px' }} />
 
                         </div>
                     </div>

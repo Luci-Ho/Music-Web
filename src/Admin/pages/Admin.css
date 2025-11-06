@@ -1,4 +1,16 @@
-:root{ --bg:#472f36; --sidebar:#0f1720; --card:#1f1720; }
+:root{ 
+    --bg: linear-gradient(135deg, #0f0a1e 0%, #1a0d33 15%, #2d1b47 30%, #1e293b 45%, #0f172a 60%, #1a0f2e 75%, #2d1547 90%, #0f0a1e 100%); 
+    --sidebar: linear-gradient(180deg, #0f0a1e 0%, #1a0d33 25%, #2d1b47 50%, #1e293b 75%, #0f172a 100%); 
+    --card: linear-gradient(135deg, #1a0d33 0%, #2d1b47 25%, #1e293b 50%, #334155 75%, #2d1b47 100%); 
+    --midnight-blue-dark: #0f0a1e;
+    --midnight-blue: #1a0d33;
+    --midnight-blue-light: #2d1b47;
+    --slate-600: #475569;
+    --slate-500: #64748b;
+    --accent-pink: #EE10B0;
+    --accent-pink-dark: #c20e94;
+    --accent-pink-light: #ff3dc4;
+}
 body{ 
     margin:0; 
     font-family: Inter, 
@@ -11,22 +23,40 @@ body{
 }
 .sidebar{ 
     width:260px; 
-    background:var(--sidebar); 
+    background: var(--sidebar); 
     color:#fff; padding:24px; 
     display:flex; 
-    flex-direction:column; 
+    flex-direction:column;
+    box-shadow: 2px 0 20px rgba(238, 16, 176, 0.1), 0 0 40px rgba(15, 10, 30, 0.5);
+    border-right: 1px solid rgba(238, 16, 176, 0.2);
+    position: relative;
+}
+
+.sidebar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(180deg, rgba(238, 16, 176, 0.05) 0%, transparent 50%, rgba(238, 16, 176, 0.03) 100%);
+    pointer-events: none;
+    z-index: 0;
 }
 .sidebar .logo-wrap{ 
     display:flex; 
     gap:12px; 
     align-items:center; 
     margin-bottom:18px; 
-    
+    position: relative;
+    z-index: 1;
 }
 .sidebar-menu{ 
     display:flex; 
     flex-direction:column; 
-    gap:8px; 
+    gap:8px;
+    position: relative;
+    z-index: 1;
 }
 .sidebar-menu button{ 
     background:transparent; 
@@ -37,17 +67,23 @@ body{
     display:flex; 
     gap:10px; 
     align-items:center; 
-    cursor:pointer; 
+    cursor:pointer;
+    transition: all 0.3s ease;
+    border-radius: 8px;
 }
 .sidebar-menu button.active{ 
     color:#fff; 
-    background:rgba(255,255,255,0.03); 
-    border-radius:8px; 
+    background: linear-gradient(135deg, #EE10B0 0%, rgba(238, 16, 176, 0.8) 100%); 
+    border-radius:8px;
+    box-shadow: 0 2px 8px rgba(238, 16, 176, 0.4);
+    text-shadow: 0 0 8px rgba(238, 16, 176, 0.6);
 }
 .sidebar-menu button:hover{ 
     color:#fff; 
-    background:rgba(255,255,255,0.03); 
-    border-radius:8px; 
+    background: linear-gradient(135deg, rgba(238, 16, 176, 0.3) 0%, rgba(238, 16, 176, 0.5) 100%); 
+    border-radius:8px;
+    transform: translateX(4px);
+    text-shadow: 0 0 5px rgba(238, 16, 176, 0.4);
 }
 
 .sidebar .logo-wrap .brand{ font-weight:700; margin-left:8px; }
@@ -67,10 +103,28 @@ body{
 
 .admin-area{ 
     flex:1; 
-    background:var(--bg); 
+    background: var(--bg); 
     color:#fff; 
     display:flex; 
-    flex-direction:column; 
+    flex-direction:column;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+}
+
+.admin-area::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 260px;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 20% 80%, rgba(238, 16, 176, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(238, 16, 176, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 40% 40%, rgba(45, 27, 71, 0.3) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
 }
 .admin-header{ 
     display:flex; 
@@ -78,6 +132,12 @@ body{
     padding:20px; 
     align-items:center; 
     justify-content:space-evenly;
+    background: linear-gradient(90deg, rgba(15, 10, 30, 0.9) 0%, rgba(26, 13, 51, 0.8) 50%, rgba(45, 27, 71, 0.7) 100%);
+    backdrop-filter: blur(15px);
+    border-bottom: 1px solid rgba(238, 16, 176, 0.2);
+    box-shadow: 0 4px 20px rgba(15, 10, 30, 0.4), 0 0 40px rgba(238, 16, 176, 0.1);
+    position: relative;
+    z-index: 10;
 
     .right {
         display: flex;
@@ -87,17 +147,119 @@ body{
     }
 }
 .admin-container{ 
-    padding:20px; 
+    padding:20px;
+    background: rgba(15, 10, 30, 0.1);
+    position: relative;
+    z-index: 5;
 }
 .stat-card .title{ 
-    color: #000;; 
+    color: #0f172a; 
     font-weight: 500;
 }
 .stat-card .value{ 
     font-size:1.6rem; 
-    font-weight: 700; 
+    font-weight: 700;
+    color: #EE10B0;
+    text-shadow: 0 0 10px rgba(238, 16, 176, 0.3);
 }
 .card{ 
-    background:var(--card); 
-    border-radius:12px; 
+    background: var(--card); 
+    border-radius:12px;
+    border: 1px solid rgba(238, 16, 176, 0.2);
+    box-shadow: 
+        0 8px 25px rgba(15, 10, 30, 0.4),
+        0 0 20px rgba(238, 16, 176, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    position: relative;
+    overflow: hidden;
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(238, 16, 176, 0.05) 0%, transparent 50%, rgba(238, 16, 176, 0.02) 100%);
+    pointer-events: none;
+}
+
+/* Chart Layout Adjustments */
+.chart-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 400px;
+    grid-template-rows: 300px 1fr;
+    gap: 20px;
+    height: calc(100vh - 140px);
+    overflow: hidden;
+}
+
+.bar-chart {
+    grid-column: 1;
+    grid-row: 1;
+    height: 300px;
+}
+
+.line-chart {
+    grid-column: 2;
+    grid-row: 1;
+    height: 300px;
+}
+
+.top-songs-list {
+    grid-column: 3;
+    grid-row: 1 / -1;
+    height: 100%;
+    overflow-y: auto;
+}
+
+.user-activity-chart {
+    grid-column: 1 / 3;
+    grid-row: 2;
+    height: calc(100vh - 480px);
+    min-height: 300px;
+}
+
+/* Admin Buttons Styling */
+.ant-btn-primary {
+    background: linear-gradient(135deg, #EE10B0 0%, rgba(238, 16, 176, 0.8) 100%) !important;
+    border-color: #EE10B0 !important;
+    box-shadow: 0 2px 8px rgba(238, 16, 176, 0.3) !important;
+    transition: all 0.3s ease !important;
+}
+
+.ant-btn-primary:hover {
+    background: linear-gradient(135deg, rgba(238, 16, 176, 0.9) 0%, #EE10B0 100%) !important;
+    border-color: #EE10B0 !important;
+    box-shadow: 0 4px 15px rgba(238, 16, 176, 0.5) !important;
+    transform: translateY(-2px) !important;
+}
+
+.ant-btn-primary:active {
+    background: linear-gradient(135deg, #EE10B0 0%, rgba(238, 16, 176, 0.7) 100%) !important;
+    transform: translateY(0px) !important;
+    box-shadow: 0 2px 8px rgba(238, 16, 176, 0.4) !important;
+}
+
+/* Generic button styles for admin */
+button[type="submit"], 
+.admin-area button.primary,
+.admin-area .btn-primary {
+    background: linear-gradient(135deg, #EE10B0 0%, rgba(238, 16, 176, 0.8) 100%);
+    border: 1px solid #EE10B0;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+button[type="submit"]:hover, 
+.admin-area button.primary:hover,
+.admin-area .btn-primary:hover {
+    background: linear-gradient(135deg, rgba(238, 16, 176, 0.9) 0%, #EE10B0 100%);
+    box-shadow: 0 4px 12px rgba(238, 16, 176, 0.4);
+    transform: translateY(-1px);
 }
