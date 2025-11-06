@@ -7,7 +7,7 @@ import AddSongModal from './AddSongModal';
 import EditSongModal from './EditSongModal';
 import { useAuth } from '../context/AuthContext';
 
-export default function SongsTable({ songs = [], onEdit, onDelete, onAdd, showUndefined = false, onRestore }) {
+export default function SongsTable({ songs = [], onEdit, onDelete, onAdd, showUndefined = false, onRestore, suggestions = { artists: [], albums: [], genres: [] } }) {
     // Auth context for permissions
     const { canEditSongs, canDeleteSongs, canAddSongs } = useAuth();
     
@@ -243,6 +243,7 @@ export default function SongsTable({ songs = [], onEdit, onDelete, onAdd, showUn
                     artists={artists}
                     albums={albums}
                     genres={genres}
+                    suggestions={suggestions}
                     refresh={refresh}
                 />
             )}
