@@ -72,6 +72,9 @@
 .card-info h3 {
   font-size: 16px;
   margin: 5px 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .card-info p {
