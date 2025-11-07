@@ -11,7 +11,10 @@ import {
   HeartOutlined,
   PlusCircleOutlined,
   SettingOutlined,
-  LogoutOutlined
+  LogoutOutlined,
+  VideoCameraOutlined,
+  AppstoreOutlined,
+  SmileOutlined
 } from '@ant-design/icons';
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons';
 import { useDashboard } from '../../App';
@@ -77,8 +80,17 @@ const Dashboard = () => {
         <div className="Menu-part">
           <MenuItem icon={<HomeFilled />} label="Home" to="/home" />
           <MenuItem icon={<GlobalOutlined />} label="Discover" to="/discover" />
+        </div>
+      </div>
+
+      <div className="DashBoard-menu">
+        <p className="Menu">Browse</p>
+        <div className="Menu-part">
+          <MenuItem icon={<VideoCameraOutlined />} label="Videos" to="/video/viewall" />
           <MenuItem icon={<CompassOutlined />} label="Albums" to="/album" />
           <MenuItem icon={<UserOutlined />} label="Artists" to="/artist" />
+          <MenuItem icon={<AppstoreOutlined />} label="Genres" to="/genres/viewall" />
+          <MenuItem icon={<SmileOutlined />} label="Moods" to="/mood/viewall" />
         </div>
       </div>
 
