@@ -91,7 +91,7 @@ function App() {
                 <Route path="/album" element={<AlbumsPage />} />
                 <Route path="/album/:id" element={<AlbumDetailPage />} />
 
-                <Route path="/playlist/add/:id" element={<ProtectedRoute>   <AddToPlaylist />                     </ProtectedRoute>} />
+                <Route path="/playlist/add" element={<ProtectedRoute>   <AddToPlaylist />                     </ProtectedRoute>} />
                 <Route path="/playlist/:id" element={<ProtectedRoute>   <PlaylistDetail />                    </ProtectedRoute>} />
                 <Route path="/favorites" element={<ProtectedRoute>   <ListPage pageType={'favorites'} />   </ProtectedRoute>} />
                 <Route path="/allsongs" element={<AllSongsPage />} />
