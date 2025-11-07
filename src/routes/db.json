@@ -278,7 +278,10 @@
       "password": "123456789*",
       "phone": "0901234567",
       "level": "l3",
-      "favorites": [],
+      "favorites": [
+        "s503",
+        "s513"
+      ],
       "playlists": [
         {
           "id": "1",
@@ -305,12 +308,18 @@
       "password": "111111",
       "phone": "01111111111",
       "level": "l3",
-      "favorites": [],
+      "favorites": [
+        "s520",
+        "41ee",
+        "s518",
+        "66a7"
+      ],
       "playlists": [
         {
-          "id": "1224_1",
-          "name": "Yêu thích của tôi",
-          "songs": []
+          "id": "1224_1762442964455",
+          "name": "Để nghe sau vậy",
+          "songs": [],
+          "createdAt": "2025-11-06T15:29:24.455Z"
         }
       ]
     },
@@ -360,8 +369,7 @@
         "952b",
         "s508",
         "s506",
-        "s501",
-        "s504"
+        "s501"
       ],
       "playlists": [
         {
@@ -387,6 +395,36 @@
               "artist": "MAYDAYs & Minh Tốc"
             }
           ]
+        }
+      ]
+    },
+    {
+      "id": "fbe6",
+      "username": "User1",
+      "email": "user1@gmail.com",
+      "password": "123456",
+      "phone": "0976789876",
+      "level": "l3",
+      "favorites": [
+        "995b",
+        "s516",
+        "877d",
+        "76ff",
+        "41ee"
+      ],
+      "playlists": [
+        {
+          "id": "pl_1762524207502",
+          "name": "wao",
+          "songs": [
+            "s501",
+            "s507",
+            "s506",
+            "76ff",
+            "66a7",
+            "995b"
+          ],
+          "createdAt": "2025-11-07T14:03:27.502Z"
         }
       ]
     }
