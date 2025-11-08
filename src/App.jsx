@@ -101,6 +101,14 @@ function App() {
                   <Route path="/favorites" element={<ProtectedRoute>   <ListPage pageType={'favorites'} />   </ProtectedRoute>} />
                   <Route path="/allsongs" element={<AllSongsPage />} />
 
+                  {/* Video routes */}
+                  <Route path="/video/:id" element={<VideoPlayerPage />} />
+                  <Route path="/video/viewall" element={<ViewAllPage pageType="videos" />} />
+                  
+                  {/* View All routes for different content types */}
+                  <Route path="/genres/viewall" element={<ViewAllPage pageType="genres" />} />
+                  <Route path="/mood/viewall" element={<ViewAllPage pageType="moods" />} />
+
                 </Routes>
               </div>
             </div>
