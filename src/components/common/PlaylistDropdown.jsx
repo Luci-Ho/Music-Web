@@ -1,184 +1,101 @@
-import React, { useEffect, useState } from 'react';
-import { Popover, Button, Input } from 'antd';
-import axios from 'axios';
-import useAuth from '../../hooks/useAuth';
-import { toast } from 'react-toastify';
+import React, { useEffect, useRef } from 'react';
 
-const PlaylistDropdown = ({ songId }) => {
-  const { user, login, isLoggedIn } = useAuth();
-  const [visible, setVisible] = useState(false);
-  const [playlists, setPlaylists] = useState([]);
-  const [newPlaylistName, setNewPlaylistName] = useState('');
+const PlaylistDropdown = ({
+  songId,
+  onClose,
+  children,
+  offset = { top: 200, left: -200 }
+}) => {
+  const dropdownRef = useRef(null);
 
   useEffect(() => {
-    if (visible && user) {
-      // Get playlists from current user instead of global endpoint
-      setPlaylists(user.playlists || []);
-    }
-  }, [visible, user]);
+    const dropdown = dropdownRef.current;
+    const button = document.querySelector(`[data-song-id="${songId}"]`);
 
-  const addToPlaylist = async (playlistId) => {
-    if (!isLoggedIn) {
-      toast.error('Bạn cần đăng nhập để thêm vào playlist!');
-      return;
-    }
+    if (dropdown && button) {
+      const rect = button.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+      const viewportWidth = window.innerWidth;
+      const dropdownWidth = 280;
+      const maxDropdownHeight = 400;
 
-    try {
-      // Get song data
-      const songRes = await axios.get(`http://localhost:4000/songs/${songId}`);
-      const songData = songRes.data;
+      const spaceBelow = viewportHeight - rect.bottom;
+      const spaceAbove = rect.top;
 
-      // Find the playlist in user's playlists
-      const userPlaylists = user.playlists || [];
-      const playlist = userPlaylists.find(p => p.id === playlistId);
-      
-      if (!playlist) {
-        toast.error('Không tìm thấy playlist!');
-        return;
-      }
+      let top = rect.bottom + offset.top;
+      let left = rect.left + offset.left;
 
-      // Check if song already exists in playlist
-      const songExists = playlist.songs.some(s => 
-        (typeof s === 'string' ? s : s.id) === songData.id
+      const actualHeight = Math.min(
+        maxDropdownHeight,
+        Math.max(spaceBelow, spaceAbove) - 40
       );
 
-      if (songExists) {
-        toast.error('Bài hát đã có trong playlist này!');
-        return;
-      }
+      const margin = 16;
+      top = Math.max(margin, Math.min(top, viewportHeight - actualHeight - margin));
+      left = Math.max(margin, Math.min(left, viewportWidth - dropdownWidth - margin));
 
-      // Create updated playlists array
-      const updatedPlaylists = userPlaylists.map(p => {
-        if (p.id === playlistId) {
-          return {
-            ...p,
-            songs: [...p.songs, {
-              id: songData.id,
-              title: songData.title,
-              artist: songData.artist
-            }]
-          };
-        }
-        return p;
-      });
-
-      // Update user with new playlists
-      const updatedUser = { ...user, playlists: updatedPlaylists };
-
-      // Update backend
-      await axios.patch(`http://localhost:4000/users/${user.id}`, {
-        playlists: updatedPlaylists
-      });
-
-      // Update local state
-      login(updatedUser);
-      setPlaylists(updatedPlaylists);
-      setVisible(false);
-      
-      try { 
-        window.dispatchEvent(new Event('userUpdated')); 
-      } catch (err) { 
-        /* ignore */ 
-      }
-
-      toast.success('Đã thêm vào playlist thành công!');
-    } catch (err) {
-      console.error('Lỗi khi thêm bài hát:', err);
-      toast.error('Có lỗi xảy ra khi thêm bài hát!');
+      dropdown.style.top = `${top}px`;
+      dropdown.style.left = `${left}px`;
+      dropdown.style.maxHeight = `${actualHeight}px`;
     }
-  };
-
-  const createPlaylist = async () => {
-    if (!newPlaylistName.trim() || !isLoggedIn) return;
-
-    try {
-      // Get song data
-      const songRes = await axios.get(`http://localhost:4000/songs/${songId}`);
-      const songData = songRes.data;
-
-      // Create new playlist with unique ID
-      const newPlaylistId = `${user.id}_${Date.now()}`;
-      const newPlaylist = {
-        id: newPlaylistId,
-        name: newPlaylistName,
-        songs: [{
-          id: songData.id,
-          title: songData.title,
-          artist: songData.artist
-        }]
-      };
-
-      // Add to user's playlists
-      const userPlaylists = user.playlists || [];
-      const updatedPlaylists = [...userPlaylists, newPlaylist];
-      const updatedUser = { ...user, playlists: updatedPlaylists };
-
-      // Update backend
-      await axios.patch(`http://localhost:4000/users/${user.id}`, {
-        playlists: updatedPlaylists
-      });
-
-      // Update local state
-      login(updatedUser);
-      setPlaylists(updatedPlaylists);
-      setNewPlaylistName('');
-      setVisible(false);
-      
-      try { 
-        window.dispatchEvent(new Event('userUpdated')); 
-      } catch (err) { 
-        /* ignore */ 
-      }
-
-      toast.success('Đã tạo playlist mới thành công!');
-    } catch (err) {
-      console.error('Lỗi khi tạo playlist:', err);
-      toast.error('Có lỗi xảy ra khi tạo playlist!');
-    }
-  };
-
-  const content = (
-    <div style={{ width: '220px' }}>
-      <p style={{ marginBottom: '8px' }}>Chọn playlist:</p>
-      {playlists.map(pl => (
-        <Button
-          key={pl.id}
-          type="text"
-          style={{ width: '100%', textAlign: 'left', marginBottom: '5px' }}
-          onClick={() => addToPlaylist(pl.id)}
-        >
-          🎵 {pl.name}
-        </Button>
-      ))}
-
-      <hr style={{ margin: '12px 0' }} />
-
-      <Input
-        placeholder="New playlist"
-        value={newPlaylistName}
-        onChange={(e) => setNewPlaylistName(e.target.value)}
-        onPressEnter={createPlaylist}
-      />
-      <Button
-        type="link"
-        onClick={createPlaylist}
-        style={{ paddingLeft: 0, marginTop: '6px' }}
-      >
-        create
-      </Button>
-    </div>
-  );
+  }, [songId, offset]);
 
   return (
-    <Popover
-      content={content}
-      title="Thêm vào playlist"
-      trigger="click"
-      open={visible}
-      onOpenChange={(v) => setVisible(v)}
-    >
-      <Button className="action-btn">➕ Thêm vào playlist</Button>
-    </Popover>
+    <>
+      {/* Overlay to close dropdown */}
+      <div
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          zIndex: 998
+        }}
+        onClick={onClose}
+      />
+
+      {/* Dropdown Menu */}
+      <div
+        ref={dropdownRef}
+        style={{
+          position: 'fixed',
+          background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)',
+          border: '1px solid rgba(238, 16, 176, 0.3)',
+          borderRadius: '12px',
+          minWidth: '280px',
+          maxHeight: '400px',
+          overflowY: 'auto',
+          boxShadow: '0 20px 60px rgba(0,0,0,0.6), 0 0 0 1px rgba(238, 16, 176, 0.1)',
+          zIndex: 9999,
+          backdropFilter: 'blur(20px)',
+          padding: '12px 0'
+        }}
+      >
+        {/* Header */}
+        <div
+          style={{
+            padding: '0 16px 12px 16px',
+            borderBottom: '1px solid rgba(238, 16, 176, 0.2)'
+          }}
+        >
+          <h4
+            style={{
+              color: 'white',
+              fontSize: '16px',
+              fontWeight: '600',
+              margin: 0,
+              textAlign: 'center'
+            }}
+          >
+            🎵 Thêm vào playlist
+          </h4>
+        </div>
+
+        {/* Content */}
+        <div>{children}</div>
+      </div>
+    </>
   );
 };
 

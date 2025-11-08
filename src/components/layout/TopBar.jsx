@@ -109,7 +109,7 @@ const TopBar = () => {
         <p>Premium</p>
       </div> */}
       <div className="text-4xl font-bold bg-gradient-to-r from-[#ff6b6b] to-[#45b7d1] bg-clip-text text-transparent flex items-center">
-          <small>{user ? `Hi, ${user.username}! 🎶` : 'Cùng nghe nhạc vui nhé baby!'}</small>
+          <small>{user ? `Hi, ${user.username}! 🎶` : 'Melodies – Where music connects emotions'}</small>
       </div>
 
       <div className="TopBar-Menu">

@@ -14,6 +14,8 @@ import {
   PlusCircleOutlined,
 } from '@ant-design/icons';
 
+import usePlaylistTrigger from '../../hooks/usePlaylistTrigger';
+
 export default function MusicPlayer() {
   const {
     playlist,
@@ -22,6 +24,8 @@ export default function MusicPlayer() {
     currentIndex,
     setCurrentIndex
   } = useContext(AppContext);
+
+  const { openPopup } = usePlaylistTrigger();
 
   const audioRef = useRef(null);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -98,7 +102,7 @@ export default function MusicPlayer() {
     // Dừng audio hiện tại trước
     audio.pause();
     setIsPlaying(false);
-    
+
     // Load bài hát mới
     audio.src = currentSong.streaming_links.audio_url;
     audio.load();
@@ -162,7 +166,7 @@ export default function MusicPlayer() {
   const handleSeek = (e) => {
     const audio = audioRef.current;
     if (!audio || !duration || !canSeek) return;
-    
+
     const newTime = parseFloat(e.target.value);
     if (isNaN(newTime)) return;
 
@@ -202,8 +206,8 @@ export default function MusicPlayer() {
 
     <div className="music-player" style={playerStyle}>
       <div className="player-left">
-        <img 
-          src={currentSong.img || currentSong.cover_url || currentSong.cover || "https://via.placeholder.com/64x64?text=No+Image"} 
+        <img
+          src={currentSong.img || currentSong.cover_url || currentSong.cover || "https://via.placeholder.com/64x64?text=No+Image"}
           alt={currentSong.title}
           onError={(e) => {
             e.target.src = "https://via.placeholder.com/64x64?text=No+Image";
@@ -254,7 +258,10 @@ export default function MusicPlayer() {
           <LikeButton isFav={isFav}
             onClick={handleToggleFavorite} />
         )}
-        <button><PlusCircleOutlined /></button>
+
+        <button onClick={() => openPopup(currentSong.id)}>
+          <PlusCircleOutlined />
+        </button>
 
       </div>
 
