@@ -69,10 +69,13 @@ export default function SongsView() {
 
     async function handleEdit(song) {
         try {
-            await updateSong(song.id, song);
+            console.log('SongsView handleEdit called with:', song);
+            const result = await updateSong(song.id, song);
+            console.log('Update result:', result);
             message.success('Updated');
-            load();
+            load(); // Reload the songs list
         } catch (error) {
+            console.error('Error in handleEdit:', error);
             message.error('Failed to update song');
         }
     }

@@ -1,15 +1,74 @@
 import React, { useState } from 'react';
 import { Modal, Form, Input, Select, AutoComplete, message } from 'antd';
 
-const AddSongModal = ({ visible, onCancel, onSubmit, artists, genres, loading, suggestions = { artists: [], albums: [], genres: [] } }) => {
+const AddSongModal = ({ visible, onCancel, onSubmit, onSuccess, artists, genres, loading, suggestions = { artists: [], albums: [], genres: [] } }) => {
     const [form] = Form.useForm();
     const [submitting, setSubmitting] = useState(false);
+
+    // Validate and clean artist name
+    const validateArtistName = (name) => {
+        if (!name || typeof name !== 'string') {
+            return null;
+        }
+        
+        // Remove extra whitespace and special characters that might cause issues
+        const cleaned = name.trim().replace(/[<>"/\\|?*:]/g, '');
+        
+        // Check length
+        if (cleaned.length < 1 || cleaned.length > 100) {
+            return null;
+        }
+        
+        return cleaned;
+    };
+
+    // Create song directly via API
+    const createSongDirectly = async (songData) => {
+        try {
+            const response = await fetch('http://localhost:4000/songsList', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(songData),
+            });
+
+            if (!response.ok) {
+                const errorData = await response.text();
+                throw new Error(`Failed to create song: ${response.statusText} - ${errorData}`);
+            }
+
+            const createdSong = await response.json();
+            console.log('Successfully created song:', createdSong);
+            return createdSong;
+        } catch (error) {
+            console.error('Error creating song:', error);
+            throw error;
+        }
+    };
 
     // Find or create multiple artists
     const findOrCreateArtists = async (artistNames) => {
         const artistIds = [];
+        const validNames = [];
         
-        for (const artistName of artistNames) {
+        // First validate all artist names
+        for (const rawName of artistNames) {
+            const cleanName = validateArtistName(rawName);
+            if (cleanName) {
+                validNames.push(cleanName);
+            } else {
+                console.warn(`Invalid artist name skipped: "${rawName}"`);
+                message.warning(`Skipped invalid artist name: "${rawName}"`);
+            }
+        }
+        
+        if (validNames.length === 0) {
+            message.error('No valid artist names provided');
+            return { artistIds: [], validNames: [] };
+        }
+        
+        for (const artistName of validNames) {
             // Check if artist already exists
             const existingArtist = artists.find(a => 
                 a.name.toLowerCase() === artistName.toLowerCase() ||
@@ -38,16 +97,25 @@ const AddSongModal = ({ visible, onCancel, onSubmit, artists, genres, loading, s
                     });
 
                     if (response.ok) {
+                        const createdArtist = await response.json();
                         message.success(`Created new artist: ${artistName}`);
                         artistIds.push(newArtistId);
+                        console.log('Successfully created artist:', createdArtist);
+                    } else {
+                        const errorData = await response.text();
+                        console.error(`Failed to create artist "${artistName}":`, response.status, errorData);
+                        message.error(`Failed to create artist "${artistName}": ${response.statusText}`);
+                        // Still continue with other artists, don't break the entire process
                     }
                 } catch (error) {
-                    console.error('Error creating artist:', error);
+                    console.error(`Error creating artist "${artistName}":`, error);
+                    message.error(`Network error while creating artist "${artistName}": ${error.message}`);
+                    // Still continue with other artists, don't break the entire process
                 }
             }
         }
         
-        return artistIds;
+        return { artistIds, validNames };
     };
 
     const handleSubmit = async () => {
@@ -57,11 +125,20 @@ const AddSongModal = ({ visible, onCancel, onSubmit, artists, genres, loading, s
             
             // Handle multiple artists
             const artistNames = Array.isArray(values.artists) ? values.artists : [values.artists];
-            const artistIds = await findOrCreateArtists(artistNames);
+            console.log('Input artist names:', artistNames);
+            
+            const { artistIds, validNames } = await findOrCreateArtists(artistNames);
+            console.log('Found/created artists:', { artistIds, validNames });
             
             if (artistIds.length === 0) {
-                message.error('Failed to create/find artists');
+                message.error('Failed to create/find any artists. Please check your input and try again.');
                 return;
+            }
+
+            // Show warning if some artists couldn't be created
+            if (artistIds.length < artistNames.length) {
+                const failedCount = artistNames.length - artistIds.length;
+                message.warning(`${failedCount} artist(s) could not be created. Proceeding with ${artistIds.length} artist(s).`);
             }
 
             // Handle multiple genres
@@ -76,9 +153,9 @@ const AddSongModal = ({ visible, onCancel, onSubmit, artists, genres, loading, s
                 title: values.title,
                 // Primary artist (first one)
                 artistId: artistIds[0],
-                artist: artistNames[0],
-                // All artists (for display and search)
-                artists: artistNames,
+                artist: validNames[0],
+                // All artists (for display and search) - only include those that were successfully created/found
+                artists: validNames.slice(0, artistIds.length),
                 artistIds: artistIds,
                 // Primary genre (first one)
                 genreId: genreIds[0],
@@ -103,10 +180,28 @@ const AddSongModal = ({ visible, onCancel, onSubmit, artists, genres, loading, s
                 created_at: new Date().toISOString()
             };
 
-            await onSubmit(newSong);
+            console.log('Attempting to create song with data:', newSong);
+            
+            // Check if we have onSubmit (from parent component that handles API)
+            if (onSubmit) {
+                await onSubmit(newSong);
+            } else if (onSuccess) {
+                // For backward compatibility - handle the song creation here
+                await createSongDirectly(newSong);
+                onSuccess();
+            } else {
+                throw new Error('No handler provided for song creation');
+            }
+            
+            message.success(`Successfully added song "${values.title}" with ${artistIds.length} artist(s)`);
             handleCancel();
         } catch (error) {
-            console.error('Validation failed:', error);
+            console.error('Error in handleSubmit:', error);
+            if (error.name === 'ValidationError') {
+                message.error('Please fill in all required fields correctly');
+            } else {
+                message.error(`Failed to add song: ${error.message || 'Unknown error'}`);
+            }
         } finally {
             setSubmitting(false);
         }

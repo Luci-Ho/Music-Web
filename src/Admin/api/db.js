@@ -46,18 +46,87 @@ export async function getUsers() {
 
 // Local-only mutation helpers (server-backed APIs would be different)
 export async function addSong(song) {
-  const id = (Date.now()).toString(36).slice(-6);
-  const newSong = { ...song, id };
-  songs = [newSong, ...songs];
-  return Promise.resolve(newSong);
+  try {
+    // Try to add via API first
+    const response = await fetch(`${API_URL}/songsList`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(song),
+    });
+
+    if (response.ok) {
+      const newSong = await response.json();
+      console.log('Successfully added song via API:', newSong);
+      return newSong;
+    } else {
+      console.warn('API add failed, falling back to local add');
+      // Fallback to local add
+      const id = (Date.now()).toString(36).slice(-6);
+      const newSong = { ...song, id };
+      songs = [newSong, ...songs];
+      return Promise.resolve(newSong);
+    }
+  } catch (error) {
+    console.error('Error adding song via API:', error);
+    // Fallback to local add
+    const id = (Date.now()).toString(36).slice(-6);
+    const newSong = { ...song, id };
+    songs = [newSong, ...songs];
+    return Promise.resolve(newSong);
+  }
 }
 
 export async function updateSong(id, updates) {
-  songs = songs.map(s => (s.id === id ? { ...s, ...updates } : s));
-  return Promise.resolve(songs.find(s => s.id === id));
+  try {
+    // Try to update via API first
+    const response = await fetch(`${API_URL}/songsList/${id}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updates),
+    });
+
+    if (response.ok) {
+      const updatedSong = await response.json();
+      console.log('Successfully updated song via API:', updatedSong);
+      return updatedSong;
+    } else {
+      console.warn('API update failed, falling back to local update');
+      // Fallback to local update
+      songs = songs.map(s => (s.id === id ? { ...s, ...updates } : s));
+      return Promise.resolve(songs.find(s => s.id === id));
+    }
+  } catch (error) {
+    console.error('Error updating song via API:', error);
+    // Fallback to local update
+    songs = songs.map(s => (s.id === id ? { ...s, ...updates } : s));
+    return Promise.resolve(songs.find(s => s.id === id));
+  }
 }
 
 export async function deleteSong(id) {
-  songs = songs.filter(s => s.id !== id);
-  return Promise.resolve(true);
+  try {
+    // Try to delete via API first
+    const response = await fetch(`${API_URL}/songsList/${id}`, {
+      method: 'DELETE',
+    });
+
+    if (response.ok) {
+      console.log('Successfully deleted song via API:', id);
+      return true;
+    } else {
+      console.warn('API delete failed, falling back to local delete');
+      // Fallback to local delete
+      songs = songs.filter(s => s.id !== id);
+      return Promise.resolve(true);
+    }
+  } catch (error) {
+    console.error('Error deleting song via API:', error);
+    // Fallback to local delete
+    songs = songs.filter(s => s.id !== id);
+    return Promise.resolve(true);
+  }
 }

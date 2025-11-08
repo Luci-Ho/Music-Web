@@ -22,24 +22,171 @@ const PlaylistDetail = () => {
   const navigate = useNavigate();
   const { user, login } = useAuth();
   const [playlist, setPlaylist] = useState(null);
+  const [songsData, setSongsData] = useState([]); // ← Thêm state để lưu thông tin bài hát
+  const [artistsData, setArtistsData] = useState([]); // ← Thêm state để lưu thông tin artists
+  const [genresData, setGenresData] = useState([]); // ← Thêm state để lưu thông tin genres
   const [loading, setLoading] = useState(true);
   const { playSong } = useContext(AppContext);
 
-  useEffect(() => {
-    if (user && user.playlists) {
-      const userPlaylist = user.playlists.find(p => p.id === id);
-      setPlaylist(userPlaylist || null);
+  // Helper function to get artist info from artistsData
+  const getArtistInfo = (artistId, fallbackName) => {
+    if (!artistId) return { name: fallbackName || 'Unknown Artist', img: null };
+    
+    const artist = artistsData.find(a => a.id === artistId);
+    if (artist) {
+      return {
+        name: artist.name,
+        img: artist.img,
+        id: artist.id
+      };
     }
-    setLoading(false);
+    
+    return { name: fallbackName || 'Unknown Artist', img: null };
+  };
+
+  // Helper function to get genre info from genresData
+  const getGenreInfo = (genreId, fallbackName) => {
+    if (!genreId) return { title: fallbackName || 'Unknown', img: null };
+    
+    const genre = genresData.find(g => g.id === genreId);
+    if (genre) {
+      return {
+        title: genre.title,
+        img: genre.img,
+        id: genre.id
+      };
+    }
+    
+    return { title: fallbackName || 'Unknown', img: null };
+  };
+
+  // Helper function to format view count
+  const formatViews = (views) => {
+    if (!views || views === 0) return '0';
+    if (views >= 1000000) {
+      return (views / 1000000).toFixed(1) + 'M';
+    } else if (views >= 1000) {
+      return (views / 1000).toFixed(1) + 'K';
+    }
+    return views.toString();
+  };
+
+  // Helper function to format duration
+  const formatDuration = (duration) => {
+    if (!duration) return '0:00';
+    if (typeof duration === 'string' && duration.includes(':')) {
+      return duration;
+    }
+    // If duration is in seconds
+    const minutes = Math.floor(duration / 60);
+    const seconds = Math.floor(duration % 60);
+    return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+  };
+
+  // 🎵 Fetch thông tin bài hát từ songsList
+  const fetchSongsData = async (songIds) => {
+    try {
+      const response = await fetch('http://localhost:4000/songsList');
+      if (!response.ok) throw new Error('Failed to fetch songs');
+      
+      const allSongs = await response.json();
+      console.log('All songs from API:', allSongs);
+      
+      // Filter songs based on IDs in playlist
+      const playlistSongs = songIds.map(songId => {
+        const song = allSongs.find(s => s.id === songId);
+        if (!song) {
+          console.warn(`Song with ID ${songId} not found in songsList`);
+          return {
+            id: songId,
+            title: `Unknown Song (${songId})`,
+            artist: 'Unknown Artist',
+            album: 'Unknown Album',
+            genre: 'Unknown',
+            img: 'https://via.placeholder.com/300?text=Song'
+          };
+        }
+        return song;
+      });
+      
+      console.log('Playlist songs data:', playlistSongs);
+      setSongsData(playlistSongs);
+    } catch (error) {
+      console.error('Error fetching songs data:', error);
+      // Fallback: create placeholder objects for song IDs
+      const placeholderSongs = songIds.map(songId => ({
+        id: songId,
+        title: `Song ${songId}`,
+        artist: 'Unknown Artist',
+        album: 'Unknown Album',
+        genre: 'Unknown',
+        img: 'https://via.placeholder.com/300?text=Song'
+      }));
+      setSongsData(placeholderSongs);
+    }
+  };
+
+  // 🎤 Fetch thông tin artists từ /artists
+  const fetchArtistsData = async () => {
+    try {
+      const response = await fetch('http://localhost:4000/artists');
+      if (!response.ok) throw new Error('Failed to fetch artists');
+      
+      const allArtists = await response.json();
+      console.log('All artists from API:', allArtists);
+      setArtistsData(allArtists);
+    } catch (error) {
+      console.error('Error fetching artists data:', error);
+      setArtistsData([]);
+    }
+  };
+
+  // 🎭 Fetch thông tin genres từ /genres
+  const fetchGenresData = async () => {
+    try {
+      const response = await fetch('http://localhost:4000/genres');
+      if (!response.ok) throw new Error('Failed to fetch genres');
+      
+      const allGenres = await response.json();
+      console.log('All genres from API:', allGenres);
+      setGenresData(allGenres);
+    } catch (error) {
+      console.error('Error fetching genres data:', error);
+      setGenresData([]);
+    }
+  };
+
+  useEffect(() => {
+    const loadPlaylistData = async () => {
+      if (user && user.playlists) {
+        const userPlaylist = user.playlists.find(p => p.id === id);
+        setPlaylist(userPlaylist || null);
+        
+        // Fetch artists and genres data first
+        await Promise.all([
+          fetchArtistsData(),
+          fetchGenresData()
+        ]);
+        
+        // Then fetch songs data if playlist exists and has songs
+        if (userPlaylist && userPlaylist.songs && userPlaylist.songs.length > 0) {
+          console.log('Playlist found with songs:', userPlaylist.songs);
+          await fetchSongsData(userPlaylist.songs);
+        } else {
+          setSongsData([]);
+        }
+      }
+      setLoading(false);
+    };
+
+    loadPlaylistData();
   }, [id, user]);
 
   const removeSongFromPlaylist = async (songId) => {
     if (!window.confirm('Bạn có chắc chắn muốn xóa bài hát này khỏi playlist?')) return;
 
     try {
-      const updatedSongs = playlist.songs.filter(song =>
-        (typeof song === 'string' ? song : song.id) !== songId
-      );
+      const updatedSongs = playlist.songs.filter(id => id !== songId);
       const updatedPlaylist = { ...playlist, songs: updatedSongs };
       const updatedPlaylists = user.playlists.map(p =>
         p.id === playlist.id ? updatedPlaylist : p
@@ -54,6 +201,11 @@ const PlaylistDetail = () => {
 
       login(updatedUser);
       setPlaylist(updatedPlaylist);
+      
+      // Update songs data
+      const updatedSongsData = songsData.filter(song => song.id !== songId);
+      setSongsData(updatedSongsData);
+      
       window.dispatchEvent(new Event('userUpdated'));
       toast.success('Đã xóa bài hát khỏi playlist!');
     } catch (error) {
@@ -68,7 +220,13 @@ const PlaylistDetail = () => {
         <TopBar />
         <div className="content">
           <div style={{ textAlign: 'center', color: 'white', marginTop: '50px' }}>
-            <h2>Đang tải playlist...</h2>
+            <h2>Đang tải playlist và thông tin bài hát...</h2>
+            <div className="text-sm text-gray-400 mt-2">
+              Đang kết nối đến cơ sở dữ liệu...
+            </div>
+            <div className="text-xs text-gray-500 mt-1">
+              Đang tải thông tin bài hát, nghệ sĩ và thể loại...
+            </div>
           </div>
         </div>
         <Footer />
@@ -104,8 +262,25 @@ const PlaylistDetail = () => {
           <div className="TopPart bg-gradient-to-r from-blue-400 to-gray-600 rounded-lg">
             <div className="top2">
               <div className="BannerPart">
-                <div className="w-[268px] h-[268px] bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg p-5 flex items-center justify-center">
-                  <PlayCircleOutlined className="text-8xl text-white" />
+                <div className="w-[268px] h-[268px] bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg p-5 flex items-center justify-center relative overflow-hidden">
+                  {songsData.length > 0 && songsData[0].img ? (
+                    <div className="absolute inset-0">
+                      <img 
+                        src={songsData[0].img || songsData[0].cover_url}
+                        alt="Playlist cover"
+                        className="w-full h-full object-cover opacity-30"
+                        onError={(e) => {
+                          e.target.style.display = 'none';
+                        }}
+                      />
+                    </div>
+                  ) : null}
+                  <div className="relative z-10 text-center">
+                    <PlayCircleOutlined className="text-6xl text-white mb-2" />
+                    <div className="text-white text-sm font-medium">
+                      {songsData.length} Bài hát
+                    </div>
+                  </div>
                 </div>
                 <div className="BannerText">
                   <button
@@ -116,21 +291,53 @@ const PlaylistDetail = () => {
                   </button>
                   <SectionTitle title1={playlist.name} title2="Playlist" />
                   <p className="btext">Playlist cá nhân của bạn</p>
-                  <p className="bts">{playlist.songs?.length || 0} bài hát</p>
+                  <div className="flex items-center gap-4 text-sm text-gray-300">
+                    <span className="flex items-center gap-1">
+                      🎵 {songsData.length} bài hát
+                    </span>
+                    {songsData.length > 0 && (
+                      <>
+                        <span className="flex items-center gap-1">
+                          🎤 {new Set(songsData.map(song => song.artistId || song.artist).filter(Boolean)).size} nghệ sĩ
+                        </span>
+                        <span className="flex items-center gap-1">
+                          🎭 {new Set(songsData.map(song => song.genreId || song.genre).filter(Boolean)).size} thể loại
+                        </span>
+                        <span className="flex items-center gap-1">
+                          ⏱️ {Math.round(songsData.reduce((total, song) => {
+                            const duration = song.duration;
+                            if (typeof duration === 'string' && duration.includes(':')) {
+                              const [min, sec] = duration.split(':').map(Number);
+                              return total + (min * 60 + sec);
+                            }
+                            return total + (duration || 180); // Default 3 minutes
+                          }, 0) / 60)} phút
+                        </span>
+                        <span className="flex items-center gap-1">
+                          👁️ {formatViews(songsData.reduce((total, song) => total + (song.views || song.viewCount || 0), 0))} lượt xem
+                        </span>
+                      </>
+                    )}
+                    {playlist.createdAt && (
+                      <span className="flex items-center gap-1">
+                        📅 {new Date(playlist.createdAt).toLocaleDateString('vi-VN')}
+                      </span>
+                    )}
+                  </div>
                 </div>
                 <div className="playbutton">
                   <button
                     className="bg-[#1db954] text-white px-6 py-3 rounded-full font-semibold hover:bg-[#1ed760] transition-colors mr-4"
                     onClick={() => {
-                      if (playlist.songs.length > 0) {
-                        const firstSong = playlist.songs[0];
-                        playSong(firstSong, playlist.songs);
+                      if (songsData.length > 0) {
+                        const firstSong = songsData[0];
+                        playSong(firstSong, songsData);
                         toast.success(`Đang phát playlist: ${playlist.name}`);
                       } else {
                         toast.info('Playlist này chưa có bài hát nào!');
                       }
                     }}
-                    disabled={playlist.songs.length === 0}
+                    disabled={songsData.length === 0}
                   >
                     <PlayCircleOutlined style={{ marginRight: 6 }} />
                     Phát playlist
@@ -149,7 +356,7 @@ const PlaylistDetail = () => {
           </div>
 
           <div className="mt-8 px-6">
-            {playlist.songs.length === 0 ? (
+            {songsData.length === 0 ? (
               <div style={{ textAlign: 'center', color: 'white', padding: '50px' }}>
                 <PlusOutlined className="text-6xl mb-4" />
                 <h3>Playlist này chưa có bài hát nào</h3>
@@ -169,37 +376,86 @@ const PlaylistDetail = () => {
                       <th className="pl-4 py-3">#</th>
                       <th className="py-3">Bài hát</th>
                       <th className="py-3">Nghệ sĩ</th>
+                      <th className="py-3">Album</th>
+                      <th className="py-3">Thể loại</th>
+                      <th className="py-3">Thời lượng</th>
+                      <th className="py-3">Lượt xem</th>
                       <th className="py-3 text-center">Hành động</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-700/30">
-                    {playlist.songs.map((song, index) => {
-                      const songId = typeof song === 'string' ? song : song.id;
-                      const songTitle = typeof song === 'string' ? song : song.title;
-                      const songArtist = typeof song === 'string' ? 'Unknown' : song.artist;
-
+                    {songsData.map((song, index) => {
+                      const artistInfo = getArtistInfo(song.artistId, song.artist);
+                      const genreInfo = getGenreInfo(song.genreId, song.genre);
+                      
                       return (
-                        <tr key={songId || index} className="hover:bg-gray-700/20 transition-colors group">
-                          <td className="pl-4 py-3 text-gray-300">{index + 1}</td>
+                        <tr key={song.id} className="hover:bg-gray-700/20 transition-colors group">
+                          <td className="pl-4 py-3 text-gray-300 font-medium">{index + 1}</td>
                           <td className="py-3">
-                            <div className="font-semibold text-white">{songTitle}</div>
+                            <div className="flex items-center gap-3">
+                              <img 
+                                src={song.img || song.cover_url || 'https://via.placeholder.com/50?text=Song'} 
+                                alt={song.title}
+                                className="w-12 h-12 rounded object-cover shadow-md"
+                                onError={(e) => {
+                                  e.target.src = 'https://via.placeholder.com/50?text=Song';
+                                }}
+                              />
+                              <div>
+                                <div className="font-semibold text-white text-sm leading-tight">
+                                  {song.title}
+                                </div>
+                                <div className="text-xs text-gray-400 mt-1">
+                                  {song.release_date ? 
+                                    new Date(song.release_date).getFullYear() : 
+                                    song.releaseYear || 'Unknown Year'
+                                  }
+                                </div>
+                              </div>
+                            </div>
                           </td>
-                          <td className="py-3 text-gray-300">{songArtist}</td>
+                          <td className="py-3 text-gray-300 text-sm">
+                            <div className="flex items-center gap-2">
+                              <div className="truncate max-w-[100px]" title={artistInfo.name}>
+                                {artistInfo.name}
+                              </div>
+                            </div>
+                          </td>
+                          <td className="py-3 text-gray-400 text-sm">
+                            <div className="truncate max-w-[100px]" title={song.album || 'Unknown Album'}>
+                              {song.album || 'Unknown Album'}
+                            </div>
+                          </td>
+                          <td className="py-3 text-gray-400 text-sm">
+                            <div className="flex items-center gap-2">                              
+                              <span className="inline-flex items-center px-2 py-1 rounded-full text-xs text-gray-300">
+                                {genreInfo.title}
+                              </span>
+                            </div>
+                          </td>
+                          <td className="py-3 text-gray-400 text-sm font-mono">
+                            {formatDuration(song.duration)}
+                          </td>
+                          <td className="py-3 text-gray-400 text-sm">
+                            <div className="flex items-center gap-1">
+                              {formatViews(song.views || song.viewCount || 0)}
+                            </div>
+                          </td>
                           <td className="py-3">
                             <div className="flex items-center justify-center gap-2">
                               <button
                                 onClick={() => {
-                                  playSong(song, playlist.songs);
-                                  toast.success(`Đang phát: ${songTitle}`);
+                                  playSong(song, songsData);
+                                  toast.success(`Đang phát: ${song.title}`);
                                 }}
-                                className="text-[#1db954] hover:text-[#1ed760] transition-colors p-1"
+                                className="text-[#1db954] hover:text-[#1ed760] transition-colors p-2 rounded-full hover:bg-gray-700/20"
                                 title="Phát bài hát"
                               >
                                 <PlayCircleOutlined style={{ fontSize: '1.25rem' }} />
                               </button>
                               <button
-                                onClick={() => removeSongFromPlaylist(songId)}
-                                className="text-red-500 hover:text-red-400 transition-colors p-1"
+                                onClick={() => removeSongFromPlaylist(song.id)}
+                                className="text-red-500 hover:text-red-400 transition-colors p-2 rounded-full hover:bg-gray-700/20"
                                 title="Xóa khỏi playlist"
                               >
                                 <DeleteOutlined style={{ fontSize: '1.25rem' }} />
@@ -213,9 +469,9 @@ const PlaylistDetail = () => {
                 </table>
               </div>
             )}
+            </div>
           </div>
         </div>
-      </div>
       <Footer />
     </>
   );

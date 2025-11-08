@@ -375,25 +375,10 @@
         {
           "id": "daf8_1",
           "name": "Yêu thích của tôi",
-          "songs": []
-        },
-        {
-          "id": "daf8_2",
-          "name": "album",
           "songs": [
-            "66a7",
-            "s505"
-          ]
-        },
-        {
-          "id": "daf8_3",
-          "name": "Nhạc hay",
-          "songs": [
-            {
-              "id": "66a7",
-              "title": "Phép Màu",
-              "artist": "MAYDAYs & Minh Tốc"
-            }
+            "s501",
+            "s502",
+            "s504"
           ]
         }
       ]
@@ -1578,7 +1563,7 @@
       "releaseDate": "2017-11-09"
     },
     {
-      "id": "v002", 
+      "id": "v002",
       "title": "Levitating",
       "artist": "a302",
       "views": 89567234,
@@ -1589,7 +1574,7 @@
     },
     {
       "id": "v003",
-      "title": "Believer", 
+      "title": "Believer",
       "artist": "a303",
       "views": 198765432,
       "img": "https://img.youtube.com/vi/7wtfhZwyrcc/sddefault.jpg",
@@ -1600,7 +1585,7 @@
     {
       "id": "v004",
       "title": "Bad Guy",
-      "artist": "a304", 
+      "artist": "a304",
       "views": 167890123,
       "img": "https://img.youtube.com/vi/DyDfgMOUjCI/sddefault.jpg",
       "videoUrl": "https://www.youtube.com/embed/DyDfgMOUjCI",
@@ -1629,7 +1614,7 @@
     },
     {
       "id": "v007",
-      "title": "Tháp Drill Tự Do", 
+      "title": "Tháp Drill Tự Do",
       "artist": "a402",
       "views": 8934567,
       "img": "https://img.youtube.com/vi/VLvBlG49BKA/maxresdefault.jpg",

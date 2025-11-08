@@ -6,7 +6,7 @@ import { useAuth } from '../context/AuthContext';
 const user = JSON.parse(localStorage.getItem('adminuser'));
 
 export default function Header({ query, setQuery }) {
-    const { userLevel, setUserLevel, setCurrentUser } = useAuth();
+    const { userLevel, setUserLevel, setCurrentUser } = useAuth("l1");
     const [searchResults, setSearchResults] = useState([]);
     const [allData, setAllData] = useState({
         songs: [],
@@ -152,8 +152,6 @@ export default function Header({ query, setQuery }) {
         switch (level) {
             case 'l1': return 'Admin';
             case 'l2': return 'Moderator';
-            case 'l3': return 'User';
-            default: return 'Unknown';
         }
     };
 
@@ -194,7 +192,6 @@ export default function Header({ query, setQuery }) {
                         >
                             <Select.Option value="l1">Admin</Select.Option>
                             <Select.Option value="l2">Moderator</Select.Option>
-                            <Select.Option value="l3">User</Select.Option>
                         </Select>
                     </div>
                 </div>

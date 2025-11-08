@@ -209,10 +209,38 @@ export default function SongsTable({ songs = [], onEdit, onDelete, onAdd, showUn
         if (refresh) refresh();
     };
 
+    const handleAddSubmit = async (newSong) => {
+        try {
+            if (onAdd) {
+                await onAdd(newSong);
+                handleAddSuccess();
+            } else {
+                throw new Error('No add handler provided');
+            }
+        } catch (error) {
+            console.error('Error adding song:', error);
+            throw error;
+        }
+    };
+
     const handleEditSuccess = () => {
         setIsEditModalVisible(false);
         setEditingRecord(null);
         if (refresh) refresh();
+    };
+
+    const handleEditSubmit = async (updatedSong) => {
+        try {
+            if (onEdit) {
+                await onEdit(updatedSong);
+                handleEditSuccess();
+            } else {
+                throw new Error('No edit handler provided');
+            }
+        } catch (error) {
+            console.error('Error editing song:', error);
+            throw error;
+        }
     };
 
     return (
@@ -239,6 +267,7 @@ export default function SongsTable({ songs = [], onEdit, onDelete, onAdd, showUn
                 <AddSongModal
                     visible={isAddModalVisible}
                     onCancel={() => setIsAddModalVisible(false)}
+                    onSubmit={handleAddSubmit}
                     onSuccess={handleAddSuccess}
                     artists={artists}
                     albums={albums}
@@ -252,11 +281,14 @@ export default function SongsTable({ songs = [], onEdit, onDelete, onAdd, showUn
                 <EditSongModal
                     visible={isEditModalVisible}
                     onCancel={() => setIsEditModalVisible(false)}
+                    onSubmit={handleEditSubmit}
                     onSuccess={handleEditSuccess}
                     editingRecord={editingRecord}
                     artists={artists}
                     albums={albums}
                     genres={genres}
+                    suggestions={suggestions}
+                    loading={loading}
                 />
             )}
         </>
