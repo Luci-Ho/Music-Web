@@ -1565,5 +1565,127 @@
       ],
       "img": "https://example.com/covers/dung_goi_anh_la_idol.jpg"
     }
+  ],
+  "videos": [
+    {
+      "id": "v001",
+      "title": "Perfect",
+      "artist": "a301",
+      "views": 125634789,
+      "img": "https://img.youtube.com/vi/2Vv-BfVoq4g/sddefault.jpg",
+      "videoUrl": "https://www.youtube.com/embed/2Vv-BfVoq4g",
+      "description": "Official music video for Ed Sheeran's Perfect",
+      "releaseDate": "2017-11-09"
+    },
+    {
+      "id": "v002", 
+      "title": "Levitating",
+      "artist": "a302",
+      "views": 89567234,
+      "img": "https://img.youtube.com/vi/TUVcZfQe-Kw/sddefault.jpg",
+      "videoUrl": "https://www.youtube.com/embed/TUVcZfQe-Kw",
+      "description": "Official music video for Dua Lipa's Levitating",
+      "releaseDate": "2020-10-01"
+    },
+    {
+      "id": "v003",
+      "title": "Believer", 
+      "artist": "a303",
+      "views": 198765432,
+      "img": "https://img.youtube.com/vi/7wtfhZwyrcc/sddefault.jpg",
+      "videoUrl": "https://www.youtube.com/embed/7wtfhZwyrcc",
+      "description": "Official music video for Imagine Dragons' Believer",
+      "releaseDate": "2017-03-07"
+    },
+    {
+      "id": "v004",
+      "title": "Bad Guy",
+      "artist": "a304", 
+      "views": 167890123,
+      "img": "https://img.youtube.com/vi/DyDfgMOUjCI/sddefault.jpg",
+      "videoUrl": "https://www.youtube.com/embed/DyDfgMOUjCI",
+      "description": "Official music video for Billie Eilish's Bad Guy",
+      "releaseDate": "2019-03-29"
+    },
+    {
+      "id": "v005",
+      "title": "God's Plan",
+      "artist": "a305",
+      "views": 145678901,
+      "img": "https://img.youtube.com/vi/xpVfcZ0ZcFM/sddefault.jpg",
+      "videoUrl": "https://www.youtube.com/embed/xpVfcZ0ZcFM",
+      "description": "Official music video for Drake's God's Plan",
+      "releaseDate": "2018-02-16"
+    },
+    {
+      "id": "v006",
+      "title": "Phép Màu",
+      "artist": "a401",
+      "views": 12456789,
+      "img": "https://img.youtube.com/vi/jPjQJYKhhk4/maxresdefault.jpg",
+      "videoUrl": "https://www.youtube.com/embed/jPjQJYKhhk4",
+      "description": "Official music video cho bài hát Phép Màu của MAYDAYs & Minh Tốc",
+      "releaseDate": "2024-09-28"
+    },
+    {
+      "id": "v007",
+      "title": "Tháp Drill Tự Do", 
+      "artist": "a402",
+      "views": 8934567,
+      "img": "https://img.youtube.com/vi/VLvBlG49BKA/maxresdefault.jpg",
+      "videoUrl": "https://www.youtube.com/embed/VLvBlG49BKA",
+      "description": "Official music video cho bài hát Tháp Drill Tự Do của MCK",
+      "releaseDate": "2024-08-15"
+    },
+    {
+      "id": "v008",
+      "title": "Cay",
+      "artist": "a403",
+      "views": 15678234,
+      "img": "https://img.youtube.com/vi/5eYevf1PmcU/maxresdefault.jpg",
+      "videoUrl": "https://www.youtube.com/embed/5eYevf1PmcU",
+      "description": "Official music video cho bài hát Cay của Khắc Hưng x Jimmii Nguyễn",
+      "releaseDate": "2025-07-30"
+    },
+    {
+      "id": "v009",
+      "title": "Ôm Em Thật Lâu",
+      "artist": "a404",
+      "views": 9876543,
+      "img": "https://img.youtube.com/vi/vCcbJGNMR60/maxresdefault.jpg",
+      "videoUrl": "https://www.youtube.com/embed/vCcbJGNMR60",
+      "description": "Official music video cho bài hát Ôm Em Thật Lâu của MONO",
+      "releaseDate": "2025-06-21"
+    },
+    {
+      "id": "v010",
+      "title": "Đừng Làm Em Khóc",
+      "artist": "a405",
+      "views": 11234567,
+      "img": "https://img.youtube.com/vi/JP0yuq3sWbo/maxresdefault.jpg",
+      "videoUrl": "https://www.youtube.com/embed/JP0yuq3sWbo",
+      "description": "Official music video cho bài hát Đừng Làm Em Khóc của Myra Trần",
+      "releaseDate": "2025-05-10"
+    },
+    {
+      "id": "v011",
+      "title": "Nơi Này Có Anh",
+      "artist": "a406",
+      "views": 19876543,
+      "img": "https://img.youtube.com/vi/FN7ALfpGxiI/maxresdefault.jpg",
+      "videoUrl": "https://www.youtube.com/embed/FN7ALfpGxiI",
+      "description": "Official music video cho bài hát Nơi Này Có Anh của Sơn Tùng M-TP",
+      "releaseDate": "2025-03-14"
+    },
+    {
+      "id": "v012",
+      "title": "Em Là Kẻ Đáng Thương",
+      "artist": "a407",
+      "views": 14567890,
+      "img": "https://img.youtube.com/vi/KavXSXuR-tM/maxresdefault.jpg",
+      "videoUrl": "https://www.youtube.com/embed/KavXSXuR-tM",
+      "description": "Official music video cho bài hát Em Là Kẻ Đáng Thương của Phát Huy T4",
+      "releaseDate": "2025-04-02"
+    }
   ]
 }
