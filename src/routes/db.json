@@ -1,259 +1,599 @@
 {
   "songs": [
     {
-      "title": "Phép Màu",
-      "artist": "MAYDAYs & Minh Tốc",
-      "artist_avatar": "https://lh3.googleusercontent.com/ozsO4hId6yzw9WqIxwiEmCqfcwj3rz2JMarYtcy2BajMFyvyLFV697UNm3fGQBGp0604waYNJaippxoU=w544-h544-l90-rj",
-      "cover_url": "https://i.ytimg.com/vi/JqTrYasCwNo/maxresdefault.jpg",
-      "album": "Phép Màu (Single)",
-      "release_date": "2024-09-28",
-      "duration": "3:45",
-      "genre": "Pop",
-      "video_url": "https://www.youtube.com/embed/jPjQJYKhhk4?si=Hfg86-umiZ90SOaG",
-      "lyrics": "Giữa đời nhiều bão dở, cố giữ trái tim mình an yên...",
-      "streaming_links": {
-        "audio_url": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3"
+      "id": "s501",
+      "title": "Perfect",
+      "artistId": "a301",
+      "albumId": "al601",
+      "genreId": "g101",
+      "moodId": "m203",
+      "releaseDate": "2017-01-01",
+      "duration": "4:23",
+      "lyrics": "",
+      "media": {
+        "image": "https://m.media-amazon.com/images/I/71fqFyMSaNL._AC_UF1000,1000_QL80_.jpg",
+        "audioUrl": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3",
+        "musicVideoId": "https://www.youtube.com/watch?v=2Vv-BfVoq4g"
       },
-      "id": "66a7",
-      "viewCount": 1214623
+      "viewCount": 2722617
     },
     {
-      "title": "Tháp Drill Tự Do",
-      "artist": "MCK",
-      "artist_avatar": "https://lh3.googleusercontent.com/HA9RIYBGdXDtQ44S6SUpuUaw4vgw8giqSpqJBe7KYh9Rm6d4M6zUnwrqnCFQVX8B6UtUBkxHSZP4C_QWYw=w544-h544-l90-rj",
-      "cover_url": "https://lh3.googleusercontent.com/HA9RIYBGdXDtQ44S6SUpuUaw4vgw8giqSpqJBe7KYh9Rm6d4M6zUnwrqnCFQVX8B6UtUBkxHSZP4C_QWYw=w544-h544-l90-rj",
-      "album": "Drill Tự Do",
-      "release_date": "2024-08-15",
-      "duration": "3:12",
-      "genre": "Drill Rap",
-      "video_url": "https://www.youtube.com/embed/VLvBlG49BKA?si=pF8wqO7kN6K2nmz3",
-      "lyrics": "Tự do là thứ không ai cho, phải giành lấy...",
-      "streaming_links": {
-        "audio_url": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3"
+      "id": "s502",
+      "title": "Levitating",
+      "artistId": "a302",
+      "albumId": "al602",
+      "genreId": "g103",
+      "moodId": "m201",
+      "releaseDate": "2020-01-01",
+      "duration": "3:24",
+      "lyrics": "",
+      "media": {
+        "image": "https://i.scdn.co/image/ab67616d0000b2734bc66095f8a70bc4e6593f4f",
+        "audioUrl": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3",
+        "musicVideoId": "https://www.youtube.com/watch?v=TUVcZfQe-Kw"
       },
-      "id": "877d",
-      "viewCount": 403677
+      "viewCount": 4696313
     },
     {
-      "title": "Cay",
-      "artist": "Khắc Hưng x Jimmii Nguyễn",
-      "artist_avatar": "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRAOUI0hz0d4kK0jJrZY2HjIwErr8o5b24EH2r6AVRSMDSA6kZn6AiA2S1ZAuArqNRCSTnEKje2ieXyUEKTqQt_MwfGO9EFI8-NIq6r2Q",
-      "cover_url": "https://i.ytimg.com/vi/5eYevf1PmcU/maxresdefault.jpg",
-      "album": "Cay (Single)",
-      "release_date": "2025-07-30",
-      "duration": "4:10",
-      "genre": "Ballad",
-      "video_url": "https://www.youtube.com/embed/5eYevf1PmcU?si=s6BiFwbwQL0iLQ83",
-      "lyrics": "Cay đắng trong tim, chẳng ai hay...",
-      "streaming_links": {
-        "audio_url": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3"
+      "id": "s503",
+      "title": "Believer",
+      "artistId": "a303",
+      "albumId": "al603",
+      "genreId": "g102",
+      "moodId": "m202",
+      "releaseDate": "2017-01-01",
+      "duration": "3:36",
+      "lyrics": "",
+      "media": {
+        "image": "https://i1.sndcdn.com/artworks-s3zOCWcV8XQVtQcv-0emq8A-t500x500.jpg",
+        "audioUrl": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3",
+        "musicVideoId": "https://www.youtube.com/watch?v=7wtfhZwyrcc"
       },
-      "id": "952b",
-      "viewCount": 1264271
+      "viewCount": 782537
     },
     {
-      "title": "Ôm Em Thật Lâu",
-      "artist": "MONO",
-      "artist_avatar": "https://yt3.ggpht.com/ry5XEhBXFrJnf31ozl4lXRDfek8XStmB1NP784iFahHADZJGlhpt7OXq2Pdh9eq4SM3dluPT7Q=s176-c-k-c0x00ffffff-no-rj",
-      "cover_url": "https://i.ytimg.com/vi/vCcbJGNMR60/maxresdefault.jpg",
-      "album": "Ôm Em (EP)",
-      "release_date": "2025-06-21",
-      "duration": "3:33",
-      "genre": "Pop",
-      "video_url": "https://www.youtube.com/embed/vCcbJGNMR60?si=J05qBt3xvalTGd2p",
-      "lyrics": "Anh chỉ muốn ôm em thật lâu, chẳng rời xa...",
-      "streaming_links": {
-        "audio_url": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3"
+      "id": "s504",
+      "title": "Bad Guy",
+      "artistId": "a304",
+      "albumId": "al604",
+      "genreId": "g105",
+      "moodId": "m209",
+      "releaseDate": "2019-01-01",
+      "duration": "3:14",
+      "lyrics": "",
+      "media": {
+        "image": "https://i1.sndcdn.com/artworks-000537584385-41r6ld-t1080x1080.jpg",
+        "audioUrl": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3",
+        "musicVideoId": "https://www.youtube.com/watch?v=DyDfgMOUjCI"
       },
-      "id": "76ff",
-      "viewCount": 1054598
+      "viewCount": 4082465
     },
     {
-      "title": "Đừng Làm Em Khóc",
-      "artist": "Myra Trần",
-      "artist_avatar": "https://i1.sndcdn.com/avatars-000632235730-0i4vq6-t500x500.jpg",
-      "cover_url": "https://image-cdn.nct.vn/playlist/share/2019/02/19/9/0/9/6/1550569818960.jpg",
-      "album": "Đừng Làm Em Khóc (Single)",
-      "release_date": "2025-05-10",
-      "duration": "4:00",
-      "genre": "Ballad",
-      "video_url": "https://www.youtube.com/embed/JP0yuq3sWbo?si=kGAsCvfJVTwMtk8y",
-      "lyrics": "Đừng làm em khóc, đừng để em đau...",
-      "streaming_links": {
-        "audio_url": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3"
+      "id": "s505",
+      "title": "God's Plan",
+      "artistId": "a305",
+      "albumId": "al605",
+      "genreId": "g105",
+      "moodId": "m210",
+      "releaseDate": "2018-01-01",
+      "duration": "3:18",
+      "lyrics": "",
+      "media": {
+        "image": "https://i1.sndcdn.com/artworks-000373673898-th71uv-t500x500.jpg",
+        "audioUrl": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3",
+        "musicVideoId": "https://www.youtube.com/watch?v=xpVfcZ0ZcFM"
       },
-      "id": "6963",
-      "viewCount": 1829422
+      "viewCount": 2007036
     },
     {
-      "title": "Nơi Này Có Anh",
-      "artist": "Sơn Tùng M-TP",
-      "artist_avatar": "https://kenh14cdn.com/203336854389633024/2022/4/9/1732920193150637133093626329146106221360649n-164947443607057196887.jpeg",
-      "cover_url": "https://i.ytimg.com/vi/FN7ALfpGxiI/hq720.jpg?sqp=-oaymwEnCNAFEJQDSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLCB-8iTiSiJpMmAosa-rLQiu3eYiw",
-      "album": "Nơi Này Có Anh (Single)",
-      "release_date": "2025-03-14",
-      "duration": "4:05",
-      "genre": "Pop",
-      "video_url": "https://www.youtube.com/embed/FN7ALfpGxiI?si=lPKFW8i39TwwqDY5",
-      "lyrics": "Khi em đi qua anh như giấc mơ...",
-      "streaming_links": {
-        "audio_url": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3"
+      "id": "s506",
+      "title": "Blank Space",
+      "artistId": "a306",
+      "albumId": "al606",
+      "genreId": "g101",
+      "moodId": "m208",
+      "releaseDate": "2014-01-01",
+      "duration": "4:33",
+      "lyrics": "",
+      "media": {
+        "image": "https://upload.wikimedia.org/wikipedia/vi/7/7c/Taylor_Swift_-_Blank_Space_%28Official_Single_Cover%29.png",
+        "audioUrl": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3",
+        "musicVideoId": "https://www.youtube.com/watch?v=e-ORhEE9VVg"
       },
-      "id": "4e5c",
-      "viewCount": 740680
+      "viewCount": 4239540
     },
     {
-      "title": "Em Là Kẻ Đáng Thương",
-      "artist": "Phát Huy T4",
-      "artist_avatar": "https://photo-resize-zmp3.zadn.vn/w600_r1x1_jpeg/cover/3/c/d/e/3cde250351db16f9231d80830ad3d7a8.jpg",
-      "cover_url": "https://i.ytimg.com/vi/KavXSXuR-tM/hq720.jpg?sqp=-oaymwEnCNAFEJQDSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLAhLNZNfraWxmLTZX5GPN5MFDQf-w",
-      "album": "Em Là Kẻ Đáng Thương (Single)",
-      "release_date": "2025-04-02",
-      "duration": "3:58",
-      "genre": "Ballad",
-      "video_url": "https://www.youtube.com/embed/KavXSXuR-tM?si=ZaLYClSJS2-ap-ZY",
-      "lyrics": "Em là kẻ đáng thương trong cuộc tình này...",
-      "streaming_links": {
-        "audio_url": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3"
+      "id": "s507",
+      "title": "Save Your Tears",
+      "artistId": "a307",
+      "albumId": "al607",
+      "genreId": "g104",
+      "moodId": "m205",
+      "releaseDate": "2021-01-01",
+      "duration": "3:35",
+      "lyrics": "",
+      "media": {
+        "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRI_stKIUr0H5rbzEnDY7mwdO9K7lxApg3HPQ&s",
+        "audioUrl": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3",
+        "musicVideoId": "https://www.youtube.com/watch?v=XXYlFuWEuKI"
       },
-      "id": "4f7e",
-      "viewCount": 1916994
+      "viewCount": 2369437
     },
     {
-      "title": "Người Đáng Thương Là Anh",
-      "artist": "Only C",
-      "artist_avatar": "https://vnn-imgs-f.vgcloud.vn/2018/07/13/15/bi-to-an-tien-ban-quyen-only-c-quyet-kien-den-cung-8.jpg?width=260&s=iB0LlEk7avAh1HxqTVro3A",
-      "cover_url": "https://i.ytimg.com/vi/9tcFnx0-cQY/hq720.jpg?sqp=-oaymwEnCNAFEJQDSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLANCWCxpP1RqNRes8sEc48kAZxbdg",
-      "album": "Người Đáng Thương Là Anh (Single)",
-      "release_date": "2024-05-01",
-      "duration": "4:12",
-      "genre": "Pop",
-      "video_url": "https://www.youtube.com/embed/9tcFnx0-cQY?si=Gbxp14kB3SgBModR",
-      "lyrics": "Anh là người đáng thương khi em rời xa...",
-      "streaming_links": {
-        "audio_url": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3"
+      "id": "s508",
+      "title": "Hello",
+      "artistId": "a308",
+      "albumId": "al608",
+      "genreId": "g101",
+      "moodId": "m205",
+      "releaseDate": "2015-01-01",
+      "duration": "4:55",
+      "lyrics": "",
+      "media": {
+        "image": "https://i.scdn.co/image/ab67616d00001e022118bf9b198b05a95ded6300",
+        "audioUrl": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3",
+        "musicVideoId": "https://www.youtube.com/watch?v=YQHsXMglC9A"
       },
-      "id": "2851",
-      "viewCount": 4817705
+      "viewCount": 1041075
     },
     {
-      "title": "Tình Đầu",
-      "artist": "Tăng Phúc",
-      "artist_avatar": "https://image-cdn.nct.vn/singer/avatar/2023/09/18/6/1/f/2/1695032682156_600.jpg",
-      "cover_url": "https://i.ytimg.com/vi/RKSSDvZAXMc/hq720.jpg?sqp=-oaymwEnCNAFEJQDSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLAYeMbRj4XEZc18sQxiUsHGZedR9g",
-      "album": "Tình Đầu (Single)",
-      "release_date": "2024-06-10",
-      "duration": "3:40",
-      "genre": "Ballad",
-      "video_url": "https://www.youtube.com/embed/RKSSDvZAXMc?si=tW1U0MKeM1qlISnk",
-      "lyrics": "Tình đầu là mối tình không thể quên...",
-      "streaming_links": {
-        "audio_url": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3"
+      "id": "s509",
+      "title": "Uptown Funk",
+      "artistId": "a309",
+      "albumId": "al609",
+      "genreId": "g110",
+      "moodId": "m207",
+      "releaseDate": "2014-01-01",
+      "duration": "4:30",
+      "lyrics": "",
+      "media": {
+        "image": "https://i1.sndcdn.com/artworks-000111694035-qybs4a-t500x500.jpg",
+        "audioUrl": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3",
+        "musicVideoId": "https://www.youtube.com/watch?v=OPf0YbXqDm0"
       },
-      "id": "b9c5",
-      "viewCount": 1211775
+      "viewCount": 4353568
     },
     {
-      "title": "Đừng Làm Bạn",
-      "artist": "Bích Phương",
-      "artist_avatar": "https://scontent.fsgn2-10.fna.fbcdn.net/v/t39.30808-6/429949504_955184519296597_9115556556751807744_n.jpg?_nc_cat=109&ccb=1-7&_nc_sid=a5f93a&_nc_eui2=AeFVzeXkj0FyQNw-plYIgG4iKDYKPIGeVckoNgo8gZ5VyY7pY14kXM9DCWi-YW_14oNU7D0S_7khcyPgGZUTnX9L&_nc_ohc=MuZizi3wIJkQ7kNvwHrI7FO&_nc_oc=Admc9YOd10EtQX3wYOTy9854mLn8JSwQdXkEZZo2PllDeFimTa1WXgHnDdmKWpO8ATzGFrjOQFro1esZwhUEee_y&_nc_zt=23&_nc_ht=scontent.fsgn2-10.fna&_nc_gid=Uy7nlL2OMZ3Py5U8DmH7mw&oh=00_Affs38UIasHcuaiLeZRdFizR_HqBnoah4XW-QBC-KVkP-A&oe=690AA15D",
-      "cover_url": "https://vstatic.vietnam.vn/vietnam/resource/IMAGE/2025/10/23/1761228782403_qmg-5221-4932-3201-jpg.webp",
-      "album": "Đừng Làm Bạn (Single)",
-      "release_date": "2025-07-05",
-      "duration": "3:55",
-      "genre": "Pop",
-      "video_url": "https://www.youtube.com/watch?v=Kv8xkFz9gWc",
-      "lyrics": "Đừng làm bạn khi ta từng yêu nhau...",
-      "streaming_links": {
-        "audio_url": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3"
+      "id": "s510",
+      "title": "HUMBLE.",
+      "artistId": "a310",
+      "albumId": "al610",
+      "genreId": "g105",
+      "moodId": "m210",
+      "releaseDate": "2017-01-01",
+      "duration": "2:57",
+      "lyrics": "",
+      "media": {
+        "image": "https://i.scdn.co/image/ab67616d00001e028b52c6b9bc4e43d873869699",
+        "audioUrl": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3",
+        "musicVideoId": "https://www.youtube.com/watch?v=gt3j86K5K7Q"
       },
-      "id": "4528",
-      "viewCount": 2298753
+      "viewCount": 1739614
     },
     {
-      "title": "Lặng",
-      "artist": "GREY D",
-      "artist_avatar": "https://cdn2.tuoitre.vn/zoom/700_438/471584752817336320/data/teen360/news/2022/11/28/69383/1669616220_grey.jpg",
-      "cover_url": "https://cdn2.tuoitre.vn/zoom/700_438/471584752817336320/data/teen360/news/2022/11/28/69383/1669616220_grey.jpg",
-      "album": "Lặng (Single)",
-      "release_date": "2024-08-01",
-      "duration": "4:00",
-      "genre": "Indie Pop",
-      "video_url": "https://www.youtube.com/watch?v=Lz9xkFz9gWc",
-      "lyrics": "Lặng thầm nhìn em bước đi...",
-      "streaming_links": {
-        "audio_url": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3"
-      },
-      "id": "995b",
-      "viewCount": 3466513
-    },
-    {
-      "title": "Không Còn Gì",
-      "artist": "Chillies",
-      "artist_avatar": "https://trixie.com.vn/media/images/article/98645721/chillies-1586223837.jpg",
-      "cover_url": "https://i.ytimg.com/vi/oahqJdcwL1k/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLBFCsUv7L5eyWWvTMllZkxCzFM9Wg",
-      "album": "Không Còn Gì (EP)",
-      "release_date": "2024-08-20",
-      "duration": "3:48",
-      "genre": "Indie Rock",
-      "video_url": "https://www.youtube.com/embed/oahqJdcwL1k?si=S6ZZatJ24uwjj8hD",
-      "lyrics": "Không còn gì để nói sau chia ly...",
-      "streaming_links": {
-        "audio_url": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3"
-      },
-      "id": "ecd7",
-      "viewCount": 929874
-    },
-    {
-      "title": "Trót Yêu",
-      "artist": "Trung Quân",
-      "artist_avatar": "https://kenh14cdn.com/thumb_w/600/EFArAxSbfRMRi1CGjBAhXbItoobDMS/Image/2014/09/04/02/untitled-(4-of-9)-ef53f.JPG",
-      "cover_url": "https://i.ytimg.com/vi/2Bg_Bv9wp-0/maxresdefault.jpg",
-      "album": "Đêm Nay Anh Mơ (Single)",
-      "release_date": "2025-09-05",
-      "duration": "4:20",
-      "genre": "Ballad",
-      "video_url": "https://www.youtube.com/embed/60mS6c9rg0E?si=XG3N7gTyz0giJycM",
-      "lyrics": "Có chút bối rối chạm tay anh rồi...",
-      "streaming_links": {
-        "audio_url": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3"
-      },
-      "id": "acb2",
-      "viewCount": 3703916
-    },
-    {
-      "title": "Gió Mùa Về",
-      "artist": "Trúc Nhân",
-      "artist_avatar": "https://cdn.tienphong.vn/images/a6bf4f60924201126af6849ca45a39809fa2682ae9051c6e3d05c9d98d239974abc66d3450044e0a43759441f482269bc1be3847ccb630252aaa2cae912954077a3d1f547dca863507f5f1dfc4d7fc21ffa2ad3050d7a2191788b40b0bc9413af0ca7ea95604f1801b5908427e7f00fe/307713136-5391952470857772-562192952731703488-n-9032.jpg",
-      "cover_url": "https://i.ytimg.com/vi/zvedq0Tc9gw/sddefault.jpg",
-      "album": "Vỡ (Single)",
-      "release_date": "2024-09-18",
+      "id": "s511",
+      "title": "Sunset Drive",
+      "artistId": "a301",
+      "albumId": "al601",
+      "genreId": "g103",
+      "moodId": "m201",
+      "releaseDate": "2022-01-01",
       "duration": "3:50",
-      "genre": "Pop",
-      "video_url": "https://www.youtube.com/embed/Kx0GmibUmRA?si=HxV_ag4_mr9OqH6N",
-      "lyrics": "Vỡ tan những giấc mơ ngày xưa...",
-      "streaming_links": {
-        "audio_url": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3"
+      "lyrics": "",
+      "media": {
+        "image": "https://via.placeholder.com/300?text=Sunset+Drive",
+        "audioUrl": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3",
+        "musicVideoId": null
       },
-      "id": "41ee",
-      "viewCount": 4447176
+      "viewCount": 2815561
     },
     {
-      "title": "Đừng Gọi Anh Là Idol",
-      "artist": "Obito",
-      "artist_avatar": "https://example.com/artists/obito.jpg",
-      "cover_url": "https://thegioidienanh.vn/stores/news_dataimages/thanhtan/072018/22/10/0419_re-DSC09992.jpg",
-      "album": "Idol (EP)",
-      "release_date": "2024-10-01",
-      "duration": "3:30",
-      "genre": "Rap",
-      "video_url": "https://www.youtube.com/watch?v=Pz4xkFz9gWc",
-      "lyrics": "Anh không phải idol, anh là người thật...",
-      "streaming_links": {
-        "audio_url": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3"
+      "id": "s512",
+      "title": "Neon Nights",
+      "artistId": "a302",
+      "albumId": "al602",
+      "genreId": "g110",
+      "moodId": "m207",
+      "releaseDate": "2023-01-01",
+      "duration": "3:05",
+      "lyrics": "",
+      "media": {
+        "image": "https://via.placeholder.com/300?text=Neon+Nights",
+        "audioUrl": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3",
+        "musicVideoId": null
       },
+      "viewCount": 1251349
+    },
+    {
+      "id": "s513",
+      "title": "Broken Compass",
+      "artistId": "a303",
+      "albumId": "al603",
+      "genreId": "g102",
+      "moodId": "m205",
+      "releaseDate": "2021-01-01",
+      "duration": "4:02",
+      "lyrics": "",
+      "media": {
+        "image": "https://via.placeholder.com/300?text=Broken+Compass",
+        "audioUrl": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3",
+        "musicVideoId": null
+      },
+      "viewCount": 1460629
+    },
+    {
+      "id": "s514",
+      "title": "Golden Echoes",
+      "artistId": "a304",
+      "albumId": "al604",
+      "genreId": "g104",
+      "moodId": "m203",
+      "releaseDate": "2020-01-01",
+      "duration": "3:42",
+      "lyrics": "",
+      "media": {
+        "image": "https://via.placeholder.com/300?text=Golden+Echoes",
+        "audioUrl": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3",
+        "musicVideoId": null
+      },
+      "viewCount": 2825054
+    },
+    {
+      "id": "s515",
+      "title": "Midnight Run",
+      "artistId": "a305",
+      "albumId": "al605",
+      "genreId": "g105",
+      "moodId": "m210",
+      "releaseDate": "2019-01-01",
+      "duration": "2:58",
+      "lyrics": "",
+      "media": {
+        "image": "https://via.placeholder.com/300?text=Midnight+Run",
+        "audioUrl": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3",
+        "musicVideoId": null
+      },
+      "viewCount": 752555
+    },
+    {
+      "id": "s516",
+      "title": "Paper Boats",
+      "artistId": "a306",
+      "albumId": "al606",
+      "genreId": "g101",
+      "moodId": "m204",
+      "releaseDate": "2018-01-01",
+      "duration": "4:15",
+      "lyrics": "",
+      "media": {
+        "image": "https://via.placeholder.com/300?text=Paper+Boats",
+        "audioUrl": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3",
+        "musicVideoId": null
+      },
+      "viewCount": 3708840
+    },
+    {
+      "id": "s517",
+      "title": "Harbor Lights",
+      "artistId": "a307",
+      "albumId": "al607",
+      "genreId": "g106",
+      "moodId": "m201",
+      "releaseDate": "2024-01-01",
+      "duration": "3:33",
+      "lyrics": "",
+      "media": {
+        "image": "https://via.placeholder.com/300?text=Harbor+Lights",
+        "audioUrl": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3",
+        "musicVideoId": null
+      },
+      "viewCount": 3660919
+    },
+    {
+      "id": "s518",
+      "title": "Velvet Streets",
+      "artistId": "a308",
+      "albumId": "al608",
+      "genreId": "g109",
+      "moodId": "m209",
+      "releaseDate": "2022-01-01",
+      "duration": "3:47",
+      "lyrics": "",
+      "media": {
+        "image": "https://via.placeholder.com/300?text=Velvet+Streets",
+        "audioUrl": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3",
+        "musicVideoId": null
+      },
+      "viewCount": 1416712
+    },
+    {
+      "id": "s519",
+      "title": "Pixel Heart",
+      "artistId": "a309",
+      "albumId": "al609",
+      "genreId": "g108",
+      "moodId": "m206",
+      "releaseDate": "2023-01-01",
+      "duration": "3:20",
+      "lyrics": "",
+      "media": {
+        "image": "https://via.placeholder.com/300?text=Pixel+Heart",
+        "audioUrl": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3",
+        "musicVideoId": null
+      },
+      "viewCount": 840312
+    },
+    {
+      "id": "s520",
+      "title": "Cloud Atlas",
+      "artistId": "a310",
+      "albumId": "al610",
+      "genreId": "g107",
+      "moodId": "m202",
+      "releaseDate": "2016-01-01",
+      "duration": "5:01",
+      "lyrics": "",
+      "media": {
+        "image": "https://via.placeholder.com/300?text=Cloud+Atlas",
+        "audioUrl": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3",
+        "musicVideoId": null
+      },
+      "viewCount": 1536033
+    },
+    {
+      "id": "66a7",
+      "title": "Phép Màu",
+      "artistId": "a401",
+      "albumId": "al701",
+      "genreId": "g102",
+      "moodId": "m203",
+      "releaseDate": "2024-09-28",
+      "duration": "3:45",
+      "lyrics": "Giữa đời nhiều bão dở, cố giữ trái tim mình an yên...",
+      "media": {
+        "image": "https://lh3.googleusercontent.com/ozsO4hId6yzw9WqIxwiEmCqfcwj3rz2JMarYtcy2BajMFyvyLFV697UNm3fGQBGp0604waYNJaippxoU=w544-h544-l90-rj",
+        "audioUrl": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3",
+        "musicVideoId": "https://www.youtube.com/embed/jPjQJYKhhk4"
+      },
+      "viewCount": 70800
+    },
+    {
+      "id": "877d",
+      "title": "Tháp Drill Tự Do",
+      "artistId": "a402",
+      "albumId": "al702",
+      "genreId": "g101",
+      "moodId": "m201",
+      "releaseDate": "2024-08-15",
+      "duration": "3:12",
+      "lyrics": "Tự do là thứ không ai cho, phải giành lấy...",
+      "media": {
+        "image": "https://lh3.googleusercontent.com/HA9RIYBGdXDtQ44S6SUpuUaw4vgw8giqSpqJBe7KYh9Rm6d4M6zUnwrqnCFQVX8B6UtUBkxHSZP4C_QWYw=w544-h544-l90-rj",
+        "audioUrl": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3",
+        "musicVideoId": "https://www.youtube.com/embed/VLvBlG49BKA"
+      },
+      "viewCount": 1181331
+    },
+    {
+      "id": "952b",
+      "title": "Cay",
+      "artistId": "a403",
+      "albumId": "al703",
+      "genreId": "g102",
+      "moodId": "m201",
+      "releaseDate": "2025-07-30",
+      "duration": "4:10",
+      "lyrics": "Cay đắng trong tim, chẳng ai hay...",
+      "media": {
+        "image": "https://i.ytimg.com/vi/5eYevf1PmcU/maxresdefault.jpg",
+        "audioUrl": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3",
+        "musicVideoId": "https://www.youtube.com/watch?v=5eYevf1PmcU"
+      },
+      "viewCount": 3489009
+    },
+    {
+      "id": "76ff",
+      "title": "Ôm Em Thật Lâu",
+      "artistId": "a404",
+      "albumId": "al704",
+      "genreId": "g102",
+      "moodId": "m201",
+      "releaseDate": "2025-06-21",
+      "duration": "3:33",
+      "lyrics": "Anh chỉ muốn ôm em thật lâu, chẳng rời xa...",
+      "media": {
+        "image": "https://i.ytimg.com/vi/vCcbJGNMR60/maxresdefault.jpg",
+        "audioUrl": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3",
+        "musicVideoId": "https://www.youtube.com/watch?v=vCcbJGNMR60"
+      },
+      "viewCount": 3305555
+    },
+    {
+      "id": "6963",
+      "title": "Đừng Làm Em Khóc",
+      "artistId": "a405",
+      "albumId": "al705",
+      "genreId": "g102",
+      "moodId": "m205",
+      "releaseDate": "2025-05-10",
+      "duration": "4:00",
+      "lyrics": "Đừng làm em khóc, đừng để em đau...",
+      "media": {
+        "image": "https://image-cdn.nct.vn/playlist/share/2019/02/19/9/0/9/6/1550569818960.jpg",
+        "audioUrl": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3",
+        "musicVideoId": "https://www.youtube.com/embed/JP0yuq3sWbo"
+      },
+      "viewCount": 938930
+    },
+    {
+      "id": "4e5c",
+      "title": "Nơi Này Có Anh",
+      "artistId": "a406",
+      "albumId": "al706",
+      "genreId": "g102",
+      "moodId": "m204",
+      "releaseDate": "2025-03-14",
+      "duration": "4:05",
+      "lyrics": "Khi em đi qua anh như giấc mơ...",
+      "media": {
+        "image": "https://i.ytimg.com/vi/FN7ALfpGxiI/hq720.jpg?sqp=-oaymwEnCNAFEJQDSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLCB-8iTiSiJpMmAosa-rLQiu3eYiw",
+        "audioUrl": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3",
+        "musicVideoId": "https://www.youtube.com/watch?v=FN7ALfpGxiI"
+      },
+      "viewCount": 823847
+    },
+    {
+      "id": "4f7e",
+      "title": "Em Là Kẻ Đáng Thương",
+      "artistId": "a407",
+      "albumId": "al707",
+      "genreId": "g102",
+      "moodId": "m205",
+      "releaseDate": "2025-04-02",
+      "duration": "3:58",
+      "lyrics": "Em là kẻ đáng thương trong cuộc tình này...",
+      "media": {
+        "image": "https://i.ytimg.com/vi/KavXSXuR-tM/hq720.jpg?sqp=-oaymwEnCNAFEJQDSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLAhLNZNfraWxmLTZX5GPN5MFDQf-w",
+        "audioUrl": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3",
+        "musicVideoId": "https://www.youtube.com/watch?v=KavXSXuR-tM"
+      },
+      "viewCount": 1783711
+    },
+    {
+      "id": "2851",
+      "title": "Người Đáng Thương Là Anh",
+      "artistId": "a408",
+      "albumId": "al708",
+      "genreId": "g102",
+      "moodId": "m203",
+      "releaseDate": "2024-05-01",
+      "duration": "4:12",
+      "lyrics": "Anh là người đáng thương khi em rời xa...",
+      "media": {
+        "image": "https://i.ytimg.com/vi/9tcFnx0-cQY/hq720.jpg?sqp=-oaymwEnCNAFEJQDSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLANCWCxpP1RqNRes8sEc48kAZxbdg",
+        "audioUrl": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3",
+        "musicVideoId": null
+      },
+      "viewCount": 2091195
+    },
+    {
+      "id": "b9c5",
+      "title": "Tình Đầu",
+      "artistId": "a409",
+      "albumId": "al709",
+      "genreId": "g102",
+      "moodId": "m203",
+      "releaseDate": "2024-06-10",
+      "duration": "3:40",
+      "lyrics": "Tình đầu là mối tình không thể quên...",
+      "media": {
+        "image": "https://i.ytimg.com/vi/RKSSDvZAXMc/hq720.jpg?sqp=-oaymwEnCNAFEJQDSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLAYeMbRj4XEZc18sQxiUsHGZedR9g",
+        "audioUrl": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3",
+        "musicVideoId": null
+      },
+      "viewCount": 1657699
+    },
+    {
+      "id": "4528",
+      "title": "Đừng Làm Bạn",
+      "artistId": "a410",
+      "albumId": "al710",
+      "genreId": "g102",
+      "moodId": "m203",
+      "releaseDate": "2025-07-05",
+      "duration": "3:55",
+      "lyrics": "Đừng làm bạn khi ta từng yêu nhau...",
+      "media": {
+        "image": "https://example.com/covers/dung_lam_ban.jpg",
+        "audioUrl": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3",
+        "musicVideoId": null
+      },
+      "viewCount": 4875120
+    },
+    {
+      "id": "995b",
+      "title": "Lặng",
+      "artistId": "a411",
+      "albumId": "al711",
+      "genreId": "g108",
+      "moodId": "m205",
+      "releaseDate": "2024-08-01",
+      "duration": "4:00",
+      "lyrics": "Lặng thầm nhìn em bước đi...",
+      "media": {
+        "image": "https://example.com/covers/lang.jpg",
+        "audioUrl": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3",
+        "musicVideoId": null
+      },
+      "viewCount": 3185983
+    },
+    {
+      "id": "ecd7",
+      "title": "Không Còn Gì",
+      "artistId": "a412",
+      "albumId": "al712",
+      "genreId": "g108",
+      "moodId": "m205",
+      "releaseDate": "2024-08-20",
+      "duration": "3:48",
+      "lyrics": "Không còn gì để nói sau chia ly...",
+      "media": {
+        "image": "https://i.ytimg.com/vi/oahqJdcwL1k/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLBFCsUv7L5eyWWvTMllZkxCzFM9Wg",
+        "audioUrl": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3",
+        "musicVideoId": null
+      },
+      "viewCount": 3524666
+    },
+    {
+      "id": "acb2",
+      "title": "Trót Yêu",
+      "artistId": "a413",
+      "albumId": "al713",
+      "genreId": "g102",
+      "moodId": "m203",
+      "releaseDate": "2025-09-05",
+      "duration": "4:20",
+      "lyrics": "Có chút bối rối chạm tay anh rồi...",
+      "media": {
+        "image": "https://i.ytimg.com/vi/2Bg_Bv9wp-0/maxresdefault.jpg",
+        "audioUrl": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3",
+        "musicVideoId": null
+      },
+      "viewCount": 1227596
+    },
+    {
+      "id": "41ee",
+      "title": "Gió Mùa Về",
+      "artistId": "a414",
+      "albumId": "al714",
+      "genreId": "g102",
+      "moodId": "m203",
+      "releaseDate": "2024-09-18",
+      "duration": "3:50",
+      "lyrics": "Vỡ tan những giấc mơ ngày xưa...",
+      "media": {
+        "image": "https://i.ytimg.com/vi/zvedq0Tc9gw/sddefault.jpg",
+        "audioUrl": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3",
+        "musicVideoId": null
+      },
+      "viewCount": 4901888
+    },
+    {
       "id": "73bf",
-      "viewCount": 3702697
+      "title": "Đừng Gọi Anh Là Idol",
+      "artistId": "a415",
+      "albumId": "al715",
+      "genreId": "g101",
+      "moodId": "m201",
+      "releaseDate": "2024-10-01",
+      "duration": "3:30",
+      "lyrics": "Anh không phải idol, anh là người thật...",
+      "media": {
+        "image": "https://example.com/covers/dung_goi_anh_la_idol.jpg",
+        "audioUrl": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3",
+        "musicVideoId": null
+      },
+      "viewCount": 344477
     }
   ],
   "levels": [
@@ -670,650 +1010,6 @@
       "img": "https://i.pinimg.com/736x/54/4a/b4/544ab4be1001745f7235d786ecfda66c.jpg"
     }
   ],
-  "musicVideos": [
-    {
-      "id": "v401",
-      "title": "Perfect",
-      "artistId": "a301",
-      "views": 1200000,
-      "videoUrl": "https://www.youtube.com/watch?v=2Vv-BfVoq4g",
-      "img": "https://img.youtube.com/vi/2Vv-BfVoq4g/sddefault.jpg"
-    },
-    {
-      "id": "v402",
-      "title": "Levitating",
-      "artistId": "a302",
-      "views": 950000,
-      "videoUrl": "https://www.youtube.com/watch?v=TUVcZfQe-Kw",
-      "img": "https://img.youtube.com/vi/TUVcZfQe-Kw/sddefault.jpg"
-    },
-    {
-      "id": "v403",
-      "title": "Believer",
-      "artistId": "a303",
-      "views": 1450000,
-      "videoUrl": "https://www.youtube.com/watch?v=7wtfhZwyrcc",
-      "img": "https://img.youtube.com/vi/7wtfhZwyrcc/sddefault.jpg"
-    },
-    {
-      "id": "v404",
-      "title": "Bad Guy",
-      "artistId": "a304",
-      "views": 1780000,
-      "videoUrl": "https://www.youtube.com/watch?v=DyDfgMOUjCI",
-      "img": "https://img.youtube.com/vi/DyDfgMOUjCI/sddefault.jpg"
-    },
-    {
-      "id": "v405",
-      "title": "God's Plan",
-      "artistId": "a305",
-      "views": 2100000,
-      "videoUrl": "https://www.youtube.com/watch?v=xpVfcZ0ZcFM",
-      "img": "https://img.youtube.com/vi/xpVfcZ0ZcFM/sddefault.jpg"
-    },
-    {
-      "id": "v406",
-      "title": "Blank Space",
-      "artistId": "a306",
-      "views": 1980000,
-      "videoUrl": "https://www.youtube.com/watch?v=e-ORhEE9VVg",
-      "img": "https://img.youtube.com/vi/e-ORhEE9VVg/sddefault.jpg"
-    },
-    {
-      "id": "v407",
-      "title": "Save Your Tears",
-      "artistId": "a307",
-      "views": 1750000,
-      "videoUrl": "https://www.youtube.com/watch?v=XXYlFuWEuKI",
-      "img": "https://img.youtube.com/vi/XXYlFuWEuKI/sddefault.jpg"
-    },
-    {
-      "id": "v408",
-      "title": "Hello",
-      "artistId": "a308",
-      "views": 2500000,
-      "videoUrl": "https://www.youtube.com/watch?v=YQHsXMglC9A",
-      "img": "https://img.youtube.com/vi/YQHsXMglC9A/sddefault.jpg"
-    },
-    {
-      "id": "v409",
-      "title": "Uptown Funk",
-      "artistId": "a309",
-      "views": 2300000,
-      "videoUrl": "https://www.youtube.com/watch?v=OPf0YbXqDm0",
-      "img": "https://img.youtube.com/vi/OPf0YbXqDm0/sddefault.jpg"
-    },
-    {
-      "id": "v410",
-      "title": "Humble",
-      "artistId": "a310",
-      "views": 1900000,
-      "videoUrl": "https://www.youtube.com/watch?v=gt3j86K5K7Q",
-      "img": "https://img.youtube.com/vi/gt3j86K5K7Q/sddefault.jpg"
-    }
-  ],
-  "songsList": [
-    {
-      "id": "s501",
-      "title": "Perfect",
-      "artistId": "a301",
-      "albumId": "al601",
-      "genreId": "g101",
-      "moodId": "m203",
-      "musicVideoId": "v401",
-      "duration": "4:23",
-      "releaseYear": 2017,
-      "img": "https://m.media-amazon.com/images/I/71fqFyMSaNL._AC_UF1000,1000_QL80_.jpg",
-      "streaming_links": {
-        "audio_url": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3"
-      },
-      "viewCount": 2722617
-    },
-    {
-      "id": "s502",
-      "title": "Levitating",
-      "artistId": "a302",
-      "albumId": "al602",
-      "genreId": "g103",
-      "moodId": "m201",
-      "musicVideoId": "v402",
-      "duration": "3:24",
-      "releaseYear": 2020,
-      "img": "https://i.scdn.co/image/ab67616d0000b2734bc66095f8a70bc4e6593f4f",
-      "streaming_links": {
-        "audio_url": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3"
-      },
-      "viewCount": 4696313
-    },
-    {
-      "id": "s503",
-      "title": "Believer",
-      "artistId": "a303",
-      "albumId": "al603",
-      "genreId": "g102",
-      "moodId": "m202",
-      "musicVideoId": "v403",
-      "duration": "3:36",
-      "releaseYear": 2017,
-      "img": "https://i1.sndcdn.com/artworks-s3zOCWcV8XQVtQcv-0emq8A-t500x500.jpg",
-      "streaming_links": {
-        "audio_url": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3"
-      },
-      "viewCount": 782537
-    },
-    {
-      "id": "s504",
-      "title": "Bad Guy",
-      "artistId": "a304",
-      "albumId": "al604",
-      "genreId": "g105",
-      "moodId": "m209",
-      "musicVideoId": "v404",
-      "duration": "3:14",
-      "releaseYear": 2019,
-      "img": "https://i1.sndcdn.com/artworks-000537584385-41r6ld-t1080x1080.jpg",
-      "streaming_links": {
-        "audio_url": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3"
-      },
-      "viewCount": 4082465
-    },
-    {
-      "id": "s505",
-      "title": "God's Plan",
-      "artistId": "a305",
-      "albumId": "al605",
-      "genreId": "g105",
-      "moodId": "m210",
-      "musicVideoId": "v405",
-      "duration": "3:18",
-      "releaseYear": 2018,
-      "img": "https://i1.sndcdn.com/artworks-000373673898-th71uv-t500x500.jpg",
-      "streaming_links": {
-        "audio_url": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3"
-      },
-      "viewCount": 2007036
-    },
-    {
-      "id": "s506",
-      "title": "Blank Space",
-      "artistId": "a306",
-      "albumId": "al606",
-      "genreId": "g101",
-      "moodId": "m208",
-      "musicVideoId": "v406",
-      "duration": "4:33",
-      "releaseYear": 2014,
-      "img": "https://upload.wikimedia.org/wikipedia/vi/7/7c/Taylor_Swift_-_Blank_Space_%28Official_Single_Cover%29.png",
-      "streaming_links": {
-        "audio_url": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3"
-      },
-      "viewCount": 4239540
-    },
-    {
-      "id": "s507",
-      "title": "Save Your Tears",
-      "artistId": "a307",
-      "albumId": "al607",
-      "genreId": "g104",
-      "moodId": "m205",
-      "musicVideoId": "v407",
-      "duration": "3:35",
-      "releaseYear": 2021,
-      "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRI_stKIUr0H5rbzEnDY7mwdO9K7lxApg3HPQ&s",
-      "streaming_links": {
-        "audio_url": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3"
-      },
-      "viewCount": 2369437
-    },
-    {
-      "id": "s508",
-      "title": "Hello",
-      "artistId": "a308",
-      "albumId": "al608",
-      "genreId": "g101",
-      "moodId": "m205",
-      "musicVideoId": "v408",
-      "duration": "4:55",
-      "releaseYear": 2015,
-      "img": "https://i.scdn.co/image/ab67616d00001e022118bf9b198b05a95ded6300",
-      "streaming_links": {
-        "audio_url": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3"
-      },
-      "viewCount": 1041075
-    },
-    {
-      "id": "s509",
-      "title": "Uptown Funk",
-      "artistId": "a309",
-      "albumId": "al609",
-      "genreId": "g110",
-      "moodId": "m207",
-      "musicVideoId": "v409",
-      "duration": "4:30",
-      "releaseYear": 2014,
-      "img": "https://i1.sndcdn.com/artworks-000111694035-qybs4a-t500x500.jpg",
-      "streaming_links": {
-        "audio_url": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3"
-      },
-      "viewCount": 4353568
-    },
-    {
-      "id": "s510",
-      "title": "HUMBLE.",
-      "artistId": "a310",
-      "albumId": "al610",
-      "genreId": "g105",
-      "moodId": "m210",
-      "musicVideoId": "v410",
-      "duration": "2:57",
-      "releaseYear": 2017,
-      "img": "https://i.scdn.co/image/ab67616d00001e028b52c6b9bc4e43d873869699",
-      "streaming_links": {
-        "audio_url": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3"
-      },
-      "viewCount": 1739614
-    },
-    {
-      "id": "s511",
-      "title": "Sunset Drive",
-      "artistId": "a301",
-      "albumId": "al601",
-      "genreId": "g103",
-      "moodId": "m201",
-      "musicVideoId": "v401",
-      "duration": "3:50",
-      "releaseYear": 2022,
-      "img": "https://via.placeholder.com/300?text=Sunset+Drive",
-      "streaming_links": {
-        "audio_url": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3"
-      },
-      "viewCount": 2815561
-    },
-    {
-      "id": "s512",
-      "title": "Neon Nights",
-      "artistId": "a302",
-      "albumId": "al602",
-      "genreId": "g110",
-      "moodId": "m207",
-      "musicVideoId": "v402",
-      "duration": "3:05",
-      "releaseYear": 2023,
-      "img": "https://via.placeholder.com/300?text=Neon+Nights",
-      "streaming_links": {
-        "audio_url": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3"
-      },
-      "viewCount": 1251349
-    },
-    {
-      "id": "s513",
-      "title": "Broken Compass",
-      "artistId": "a303",
-      "albumId": "al603",
-      "genreId": "g102",
-      "moodId": "m205",
-      "musicVideoId": "v403",
-      "duration": "4:02",
-      "releaseYear": 2021,
-      "img": "https://via.placeholder.com/300?text=Broken+Compass",
-      "streaming_links": {
-        "audio_url": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3"
-      },
-      "viewCount": 1460629
-    },
-    {
-      "id": "s514",
-      "title": "Golden Echoes",
-      "artistId": "a304",
-      "albumId": "al604",
-      "genreId": "g104",
-      "moodId": "m203",
-      "musicVideoId": "v404",
-      "duration": "3:42",
-      "releaseYear": 2020,
-      "img": "https://via.placeholder.com/300?text=Golden+Echoes",
-      "streaming_links": {
-        "audio_url": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3"
-      },
-      "viewCount": 2825054
-    },
-    {
-      "id": "s515",
-      "title": "Midnight Run",
-      "artistId": "a305",
-      "albumId": "al605",
-      "genreId": "g105",
-      "moodId": "m210",
-      "musicVideoId": "v405",
-      "duration": "2:58",
-      "releaseYear": 2019,
-      "img": "https://via.placeholder.com/300?text=Midnight+Run",
-      "streaming_links": {
-        "audio_url": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3"
-      },
-      "viewCount": 752555
-    },
-    {
-      "id": "s516",
-      "title": "Paper Boats",
-      "artistId": "a306",
-      "albumId": "al606",
-      "genreId": "g101",
-      "moodId": "m204",
-      "musicVideoId": "v406",
-      "duration": "4:15",
-      "releaseYear": 2018,
-      "img": "https://via.placeholder.com/300?text=Paper+Boats",
-      "streaming_links": {
-        "audio_url": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3"
-      },
-      "viewCount": 3708840
-    },
-    {
-      "id": "s517",
-      "title": "Harbor Lights",
-      "artistId": "a307",
-      "albumId": "al607",
-      "genreId": "g106",
-      "moodId": "m201",
-      "musicVideoId": "v407",
-      "duration": "3:33",
-      "releaseYear": 2024,
-      "img": "https://via.placeholder.com/300?text=Harbor+Lights",
-      "streaming_links": {
-        "audio_url": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3"
-      },
-      "viewCount": 3660919
-    },
-    {
-      "id": "s518",
-      "title": "Velvet Streets",
-      "artistId": "a308",
-      "albumId": "al608",
-      "genreId": "g109",
-      "moodId": "m209",
-      "musicVideoId": "v408",
-      "duration": "3:47",
-      "releaseYear": 2022,
-      "img": "https://via.placeholder.com/300?text=Velvet+Streets",
-      "streaming_links": {
-        "audio_url": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3"
-      },
-      "viewCount": 1416712
-    },
-    {
-      "id": "s519",
-      "title": "Pixel Heart",
-      "artistId": "a309",
-      "albumId": "al609",
-      "genreId": "g108",
-      "moodId": "m206",
-      "musicVideoId": "v409",
-      "duration": "3:20",
-      "releaseYear": 2023,
-      "img": "https://via.placeholder.com/300?text=Pixel+Heart",
-      "streaming_links": {
-        "audio_url": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3"
-      },
-      "viewCount": 840312
-    },
-    {
-      "id": "s520",
-      "title": "Cloud Atlas",
-      "artistId": "a310",
-      "albumId": "al610",
-      "genreId": "g107",
-      "moodId": "m202",
-      "musicVideoId": "v410",
-      "duration": "5:01",
-      "releaseYear": 2016,
-      "img": "https://via.placeholder.com/300?text=Cloud+Atlas",
-      "streaming_links": {
-        "audio_url": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3"
-      },
-      "viewCount": 1536033
-    },
-    {
-      "id": "66a7",
-      "title": "Phép Màu",
-      "artistId": "a401",
-      "img": "https://lh3.googleusercontent.com/ozsO4hId6yzw9WqIxwiEmCqfcwj3rz2JMarYtcy2BajMFyvyLFV697UNm3fGQBGp0604waYNJaippxoU=w544-h544-l90-rj",
-      "albumId": "al701",
-      "release_date": "2024-09-28",
-      "duration": "3:45",
-      "genre": "Pop",
-      "video_url": "https://www.youtube.com/embed/jPjQJYKhhk4?si=Hfg86-umiZ90SOaG",
-      "lyrics": "Giữa đời nhiều bão dở, cố giữ trái tim mình an yên...",
-      "streaming_links": {
-        "audio_url": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3"
-      },
-      "viewCount": 70800
-    },
-    {
-      "id": "877d",
-      "title": "Tháp Drill Tự Do",
-      "artistId": "a402",
-      "img": "https://lh3.googleusercontent.com/HA9RIYBGdXDtQ44S6SUpuUaw4vgw8giqSpqJBe7KYh9Rm6d4M6zUnwrqnCFQVX8B6UtUBkxHSZP4C_QWYw=w544-h544-l90-rj",
-      "albumId": "al702",
-      "release_date": "2024-08-15",
-      "duration": "3:12",
-      "genre": "Drill Rap",
-      "video_url": "https://www.youtube.com/embed/VLvBlG49BKA?si=pF8wqO7kN6K2nmz3",
-      "lyrics": "Tự do là thứ không ai cho, phải giành lấy...",
-      "streaming_links": {
-        "audio_url": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3"
-      },
-      "viewCount": 1181331
-    },
-    {
-      "id": "952b",
-      "title": "Cay",
-      "artistId": "a403",
-      "img": "https://i.ytimg.com/vi/5eYevf1PmcU/maxresdefault.jpg",
-      "albumId": "al703",
-      "release_date": "2025-07-30",
-      "duration": "4:10",
-      "genre": "Ballad",
-      "video_url": "https://www.youtube.com/embed/5eYevf1PmcU?si=s6BiFwbwQL0iLQ83",
-      "lyrics": "Cay đắng trong tim, chẳng ai hay...",
-      "streaming_links": {
-        "audio_url": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3"
-      },
-      "viewCount": 3489009
-    },
-    {
-      "id": "76ff",
-      "title": "Ôm Em Thật Lâu",
-      "artistId": "a404",
-      "img": "https://i.ytimg.com/vi/vCcbJGNMR60/maxresdefault.jpg",
-      "albumId": "al704",
-      "release_date": "2025-06-21",
-      "duration": "3:33",
-      "genre": "Pop",
-      "video_url": "https://www.youtube.com/embed/vCcbJGNMR60?si=J05qBt3xvalTGd2p",
-      "lyrics": "Anh chỉ muốn ôm em thật lâu, chẳng rời xa...",
-      "streaming_links": {
-        "audio_url": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3"
-      },
-      "viewCount": 3305555
-    },
-    {
-      "id": "6963",
-      "title": "Đừng Làm Em Khóc",
-      "artistId": "a405",
-      "img": "https://image-cdn.nct.vn/playlist/share/2019/02/19/9/0/9/6/1550569818960.jpg",
-      "albumId": "al705",
-      "release_date": "2025-05-10",
-      "duration": "4:00",
-      "genre": "Ballad",
-      "video_url": "https://www.youtube.com/embed/JP0yuq3sWbo?si=kGAsCvfJVTwMtk8y",
-      "lyrics": "Đừng làm em khóc, đừng để em đau...",
-      "streaming_links": {
-        "audio_url": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3"
-      },
-      "viewCount": 938930
-    },
-    {
-      "id": "4e5c",
-      "title": "Nơi Này Có Anh",
-      "artistId": "a406",
-      "img": "https://i.ytimg.com/vi/FN7ALfpGxiI/hq720.jpg?sqp=-oaymwEnCNAFEJQDSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLCB-8iTiSiJpMmAosa-rLQiu3eYiw",
-      "albumId": "al706",
-      "release_date": "2025-03-14",
-      "duration": "4:05",
-      "genre": "Pop",
-      "video_url": "https://www.youtube.com/embed/FN7ALfpGxiI?si=lPKFW8i39TwwqDY5",
-      "lyrics": "Khi em đi qua anh như giấc mơ...",
-      "streaming_links": {
-        "audio_url": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3"
-      },
-      "viewCount": 823847
-    },
-    {
-      "id": "4f7e",
-      "title": "Em Là Kẻ Đáng Thương",
-      "artistId": "a407",
-      "img": "https://i.ytimg.com/vi/KavXSXuR-tM/hq720.jpg?sqp=-oaymwEnCNAFEJQDSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLAhLNZNfraWxmLTZX5GPN5MFDQf-w",
-      "albumId": "al707",
-      "release_date": "2025-04-02",
-      "duration": "3:58",
-      "genre": "Ballad",
-      "video_url": "https://www.youtube.com/embed/KavXSXuR-tM?si=ZaLYClSJS2-ap-ZY",
-      "lyrics": "Em là kẻ đáng thương trong cuộc tình này...",
-      "streaming_links": {
-        "audio_url": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3"
-      },
-      "viewCount": 1783711
-    },
-    {
-      "id": "2851",
-      "title": "Người Đáng Thương Là Anh",
-      "artistId": "a408",
-      "img": "https://i.ytimg.com/vi/9tcFnx0-cQY/hq720.jpg?sqp=-oaymwEnCNAFEJQDSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLANCWCxpP1RqNRes8sEc48kAZxbdg",
-      "albumId": "al708",
-      "release_date": "2024-05-01",
-      "duration": "4:12",
-      "genre": "Pop",
-      "video_url": "https://www.youtube.com/embed/9tcFnx0-cQY?si=Gbxp14kB3SgBModR",
-      "lyrics": "Anh là người đáng thương khi em rời xa...",
-      "streaming_links": {
-        "audio_url": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3"
-      },
-      "viewCount": 2091195
-    },
-    {
-      "id": "b9c5",
-      "title": "Tình Đầu",
-      "artistId": "a409",
-      "img": "https://i.ytimg.com/vi/RKSSDvZAXMc/hq720.jpg?sqp=-oaymwEnCNAFEJQDSFryq4qpAxkIARUAAIhCGAHYAQHiAQoIGBACGAY4AUAB&rs=AOn4CLAYeMbRj4XEZc18sQxiUsHGZedR9g",
-      "albumId": "al709",
-      "release_date": "2024-06-10",
-      "duration": "3:40",
-      "genre": "Ballad",
-      "video_url": "https://www.youtube.com/embed/RKSSDvZAXMc?si=tW1U0MKeM1qlISnk",
-      "lyrics": "Tình đầu là mối tình không thể quên...",
-      "streaming_links": {
-        "audio_url": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3"
-      },
-      "viewCount": 1657699
-    },
-    {
-      "id": "4528",
-      "title": "Đừng Làm Bạn",
-      "artistId": "a410",
-      "img": "https://example.com/covers/dung_lam_ban.jpg",
-      "albumId": "al710",
-      "release_date": "2025-07-05",
-      "duration": "3:55",
-      "genre": "Pop",
-      "video_url": "https://www.youtube.com/watch?v=Kv8xkFz9gWc",
-      "lyrics": "Đừng làm bạn khi ta từng yêu nhau...",
-      "streaming_links": {
-        "audio_url": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3"
-      },
-      "viewCount": 4875120
-    },
-    {
-      "id": "995b",
-      "title": "Lặng",
-      "artistId": "a411",
-      "img": "https://example.com/covers/lang.jpg",
-      "albumId": "al711",
-      "release_date": "2024-08-01",
-      "duration": "4:00",
-      "genre": "Indie Pop",
-      "video_url": "https://www.youtube.com/watch?v=Lz9xkFz9gWc",
-      "lyrics": "Lặng thầm nhìn em bước đi...",
-      "streaming_links": {
-        "audio_url": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3"
-      },
-      "viewCount": 3185983
-    },
-    {
-      "id": "ecd7",
-      "title": "Không Còn Gì",
-      "artistId": "a412",
-      "img": "https://i.ytimg.com/vi/oahqJdcwL1k/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLBFCsUv7L5eyWWvTMllZkxCzFM9Wg",
-      "albumId": "al712",
-      "release_date": "2024-08-20",
-      "duration": "3:48",
-      "genre": "Indie Rock",
-      "video_url": "https://www.youtube.com/embed/oahqJdcwL1k?si=S6ZZatJ24uwjj8hD",
-      "lyrics": "Không còn gì để nói sau chia ly...",
-      "streaming_links": {
-        "audio_url": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3"
-      },
-      "viewCount": 3524666
-    },
-    {
-      "id": "acb2",
-      "title": "Trót Yêu",
-      "artistId": "a413",
-      "img": "https://i.ytimg.com/vi/2Bg_Bv9wp-0/maxresdefault.jpg",
-      "albumId": "al713",
-      "release_date": "2025-09-05",
-      "duration": "4:20",
-      "genre": "Ballad",
-      "video_url": "https://www.youtube.com/embed/60mS6c9rg0E?si=XG3N7gTyz0giJycM",
-      "lyrics": "Có chút bối rối chạm tay anh rồi...",
-      "streaming_links": {
-        "audio_url": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3"
-      },
-      "viewCount": 1227596
-    },
-    {
-      "id": "41ee",
-      "title": "Gió Mùa Về",
-      "artistId": "a414",
-      "img": "https://i.ytimg.com/vi/zvedq0Tc9gw/sddefault.jpg",
-      "albumId": "al714",
-      "release_date": "2024-09-18",
-      "duration": "3:50",
-      "genre": "Pop",
-      "video_url": "https://www.youtube.com/embed/Kx0GmibUmRA?si=HxV_ag4_mr9OqH6N",
-      "lyrics": "Vỡ tan những giấc mơ ngày xưa...",
-      "streaming_links": {
-        "audio_url": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3"
-      },
-      "viewCount": 4901888
-    },
-    {
-      "id": "73bf",
-      "title": "Đừng Gọi Anh Là Idol",
-      "artistId": "a415",
-      "img": "https://example.com/covers/dung_goi_anh_la_idol.jpg",
-      "albumId": "al715",
-      "release_date": "2024-10-01",
-      "duration": "3:30",
-      "genre": "Rap",
-      "video_url": "https://www.youtube.com/watch?v=Pz4xkFz9gWc",
-      "lyrics": "Anh không phải idol, anh là người thật...",
-      "streaming_links": {
-        "audio_url": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3"
-      },
-      "viewCount": 344477
-    }
-  ],
   "albums": [
     {
       "id": "al601",
@@ -1549,128 +1245,6 @@
         "73bf"
       ],
       "img": "https://example.com/covers/dung_goi_anh_la_idol.jpg"
-    }
-  ],
-  "videos": [
-    {
-      "id": "v001",
-      "title": "Perfect",
-      "artist": "a301",
-      "views": 125634789,
-      "img": "https://img.youtube.com/vi/2Vv-BfVoq4g/sddefault.jpg",
-      "videoUrl": "https://www.youtube.com/embed/2Vv-BfVoq4g",
-      "description": "Official music video for Ed Sheeran's Perfect",
-      "releaseDate": "2017-11-09"
-    },
-    {
-      "id": "v002",
-      "title": "Levitating",
-      "artist": "a302",
-      "views": 89567234,
-      "img": "https://img.youtube.com/vi/TUVcZfQe-Kw/sddefault.jpg",
-      "videoUrl": "https://www.youtube.com/embed/TUVcZfQe-Kw",
-      "description": "Official music video for Dua Lipa's Levitating",
-      "releaseDate": "2020-10-01"
-    },
-    {
-      "id": "v003",
-      "title": "Believer",
-      "artist": "a303",
-      "views": 198765432,
-      "img": "https://img.youtube.com/vi/7wtfhZwyrcc/sddefault.jpg",
-      "videoUrl": "https://www.youtube.com/embed/7wtfhZwyrcc",
-      "description": "Official music video for Imagine Dragons' Believer",
-      "releaseDate": "2017-03-07"
-    },
-    {
-      "id": "v004",
-      "title": "Bad Guy",
-      "artist": "a304",
-      "views": 167890123,
-      "img": "https://img.youtube.com/vi/DyDfgMOUjCI/sddefault.jpg",
-      "videoUrl": "https://www.youtube.com/embed/DyDfgMOUjCI",
-      "description": "Official music video for Billie Eilish's Bad Guy",
-      "releaseDate": "2019-03-29"
-    },
-    {
-      "id": "v005",
-      "title": "God's Plan",
-      "artist": "a305",
-      "views": 145678901,
-      "img": "https://img.youtube.com/vi/xpVfcZ0ZcFM/sddefault.jpg",
-      "videoUrl": "https://www.youtube.com/embed/xpVfcZ0ZcFM",
-      "description": "Official music video for Drake's God's Plan",
-      "releaseDate": "2018-02-16"
-    },
-    {
-      "id": "v006",
-      "title": "Phép Màu",
-      "artist": "a401",
-      "views": 12456789,
-      "img": "https://img.youtube.com/vi/jPjQJYKhhk4/maxresdefault.jpg",
-      "videoUrl": "https://www.youtube.com/embed/jPjQJYKhhk4",
-      "description": "Official music video cho bài hát Phép Màu của MAYDAYs & Minh Tốc",
-      "releaseDate": "2024-09-28"
-    },
-    {
-      "id": "v007",
-      "title": "Tháp Drill Tự Do",
-      "artist": "a402",
-      "views": 8934567,
-      "img": "https://img.youtube.com/vi/VLvBlG49BKA/maxresdefault.jpg",
-      "videoUrl": "https://www.youtube.com/embed/VLvBlG49BKA",
-      "description": "Official music video cho bài hát Tháp Drill Tự Do của MCK",
-      "releaseDate": "2024-08-15"
-    },
-    {
-      "id": "v008",
-      "title": "Cay",
-      "artist": "a403",
-      "views": 15678234,
-      "img": "https://img.youtube.com/vi/5eYevf1PmcU/maxresdefault.jpg",
-      "videoUrl": "https://www.youtube.com/embed/5eYevf1PmcU",
-      "description": "Official music video cho bài hát Cay của Khắc Hưng x Jimmii Nguyễn",
-      "releaseDate": "2025-07-30"
-    },
-    {
-      "id": "v009",
-      "title": "Ôm Em Thật Lâu",
-      "artist": "a404",
-      "views": 9876543,
-      "img": "https://img.youtube.com/vi/vCcbJGNMR60/maxresdefault.jpg",
-      "videoUrl": "https://www.youtube.com/embed/vCcbJGNMR60",
-      "description": "Official music video cho bài hát Ôm Em Thật Lâu của MONO",
-      "releaseDate": "2025-06-21"
-    },
-    {
-      "id": "v010",
-      "title": "Đừng Làm Em Khóc",
-      "artist": "a405",
-      "views": 11234567,
-      "img": "https://img.youtube.com/vi/JP0yuq3sWbo/maxresdefault.jpg",
-      "videoUrl": "https://www.youtube.com/embed/JP0yuq3sWbo",
-      "description": "Official music video cho bài hát Đừng Làm Em Khóc của Myra Trần",
-      "releaseDate": "2025-05-10"
-    },
-    {
-      "id": "v011",
-      "title": "Nơi Này Có Anh",
-      "artist": "a406",
-      "views": 19876543,
-      "img": "https://img.youtube.com/vi/FN7ALfpGxiI/maxresdefault.jpg",
-      "videoUrl": "https://www.youtube.com/embed/FN7ALfpGxiI",
-      "description": "Official music video cho bài hát Nơi Này Có Anh của Sơn Tùng M-TP",
-      "releaseDate": "2025-03-14"
-    },
-    {
-      "id": "v012",
-      "title": "Em Là Kẻ Đáng Thương",
-      "artist": "a407",
-      "views": 14567890,
-      "img": "https://img.youtube.com/vi/KavXSXuR-tM/maxresdefault.jpg",
-      "videoUrl": "https://www.youtube.com/embed/KavXSXuR-tM",
-      "description": "Official music video cho bài hát Em Là Kẻ Đáng Thương của Phát Huy T4",
-      "releaseDate": "2025-04-02"
     }
   ]
 }
