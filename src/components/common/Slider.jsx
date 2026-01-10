@@ -1,32 +1,38 @@
-import React, { useEffect, useState, useContext  } from "react";
+import React, { useEffect, useState } from "react";
 import "./Slider.css";
-import { AppContext } from "./AppContext";
 import useMusicPlayer from "../../hooks/useMusicPlayer";
 
-export default function Slider() {
+export default function Slider({ source = "songs", limit = 5 }) {
   const [current, setCurrent] = useState(0);
   const [slides, setSlides] = useState([]);
   const [isPaused, setIsPaused] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
+
   const { playSong } = useMusicPlayer();
 
-
+  // 🔥 FETCH THEO SOURCE
   useEffect(() => {
-    fetch("http://localhost:4000/songs")
-      .then((res) => res.json())
-      .then((data) => setSlides(data.slice(0, 5))) 
-      .catch((err) => console.error("Lỗi khi gọi API:", err));
-  }, []);
+    fetch(`http://localhost:4000/${source}`)
+      .then((res) => {
+        if (!res.ok) throw new Error("Không thể lấy dữ liệu slider");
+        return res.json();
+      })
+      .then((data) => {
+        const list = Array.isArray(data) ? data.slice(0, limit) : [];
+        setSlides(list);
+      })
+      .catch((err) => console.error("Lỗi khi gọi API slider:", err));
+  }, [source, limit]);
 
-  // Auto-slide functionality
+  // Auto-slide
   useEffect(() => {
     if (slides.length === 0 || isPaused) return;
 
-    const autoSlideInterval = setInterval(() => {
+    const interval = setInterval(() => {
       setCurrent((prev) => (prev + 1) % slides.length);
-    }, 3000); // Change slide every 3 seconds
+    }, 3000);
 
-    return () => clearInterval(autoSlideInterval);
+    return () => clearInterval(interval);
   }, [slides.length, isPaused]);
 
   const nextSlide = () => {
@@ -34,10 +40,11 @@ export default function Slider() {
     setIsTransitioning(true);
     setCurrent((prev) => (prev + 1) % slides.length);
     setIsPaused(true);
+
     setTimeout(() => {
       setIsTransitioning(false);
       setIsPaused(false);
-    }, 800); // Match transition duration
+    }, 800);
   };
 
   const prevSlide = () => {
@@ -45,10 +52,11 @@ export default function Slider() {
     setIsTransitioning(true);
     setCurrent((prev) => (prev - 1 + slides.length) % slides.length);
     setIsPaused(true);
+
     setTimeout(() => {
       setIsTransitioning(false);
       setIsPaused(false);
-    }, 800); // Match transition duration
+    }, 800);
   };
 
   if (slides.length === 0) return <div>Đang tải dữ liệu...</div>;
@@ -56,8 +64,8 @@ export default function Slider() {
   const song = slides[current];
 
   const handleListen = () => {
-    playSong(song);
-  }
+    playSong(song, slides); // 🔥 set playlist luôn
+  };
 
   const getPrevIndex = () => (current - 1 + slides.length) % slides.length;
   const getNextIndex = () => (current + 1) % slides.length;
@@ -67,67 +75,87 @@ export default function Slider() {
     setIsTransitioning(true);
     setCurrent(index);
     setIsPaused(true);
+
     setTimeout(() => {
       setIsTransitioning(false);
       setIsPaused(false);
-    }, 800); // Match transition duration
+    }, 800);
   };
 
-  const handleMouseEnter = () => setIsPaused(true);
-  const handleMouseLeave = () => setIsPaused(false);
-
   return (
-    <div 
-      className={`slider ${isTransitioning ? 'transitioning' : ''}`}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
+    <div
+      className={`slider ${isTransitioning ? "transitioning" : ""}`}
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
     >
-      <button className={`nav left ${isTransitioning ? 'disabled' : ''}`} onClick={prevSlide} disabled={isTransitioning}>❮</button>
+      <button
+        className={`nav left ${isTransitioning ? "disabled" : ""}`}
+        onClick={prevSlide}
+        disabled={isTransitioning}
+      >
+        ❮
+      </button>
 
       <div className="slides-container">
-        {/* Slide trước (mờ) */}
+        {/* Prev */}
         <div className="slide prev" onClick={prevSlide}>
           <div className="image-wrapper">
-            <img src={slides[getPrevIndex()]?.cover_url} alt={slides[getPrevIndex()]?.title} />
+            <img
+              src={slides[getPrevIndex()]?.cover_url}
+              alt={slides[getPrevIndex()]?.title}
+            />
             <div className="preview-overlay"></div>
           </div>
         </div>
 
-        {/* Slide hiện tại */}
+        {/* Active */}
         <div className="slide active">
           <div className="image-wrapper">
             <img src={song.cover_url} alt={song.title} />
             <div className="gradient-overlay"></div>
+
             <div className="info">
               <h2>{song.title}</h2>
               <p>{song.artist}</p>
+
               <div className="actions">
-                <button className="listen" onClick={handleListen}>Listen Now</button>
+                <button className="listen" onClick={handleListen}>
+                  Listen Now
+                </button>
                 <button className="follow">Follow</button>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Slide kế tiếp (mờ) */}
+        {/* Next */}
         <div className="slide next" onClick={nextSlide}>
           <div className="image-wrapper">
-            <img src={slides[getNextIndex()]?.cover_url} alt={slides[getNextIndex()]?.title} />
+            <img
+              src={slides[getNextIndex()]?.cover_url}
+              alt={slides[getNextIndex()]?.title}
+            />
             <div className="preview-overlay"></div>
           </div>
         </div>
       </div>
 
-      <button className={`nav right ${isTransitioning ? 'disabled' : ''}`} onClick={nextSlide} disabled={isTransitioning}>❯</button>
+      <button
+        className={`nav right ${isTransitioning ? "disabled" : ""}`}
+        onClick={nextSlide}
+        disabled={isTransitioning}
+      >
+        ❯
+      </button>
 
-      {/* Dots indicator */}
+      {/* Dots */}
       <div className="dots-container">
         {slides.map((_, index) => (
           <button
             key={index}
-            className={`dot ${index === current ? 'active' : ''}`}
+            className={`dot ${index === current ? "active" : ""}`}
             onClick={() => handleDotClick(index)}
-          ></button>
+          />
         ))}
       </div>
     </div>
