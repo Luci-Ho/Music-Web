@@ -9,21 +9,37 @@ import VideoGrid from '../components/common/Video.jsx';
 import SongsGrid from '../components/common/NewSong.jsx';
 import CardGrid from '../components/common/CardGrid.jsx';
 
+import { getDiscoverData } from '../services/discover.service.js';
 
 const Discover = () => {
+  const [discoverData, setDiscoverData] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-    return (
-        <div className="box">
-            <TopBar />
-            <D2CardRow source={'genres'} title1="Music" title2="Genres" />
-            <D2CardRow source={'moods'} title1="Mood" title2="Playlist" />
-            <ArtistRow source={'artists'} />
-            <VideoGrid source={'musicVideos'} title1="Music" title2="Video" />
-            <SongsGrid source={'songsList'} title1="New" title2="Song" />
-            <CardGrid title="New" title2="Album" limit={6} />
-            <Footer />
-        </div>
-    );
+  useEffect(() => {
+    getDiscoverData()
+      .then((data) => setDiscoverData(data))
+      .catch((err) => setError(err.message))
+      .finally(() => setLoading(false));
+  }, []);
+
+  if (loading) return <p>Đang tải dữ liệu Discover...</p>;
+  if (error) return <p className="error">Lỗi: {error}</p>;
+
+  return (
+    <div className="box">
+      <TopBar />
+
+      <D2CardRow title1="Music" title2="Genres" data={discoverData?.genres} />
+      <D2CardRow title1="Mood" title2="Playlist" data={discoverData?.moods} />
+      <ArtistRow data={discoverData?.artists} />
+      <VideoGrid title1="Music" title2="Video" data={discoverData?.musicVideos} />
+      <SongsGrid title1="New" title2="Song" data={discoverData?.songsList} />
+      <CardGrid title1="New" title2="Album" limit={6} data={discoverData?.albums} />
+
+      <Footer />
+    </div>
+  );
 };
 
 export default Discover;

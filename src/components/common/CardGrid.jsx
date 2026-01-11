@@ -58,7 +58,7 @@ export default function CardGrid({
                   src={
                     song.cover_url ||
                     song.media?.image ||
-                    "https://via.placeholder.com/150?text=No+Image"
+                    "/images/none.jpg"
                   }
                   alt={song.title}
                   onClick={() => handlePlaySong(song)}
