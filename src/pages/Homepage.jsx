@@ -20,9 +20,9 @@ const HomePage = () => {
         </div>
 
         <div>
-          <CardGrid title1={"Top"} title2={"Trending"} limit={6} filterByYear={2024} />
-          <CardGrid title1={"New"} title2={"Released"} limit={6} filterByYear={2025} />
-          <CardGrid title1={"Favorite"} title2={"Songs"} limit={6} filterBy={{ genre: "Pop" }} />
+          <CardGrid title1={"Top"} title2={"Trending"} limit={5} filterByYear={2024} />
+          <CardGrid title1={"New"} title2={"Released"} limit={5} filterByYear={2025} />
+          <CardGrid title1={"Favorite"} title2={"Songs"} limit={5} filterBy={{ genre: "Pop" }} />
           <VideoGrid title1={"Music"} title2={"Videos"} limit={8} />
           <Artist source={'artists'} />
         </div>

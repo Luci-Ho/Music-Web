@@ -752,6 +752,25 @@
           "createdAt": "2025-11-07T14:03:27.502Z"
         }
       ]
+    },
+    {
+      "id": "5df8",
+      "username": "Luci",
+      "email": "lovely.041176@gmail.com",
+      "password": "123456",
+      "phone": "0902889889",
+      "level": "l3",
+      "favorites": [
+        "v009",
+        "s514"
+      ],
+      "playlists": [
+        {
+          "id": "1767367882036_1",
+          "name": "Yêu thích của tôi",
+          "songs": []
+        }
+      ]
     }
   ],
   "genres": [
