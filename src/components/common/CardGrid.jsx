@@ -1,67 +1,44 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useMemo, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import "./CardGrid.css";
 import SectionTitle from "./SectionTitle.jsx";
 import { AppContext } from "./AppContext";
 
 export default function CardGrid({
-  source = "songs",
   title1 = "",
   title2 = "",
   limit = 5,
   filterBy,
   filterByYear,
+  data = [],
   onViewAll
 }) {
-  const [songs, setSongs] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
   const { playSong } = useContext(AppContext);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    setLoading(true);
+  // Tính toán danh sách bài hát từ data
+  const songs = useMemo(() => {
+    let filtered = Array.isArray(data) ? [...data] : [];
 
-    fetch(`http://localhost:4000/${source}`)
-      .then((res) => {
-        if (!res.ok) throw new Error("Không thể lấy dữ liệu");
-        return res.json();
-      })
-      .then((data) => {
-        let filtered = Array.isArray(data) ? data : [];
-
-        // filter động theo key
-        if (filterBy) {
-          Object.entries(filterBy).forEach(([key, value]) => {
-            filtered = filtered.filter((song) => song[key] === value);
-          });
-        }
-
-        // filter theo năm
-        if (filterByYear) {
-          filtered = filtered.filter((song) => {
-            if (!song.release_date) return false;
-            return new Date(song.release_date).getFullYear() === filterByYear;
-          });
-        }
-
-        // sort mới nhất
-        filtered.sort(
-          (a, b) => new Date(b.release_date) - new Date(a.release_date)
-        );
-
-        setSongs(filtered.slice(0, limit));
-        setLoading(false);
-      })
-      .catch((err) => {
-        setError(err.message);
-        setLoading(false);
+    if (filterBy) {
+      Object.entries(filterBy).forEach(([key, value]) => {
+        filtered = filtered.filter((song) => song[key] === value);
       });
-  }, [source, limit, filterBy, filterByYear]);
+    }
+
+    if (filterByYear) {
+      filtered = filtered.filter((song) => {
+        if (!song.releaseDate) return false;
+        return new Date(song.releaseDate).getFullYear() === filterByYear;
+      });
+    }
+
+    filtered.sort((a, b) => new Date(b.releaseDate) - new Date(a.releaseDate));
+    return filtered.slice(0, limit);
+  }, [data, limit, filterBy, filterByYear]);
 
   const handlePlaySong = (song) => {
-    playSong(song, songs); // phát + set playlist
+    playSong(song, songs);
   };
 
   return (
@@ -70,16 +47,19 @@ export default function CardGrid({
         <SectionTitle title1={title1} title2={title2} />
       </div>
 
-      {loading && <p className="loading">Đang tải bài hát...</p>}
-      {error && <p className="error">Lỗi: {error}</p>}
-
-      {!loading && !error && (
+      {songs.length === 0 ? (
+        <p className="loading">Không có dữ liệu để hiển thị</p>
+      ) : (
         <div className="grid-container">
           {songs.map((song, index) => (
             <div className="card" key={song.id ?? index}>
               <div className="card-image">
                 <img
-                  src={song.cover_url}
+                  src={
+                    song.cover_url ||
+                    song.media?.image ||
+                    "https://via.placeholder.com/150?text=No+Image"
+                  }
                   alt={song.title}
                   onClick={() => handlePlaySong(song)}
                 />
@@ -90,7 +70,7 @@ export default function CardGrid({
                 onClick={() => handlePlaySong(song)}
               >
                 <h3>{song.title}</h3>
-                <p>{song.artist ?? song.artistName}</p>
+                <p>{song.artistId?.name || song.artistName || "Unknown Artist"}</p>
               </div>
             </div>
           ))}

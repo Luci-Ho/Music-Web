@@ -771,6 +771,22 @@
           "songs": []
         }
       ]
+    },
+    {
+      "id": "c46f",
+      "username": "01",
+      "email": "test@gmail.com",
+      "password": "2468",
+      "phone": "0987654321",
+      "level": "l3",
+      "favorites": [],
+      "playlists": [
+        {
+          "id": "1768069798515_1",
+          "name": "Yêu thích của tôi",
+          "songs": []
+        }
+      ]
     }
   ],
   "genres": [

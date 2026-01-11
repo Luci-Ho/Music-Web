@@ -12,17 +12,20 @@ export default function Slider({ source = "songs", limit = 5 }) {
 
   // 🔥 FETCH THEO SOURCE
   useEffect(() => {
-    fetch(`http://localhost:4000/${source}`)
+    fetch(`http://localhost:5000/api/home`)
       .then((res) => {
         if (!res.ok) throw new Error("Không thể lấy dữ liệu slider");
         return res.json();
       })
       .then((data) => {
-        const list = Array.isArray(data) ? data.slice(0, limit) : [];
+        console.log("HOME API:", data); // 👈 DEBUG RẤT QUAN TRỌNG
+
+        const list = data?.topTrending?.slice(0, limit) || [];
+
         setSlides(list);
       })
       .catch((err) => console.error("Lỗi khi gọi API slider:", err));
-  }, [source, limit]);
+  }, [limit]);
 
   // Auto-slide
   useEffect(() => {
@@ -111,12 +114,12 @@ export default function Slider({ source = "songs", limit = 5 }) {
         {/* Active */}
         <div className="slide active">
           <div className="image-wrapper">
-            <img src={song.cover_url} alt={song.title} />
+            <img src={song.media?.image} alt={song.title} />
             <div className="gradient-overlay"></div>
 
             <div className="info">
               <h2>{song.title}</h2>
-              <p>{song.artist}</p>
+              <p>{song.artistId?.name || 'Unknown Artist'}</p>
 
               <div className="actions">
                 <button className="listen" onClick={handleListen}>
