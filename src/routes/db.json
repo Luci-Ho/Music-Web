@@ -431,6 +431,22 @@
           "songs": []
         }
       ]
+    },
+    {
+      "id": "c46f",
+      "username": "01",
+      "email": "test@gmail.com",
+      "password": "2468",
+      "phone": "0987654321",
+      "level": "l3",
+      "favorites": [],
+      "playlists": [
+        {
+          "id": "1768069798515_1",
+          "name": "Yêu thích của tôi",
+          "songs": []
+        }
+      ]
     }
   ],
   "genres": [
@@ -1250,7 +1266,30 @@
       "streaming_links": {
         "audio_url": "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3"
       },
-      "viewCount": 4875120
+      "viewCount": 4875120,
+      "artist": "Bích Phương",
+      "album": "Đừng Làm Bạn (Single)",
+      "listens": 4875120,
+      "date": "2025-07-05",
+      "artists": [
+        "Bích Phương"
+      ],
+      "artistIds": [
+        "a410"
+      ],
+      "genreId": "g101",
+      "genres": [
+        "Pop"
+      ],
+      "genreIds": [
+        "g101"
+      ],
+      "updated_at": "2026-01-10T16:24:16.681Z",
+      "releaseYear": 2026,
+      "views": 0,
+      "cover_url": "https://example.com/covers/dung_lam_ban.jpg",
+      "isHidden": false,
+      "created_at": "2026-01-10T16:24:16.681Z"
     },
     {
       "id": "995b",

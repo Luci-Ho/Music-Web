@@ -101,7 +101,7 @@ const Login = () => {
             const { accessToken, user } = res.data;
 
             // 🔐 LƯU TOKEN & USER
-            localStorage.setItem('token', accessToken);
+            localStorage.setItem('accesstoken', accessToken);
             localStorage.setItem('user', JSON.stringify(user));
 
             toast.success('Chào mừng bạn đến với Melodies!');
