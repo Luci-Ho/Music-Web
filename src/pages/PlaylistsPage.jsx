@@ -60,7 +60,7 @@ const PlaylistsPage = () => {
       const updatedUser = { ...user, playlists: updatedPlaylists };
 
       // Update backend
-      await fetch(`http://localhost:4000/users/${user.id}`, {
+      await fetch(`http://localhost:5000/users/${user.id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -99,7 +99,7 @@ const PlaylistsPage = () => {
       const updatedUser = { ...user, playlists: updatedPlaylists };
 
       // Update backend
-      await fetch(`http://localhost:4000/users/${user.id}`, {
+      await fetch(`http://localhost:5000/users/${user.id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

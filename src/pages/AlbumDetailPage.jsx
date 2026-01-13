@@ -121,7 +121,7 @@ const AlbumDetailPage = () => {
       login(updatedUser);
 
       // Persist to backend
-      const API_USERS = 'http://localhost:4000/users';
+      const API_USERS = 'http://localhost:5000/users';
       const res = await fetch(`${API_USERS}/${user.id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
@@ -161,7 +161,7 @@ const AlbumDetailPage = () => {
       login(updatedUser);
 
       // Persist to backend
-      const API_USERS = 'http://localhost:4000/users';
+      const API_USERS = 'http://localhost:5000/users';
       const res = await fetch(`${API_USERS}/${user.id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },

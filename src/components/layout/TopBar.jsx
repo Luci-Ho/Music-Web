@@ -28,8 +28,8 @@ const TopBar = () => {
   useEffect(() => {
     const fetchData = async () => {
       const [songsRes, artistsRes] = await Promise.all([
-        fetch('http://localhost:4000/songsList'),
-        fetch('http://localhost:4000/artists')
+        fetch('http://localhost:5000/songsList'),
+        fetch('http://localhost:5000/artists')
       ]);
       setSongs(await songsRes.json());
       setArtists(await artistsRes.json());

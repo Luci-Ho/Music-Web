@@ -22,7 +22,7 @@ const SongPlayer = () => {
 
 
     useEffect(() => {
-        axios.get(`http://localhost:4000/songs/${id}`)
+        axios.get(`http://localhost:5000/songs/${id}`)
             .then(res => setSong(res.data))
             .catch(err => console.error('Lỗi khi lấy bài hát:', err));
     }, [id]);

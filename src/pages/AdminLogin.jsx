@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function AdminLogin({ visible = true, onClose }) {
     const [form] = Form.useForm();
-    const API_URL = 'http://localhost:4000/users';
+    const API_URL = 'http://localhost:5000/users';
     const navigate = useNavigate();
 
     const checkAdmin = async (code) => {

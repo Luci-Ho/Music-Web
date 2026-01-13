@@ -24,7 +24,7 @@ const AddToPlaylist = () => {
   }, [user]);
 
   useEffect(() => {
-    axios.get(`http://localhost:4000/songs/${id}`)
+    axios.get(`http://localhost:5000/songs/${id}`)
       .then(res => setSong(res.data))
       .catch(err => console.error('Lỗi khi lấy bài hát:', err));
   }, [id]);
@@ -71,7 +71,7 @@ const AddToPlaylist = () => {
       const updatedUser = { ...user, playlists: updatedPlaylists };
 
       // Update backend
-      await axios.patch(`http://localhost:4000/users/${user.id}`, {
+      await axios.patch(`http://localhost:5000/users/${user.id}`, {
         playlists: updatedPlaylists
       });
 

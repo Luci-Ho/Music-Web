@@ -25,7 +25,7 @@ const AddSongModal = ({ visible, onCancel, onSubmit, onSuccess, artists, genres,
     // Create song directly via API
     const createSongDirectly = async (songData) => {
         try {
-            const response = await fetch('http://localhost:4000/songsList', {
+            const response = await fetch('http://localhost:5000/songsList', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -88,7 +88,7 @@ const AddSongModal = ({ visible, onCancel, onSubmit, onSuccess, artists, genres,
                         img: "https://via.placeholder.com/150?text=New+Artist"
                     };
 
-                    const response = await fetch('http://localhost:4000/artists', {
+                    const response = await fetch('http://localhost:5000/artists', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',

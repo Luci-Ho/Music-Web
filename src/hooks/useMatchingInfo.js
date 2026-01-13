@@ -22,7 +22,7 @@ export default function useMatchingInfo() {
     const fetchArtists = useCallback(() => {
         setLoadingArtists(true);
         setErrorArtists(null);
-        fetch('http://localhost:4000/artists')
+        fetch('http://localhost:5000/artists')
             .then((res) => {
                 if (!res.ok) throw new Error('Tìm Nghệ Sĩ Không Ra');
                 return res.json();
@@ -41,7 +41,7 @@ export default function useMatchingInfo() {
     const fetchAlbums = useCallback(() => {
         setLoadingAlbums(true);
         setErrorAlbums(null);
-        fetch('http://localhost:4000/albums')
+        fetch('http://localhost:5000/albums')
             .then((res) => {
                 if (!res.ok) throw new Error('Tìm Album Không Ra');
                 return res.json();
@@ -60,7 +60,7 @@ export default function useMatchingInfo() {
     const fetchGenres = useCallback(() => {
         setLoadingGenres(true);
         setErrorGenres(null);
-        fetch('http://localhost:4000/genres')
+        fetch('http://localhost:5000/genres')
             .then((res) => {
                 if (!res.ok) throw new Error('Tìm Thể Loại Không Ra');
                 return res.json();

@@ -49,7 +49,7 @@ const VideoPlayerPage = () => {
       setVideo(location.state.video);
     } else {
       // Fetch video from API
-      fetch(`http://localhost:4000/videos/${id}`)
+      fetch(`http://localhost:5000/videos/${id}`)
         .then(res => {
           if (!res.ok) throw new Error('Video not found');
           return res.json();
@@ -62,7 +62,7 @@ const VideoPlayerPage = () => {
     }
 
     // Load related videos
-    fetch('http://localhost:4000/videos')
+    fetch('http://localhost:5000/videos')
       .then(res => res.json())
       .then(data => {
         const filtered = data.filter(v => v.id !== id).slice(0, 6);

@@ -26,7 +26,7 @@ const EditSongModal = ({ visible, onCancel, onSubmit, onSuccess, editingRecord, 
     const updateSongDirectly = async (songData) => {
         try {
             // Try PATCH first (partial update)
-            let response = await fetch(`http://localhost:4000/songsList/${songData.id}`, {
+            let response = await fetch(`http://localhost:5000/songsList/${songData.id}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
@@ -37,7 +37,7 @@ const EditSongModal = ({ visible, onCancel, onSubmit, onSuccess, editingRecord, 
             // If PATCH fails, try PUT (full replace)
             if (!response.ok) {
                 console.log('PATCH failed, trying PUT method');
-                response = await fetch(`http://localhost:4000/songsList/${songData.id}`, {
+                response = await fetch(`http://localhost:5000/songsList/${songData.id}`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
@@ -101,7 +101,7 @@ const EditSongModal = ({ visible, onCancel, onSubmit, onSuccess, editingRecord, 
                         img: "https://via.placeholder.com/150?text=New+Artist"
                     };
 
-                    const response = await fetch('http://localhost:4000/artists', {
+                    const response = await fetch('http://localhost:5000/artists', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',

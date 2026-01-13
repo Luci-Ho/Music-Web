@@ -21,10 +21,10 @@ export default function Header({ query, setQuery }) {
         const loadSearchData = async () => {
             try {
                 const [songsRes, artistsRes, albumsRes, usersRes] = await Promise.all([
-                    fetch('http://localhost:4000/songsList'),
-                    fetch('http://localhost:4000/artists'),
-                    fetch('http://localhost:4000/albums'),
-                    fetch('http://localhost:4000/users')
+                    fetch('http://localhost:5000/songsList'),
+                    fetch('http://localhost:5000/artists'),
+                    fetch('http://localhost:5000/albums'),
+                    fetch('http://localhost:5000/users')
                 ]);
 
                 setAllData({

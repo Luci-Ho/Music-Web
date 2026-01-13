@@ -133,7 +133,7 @@ const FilteredSongsTable = ({ filterType = 'genre', filterId, title }) => {
             login(updatedUser);
 
             // Persist to backend
-            const API_USERS = 'http://localhost:4000/users';
+            const API_USERS = 'http://localhost:5000/users';
             const res = await fetch(`${API_USERS}/${user.id}`, {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json' },
@@ -172,7 +172,7 @@ const FilteredSongsTable = ({ filterType = 'genre', filterId, title }) => {
             login(updatedUser);
 
             // Persist to backend
-            const API_USERS = 'http://localhost:4000/users';
+            const API_USERS = 'http://localhost:5000/users';
             const res = await fetch(`${API_USERS}/${user.id}`, {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json' },
@@ -288,7 +288,7 @@ const FilteredSongsTable = ({ filterType = 'genre', filterId, title }) => {
                                     try { window.dispatchEvent(new Event('userUpdated')); } catch (err) { /* ignore */ }
 
                                     // persist to backend (json-server style)
-                                    const API_USERS = 'http://localhost:4000/users';
+                                    const API_USERS = 'http://localhost:5000/users';
                                     try {
                                         const res = await fetch(`${API_USERS}/${user.id}`, {
                                             method: 'PATCH',

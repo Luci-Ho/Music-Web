@@ -53,7 +53,7 @@ export default function usePlaylistManager() {
             setUserPlaylists(updatedPlaylists);
             login({ ...user, playlists: updatedPlaylists });
 
-            await fetch(`http://localhost:4000/users/${user.id}`, {
+            await fetch(`http://localhost:5000/users/${user.id}`, {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ playlists: updatedPlaylists }),
@@ -86,7 +86,7 @@ export default function usePlaylistManager() {
             setUserPlaylists(updatedPlaylists);
             login({ ...user, playlists: updatedPlaylists });
 
-            await fetch(`http://localhost:4000/users/${user.id}`, {
+            await fetch(`http://localhost:5000/users/${user.id}`, {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ playlists: updatedPlaylists }),

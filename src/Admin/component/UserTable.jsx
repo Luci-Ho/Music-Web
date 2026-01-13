@@ -14,7 +14,7 @@ export default function UsersTable({ users, onUserUpdate }) {
 
     const fetchLevels = async () => {
         try {
-            const response = await fetch('http://localhost:4000/levels');
+            const response = await fetch('http://localhost:5000/levels');
             const levelsData = await response.json();
             setLevels(levelsData);
         } catch (error) {
@@ -45,7 +45,7 @@ export default function UsersTable({ users, onUserUpdate }) {
         setUpdating(prev => ({ ...prev, [userId]: true }));
         
         try {
-            const response = await fetch(`http://localhost:4000/users/${userId}`, {
+            const response = await fetch(`http://localhost:5000/users/${userId}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',

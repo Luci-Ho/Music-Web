@@ -38,10 +38,10 @@ export default function TagsView() {
         setLoading(true);
         try {
             const [genresRes, albumsRes, artistsRes, songsRes] = await Promise.all([
-                fetch('http://localhost:4000/genres'),
-                fetch('http://localhost:4000/albums'),
-                fetch('http://localhost:4000/artists'),
-                fetch('http://localhost:4000/songsList')
+                fetch('http://localhost:5000/genres'),
+                fetch('http://localhost:5000/albums'),
+                fetch('http://localhost:5000/artists'),
+                fetch('http://localhost:5000/songsList')
             ]);
 
             setGenres(await genresRes.json());
@@ -94,7 +94,7 @@ export default function TagsView() {
                 return;
             }
 
-            const endpoint = `http://localhost:4000/${modalType === 'genre' ? 'genres' : modalType === 'artist' ? 'artists' : 'albums'}`;
+            const endpoint = `http://localhost:5000/${modalType === 'genre' ? 'genres' : modalType === 'artist' ? 'artists' : 'albums'}`;
             
             let newItem;
             if (editingItem) {
@@ -149,7 +149,7 @@ export default function TagsView() {
                 updateData = { albumId: item.id, album: item.title };
             }
 
-            return fetch(`http://localhost:4000/songsList/${songId}`, {
+            return fetch(`http://localhost:5000/songsList/${songId}`, {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(updateData)
@@ -183,7 +183,7 @@ export default function TagsView() {
                     updateData.album = 'Undefined';
                 }
 
-                return fetch(`http://localhost:4000/songsList/${song.id}`, {
+                return fetch(`http://localhost:5000/songsList/${song.id}`, {
                     method: 'PATCH',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(updateData)
@@ -193,7 +193,7 @@ export default function TagsView() {
             await Promise.all(hidePromises);
 
             // Delete the item
-            const endpoint = `http://localhost:4000/${type === 'genre' ? 'genres' : type === 'artist' ? 'artists' : 'albums'}`;
+            const endpoint = `http://localhost:5000/${type === 'genre' ? 'genres' : type === 'artist' ? 'artists' : 'albums'}`;
             await fetch(`${endpoint}/${item.id}`, { method: 'DELETE' });
 
             message.success(`${type} deleted and ${associatedSongs.length} songs moved to undefined`);

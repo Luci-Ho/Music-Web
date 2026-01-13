@@ -33,7 +33,7 @@ export const handleFavoriteToggle = async ({
     window.dispatchEvent(new Event('userUpdated'));
   } catch (err) {}
 
-  const API_USERS = 'http://localhost:4000/users';
+  const API_USERS = 'http://localhost:5000/users';
   try {
     const res = await fetch(`${API_USERS}/${user.id}`, {
       method: 'PATCH',

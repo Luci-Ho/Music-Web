@@ -22,11 +22,11 @@ const FilteredSongsTable2 = ({ filterType = 'genre', filterId, title }) => {
   useEffect(() => {
     const fetchData = async () => {
       const [songsRes, artistsRes, albumsRes, genresRes, moodsRes] = await Promise.all([
-        fetch('http://localhost:4000/songsList'),
-        fetch('http://localhost:4000/artists'),
-        fetch('http://localhost:4000/albums'),
-        fetch('http://localhost:4000/genres'),
-        fetch('http://localhost:4000/moods'),
+        fetch('http://localhost:5000/songsList'),
+        fetch('http://localhost:5000/artists'),
+        fetch('http://localhost:5000/albums'),
+        fetch('http://localhost:5000/genres'),
+        fetch('http://localhost:5000/moods'),
       ]);
       const [songsData, artistsData, albumsData, genresData, moodsData] = await Promise.all([
         songsRes.json(),
@@ -89,7 +89,7 @@ const FilteredSongsTable2 = ({ filterType = 'genre', filterId, title }) => {
     login({ ...(user || {}), favorites: updated });
 
     try {
-      await fetch(`http://localhost:4000/users/${user.id}`, {
+      await fetch(`http://localhost:5000/users/${user.id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ favorites: updated }),

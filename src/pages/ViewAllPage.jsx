@@ -106,7 +106,7 @@ const ViewAllPage = ({ pageType = 'videos' }) => {
 
     useEffect(() => {
         // Fetch data from API based on pageType
-        fetch(`http://localhost:4000/${config.endpoint}`)
+        fetch(`http://localhost:5000/${config.endpoint}`)
             .then(res => {
                 if (!res.ok) throw new Error(`Không thể tải ${config.itemName}`);
                 return res.json();

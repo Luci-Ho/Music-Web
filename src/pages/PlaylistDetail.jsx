@@ -86,7 +86,7 @@ const PlaylistDetail = () => {
   // 🎵 Fetch thông tin bài hát từ songsList
   const fetchSongsData = async (songIds) => {
     try {
-      const response = await fetch('http://localhost:4000/songsList');
+      const response = await fetch('http://localhost:5000/songsList');
       if (!response.ok) throw new Error('Failed to fetch songs');
       
       const allSongs = await response.json();
@@ -129,7 +129,7 @@ const PlaylistDetail = () => {
   // 🎤 Fetch thông tin artists từ /artists
   const fetchArtistsData = async () => {
     try {
-      const response = await fetch('http://localhost:4000/artists');
+      const response = await fetch('http://localhost:5000/artists');
       if (!response.ok) throw new Error('Failed to fetch artists');
       
       const allArtists = await response.json();
@@ -144,7 +144,7 @@ const PlaylistDetail = () => {
   // 🎭 Fetch thông tin genres từ /genres
   const fetchGenresData = async () => {
     try {
-      const response = await fetch('http://localhost:4000/genres');
+      const response = await fetch('http://localhost:5000/genres');
       if (!response.ok) throw new Error('Failed to fetch genres');
       
       const allGenres = await response.json();
@@ -193,7 +193,7 @@ const PlaylistDetail = () => {
       );
       const updatedUser = { ...user, playlists: updatedPlaylists };
 
-      await fetch(`http://localhost:4000/users/${user.id}`, {
+      await fetch(`http://localhost:5000/users/${user.id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ playlists: updatedPlaylists })

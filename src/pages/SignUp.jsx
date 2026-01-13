@@ -11,7 +11,7 @@ import '../style/LoginAndSignUp.css';
 
 const logoImage = "https://res.cloudinary.com/da4y5zf5k/image/upload/v1751044695/logo-no-background_1_z7njh8.png";
 // const backIcon = "https://res.cloudinary.com/da4y5zf5k/image/upload/v1751041190/ooui_next-ltr_np1svd.png";
-const API_URL = 'http://localhost:4000/users';
+const API_URL = 'http://localhost:5000/users';
 
 const SignUp = () => {
     const navigate = useNavigate();

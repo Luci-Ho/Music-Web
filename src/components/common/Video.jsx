@@ -61,7 +61,7 @@ const VideoGrid = ({ source = '', title1 = 'Music', title2 = 'Video', onViewAll,
 
     useEffect(() => {
         // fetch the main data (e.g., videos) from the provided source
-        fetch(`http://localhost:4000/${source || 'videos'}`)
+        fetch(`http://localhost:5000/${source || 'videos'}`)
             .then((res) => {
                 if (!res.ok) throw new Error("Không thể lấy dữ liệu");
                 return res.json();
