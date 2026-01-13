@@ -70,22 +70,33 @@ export default function MusicPlayer() {
     const audio = audioRef.current;
     if (!audio || !currentSong) return;
 
-    // Validate song data
-    if (!currentSong.streaming_links?.audio_url) {
-      console.error('Song missing audio URL:', currentSong);
+    const audioUrl = currentSong?.media?.audioUrl;
+
+    if (!audioUrl) {
+      console.error('❌ Song missing audioUrl:', currentSong);
       return;
     }
+
+    console.log("🎧 AUDIO URL =", audioUrl);
+
+    // stop bài cũ
+    audio.pause();
+    audio.currentTime = 0;
+    setIsPlaying(false);
+
+    // load bài mới
+    audio.src = audioUrl;
+    audio.load();
 
     const handleLoadedMetadata = () => {
       setDuration(audio.duration || 0);
       setCanSeek(true);
-      // Auto-play chỉ khi user đã từng nhấn play
-      if (shouldAutoPlay && audio.paused) {
+
+      if (shouldAutoPlay) {
         audio.play()
           .then(() => setIsPlaying(true))
-          .catch((err) => {
-            console.warn("⚠️ Không thể tự động phát:", err);
-            setIsPlaying(false);
+          .catch(err => {
+            console.warn("⚠️ autoplay blocked:", err);
           });
       }
     };
@@ -94,34 +105,15 @@ export default function MusicPlayer() {
       setProgress(audio.currentTime);
     };
 
-    const handleError = (e) => {
-      console.error('Audio loading error:', e);
-      setIsPlaying(false);
-    };
-
-    // Dừng audio hiện tại trước
-    audio.pause();
-    setIsPlaying(false);
-
-    // Load bài hát mới
-    audio.src = currentSong.streaming_links.audio_url;
-    audio.load();
-
-    // Đăng ký event listeners
     audio.addEventListener("loadedmetadata", handleLoadedMetadata);
     audio.addEventListener("timeupdate", updateProgress);
-    audio.addEventListener("error", handleError);
-
-    // Reset trạng thái
-    setProgress(0);
-    setCanSeek(false);
 
     return () => {
       audio.removeEventListener("loadedmetadata", handleLoadedMetadata);
       audio.removeEventListener("timeupdate", updateProgress);
-      audio.removeEventListener("error", handleError);
     };
   }, [currentSong, shouldAutoPlay]);
+
 
   // Xử lý khi bài hát kết thúc
   useEffect(() => {
@@ -207,12 +199,13 @@ export default function MusicPlayer() {
     <div className="music-player" style={playerStyle}>
       <div className="player-left">
         <img
-          src={currentSong.img || currentSong.cover_url || currentSong.cover || "https://via.placeholder.com/64x64?text=No+Image"}
+          src={currentSong.coverUrl || "/images/none.jpg"}
           alt={currentSong.title}
           onError={(e) => {
-            e.target.src = "https://via.placeholder.com/64x64?text=No+Image";
+            e.target.src = "/images/none.jpg";
           }}
         />
+
         <div className="song-info">
           <h4>{currentSong.title}</h4>
           <p>{currentSong.artist}</p>
