@@ -7,14 +7,17 @@ export default function UsersTable({ users, onUserUpdate }) {
     const [levels, setLevels] = useState([]);
     const [updating, setUpdating] = useState({});
     
-    // Fetch levels from API
+    // Fetch levels from backend (Mongoose-based API)
     useEffect(() => {
         fetchLevels();
     }, []);
 
+    const API_BASE = process.env.REACT_APP_API_BASE || 'http://localhost:5000/api';
+
     const fetchLevels = async () => {
         try {
-            const response = await fetch('http://localhost:5000/levels');
+            const response = await fetch(`${API_BASE}/levels`);
+            if (!response.ok) throw new Error(`Failed to load levels: ${response.status}`);
             const levelsData = await response.json();
             setLevels(levelsData);
         } catch (error) {
@@ -24,7 +27,7 @@ export default function UsersTable({ users, onUserUpdate }) {
 
     // Map level to role name and color using API data
     const getLevelRole = (levelId) => {
-        const level = levels.find(l => l.id === levelId);
+        const level = levels.find(l => l._id === levelId);
         if (!level) return { text: 'Unknown', color: 'gray' };
         
         switch (level.name) {
@@ -45,7 +48,7 @@ export default function UsersTable({ users, onUserUpdate }) {
         setUpdating(prev => ({ ...prev, [userId]: true }));
         
         try {
-            const response = await fetch(`http://localhost:5000/users/${userId}`, {
+            const response = await fetch(`${API_BASE}/users/${userId}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
@@ -79,12 +82,12 @@ export default function UsersTable({ users, onUserUpdate }) {
                         size="small"
                         value={record.level}
                         style={{ width: 100 }}
-                        onChange={(value) => handlePromotion(record.id, value)}
-                        loading={updating[record.id]}
+                        onChange={(value) => handlePromotion(record._id, value)}
+                        loading={updating[record._id]}
                         placeholder="Promote"
                     >
                         {levels.map(level => (
-                            <Select.Option key={level.id} value={level.id}>
+                            <Select.Option key={level._id} value={level._id}>
                                 {level.name}
                             </Select.Option>
                         ))}
@@ -94,7 +97,7 @@ export default function UsersTable({ users, onUserUpdate }) {
                     <Button 
                         size="small" 
                         danger
-                        loading={updating[record.id]}
+                        loading={updating[record._id]}
                     >
                         Delete
                     </Button>

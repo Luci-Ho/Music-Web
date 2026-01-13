@@ -19,7 +19,7 @@ const useDataLoader = () => {
 
   // Create artist name map for quick lookup
   const artistMap = useMemo(() => {
-    return Object.fromEntries(artists.map(artist => [artist.id, artist.name]));
+    return Object.fromEntries(artists.map(artist => [artist._id, artist.name]));
   }, [artists]);
 
   useEffect(() => {

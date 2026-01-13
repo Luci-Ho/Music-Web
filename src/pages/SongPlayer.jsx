@@ -34,7 +34,7 @@ const SongPlayer = () => {
 
     // Xử lý thêm vào playlist
     const handleAddToPlaylist = () => {
-        navigate(`/playlist/add/${song.id}`);
+        navigate(`/playlist/add/${song._id}`);
         console.log("Thêm vào playlist:", song.title);
 
     };
@@ -105,7 +105,7 @@ const SongPlayer = () => {
                         {/* Các nút tương tác */}
                         <div style={{ marginTop: '20px', display: 'flex', gap: '20px' }}>
                             <button onClick={handleLike} className="action-btn">❤️ Thích</button>
-                            <PlaylistDropdown songId={song.id} />
+                            <PlaylistDropdown songId={song._id} />
                             <button onClick={handleCommentToggle} className="action-btn">💬 Bình luận</button>
                         </div>
                     </div>

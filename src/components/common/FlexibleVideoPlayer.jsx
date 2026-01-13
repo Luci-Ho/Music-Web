@@ -32,7 +32,7 @@ const FlexibleVideoPlayer = ({ video, onError }) => {
         clearTimeout(errorTimeoutRef.current);
       }
     };
-  }, [video?.id]);
+  }, [video?._id]);
 
   const handleIframeError = () => {
     console.log('Iframe failed, showing fallback');

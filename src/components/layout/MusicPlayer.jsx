@@ -49,12 +49,12 @@ export default function MusicPlayer() {
     setFavorites(user && Array.isArray(user.favorites) ? user.favorites : []);
   }, [user]);
 
-  const isFav = currentSong?.id && favorites.includes(currentSong.id);
+  const isFav = currentSong?._id && favorites.includes(currentSong._id);
 
   const handleToggleFavorite = (e) => {
     handleFavoriteToggle({
       e,
-      songId: currentSong.id,
+      songId: currentSong._id,
       isFav,
       favorites,
       setFavorites,
@@ -252,7 +252,7 @@ export default function MusicPlayer() {
             onClick={handleToggleFavorite} />
         )}
 
-        <button onClick={() => openPopup(currentSong.id)}>
+        <button onClick={() => openPopup(currentSong._id)}>
           <PlusCircleOutlined />
         </button>
 

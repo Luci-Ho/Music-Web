@@ -87,7 +87,7 @@ export const D2CardRow = ({
 
                 <ul className="flex row-auto justify-between w-full items-center list-none p-0 m-0">
                     {datas.map((a, idx) => {
-                        const id = a._id ?? a.id ?? idx;
+                        const id = a._id ?? a._id ?? idx;
 
                         /* ===== MAP ẢNH CHUẨN ===== */
                         const image =

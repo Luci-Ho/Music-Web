@@ -28,8 +28,8 @@ const TopBar = () => {
   useEffect(() => {
     const fetchData = async () => {
       const [songsRes, artistsRes] = await Promise.all([
-        fetch('http://localhost:5000/songsList'),
-        fetch('http://localhost:5000/artists')
+        fetch('http://localhost:5000/api/songs'),
+        fetch('http://localhost:5000/api/artists')
       ]);
       setSongs(await songsRes.json());
       setArtists(await artistsRes.json());
@@ -40,7 +40,7 @@ const TopBar = () => {
   // Join artist name into songs
   const songsWithArtistName = useMemo(() => {
     return songs.map(song => {
-      const artist = artists.find(a => a.id === song.artistId);
+      const artist = artists.find(a => a._id === song.artistId);
       return {
         ...song,
         artist: artist?.name || ''
@@ -66,7 +66,7 @@ const TopBar = () => {
         const isTitleMatch = removeVietnameseTones(song.title.toLowerCase()).includes(normalizedKeyword);
         const isArtistMatch = removeVietnameseTones(song.artist.toLowerCase()).includes(normalizedKeyword);
         return {
-          id: song.id,
+          id: song._id,
           display: isTitleMatch ? song.title : song.artist
         };
       });
@@ -94,7 +94,7 @@ const TopBar = () => {
         {suggestions.length > 0 && (
           <div className="Search-Suggestions">
             {suggestions.map(item => (
-              <div key={item.id} onClick={() => navigate(`/song/${item.id}`)}>
+              <div key={item._id} onClick={() => navigate(`/song/${item._id}`)}>
                 {item.display}
               </div>
             ))}

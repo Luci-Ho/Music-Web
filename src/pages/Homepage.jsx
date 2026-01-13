@@ -62,12 +62,12 @@ const HomePage = () => {
             data={homeData?.recommended}
           />
 
-          <VideoGrid
+          {/* <VideoGrid
             title1="Music"
             title2="Videos"
             limit={8}
             data={homeData?.videos}
-          />
+          /> */}
 
           <Artist data={homeData?.artists} limit={6} />
         </div>

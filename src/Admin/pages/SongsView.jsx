@@ -3,7 +3,7 @@ import { Button, Card, message } from 'antd';
 import SongsTable from '../component/SongTable';
 import { getSongs, deleteSong, updateSong, addSong } from '../api/db';
 
-const API_URL = 'http://localhost:4000';
+const API_BASE = process.env.REACT_APP_API_BASE || 'http://localhost:5000/api';
 
 export default function SongsView() {
     const [songs, setSongs] = useState([]);
@@ -22,9 +22,9 @@ export default function SongsView() {
     async function loadSuggestions() {
         try {
             const [artistsRes, albumsRes, genresRes] = await Promise.all([
-                fetch(`${API_URL}/artists`),
-                fetch(`${API_URL}/albums`),
-                fetch(`${API_URL}/genres`)
+                fetch(`${API_BASE}/artists`),
+                fetch(`${API_BASE}/albums`),
+                fetch(`${API_BASE}/genres`)
             ]);
 
             const artists = await artistsRes.json();
@@ -34,17 +34,17 @@ export default function SongsView() {
             setSuggestions({
                 artists: artists.map(artist => ({
                     value: artist.name,
-                    id: artist.id,
+                    id: artist._id,
                     label: artist.name
                 })),
                 albums: albums.map(album => ({
                     value: album.title,
-                    id: album.id,
+                    id: album._id,
                     label: album.title
                 })),
                 genres: genres.map(genre => ({
                     value: genre.title,
-                    id: genre.id,
+                    id: genre._id,
                     label: genre.title
                 }))
             });
@@ -70,7 +70,7 @@ export default function SongsView() {
     async function handleEdit(song) {
         try {
             console.log('SongsView handleEdit called with:', song);
-            const result = await updateSong(song.id, song);
+            const result = await updateSong(song._id, song);
             console.log('Update result:', result);
             message.success('Updated');
             load(); // Reload the songs list
@@ -110,7 +110,7 @@ export default function SongsView() {
             };
 
             // Add to songsList endpoint
-            const response = await fetch(`${API_URL}/songsList`, {
+            const response = await fetch(`${API_BASE}/songs`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -137,7 +137,7 @@ export default function SongsView() {
         const suggestion = suggestions[type]?.find(item => 
             item.value.toLowerCase() === value.toLowerCase()
         );
-        return suggestion ? suggestion.id : null;
+        return suggestion ? suggestion._id : null;
     }
 
     async function handleCreate() {
@@ -154,7 +154,7 @@ export default function SongsView() {
 
     const restoreHiddenSong = async (songId) => {
         try {
-            await fetch(`${API_URL}/songsList/${songId}`, {
+            await fetch(`${API_BASE}/songs/${songId}`, {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ 

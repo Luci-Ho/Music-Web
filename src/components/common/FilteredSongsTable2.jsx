@@ -49,18 +49,18 @@ const FilteredSongsTable2 = ({ filterType = 'genre', filterId, title }) => {
   }, [user]);
 
   const bannerImg = useMemo(() => {
-    if (filterType === 'genre') return genres.find(g => g.id === filterId)?.img;
-    if (filterType === 'mood') return moods.find(m => m.id === filterId)?.img;
-    if (filterType === 'artist') return artists.find(a => a.id === filterId)?.img;
+    if (filterType === 'genre') return genres.find(g => g._id === filterId)?.img;
+    if (filterType === 'mood') return moods.find(m => m._id === filterId)?.img;
+    if (filterType === 'artist') return artists.find(a => a._id === filterId)?.img;
     return null;
   }, [filterType, filterId, genres, moods, artists]);
 
-  const artistMap = useMemo(() => Object.fromEntries(artists.map(a => [a.id, a.name])), [artists]);
-  const albumMap = useMemo(() => Object.fromEntries(albums.map(a => [a.id, a.title])), [albums]);
+  const artistMap = useMemo(() => Object.fromEntries(artists.map(a => [a._id, a.name])), [artists]);
+  const albumMap = useMemo(() => Object.fromEntries(albums.map(a => [a._id, a.title])), [albums]);
 
   const filtered = useMemo(() => {
     if (filterType === 'favorites') {
-      return songs.filter(s => favorites.includes(s.id));
+      return songs.filter(s => favorites.includes(s._id));
     }
     if (!filterId) return [];
     switch (filterType) {
@@ -89,7 +89,7 @@ const FilteredSongsTable2 = ({ filterType = 'genre', filterId, title }) => {
     login({ ...(user || {}), favorites: updated });
 
     try {
-      await fetch(`http://localhost:5000/users/${user.id}`, {
+      await fetch(`http://localhost:5000/users/${user._id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ favorites: updated }),
@@ -148,10 +148,10 @@ const FilteredSongsTable2 = ({ filterType = 'genre', filterId, title }) => {
               {filtered.map((s, i) => {
                 const albumTitle = albumMap[s.albumId] || '-';
                 const artistName = artistMap[s.artistId] || '-';
-                const isFav = favorites.includes(s.id);
+                const isFav = favorites.includes(s._id);
 
                 return (
-                  <tr key={s.id || i} className="hover:bg-gray-800/30">
+                  <tr key={s._id || i} className="hover:bg-gray-800/30">
                     <td className="pl-2 align-middle py-3 text-gray-300">{i + 1}</td>
                     <td className="py-2">
                       <div className="flex items-center gap-3">
@@ -166,7 +166,7 @@ const FilteredSongsTable2 = ({ filterType = 'genre', filterId, title }) => {
                     <td className="py-2 text-gray-300">{albumTitle}</td>
                     <td className="py-2 text-gray-300">{s.duration || '-'}</td>
                     <td className="py-2 text-gray-300">
-                      <button onClick={(e) => toggleFavorite(e, s.id)} style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}>
+                      <button onClick={(e) => toggleFavorite(e, s._id)} style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}>
                         {isFav ? <HeartFilled style={{ color: 'red', fontSize: '1.25rem' }} /> : <HeartTwoTone twoToneColor="#eb2f96" style={{ fontSize: '1.25rem' }} />}
                       </button>
                     </td>

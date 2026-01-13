@@ -19,12 +19,13 @@ export default function Header({ query, setQuery }) {
     // Load all data for search
     useEffect(() => {
         const loadSearchData = async () => {
+            const API_BASE = process.env.REACT_APP_API_BASE || 'http://localhost:5000/api';
             try {
                 const [songsRes, artistsRes, albumsRes, usersRes] = await Promise.all([
-                    fetch('http://localhost:5000/songsList'),
-                    fetch('http://localhost:5000/artists'),
-                    fetch('http://localhost:5000/albums'),
-                    fetch('http://localhost:5000/users')
+                    fetch(`${API_BASE}/songs`),
+                    fetch(`${API_BASE}/artists`),
+                    fetch(`${API_BASE}/albums`),
+                    fetch(`${API_BASE}/users`)
                 ]);
 
                 setAllData({
@@ -60,7 +61,7 @@ export default function Header({ query, setQuery }) {
             if (normalizeText(song.title || '').includes(normalizedQuery) ||
                 normalizeText(song.artist || '').includes(normalizedQuery)) {
                 results.push({
-                    value: `song-${song.id}`,
+                    value: `song-${song._id}`,
                     label: (
                         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                             <span style={{ color: '#EE10B0', fontSize: '12px' }}>♪</span>
@@ -78,7 +79,7 @@ export default function Header({ query, setQuery }) {
         allData.artists.forEach(artist => {
             if (normalizeText(artist.name || '').includes(normalizedQuery)) {
                 results.push({
-                    value: `artist-${artist.id}`,
+                    value: `artist-${artist._id}`,
                     label: (
                         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                             <span style={{ color: '#EE10B0', fontSize: '12px' }}>👤</span>
@@ -96,7 +97,7 @@ export default function Header({ query, setQuery }) {
         allData.albums.forEach(album => {
             if (normalizeText(album.title || '').includes(normalizedQuery)) {
                 results.push({
-                    value: `album-${album.id}`,
+                    value: `album-${album._id}`,
                     label: (
                         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                             <span style={{ color: '#EE10B0', fontSize: '12px' }}>💿</span>
@@ -115,7 +116,7 @@ export default function Header({ query, setQuery }) {
             if (normalizeText(user.username || '').includes(normalizedQuery) ||
                 normalizeText(user.email || '').includes(normalizedQuery)) {
                 results.push({
-                    value: `user-${user.id}`,
+                    value: `user-${user._id}`,
                     label: (
                         <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                             <span style={{ color: '#EE10B0', fontSize: '12px' }}>👥</span>

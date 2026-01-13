@@ -60,9 +60,9 @@ export default function SongsTable({ songs = [], onEdit, onDelete, onAdd, showUn
         const result = (songs || []).map((s) => {
             if (hasSongsListFormat) {
                 // songsList format - need to map IDs to names
-                const matchedArtist = artists.find((a) => a && (a.id === s.artistId));
-                const matchedAlbum = albums.find((a) => a && (a.id === s.albumId));
-                const matchedGenre = genres.find((g) => g && (g.id === s.genreId));
+                const matchedArtist = artists.find((a) => a && (a._id === s.artistId));
+                const matchedAlbum = albums.find((a) => a && (a._id === s.albumId));
+                const matchedGenre = genres.find((g) => g && (g._id === s.genreId));
                 
                 console.log(`Mapping song ${s.title}:`, {
                     genreId: s.genreId,
@@ -114,7 +114,7 @@ export default function SongsTable({ songs = [], onEdit, onDelete, onAdd, showUn
     }, [dataSource]);
 
     const columns = useMemo(() => [
-        { title: 'Song ID', dataIndex: 'id', width: 100, sorter: (a, b) => String(a.id || '').localeCompare(String(b.id || '')) },
+        { title: 'Song ID', dataIndex: 'id', width: 100, sorter: (a, b) => String(a._id || '').localeCompare(String(b._id || '')) },
         { title: 'Title', dataIndex: 'title', sorter: (a, b) => String(a.title || '').localeCompare(String(b.title || '')) },
         {
             title: 'Artist',
@@ -167,7 +167,7 @@ export default function SongsTable({ songs = [], onEdit, onDelete, onAdd, showUn
             render: (_, record) => (
                 <Space>
                     {showUndefined && onRestore && (
-                        <Button size="small" type="primary" onClick={() => onRestore(record.id)}>
+                        <Button size="small" type="primary" onClick={() => onRestore(record._id)}>
                             Restore
                         </Button>
                     )}
@@ -175,7 +175,7 @@ export default function SongsTable({ songs = [], onEdit, onDelete, onAdd, showUn
                         <Button size="small" onClick={() => handleEditClick(record)}>Edit</Button>
                     )}
                     {canDeleteSongs() && (
-                        <Button danger size="small" onClick={() => onDelete && onDelete(record.id)}>Delete</Button>
+                        <Button danger size="small" onClick={() => onDelete && onDelete(record._id)}>Delete</Button>
                     )}
                 </Space>
             )
@@ -256,7 +256,7 @@ export default function SongsTable({ songs = [], onEdit, onDelete, onAdd, showUn
             <Table
                 columns={columns}
                 dataSource={dataSource}
-                rowKey={(record) => record.id ?? record.key}
+                rowKey={(record) => record._id ?? record.key}
                 pagination={tableState.pagination ?? { pageSize: 10 }}
                 loading={loading}
                 onChange={handleTableChange}

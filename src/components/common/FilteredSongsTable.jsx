@@ -31,16 +31,16 @@ const FilteredSongsTable = ({ filterType = 'genre', filterId, title }) => {
     // banner image depends on the selected filter entry
     let bannerImg = null;
     if (filterType === 'genre') {
-        bannerImg = (data.genres || []).find(g => g.id === filterId)?.img;
+        bannerImg = (data.genres || []).find(g => g._id === filterId)?.img;
     } else if (filterType === 'mood') {
-        bannerImg = (data.moods || []).find(m => m.id === filterId)?.img;
+        bannerImg = (data.moods || []).find(m => m._id === filterId)?.img;
     } else if (filterType === 'artist') {
-        bannerImg = (data.artists || []).find(a => a.id === filterId)?.img;
+        bannerImg = (data.artists || []).find(a => a._id === filterId)?.img;
     }
 
     // build maps for quick lookup
-    const artistMap = useMemo(() => Object.fromEntries((artists || []).map(a => [a.id, a.name])), [artists]);
-    const albumMap = useMemo(() => Object.fromEntries(albums.map(a => [a.id, a.title])), [albums]);
+    const artistMap = useMemo(() => Object.fromEntries((artists || []).map(a => [a._id, a.name])), [artists]);
+    const albumMap = useMemo(() => Object.fromEntries(albums.map(a => [a._id, a.title])), [albums]);
 
 
     // auth
@@ -70,7 +70,7 @@ const FilteredSongsTable = ({ filterType = 'genre', filterId, title }) => {
         
         // favorites doesn't require a filterId — it uses the current user's favorites
         if (filterType === 'favorites') {
-            result = songs.filter(s => Array.isArray(user?.favorites) && user.favorites.includes(s.id));
+            result = songs.filter(s => Array.isArray(user?.favorites) && user.favorites.includes(s._id));
         } else if (filterType === 'all') {
             // Show all songs
             result = songs;
@@ -117,7 +117,7 @@ const FilteredSongsTable = ({ filterType = 'genre', filterId, title }) => {
 
         try {
             const updatedPlaylists = userPlaylists.map(playlist => {
-                if (playlist.id === playlistId) {
+                if (playlist._id === playlistId) {
                     const songs = Array.isArray(playlist.songs) ? playlist.songs : [];
                     if (!songs.includes(songId)) {
                         return { ...playlist, songs: [...songs, songId] };
@@ -134,7 +134,7 @@ const FilteredSongsTable = ({ filterType = 'genre', filterId, title }) => {
 
             // Persist to backend
             const API_USERS = 'http://localhost:5000/users';
-            const res = await fetch(`${API_USERS}/${user.id}`, {
+            const res = await fetch(`${API_USERS}/${user._id}`, {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ playlists: updatedPlaylists }),
@@ -142,7 +142,7 @@ const FilteredSongsTable = ({ filterType = 'genre', filterId, title }) => {
 
             if (!res.ok) throw new Error(`Server responded ${res.status}`);
             
-            const playlistName = updatedPlaylists.find(p => p.id === playlistId)?.name || 'playlist';
+            const playlistName = updatedPlaylists.find(p => p._id === playlistId)?.name || 'playlist';
             toast.success(`Đã thêm bài hát vào ${playlistName}`);
             
         } catch (err) {
@@ -173,7 +173,7 @@ const FilteredSongsTable = ({ filterType = 'genre', filterId, title }) => {
 
             // Persist to backend
             const API_USERS = 'http://localhost:5000/users';
-            const res = await fetch(`${API_USERS}/${user.id}`, {
+            const res = await fetch(`${API_USERS}/${user._id}`, {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ playlists: updatedPlaylists }),
@@ -265,7 +265,7 @@ const FilteredSongsTable = ({ filterType = 'genre', filterId, title }) => {
                             {filtered.map((s, i) => {
                                 const albumTitle = s.album || albumMap[s.albumId] || '-';
                                 const artistName = artistMap[s.artistId] || s.artist || '-';
-                                const isFav = favorites.includes(s.id);
+                                const isFav = favorites.includes(s._id);
 
                                 const toggleFavorite = async (e) => {
                                     e.preventDefault();
@@ -278,7 +278,7 @@ const FilteredSongsTable = ({ filterType = 'genre', filterId, title }) => {
                                     }
 
                                     // optimistic update
-                                    const updated = isFav ? favorites.filter(id => id !== s.id) : [...favorites, s.id];
+                                    const updated = isFav ? favorites.filter(id => id !== s._id) : [...favorites, s._id];
                                     const prev = favorites;
                                     setFavorites(updated);
 
@@ -290,7 +290,7 @@ const FilteredSongsTable = ({ filterType = 'genre', filterId, title }) => {
                                     // persist to backend (json-server style)
                                     const API_USERS = 'http://localhost:5000/users';
                                     try {
-                                        const res = await fetch(`${API_USERS}/${user.id}`, {
+                                        const res = await fetch(`${API_USERS}/${user._id}`, {
                                             method: 'PATCH',
                                             headers: { 'Content-Type': 'application/json' },
                                             body: JSON.stringify({ favorites: updated }),
@@ -310,7 +310,7 @@ const FilteredSongsTable = ({ filterType = 'genre', filterId, title }) => {
                                 };
 
                                 return (
-                                    <tr key={s.id || i} className={"hover:bg-gray-800/30"}>
+                                    <tr key={s._id || i} className={"hover:bg-gray-800/30"}>
                                         <td className="pl-2 align-middle py-3 text-gray-300">{i + 1}</td>
                                         <td className="py-2 ">
                                             <div className="flex items-center gap-3">
@@ -342,7 +342,7 @@ const FilteredSongsTable = ({ filterType = 'genre', filterId, title }) => {
                                                         navigate('/login', { state: { from: location } });
                                                         return;
                                                     }
-                                                    setShowPlaylistDropdown(showPlaylistDropdown === s.id ? null : s.id);
+                                                    setShowPlaylistDropdown(showPlaylistDropdown === s._id ? null : s._id);
                                                     setShowCreatePlaylist(false);
                                                 }}
                                                 title="Add to playlist"
@@ -351,7 +351,7 @@ const FilteredSongsTable = ({ filterType = 'genre', filterId, title }) => {
                                             </button>
 
                                             {/* Playlist Dropdown */}
-                                            {showPlaylistDropdown === s.id && (
+                                            {showPlaylistDropdown === s._id && (
                                                 <>
                                                     {/* Overlay to close dropdown */}
                                                     <div 
@@ -418,7 +418,7 @@ const FilteredSongsTable = ({ filterType = 'genre', filterId, title }) => {
                                                                         onKeyPress={(e) => {
                                                                             e.stopPropagation();
                                                                             if (e.key === 'Enter') {
-                                                                                createNewPlaylist(s.id);
+                                                                                createNewPlaylist(s._id);
                                                                             }
                                                                         }}
                                                                         style={{
@@ -438,7 +438,7 @@ const FilteredSongsTable = ({ filterType = 'genre', filterId, title }) => {
                                                                         <button
                                                                             onClick={(e) => {
                                                                                 e.stopPropagation();
-                                                                                createNewPlaylist(s.id);
+                                                                                createNewPlaylist(s._id);
                                                                             }}
                                                                             style={{
                                                                                 flex: 1,
@@ -488,14 +488,14 @@ const FilteredSongsTable = ({ filterType = 'genre', filterId, title }) => {
                                                                 </div>
                                                             ) : (
                                                                 userPlaylists.map((playlist) => {
-                                                                    const isInPlaylist = Array.isArray(playlist.songs) && playlist.songs.includes(s.id);
+                                                                    const isInPlaylist = Array.isArray(playlist.songs) && playlist.songs.includes(s._id);
                                                                     return (
                                                                         <div
-                                                                            key={playlist.id}
+                                                                            key={playlist._id}
                                                                             onClick={(e) => {
                                                                                 e.stopPropagation();
                                                                                 if (!isInPlaylist) {
-                                                                                    addToPlaylist(s.id, playlist.id);
+                                                                                    addToPlaylist(s._id, playlist._id);
                                                                                     setShowPlaylistDropdown(null);
                                                                                 }
                                                                             }}

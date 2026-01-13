@@ -16,7 +16,7 @@ export const handleFavoriteToggle = async ({
     e.stopPropagation();
   }
 
-  if (!user || !user.id) {
+  if (!user || !user._id) {
     navigate('/login', { state: { from: location } });
     return;
   }
@@ -35,7 +35,7 @@ export const handleFavoriteToggle = async ({
 
   const API_USERS = 'http://localhost:5000/users';
   try {
-    const res = await fetch(`${API_USERS}/${user.id}`, {
+    const res = await fetch(`${API_USERS}/${user._id}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ favorites: updated }),

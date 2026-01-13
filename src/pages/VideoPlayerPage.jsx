@@ -65,7 +65,7 @@ const VideoPlayerPage = () => {
     fetch('http://localhost:5000/videos')
       .then(res => res.json())
       .then(data => {
-        const filtered = data.filter(v => v.id !== id).slice(0, 6);
+        const filtered = data.filter(v => v._id !== id).slice(0, 6);
         setRelatedVideos(filtered);
       })
       .catch(err => console.error('Error loading related videos:', err));
@@ -76,7 +76,7 @@ const VideoPlayerPage = () => {
   };
 
   const navigateToVideo = (videoData) => {
-    navigate(`/video/${videoData.id}`, { 
+    navigate(`/video/${videoData._id}`, { 
       state: { video: videoData },
       replace: false 
     });
@@ -97,7 +97,7 @@ const VideoPlayerPage = () => {
   }
 
   const artistName = getArtistName(video.artist || video.artistId) || video.artist || 'Unknown Artist';
-  const isFav = isFavorite(video.id);
+  const isFav = isFavorite(video._id);
 
   return (
     <>
@@ -144,7 +144,7 @@ const VideoPlayerPage = () => {
                     
                     <div className="flex items-center gap-3">
                       <button
-                        onClick={() => toggleFavorite(video.id)}
+                        onClick={() => toggleFavorite(video._id)}
                         className={`p-3 rounded-full transition-all ${
                           isFav 
                             ? 'bg-red-500 text-white' 
@@ -190,7 +190,7 @@ const VideoPlayerPage = () => {
                     const relatedArtist = getArtistName(relatedVideo.artist || relatedVideo.artistId) || relatedVideo.artist || 'Unknown Artist';
                     return (
                       <div
-                        key={relatedVideo.id}
+                        key={relatedVideo._id}
                         onClick={() => navigateToVideo(relatedVideo)}
                         className="flex gap-3 p-3 rounded-lg bg-white/10 hover:bg-white/20 transition-all cursor-pointer group"
                       >

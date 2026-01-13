@@ -32,12 +32,12 @@ const PlaylistDetail = () => {
   const getArtistInfo = (artistId, fallbackName) => {
     if (!artistId) return { name: fallbackName || 'Unknown Artist', img: null };
     
-    const artist = artistsData.find(a => a.id === artistId);
+    const artist = artistsData.find(a => a._id === artistId);
     if (artist) {
       return {
         name: artist.name,
         img: artist.img,
-        id: artist.id
+        id: artist._id
       };
     }
     
@@ -48,12 +48,12 @@ const PlaylistDetail = () => {
   const getGenreInfo = (genreId, fallbackName) => {
     if (!genreId) return { title: fallbackName || 'Unknown', img: null };
     
-    const genre = genresData.find(g => g.id === genreId);
+    const genre = genresData.find(g => g._id === genreId);
     if (genre) {
       return {
         title: genre.title,
         img: genre.img,
-        id: genre.id
+        id: genre._id
       };
     }
     
@@ -94,7 +94,7 @@ const PlaylistDetail = () => {
       
       // Filter songs based on IDs in playlist
       const playlistSongs = songIds.map(songId => {
-        const song = allSongs.find(s => s.id === songId);
+        const song = allSongs.find(s => s._id === songId);
         if (!song) {
           console.warn(`Song with ID ${songId} not found in songsList`);
           return {
@@ -159,7 +159,7 @@ const PlaylistDetail = () => {
   useEffect(() => {
     const loadPlaylistData = async () => {
       if (user && user.playlists) {
-        const userPlaylist = user.playlists.find(p => p.id === id);
+        const userPlaylist = user.playlists.find(p => p._id === id);
         setPlaylist(userPlaylist || null);
         
         // Fetch artists and genres data first
@@ -189,11 +189,11 @@ const PlaylistDetail = () => {
       const updatedSongs = playlist.songs.filter(id => id !== songId);
       const updatedPlaylist = { ...playlist, songs: updatedSongs };
       const updatedPlaylists = user.playlists.map(p =>
-        p.id === playlist.id ? updatedPlaylist : p
+        p._id === playlist._id ? updatedPlaylist : p
       );
       const updatedUser = { ...user, playlists: updatedPlaylists };
 
-      await fetch(`http://localhost:5000/users/${user.id}`, {
+      await fetch(`http://localhost:5000/users/${user._id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ playlists: updatedPlaylists })
@@ -203,7 +203,7 @@ const PlaylistDetail = () => {
       setPlaylist(updatedPlaylist);
       
       // Update songs data
-      const updatedSongsData = songsData.filter(song => song.id !== songId);
+      const updatedSongsData = songsData.filter(song => song._id !== songId);
       setSongsData(updatedSongsData);
       
       window.dispatchEvent(new Event('userUpdated'));
@@ -389,7 +389,7 @@ const PlaylistDetail = () => {
                       const genreInfo = getGenreInfo(song.genreId, song.genre);
                       
                       return (
-                        <tr key={song.id} className="hover:bg-gray-700/20 transition-colors group">
+                        <tr key={song._id} className="hover:bg-gray-700/20 transition-colors group">
                           <td className="pl-4 py-3 text-gray-300 font-medium">{index + 1}</td>
                           <td className="py-3">
                             <div className="flex items-center gap-3">
@@ -454,7 +454,7 @@ const PlaylistDetail = () => {
                                 <PlayCircleOutlined style={{ fontSize: '1.25rem' }} />
                               </button>
                               <button
-                                onClick={() => removeSongFromPlaylist(song.id)}
+                                onClick={() => removeSongFromPlaylist(song._id)}
                                 className="text-red-500 hover:text-red-400 transition-colors p-2 rounded-full hover:bg-gray-700/20"
                                 title="Xóa khỏi playlist"
                               >

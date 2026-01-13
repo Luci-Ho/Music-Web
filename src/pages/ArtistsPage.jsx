@@ -34,7 +34,7 @@ const ArtistsPage = () => {
       // Count songs by this artist (check both artist field and artistId)
       const artistSongs = allSongs.filter(song => 
         song.artist === artist.name || 
-        song.artistId === artist.id ||
+        song.artistId === artist._id ||
         song.artist?.toLowerCase() === artist.name?.toLowerCase()
       );
 
@@ -117,7 +117,7 @@ const ArtistsPage = () => {
 
   const handleArtistClick = (artist) => {
     // Navigate to artist detail page with filtered songs
-    navigate(`/artist/${artist.id}`, { 
+    navigate(`/artist/${artist._id}`, { 
       state: { 
         artist: artist,
         songs: artist.songs 
@@ -199,7 +199,7 @@ const ArtistsPage = () => {
                   <div className="artists-grid">
                     {filteredArtists.map((artist) => (
                       <div 
-                        key={artist.id}
+                        key={artist._id}
                         className="artist-card"
                         onClick={() => handleArtistClick(artist)}
                       >

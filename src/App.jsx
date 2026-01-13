@@ -78,12 +78,12 @@ function App() {
                   <Route path="/:source/listpage" element={<ListPage />} />
 
                   {/* dynamic pages for genres, moods, and artists */}
-                  <Route path="/genre/:id" element={<ListPage pageType={'genre'} />} />
-                  <Route path="/mood/:id" element={<ListPage pageType={'mood'} />} />
-                  <Route path="/artist/:id" element={<ArtistDetailPage />} />
+                  <Route path="/genre/:_id" element={<ListPage pageType={'genre'} />} />
+                  <Route path="/mood/:_id" element={<ListPage pageType={'mood'} />} />
+                  <Route path="/artist/:_id" element={<ArtistDetailPage />} />
 
-                  {/* redirect old /browse/:type/:id to canonical routes */}
-                  <Route path="/browse/:type/:id" element={<BrowseRedirect />} />
+                  {/* redirect old /browse/:type/:_id to canonical routes */}
+                  <Route path="/browse/:type/:_id" element={<BrowseRedirect />} />
 
                   {/* singular listpage routes (View All) mapped to ListPage with source prop */}
                   <Route path="/genre/listpage" element={<ListPage source={"genres"} />} />
@@ -94,15 +94,15 @@ function App() {
                   <Route path="/playlist" element={<ProtectedRoute><PlaylistsPage /></ProtectedRoute>} />
                   <Route path="/artist" element={<ArtistsPage />} />
                   <Route path="/album" element={<AlbumsPage />} />
-                  <Route path="/album/:id" element={<AlbumDetailPage />} />
+                  <Route path="/album/:_id" element={<AlbumDetailPage />} />
 
                   <Route path="/playlist/add" element={<ProtectedRoute>   <AddToPlaylist />                     </ProtectedRoute>} />
-                  <Route path="/playlist/:id" element={<ProtectedRoute>   <PlaylistDetail />                    </ProtectedRoute>} />
+                  <Route path="/playlist/:_id" element={<ProtectedRoute>   <PlaylistDetail />                    </ProtectedRoute>} />
                   <Route path="/favorites" element={<ProtectedRoute>   <ListPage pageType={'favorites'} />   </ProtectedRoute>} />
                   <Route path="/allsongs" element={<AllSongsPage />} />
 
                   {/* Video routes */}
-                  <Route path="/video/:id" element={<VideoPlayerPage />} />
+                  <Route path="/video/:_id" element={<VideoPlayerPage />} />
                   <Route path="/video/viewall" element={<ViewAllPage pageType="videos" />} />
                   
                   {/* View All routes for different content types */}

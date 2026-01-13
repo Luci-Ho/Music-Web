@@ -7,7 +7,7 @@ import ChartLine from '../component/ChartLine';
 import { useAuth } from '../context/AuthContext';
 import formatTimes from '../../hooks/formatTimes';
 
-const API_URL = 'http://localhost:4000';
+const API_BASE = process.env.REACT_APP_API_BASE || 'http://localhost:5000/api';
 
 
 export default function DashboardView() {
@@ -19,9 +19,9 @@ export default function DashboardView() {
 
     useEffect(() => {
         async function load() {
-            const songs = await fetch(`${API_URL}/songs`).then(res => res.json());
-            const users = await fetch(`${API_URL}/users`).then(res => res.json());
-            const artists = await fetch(`${API_URL}/artists`).then(res => res.json());
+            const songs = await fetch(`${API_BASE}/songs`).then(res => res.json());
+            const users = await fetch(`${API_BASE}/users`).then(res => res.json());
+            const artists = await fetch(`${API_BASE}/artists`).then(res => res.json());
             const streaming = 4512500; // Giả sử giá trị tĩnh cho tổng số lượt phát
             setStreamingCount(streaming);
             setSongsCount(songs.length);
@@ -137,7 +137,7 @@ const userActivity = [
     return (
         <section>
             <div className="grid grid-cols-4 gap-4 mb-6 ">
-                {stats.map(s => <StartCard key={s.id} title={s.title} value={s.value} />)}
+                {stats.map(s => <StartCard key={s._id} title={s.title} value={s.value} />)}
             </div>
 
             <div className="grid grid-cols-3 gap-6 mb-6">

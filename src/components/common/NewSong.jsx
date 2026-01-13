@@ -41,7 +41,7 @@ const SongsGrid = ({ data = [], title1 = 'New', title2 = 'Song', limit = 5 }) =>
             const artistName = artistKey == null ? '' : (getArtistName(artistKey) || String(artistKey));
             return (
               <SongCard
-                key={v._id ?? v.id ?? `${v.title}-${i}`}
+                key={v._id ?? v._id ?? `${v.title}-${i}`}
                 title={v.title}
                 artist={artistName}
                 img={v.media?.image ?? v.img}

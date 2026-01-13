@@ -61,22 +61,22 @@ const AlbumDetailPage = () => {
       setAlbumSongs(location.state.songs);
       
       // Find artist info
-      const foundArtist = artists.find(a => a.id === location.state.album.artistId);
+      const foundArtist = artists.find(a => a._id === location.state.album.artistId);
       setArtist(foundArtist);
       
       return;
     }
 
     // Otherwise, find album and songs from data
-    const foundAlbum = albums.find(a => a.id === id);
+    const foundAlbum = albums.find(a => a._id === id);
     if (foundAlbum) {
       // Get songs in this album
       const albumSongsData = allSongs.filter(song => 
-        foundAlbum.songs.includes(song.id) || song.albumId === foundAlbum.id
+        foundAlbum.songs.includes(song._id) || song.albumId === foundAlbum._id
       );
 
       // Find artist
-      const foundArtist = artists.find(a => a.id === foundAlbum.artistId);
+      const foundArtist = artists.find(a => a._id === foundAlbum.artistId);
 
       setAlbum(foundAlbum);
       setAlbumSongs(albumSongsData);
@@ -105,7 +105,7 @@ const AlbumDetailPage = () => {
 
     try {
       const updatedPlaylists = userPlaylists.map(playlist => {
-        if (playlist.id === playlistId) {
+        if (playlist._id === playlistId) {
           const songs = Array.isArray(playlist.songs) ? playlist.songs : [];
           if (!songs.includes(songId)) {
             return { ...playlist, songs: [...songs, songId] };
@@ -122,7 +122,7 @@ const AlbumDetailPage = () => {
 
       // Persist to backend
       const API_USERS = 'http://localhost:5000/users';
-      const res = await fetch(`${API_USERS}/${user.id}`, {
+      const res = await fetch(`${API_USERS}/${user._id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ playlists: updatedPlaylists }),
@@ -130,7 +130,7 @@ const AlbumDetailPage = () => {
 
       if (!res.ok) throw new Error(`Server responded ${res.status}`);
       
-      const playlistName = updatedPlaylists.find(p => p.id === playlistId)?.name || 'playlist';
+      const playlistName = updatedPlaylists.find(p => p._id === playlistId)?.name || 'playlist';
       setShowPlaylistPopup(false);
       toast.success(`Đã thêm bài hát vào ${playlistName}`);
       
@@ -162,7 +162,7 @@ const AlbumDetailPage = () => {
 
       // Persist to backend
       const API_USERS = 'http://localhost:5000/users';
-      const res = await fetch(`${API_USERS}/${user.id}`, {
+      const res = await fetch(`${API_USERS}/${user._id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ playlists: updatedPlaylists }),
@@ -295,11 +295,11 @@ const AlbumDetailPage = () => {
                       </thead>
                       <tbody className="divide-y divide-gray-700/30">
                         {albumSongs.map((song, index) => {
-                          const isFav = isFavorite(song.id);
+                          const isFav = isFavorite(song._id);
                           
                           return (
                             <tr 
-                              key={song.id || index} 
+                              key={song._id || index} 
                               className="hover:bg-gray-700/20 transition-colors group"
                             >
                               <td className="pl-4 py-3 text-gray-300">{index + 1}</td>
@@ -344,7 +344,7 @@ const AlbumDetailPage = () => {
                                   </button>
                                   
                                   <button
-                                    onClick={() => toggleFavorite(song.id)}
+                                    onClick={() => toggleFavorite(song._id)}
                                     className={`transition-colors p-1 ${isFav ? 'text-red-500' : 'text-gray-400 hover:text-red-500'}`}
                                     title={isFav ? 'Xóa khỏi yêu thích' : 'Thêm vào yêu thích'}
                                   >
@@ -362,12 +362,12 @@ const AlbumDetailPage = () => {
                                           navigate('/login', { state: { from: location } });
                                           return;
                                         }
-                                        setSelectedSongId(song.id);
+                                        setSelectedSongId(song._id);
                                         setShowPlaylistPopup(true);
                                       }}
                                       className="text-gray-400 hover:text-white transition-colors p-1"
                                       title="Thêm vào playlist"
-                                      data-song-id={song.id}
+                                      data-song-id={song._id}
                                     >
                                       <PlusOutlined style={{ fontSize: '1.25rem' }} />
                                     </button>
@@ -409,7 +409,7 @@ const AlbumDetailPage = () => {
                                           ref={(dropdown) => {
                                             if (dropdown) {
                                               // Get button position
-                                              const button = document.querySelector(`[data-song-id="${song.id}"]`);
+                                              const button = document.querySelector(`[data-song-id="${song._id}"]`);
                                               if (button) {
                                                 const rect = button.getBoundingClientRect();
                                                 const viewportHeight = window.innerHeight;
@@ -508,7 +508,7 @@ const AlbumDetailPage = () => {
                                                   onKeyPress={(e) => {
                                                     e.stopPropagation();
                                                     if (e.key === 'Enter') {
-                                                      createNewPlaylist(song.id);
+                                                      createNewPlaylist(song._id);
                                                     }
                                                   }}
                                                   style={{
@@ -537,7 +537,7 @@ const AlbumDetailPage = () => {
                                                   <button
                                                     onClick={(e) => {
                                                       e.stopPropagation();
-                                                      createNewPlaylist(song.id);
+                                                      createNewPlaylist(song._id);
                                                     }}
                                                     style={{
                                                       flex: 1,
@@ -607,15 +607,15 @@ const AlbumDetailPage = () => {
                                             ) : (
                                               <div style={{ maxHeight: '200px', overflowY: 'auto' }}>
                                                 {userPlaylists.map((playlist) => {
-                                                  const isInPlaylist = Array.isArray(playlist.songs) && playlist.songs.includes(song.id);
+                                                  const isInPlaylist = Array.isArray(playlist.songs) && playlist.songs.includes(song._id);
                                                   const songCount = Array.isArray(playlist.songs) ? playlist.songs.length : 0;
                                                   return (
                                                     <div
-                                                      key={playlist.id}
+                                                      key={playlist._id}
                                                       onClick={(e) => {
                                                         e.stopPropagation();
                                                         if (!isInPlaylist) {
-                                                          addToPlaylist(song.id, playlist.id);
+                                                          addToPlaylist(song._id, playlist._id);
                                                           setShowPlaylistPopup(false);
                                                         }
                                                       }}
@@ -732,7 +732,7 @@ const AlbumDetailPage = () => {
                           style={{ background: 'linear-gradient(135deg, #EE10B0, #EE10B0)' }}
                           onMouseEnter={(e) => e.target.style.background = 'linear-gradient(135deg, #d60e9e, #d60e9e)'}
                           onMouseLeave={(e) => e.target.style.background = 'linear-gradient(135deg, #EE10B0, #EE10B0)'}
-                          onClick={() => navigate(`/artist/${artist.id}`)}
+                          onClick={() => navigate(`/artist/${artist._id}`)}
                         >
                           Xem thêm
                         </button>
@@ -971,10 +971,10 @@ const AlbumDetailPage = () => {
                       const songCount = Array.isArray(playlist.songs) ? playlist.songs.length : 0;
                       return (
                         <div
-                          key={playlist.id}
+                          key={playlist._id}
                           onClick={() => {
                             if (!isInPlaylist) {
-                              addToPlaylist(selectedSongId, playlist.id);
+                              addToPlaylist(selectedSongId, playlist._id);
                             }
                           }}
                           style={{

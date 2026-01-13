@@ -44,7 +44,7 @@ export default function usePlaylistManager() {
     const addToPlaylist = async (songId, playlistId) => {
         try {
             const updatedPlaylists = userPlaylists.map((playlist) => {
-                if (playlist.id === playlistId && !playlist.songs.includes(songId)) {
+                if (playlist._id === playlistId && !playlist.songs.includes(songId)) {
                     return { ...playlist, songs: [...playlist.songs, songId] };
                 }
                 return playlist;
@@ -53,13 +53,13 @@ export default function usePlaylistManager() {
             setUserPlaylists(updatedPlaylists);
             login({ ...user, playlists: updatedPlaylists });
 
-            await fetch(`http://localhost:5000/users/${user.id}`, {
+            await fetch(`http://localhost:5000/users/${user._id}`, {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ playlists: updatedPlaylists }),
             });
 
-            const playlistName = updatedPlaylists.find(p => p.id === playlistId)?.name || 'playlist';
+            const playlistName = updatedPlaylists.find(p => p._id === playlistId)?.name || 'playlist';
             toast.success(`✅ Đã thêm bài hát vào "${playlistName}"`);
             closePopup();
         } catch (err) {
@@ -86,7 +86,7 @@ export default function usePlaylistManager() {
             setUserPlaylists(updatedPlaylists);
             login({ ...user, playlists: updatedPlaylists });
 
-            await fetch(`http://localhost:5000/users/${user.id}`, {
+            await fetch(`http://localhost:5000/users/${user._id}`, {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ playlists: updatedPlaylists }),

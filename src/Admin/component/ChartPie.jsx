@@ -3,7 +3,7 @@ import { Table } from 'antd';
 import formatNumber from '../../hooks/formatNumber';
 import './TopSongsChart.css';
 
-const API_URL = 'http://localhost:4000';
+const API_BASE = process.env.REACT_APP_API_BASE || 'http://localhost:5000/api';
 
 export default function TopSongsChart() {
     const [topSongs, setTopSongs] = useState([]);
@@ -12,7 +12,7 @@ export default function TopSongsChart() {
     useEffect(() => {
         async function fetchTopSongs() {
             try {
-                const response = await fetch(`${API_URL}/songs`);
+                const response = await fetch(`${API_BASE}/songs`);
                 const songs = await response.json();
                 
                 // Sắp xếp theo viewCount giảm dần và lấy top 10
@@ -20,7 +20,7 @@ export default function TopSongsChart() {
                     .sort((a, b) => (b.viewCount || 0) - (a.viewCount || 0))
                     .slice(0, 10)
                     .map((song, index) => ({
-                        key: song.id,
+                        key: song._id,
                         rank: index + 1,
                         title: song.title,
                         artist: song.artist,

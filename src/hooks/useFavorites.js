@@ -41,7 +41,7 @@ const useFavorites = () => {
 
     // Update backend
     try {
-      const res = await fetch(`http://localhost:5000/users/${user.id}`, {
+      const res = await fetch(`http://localhost:5000/users/${user._id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ favorites: updated }),

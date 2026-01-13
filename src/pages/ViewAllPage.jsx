@@ -124,13 +124,13 @@ const ViewAllPage = ({ pageType = 'videos' }) => {
     const handleItemClick = (item) => {
         switch (pageType) {
             case 'genres':
-                navigate(`/genre/${item.id}`);
+                navigate(`/genre/${item._id}`);
                 break;
             case 'moods':
-                navigate(`/mood/${item.id}`);
+                navigate(`/mood/${item._id}`);
                 break;
             default:
-                navigate(`/video/${item.id}`, { state: { video: item } });
+                navigate(`/video/${item._id}`, { state: { video: item } });
                 break;
         }
     };
@@ -140,7 +140,7 @@ const ViewAllPage = ({ pageType = 'videos' }) => {
             case 'genres':
                 return (
                     <GenreCard
-                        key={item.id}
+                        key={item._id}
                         genre={item}
                         onClick={() => handleItemClick(item)}
                     />
@@ -148,7 +148,7 @@ const ViewAllPage = ({ pageType = 'videos' }) => {
             case 'moods':
                 return (
                     <MoodCard
-                        key={item.id}
+                        key={item._id}
                         mood={item}
                         onClick={() => handleItemClick(item)}
                     />
@@ -156,7 +156,7 @@ const ViewAllPage = ({ pageType = 'videos' }) => {
             default:
                 return (
                     <VideoCard
-                        key={item.id}
+                        key={item._id}
                         video={item}
                         onClick={() => handleItemClick(item)}
                     />

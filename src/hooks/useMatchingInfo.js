@@ -85,7 +85,7 @@ export default function useMatchingInfo() {
     const getArtistName = useCallback(
         (id) => {
             if (id == null) return '';
-            const found = artists.find((a) => a && (a.id === id || String(a.id) === String(id)));
+            const found = artists.find((a) => a && (a._id === id || String(a._id) === String(id)));
             return found?.name ?? '';
         },
         [artists]
@@ -94,7 +94,7 @@ export default function useMatchingInfo() {
     const getAlbumTitle = useCallback(
         (id) => {
             if (id == null) return '';
-            const found = albums.find((a) => a && (a.id === id || String(a.id) === String(id)));
+            const found = albums.find((a) => a && (a._id === id || String(a._id) === String(id)));
             return found?.title ?? found?.name ?? '';
         },
         [albums]
@@ -103,7 +103,7 @@ export default function useMatchingInfo() {
     const getGenreName = useCallback(
         (id) => {
             if (id == null) return '';
-            const found = genres.find((g) => g && (g.id === id || String(g.id) === String(id)));
+            const found = genres.find((g) => g && (g._id === id || String(g._id) === String(id)));
             return found?.title ?? found?.name ?? ''; // sử dụng title trước, fallback name
         },
         [genres]

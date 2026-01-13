@@ -48,7 +48,7 @@ const PlaylistsPage = () => {
     }
 
     try {
-      const newPlaylistId = `${user.id}_${Date.now()}`;
+      const newPlaylistId = `${user._id}_${Date.now()}`;
       const newPlaylist = {
         id: newPlaylistId,
         name: newPlaylistName.trim(),
@@ -60,7 +60,7 @@ const PlaylistsPage = () => {
       const updatedUser = { ...user, playlists: updatedPlaylists };
 
       // Update backend
-      await fetch(`http://localhost:5000/users/${user.id}`, {
+      await fetch(`http://localhost:5000/users/${user._id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -95,11 +95,11 @@ const PlaylistsPage = () => {
     }
 
     try {
-      const updatedPlaylists = playlists.filter(p => p.id !== playlistId);
+      const updatedPlaylists = playlists.filter(p => p._id !== playlistId);
       const updatedUser = { ...user, playlists: updatedPlaylists };
 
       // Update backend
-      await fetch(`http://localhost:5000/users/${user.id}`, {
+      await fetch(`http://localhost:5000/users/${user._id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -201,7 +201,7 @@ const PlaylistsPage = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {playlists.map((playlist) => (
                   <div
-                    key={playlist.id}
+                    key={playlist._id}
                     className="bg-gray-800/30 rounded-lg p-4 hover:bg-gray-700/40 transition-colors cursor-pointer group"
                   >
                     <div className="relative">
@@ -213,7 +213,7 @@ const PlaylistsPage = () => {
                         <button
                           onClick={(e) => {
                             e.stopPropagation();
-                            deletePlaylist(playlist.id);
+                            deletePlaylist(playlist._id);
                           }}
                           className="bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition-colors"
                           title="Xóa playlist"
@@ -244,7 +244,7 @@ const PlaylistsPage = () => {
                       </button>
 
                       <button
-                        onClick={() => navigate(`/playlist/${playlist.id}`)}
+                        onClick={() => navigate(`/playlist/${playlist._id}`)}
                         className="flex-1 bg-gray-600 text-white py-2 px-4 rounded-lg hover:bg-gray-500 transition-colors text-sm"
                       >
                         <EditOutlined /> Xem

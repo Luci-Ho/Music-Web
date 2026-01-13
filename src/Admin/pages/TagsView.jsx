@@ -12,6 +12,9 @@ console.warn = (...args) => {
 
 const { Option } = Select;
 
+// API base used by admin pages (single shared declaration to avoid redeclare errors)
+const API_BASE = process.env.REACT_APP_API_BASE || 'http://localhost:5000/api';
+
 export default function TagsView() {
     const { isAdmin, isModerator, canDeleteSongs } = useAuth();
     const [genres, setGenres] = useState([]);
@@ -38,10 +41,10 @@ export default function TagsView() {
         setLoading(true);
         try {
             const [genresRes, albumsRes, artistsRes, songsRes] = await Promise.all([
-                fetch('http://localhost:5000/genres'),
-                fetch('http://localhost:5000/albums'),
-                fetch('http://localhost:5000/artists'),
-                fetch('http://localhost:5000/songsList')
+                fetch(`${API_BASE}/genres`),
+                fetch(`${API_BASE}/albums`),
+                fetch(`${API_BASE}/artists`),
+                fetch(`${API_BASE}/songs`)
             ]);
 
             setGenres(await genresRes.json());
@@ -65,12 +68,12 @@ export default function TagsView() {
             form.setFieldsValue(item);
             // For editing, load associated songs
             const associatedSongs = songs.filter(song => {
-                if (type === 'genre') return song.genreId === item.id || song.genre === item.title;
-                if (type === 'artist') return song.artistId === item.id || song.artist === item.name;
-                if (type === 'album') return song.albumId === item.id || song.album === item.title;
+                if (type === 'genre') return song.genreId === item._id || song.genre === item.title;
+                if (type === 'artist') return song.artistId === item._id || song.artist === item.name;
+                if (type === 'album') return song.albumId === item._id || song.album === item.title;
                 return false;
             });
-            setSelectedSongs(associatedSongs.map(song => song.id));
+            setSelectedSongs(associatedSongs.map(song => song._id));
         } else {
             form.resetFields();
             setSelectedSongs([]);
@@ -94,12 +97,12 @@ export default function TagsView() {
                 return;
             }
 
-            const endpoint = `http://localhost:5000/${modalType === 'genre' ? 'genres' : modalType === 'artist' ? 'artists' : 'albums'}`;
+            const endpoint = `${API_BASE}/${modalType === 'genre' ? 'genres' : modalType === 'artist' ? 'artists' : 'albums'}`;
             
             let newItem;
             if (editingItem) {
                 // Update existing item
-                const response = await fetch(`${endpoint}/${editingItem.id}`, {
+                const response = await fetch(`${endpoint}/${editingItem._id}`, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ ...editingItem, ...values })
@@ -137,19 +140,19 @@ export default function TagsView() {
 
     const updateSongAssociations = async (item, songIds) => {
         const updatePromises = songIds.map(songId => {
-            const song = songs.find(s => s.id === songId);
+            const song = songs.find(s => s._id === songId);
             if (!song) return Promise.resolve();
 
             let updateData = {};
             if (modalType === 'genre') {
-                updateData = { genreId: item.id, genre: item.title };
+                updateData = { genreId: item._id, genre: item.title };
             } else if (modalType === 'artist') {
-                updateData = { artistId: item.id, artist: item.name };
+                updateData = { artistId: item._id, artist: item.name };
             } else if (modalType === 'album') {
-                updateData = { albumId: item.id, album: item.title };
+                updateData = { albumId: item._id, album: item.title };
             }
 
-            return fetch(`http://localhost:5000/songsList/${songId}`, {
+                return fetch(`${API_BASE}/songs/${songId}`, {
                 method: 'PATCH',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(updateData)
@@ -163,9 +166,9 @@ export default function TagsView() {
         try {
             // Move associated songs to undefined category
             const associatedSongs = songs.filter(song => {
-                if (type === 'genre') return song.genreId === item.id;
-                if (type === 'artist') return song.artistId === item.id;
-                if (type === 'album') return song.albumId === item.id;
+                if (type === 'genre') return song.genreId === item._id;
+                if (type === 'artist') return song.artistId === item._id;
+                if (type === 'album') return song.albumId === item._id;
                 return false;
             });
 
@@ -183,7 +186,7 @@ export default function TagsView() {
                     updateData.album = 'Undefined';
                 }
 
-                return fetch(`http://localhost:5000/songsList/${song.id}`, {
+                return fetch(`${API_BASE}/songs/${song._id}`, {
                     method: 'PATCH',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(updateData)
@@ -193,8 +196,8 @@ export default function TagsView() {
             await Promise.all(hidePromises);
 
             // Delete the item
-            const endpoint = `http://localhost:5000/${type === 'genre' ? 'genres' : type === 'artist' ? 'artists' : 'albums'}`;
-            await fetch(`${endpoint}/${item.id}`, { method: 'DELETE' });
+            const endpoint = `${API_BASE}/${type === 'genre' ? 'genres' : type === 'artist' ? 'artists' : 'albums'}`;
+            await fetch(`${endpoint}/${item._id}`, { method: 'DELETE' });
 
             message.success(`${type} deleted and ${associatedSongs.length} songs moved to undefined`);
             loadData();
@@ -230,9 +233,9 @@ export default function TagsView() {
             className: 'text-center',
             render: (_, record) => {
                 const count = songs.filter(song => {
-                    if (type === 'genre') return song.genreId === record.id;
-                    if (type === 'artist') return song.artistId === record.id;
-                    if (type === 'album') return song.albumId === record.id;
+                    if (type === 'genre') return song.genreId === record._id;
+                    if (type === 'artist') return song.artistId === record._id;
+                    if (type === 'album') return song.albumId === record._id;
                     return false;
                 }).length;
                 return <Tag color={count === 0 ? 'red' : 'blue'}>{count}</Tag>;
@@ -294,9 +297,9 @@ export default function TagsView() {
 
     const getSongsDropdown = (type, item) => {
         const associatedSongs = songs.filter(song => {
-            if (type === 'genre') return song.genreId === item.id;
-            if (type === 'artist') return song.artistId === item.id;
-            if (type === 'album') return song.albumId === item.id;
+            if (type === 'genre') return song.genreId === item._id;
+            if (type === 'artist') return song.artistId === item._id;
+            if (type === 'album') return song.albumId === item._id;
             return false;
         });
 
@@ -314,7 +317,7 @@ export default function TagsView() {
 
         return {
             items: associatedSongs.map(song => ({
-                key: song.id,
+                key: song._id,
                 label: song.title
             }))
         };
@@ -524,7 +527,7 @@ export default function TagsView() {
                         >
                             <Select placeholder="Select an artist">
                                 {artists.map(artist => (
-                                    <Option key={artist.id} value={artist.id}>
+                                    <Option key={artist._id} value={artist._id}>
                                         {artist.name}
                                     </Option>
                                 ))}
@@ -553,7 +556,7 @@ export default function TagsView() {
                             maxTagCount={5}
                         >
                             {availableSongs.map(song => (
-                                <Option key={song.id} value={song.id}>
+                                <Option key={song._id} value={song._id}>
                                     {song.title} - {song.artist}
                                 </Option>
                             ))}

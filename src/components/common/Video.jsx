@@ -54,7 +54,7 @@ const VideoGrid = ({ source = '', title1 = 'Music', title2 = 'Video', onViewAll,
     const { getArtistName } = useMatchingInfo();
 
     const navigateToVideo = (videoData) => {
-        navigate(`/video/${videoData.id}`, { 
+        navigate(`/video/${videoData._id}`, { 
             state: { video: videoData } 
         });
     };
@@ -95,7 +95,7 @@ const VideoGrid = ({ source = '', title1 = 'Music', title2 = 'Video', onViewAll,
                                 : (getArtistName(artistKey) || String(artistKey));
                             return (
                                 <VideoCard 
-                                    key={v.id ?? `${v.title}-${i}`} 
+                                    key={v._id ?? `${v.title}-${i}`} 
                                     title={v.title} 
                                     artist={artistName} 
                                     img={v.img} 

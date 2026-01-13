@@ -25,8 +25,9 @@ const EditSongModal = ({ visible, onCancel, onSubmit, onSuccess, editingRecord, 
     // Update song directly via API
     const updateSongDirectly = async (songData) => {
         try {
+            const API_BASE = process.env.REACT_APP_API_BASE || 'http://localhost:5000/api';
             // Try PATCH first (partial update)
-            let response = await fetch(`http://localhost:5000/songsList/${songData.id}`, {
+            let response = await fetch(`${API_BASE}/songs/${songData._id}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
@@ -37,7 +38,7 @@ const EditSongModal = ({ visible, onCancel, onSubmit, onSuccess, editingRecord, 
             // If PATCH fails, try PUT (full replace)
             if (!response.ok) {
                 console.log('PATCH failed, trying PUT method');
-                response = await fetch(`http://localhost:5000/songsList/${songData.id}`, {
+                response = await fetch(`${API_BASE}/songs/${songData._id}`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
@@ -90,7 +91,7 @@ const EditSongModal = ({ visible, onCancel, onSubmit, onSuccess, editingRecord, 
             );
             
             if (existingArtist) {
-                artistIds.push(existingArtist.id);
+                artistIds.push(existingArtist._id);
             } else {
                 // Create new artist
                 try {
@@ -101,7 +102,8 @@ const EditSongModal = ({ visible, onCancel, onSubmit, onSuccess, editingRecord, 
                         img: "https://via.placeholder.com/150?text=New+Artist"
                     };
 
-                    const response = await fetch('http://localhost:5000/artists', {
+                    const API_BASE = process.env.REACT_APP_API_BASE || 'http://localhost:5000/api';
+                    const response = await fetch(`${API_BASE}/artists`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -183,7 +185,7 @@ const EditSongModal = ({ visible, onCancel, onSubmit, onSuccess, editingRecord, 
             const selectedGenres = Array.isArray(values.genres) ? values.genres : [values.genres];
             const genreIds = selectedGenres.map(genreName => {
                 const genre = genres.find(g => g.title === genreName);
-                return genre?.id || 'g101'; // fallback to default genre
+                return genre?._id || 'g101'; // fallback to default genre
             });
             
             const updatedSong = {
@@ -207,7 +209,7 @@ const EditSongModal = ({ visible, onCancel, onSubmit, onSuccess, editingRecord, 
                 // Update timestamp
                 updated_at: new Date().toISOString(),
                 // Preserve important fields that shouldn't be lost
-                id: editingRecord.id,
+                id: editingRecord._id,
                 duration: editingRecord.duration || "3:30",
                 releaseYear: editingRecord.releaseYear || new Date().getFullYear(),
                 release_date: editingRecord.release_date || new Date().toISOString().split('T')[0],
@@ -314,7 +316,7 @@ const EditSongModal = ({ visible, onCancel, onSubmit, onSuccess, editingRecord, 
                         maxTagTextLength={20}
                     >
                         {suggestions.artists.map(artist => (
-                            <Select.Option key={artist.id} value={artist.value}>
+                            <Select.Option key={artist._id} value={artist.value}>
                                 {artist.label}
                             </Select.Option>
                         ))}
@@ -370,7 +372,7 @@ const EditSongModal = ({ visible, onCancel, onSubmit, onSuccess, editingRecord, 
                         }
                     >
                         {suggestions.genres.map(genre => (
-                            <Select.Option key={genre.id} value={genre.value}>
+                            <Select.Option key={genre._id} value={genre.value}>
                                 {genre.label}
                             </Select.Option>
                         ))}

@@ -22,10 +22,10 @@ const PlaylistList = ({ playlists, songId, onAdd, onClose }) => {
 
         return (
           <div
-            key={playlist.id}
+            key={playlist._id}
             onClick={() => {
               if (!isInPlaylist) {
-                onAdd(songId, playlist.id);
+                onAdd(songId, playlist._id);
                 onClose?.();
               }
             }}

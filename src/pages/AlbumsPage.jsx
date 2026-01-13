@@ -34,7 +34,7 @@ const AlbumsPage = () => {
       
       // Get songs in this album
       const albumSongs = allSongs.filter(song => 
-        album.songs.includes(song.id) || song.albumId === album.id
+        album.songs.includes(song._id) || song.albumId === album._id
       );
 
       // Calculate total views/plays
@@ -88,7 +88,7 @@ const AlbumsPage = () => {
 
   const handleAlbumClick = (album) => {
     // Navigate to album detail page with filtered songs
-    navigate(`/album/${album.id}`, { 
+    navigate(`/album/${album._id}`, { 
       state: { 
         album: album,
         songs: album.songs 
@@ -161,7 +161,7 @@ const AlbumsPage = () => {
                   <div className="albums-grid">
                     {filteredAlbums.map((album) => (
                       <div 
-                        key={album.id}
+                        key={album._id}
                         className="album-card"
                         onClick={() => handleAlbumClick(album)}
                       >

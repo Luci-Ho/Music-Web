@@ -52,7 +52,7 @@ export default function CardGrid({
       ) : (
         <div className="grid-container">
           {songs.map((song, index) => (
-            <div className="card" key={song.id ?? index}>
+            <div className="card" key={song._id ?? index}>
               <div className="card-image">
                 <img
                   src={

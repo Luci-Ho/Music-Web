@@ -66,18 +66,18 @@
 //                             const artists = data.artists || [];
 //                             const albums = data.albums || [];
 //                             const artistMap = React.useMemo(
-//                                 () => Object.fromEntries(artists.map(a => [a.id, a.name])),
+//                                 () => Object.fromEntries(artists.map(a => [a._id, a.name])),
 //                                 [artists]
 //                             );
 
 //                             return songs.map((s, i) => {
 //                                 // find album title if an album contains this song id
-//                                 const albumObj = albums.find(al => Array.isArray(al.songs) && al.songs.includes(s.id));
+//                                 const albumObj = albums.find(al => Array.isArray(al.songs) && al.songs.includes(s._id));
 //                                 const albumTitle = albumObj ? albumObj.title : s.album || "-";
 //                                 const artistName = artistMap[s.artistId] || s.artist || "-";
 
 //                                 return (
-//                                     <tr key={s.id} className={"hover:bg-gray-800/30"}>
+//                                     <tr key={s._id} className={"hover:bg-gray-800/30"}>
 //                                         <td className="pl-2 align-middle py-3 text-gray-300">{i + 1}</td>
 //                                         <td className="py-2 ">
 //                                             <div className="flex items-center gap-3">

@@ -35,7 +35,7 @@ const AddToPlaylist = () => {
     try {
       // Find the playlist in user's playlists
       const userPlaylists = user.playlists || [];
-      const playlist = userPlaylists.find(p => p.id === selectedPlaylistId);
+      const playlist = userPlaylists.find(p => p._id === selectedPlaylistId);
       
       if (!playlist) {
         alert('Không tìm thấy playlist!');
@@ -44,7 +44,7 @@ const AddToPlaylist = () => {
 
       // Check if song already exists in playlist
       const songExists = playlist.songs.some(s => 
-        (typeof s === 'string' ? s : s.id) === id
+        (typeof s === 'string' ? s : s._id) === id
       );
 
       if (songExists) {
@@ -54,11 +54,11 @@ const AddToPlaylist = () => {
 
       // Create updated playlists array
       const updatedPlaylists = userPlaylists.map(p => {
-        if (p.id === selectedPlaylistId) {
+        if (p._id === selectedPlaylistId) {
           return {
             ...p,
             songs: [...p.songs, {
-              id: song.id,
+              id: song._id,
               title: song.title,
               artist: song.artist
             }]
@@ -71,7 +71,7 @@ const AddToPlaylist = () => {
       const updatedUser = { ...user, playlists: updatedPlaylists };
 
       // Update backend
-      await axios.patch(`http://localhost:5000/users/${user.id}`, {
+      await axios.patch(`http://localhost:5000/users/${user._id}`, {
         playlists: updatedPlaylists
       });
 
@@ -134,7 +134,7 @@ const AddToPlaylist = () => {
               >
                 <option value="" disabled>-- Chọn playlist --</option>
                 {playlists.map(pl => (
-                  <option key={pl.id} value={pl.id}>{pl.name}</option>
+                  <option key={pl._id} value={pl._id}>{pl.name}</option>
                 ))}
               </select>
 

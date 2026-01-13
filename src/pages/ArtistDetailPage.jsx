@@ -57,11 +57,11 @@ const ArtistDetailPage = () => {
     }
 
     // Otherwise, find artist and songs from data
-    const foundArtist = artists.find(a => a.id === id);
+    const foundArtist = artists.find(a => a._id === id);
     if (foundArtist) {
       const artistSongsData = allSongs.filter(song => 
         song.artist === foundArtist.name || 
-        song.artistId === foundArtist.id ||
+        song.artistId === foundArtist._id ||
         song.artist?.toLowerCase() === foundArtist.name?.toLowerCase()
       );
 
@@ -91,7 +91,7 @@ const ArtistDetailPage = () => {
 
     try {
       const updatedUser = { ...user };
-      const playlistIndex = updatedUser.playlists.findIndex(p => p.id === playlistId);
+      const playlistIndex = updatedUser.playlists.findIndex(p => p._id === playlistId);
       
       if (playlistIndex !== -1) {
         if (!updatedUser.playlists[playlistIndex].songs) {
@@ -101,7 +101,7 @@ const ArtistDetailPage = () => {
         if (!updatedUser.playlists[playlistIndex].songs.includes(songId)) {
           updatedUser.playlists[playlistIndex].songs.push(songId);
           
-          const response = await fetch(`http://localhost:3001/users/${user.id}`, {
+          const response = await fetch(`http://localhost:3001/users/${user._id}`, {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ playlists: updatedUser.playlists })
@@ -141,7 +141,7 @@ const ArtistDetailPage = () => {
       }
       updatedUser.playlists.push(newPlaylist);
 
-      const response = await fetch(`http://localhost:3001/users/${user.id}`, {
+      const response = await fetch(`http://localhost:3001/users/${user._id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ playlists: updatedUser.playlists })
@@ -255,11 +255,11 @@ const ArtistDetailPage = () => {
                       </thead>
                       <tbody className="divide-y divide-gray-700/30">
                         {artistSongs.map((song, index) => {
-                          const isFav = isFavorite(song.id);
+                          const isFav = isFavorite(song._id);
                           
                           return (
                             <tr 
-                              key={song.id || index} 
+                              key={song._id || index} 
                               className="hover:bg-gray-700/20 transition-colors group"
                             >
                               <td className="pl-4 py-3 text-gray-300">{index + 1}</td>
@@ -308,7 +308,7 @@ const ArtistDetailPage = () => {
                                   </button>
                                   
                                   <button
-                                    onClick={() => toggleFavorite(song.id)}
+                                    onClick={() => toggleFavorite(song._id)}
                                     className={`transition-colors p-1 ${isFav ? 'text-red-500' : 'text-gray-400 hover:text-red-500'}`}
                                     title={isFav ? 'Xóa khỏi yêu thích' : 'Thêm vào yêu thích'}
                                   >
@@ -325,7 +325,7 @@ const ArtistDetailPage = () => {
                                         navigate('/login', { state: { from: location } });
                                         return;
                                       }
-                                      setSelectedSongId(song.id);
+                                      setSelectedSongId(song._id);
                                       setShowPlaylistPopup(true);
                                     }}
                                     className="text-gray-400 hover:text-white transition-colors p-1"
@@ -603,10 +603,10 @@ const ArtistDetailPage = () => {
                       const songCount = Array.isArray(playlist.songs) ? playlist.songs.length : 0;
                       return (
                         <div
-                          key={playlist.id}
+                          key={playlist._id}
                           onClick={() => {
                             if (!isInPlaylist) {
-                              addToPlaylist(selectedSongId, playlist.id);
+                              addToPlaylist(selectedSongId, playlist._id);
                             }
                           }}
                           style={{

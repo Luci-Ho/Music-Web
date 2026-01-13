@@ -51,8 +51,8 @@ const ArtistRow = ({ data = [], limit = 6 }) => {
         <div className="artist-row">
           {artistList.map((a, i) => (
             <Link
-              to={`/artist/${a.id}`}
-              key={a.id ?? `${a.name}-${i}`}
+              to={`/artist/${a._id}`}
+              key={a._id ?? `${a.name}-${i}`}
               style={{ textDecoration: 'none' }}
             >
               <ArtistItem artist={a} />
