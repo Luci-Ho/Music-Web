@@ -70,7 +70,7 @@ const FilteredSongsTable = ({ filterType = 'genre', filterId, title }) => {
         
         // favorites doesn't require a filterId — it uses the current user's favorites
         if (filterType === 'favorites') {
-            result = songs.filter(s => Array.isArray(user?.favorites) && user.favorites.includes(s.id));
+            result = songs.filter(s => Array.isArray(user?.favorites) && user.favorites?.includes(s.id));
         } else if (filterType === 'all') {
             // Show all songs
             result = songs;

@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import useAuth from './useAuth';
+import { favoriteService } from '../services/favorite.service';
+
 
 /**
  * Custom hook for managing user favorites
@@ -23,7 +25,9 @@ const useFavorites = () => {
     }
 
     const isFav = favorites.includes(songId);
-    const updated = isFav ? favorites.filter(id => id !== songId) : [...favorites, songId];
+    const updated = isFav 
+      ? favorites.filter(id => id !== songId) 
+      : [...favorites, songId];
     const prev = favorites;
     
     // Optimistic update
@@ -41,13 +45,12 @@ const useFavorites = () => {
 
     // Update backend
     try {
-      const res = await fetch(`http://localhost:4000/users/${user.id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ favorites: updated }),
-      });
+      const res = await favoriteService.toggle(songId);
 
-      if (!res.ok) throw new Error(`Server responded ${res.status}`);
+      const serverFavorites = res.data.favorite;
+
+      setFavorites(serverFavorites);
+      login({ ...user, favorites: serverFavorites });
 
       toast.success(isFav ? 'Đã xóa khỏi yêu thích' : 'Đã thêm vào yêu thích');
     } catch (err) {
