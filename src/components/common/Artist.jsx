@@ -49,15 +49,20 @@ const ArtistRow = ({ data = [], limit = 6 }) => {
         {error && <p className="error">Lỗi: {error}</p>}
 
         <div className="artist-row">
-          {artistList.map((a, i) => (
-            <Link
-              to={`/artist/${a._id}`}
-              key={a._id ?? `${a.name}-${i}`}
-              style={{ textDecoration: 'none' }}
-            >
-              <ArtistItem artist={a} />
-            </Link>
-          ))}
+          {artistList.map((a, i) => {
+            const artistId = a._id || a.legacyId;
+
+            return (
+              <Link
+                to={`/artist/${artistId}`}
+                key={artistId ?? `${a.name}-${i}`}
+                style={{ textDecoration: 'none' }}
+              >
+                <ArtistItem artist={a} />
+              </Link>
+            );
+          })}
+
 
           <Link to={`/artist`} className="aviewall" tabIndex={0}>
             <div className="avaplus">+</div>

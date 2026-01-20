@@ -7,25 +7,28 @@ import formatNumber from '../../hooks/formatNumber';
 import SectionTitle from './SectionTitle';
 import useMatchingInfo from '../../hooks/useMatchingInfo';
 
+import { getAllVideos } from '../../services/video.service';
+
+
 const VideoCard = ({ title, artist, img, views, onClick, videoData }) => {
     const [isHovered, setIsHovered] = useState(false);
 
     return (
-        <div 
-            className="video-card" 
-            onClick={onClick} 
+        <div
+            className="video-card"
+            onClick={onClick}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
-            role={onClick ? 'button' : undefined} 
+            role={onClick ? 'button' : undefined}
             tabIndex={onClick ? 0 : undefined}
         >
             <div className="video-thumbnail">
-                <img 
-                    src={img} 
-                    alt={title} 
+                <img
+                    src={img}
+                    alt={title}
                 />
                 {/* Play overlay khi hover */}
-                <div 
+                <div
                     className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center transition-opacity duration-300"
                     style={{ opacity: isHovered ? 1 : 0 }}
                 >
@@ -54,27 +57,26 @@ const VideoGrid = ({ source = '', title1 = 'Music', title2 = 'Video', onViewAll,
     const { getArtistName } = useMatchingInfo();
 
     const navigateToVideo = (videoData) => {
-        navigate(`/video/${videoData._id}`, { 
-            state: { video: videoData } 
+        navigate(`/video/${videoData.id}`, {
+            state: { video: videoData }
         });
     };
 
     useEffect(() => {
-        // fetch the main data (e.g., videos) from the provided source
-        fetch(`http://localhost:5000/${source || 'videos'}`)
+        setLoading(true);
+
+        getAllVideos()
             .then((res) => {
-                if (!res.ok) throw new Error("Không thể lấy dữ liệu");
-                return res.json();
-            })
-            .then((data) => {
-                setDatas(Array.isArray(data) ? data.slice(0, limit) : []); // giới hạn số bài
-                setLoading(false);
+                const list = Array.isArray(res.data) ? res.data.slice(0, limit) : [];
+                setDatas(list);
             })
             .catch((err) => {
-                setError(err.message);
+                setError(err.response?.data?.message || 'Lỗi tải video');
+            })
+            .finally(() => {
                 setLoading(false);
             });
-    }, [limit, source]);
+    }, [limit]);
 
     // artist list handled by useMatchingInfo
 
@@ -94,23 +96,23 @@ const VideoGrid = ({ source = '', title1 = 'Music', title2 = 'Video', onViewAll,
                                 ? ''
                                 : (getArtistName(artistKey) || String(artistKey));
                             return (
-                                <VideoCard 
-                                    key={v._id ?? `${v.title}-${i}`} 
-                                    title={v.title} 
-                                    artist={artistName} 
-                                    img={v.img} 
-                                    views={v.views}
+                                <VideoCard
+                                    key={v._id}
+                                    title={v.title}
+                                    artist={v.artistId?.name || ''}
+                                    img={v.media?.imgage}
+                                    views={v.viewCount}
                                     videoData={v}
                                     onClick={() => navigateToVideo(v)}
                                 />
                             );
                         })}
-                </div>
-                <div className="vviewall" onClick={() => navigate(`/video/viewall`)} tabIndex={0}>
+                    </div>
+                    <div className="vviewall" onClick={() => navigate(`/video/viewall`)} tabIndex={0}>
                         <div className="vvaplus">+</div>
                         <div className="vvat">View All</div>
+                    </div>
                 </div>
-            </div>
             )}
         </section>
     );

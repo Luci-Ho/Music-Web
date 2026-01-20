@@ -1,4 +1,5 @@
 import { toast } from 'react-toastify';
+import { favoriteService } from '../services/favorite.service';
 
 export const handleFavoriteToggle = async ({
   e,
@@ -16,40 +17,41 @@ export const handleFavoriteToggle = async ({
     e.stopPropagation();
   }
 
-  if (!user || !user._id) {
+  // 🚪 Chưa login → đá qua login
+  if (!user || !user.id) {
     navigate('/login', { state: { from: location } });
     return;
   }
 
+  // 🧠 Lưu trạng thái cũ (để rollback)
+  const prev = favorites;
+
+  // ⚡ Update UI trước cho mượt
   const updated = isFav
     ? favorites.filter(id => id !== songId)
     : [...favorites, songId];
-  const prev = favorites;
+
   setFavorites(updated);
+  login({ ...user, favorites: updated });
 
-  const updatedUser = { ...user, favorites: updated };
-  login(updatedUser);
   try {
-    window.dispatchEvent(new Event('userUpdated'));
-  } catch (err) {}
+    // 🚚 GỌI SERVICE 
+    const res = await favoriteService.toggle(songId);
 
-  const API_USERS = 'http://localhost:5000/users';
-  try {
-    const res = await fetch(`${API_USERS}/${user._id}`, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ favorites: updated }),
-    });
+    // 🔁 Backend trả favorites mới (chuẩn nhất)
+    const newFavorites = res.data.favorites;
 
-    if (!res.ok) throw new Error(`Server responded ${res.status}`);
-    toast.success(isFav ? 'Removed from favorites' : 'Added to favorites');
+    setFavorites(newFavorites);
+    login({ ...user, favorites: newFavorites });
+
+    toast.success(
+      isFav ? 'Đã bỏ khỏi yêu thích' : 'Đã thêm vào yêu thích'
+    );
   } catch (err) {
+    // 🔙 Nếu lỗi → quay về như cũ
     setFavorites(prev);
-    const rollbackUser = { ...user, favorites: prev };
-    login(rollbackUser);
-    try {
-      window.dispatchEvent(new Event('userUpdated'));
-    } catch (e) {}
-    toast.error('Không thể cập nhật yêu thích. Vui lòng thử lại.');
+    login({ ...user, favorites: prev });
+
+    toast.error('Không thể cập nhật yêu thích 😭');
   }
 };

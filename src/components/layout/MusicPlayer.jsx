@@ -49,7 +49,8 @@ export default function MusicPlayer() {
     setFavorites(user && Array.isArray(user.favorites) ? user.favorites : []);
   }, [user]);
 
-  const isFav = currentSong?._id && favorites.includes(currentSong._id);
+  const isFav = 
+    currentSong?.id && (favorites ?? []).includes(currentSong.id);
 
   const handleToggleFavorite = (e) => {
     handleFavoriteToggle({

@@ -9,74 +9,94 @@ import SubmitButton from '../components/UserAccess/SubmitButton';
 import AuthForm from '../components/UserAccess/AuthForm';
 import '../style/LoginAndSignUp.css';
 
+import { authService } from '../services/auth.service';
+
 const logoImage = "https://res.cloudinary.com/da4y5zf5k/image/upload/v1751044695/logo-no-background_1_z7njh8.png";
 // const backIcon = "https://res.cloudinary.com/da4y5zf5k/image/upload/v1751041190/ooui_next-ltr_np1svd.png";
-const API_URL = 'http://localhost:5000/users';
+// const API_URL = 'http://localhost:4000/users';
 
 const SignUp = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(false);
     const [form] = Form.useForm();
 
+    // const handleSubmit = async (values) => {
+    //     const { username, email, password, phone } = values;
+    //     console.log("Dữ liệu form:", values); // 👈 kiểm tra đầu vào
+    //     setLoading(true);
+
+    //     try {
+    //         // Kiểm tra email đã tồn tại chưa
+    //         const checkRes = await fetch(API_URL);
+    //         const allUsers = await checkRes.json();
+    //         const emailExists = allUsers.some(user => user.email === email);
+
+    //         if (emailExists) {
+    //             alert('Email này đã được sử dụng!');
+    //             setLoading(false);
+    //             return;
+    //         }
+
+
+    //         // Gửi dữ liệu đăng ký với favorites và playlists mặc định
+    //         const newUser = {
+    //             username, 
+    //             email, 
+    //             password, 
+    //             phone,
+    //             level: 'l3', // User level mặc định
+    //             favorites: [],
+    //             playlists: [
+    //                 {
+    //                     id: `${Date.now()}_1`,
+    //                     name: "Yêu thích của tôi",
+    //                     songs: []
+    //                 }
+    //             ]
+    //         };
+
+    //         const res = await fetch(API_URL, {
+    //             method: 'POST',
+    //             headers: { 'Content-Type': 'application/json' },
+    //             body: JSON.stringify(newUser),
+    //         });
+
+    //         console.log("Kết quả trả về từ API:", res);
+
+    //         if (!res.ok) {
+    //             console.error("API trả về lỗi:", res.status);
+    //             throw new Error('Đăng ký thất bại');
+    //         }
+
+    //         const result = await res.json();
+    //         console.log("Kết quả trả về từ API:", result);
+
+    //         toast.success('Tạo tài khoản thành công!');
+    //         navigate('/login', { state: { redirectTo: '/' } });
+    //     } catch (err) {
+    //         toast.error(`Lỗi: ${err.message}`);
+    //     }
+
+
+    //     setLoading(false);
+    // };
+
     const handleSubmit = async (values) => {
-        const { username, email, password, phone } = values;
-        console.log("Dữ liệu form:", values); // 👈 kiểm tra đầu vào
         setLoading(true);
 
         try {
-            // Kiểm tra email đã tồn tại chưa
-            const checkRes = await fetch(API_URL);
-            const allUsers = await checkRes.json();
-            const emailExists = allUsers.some(user => user.email === email);
-
-            if (emailExists) {
-                alert('Email này đã được sử dụng!');
-                setLoading(false);
-                return;
-            }
-
-
-            // Gửi dữ liệu đăng ký với favorites và playlists mặc định
-            const newUser = {
-                username, 
-                email, 
-                password, 
-                phone,
-                level: 'l3', // User level mặc định
-                favorites: [],
-                playlists: [
-                    {
-                        id: `${Date.now()}_1`,
-                        name: "Yêu thích của tôi",
-                        songs: []
-                    }
-                ]
-            };
-
-            const res = await fetch(API_URL, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(newUser),
-            });
-
-            console.log("Kết quả trả về từ API:", res);
-
-            if (!res.ok) {
-                console.error("API trả về lỗi:", res.status);
-                throw new Error('Đăng ký thất bại');
-            }
-
-            const result = await res.json();
-            console.log("Kết quả trả về từ API:", result);
+            await authService.signup(values);
 
             toast.success('Tạo tài khoản thành công!');
             navigate('/login', { state: { redirectTo: '/' } });
         } catch (err) {
-            toast.error(`Lỗi: ${err.message}`);
+            const message =
+                err.response?.data?.message || 'Đăng ký thất bại';
+
+            toast.error(message);
+        } finally {
+            setLoading(false);
         }
-
-
-        setLoading(false);
     };
 
     return (

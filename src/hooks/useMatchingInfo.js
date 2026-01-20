@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import api from '../services/api';
 
 // Hook: useMatchingInfo
 // Fetches matching datasets used across components (currently: artists)
@@ -22,37 +23,31 @@ export default function useMatchingInfo() {
     const fetchArtists = useCallback(() => {
         setLoadingArtists(true);
         setErrorArtists(null);
-        fetch('http://localhost:5000/artists')
-            .then((res) => {
-                if (!res.ok) throw new Error('Tìm Nghệ Sĩ Không Ra');
-                return res.json();
-            })
-            .then((data) => {
-                setArtists(Array.isArray(data) ? data : []);
-                setLoadingArtists(false);
-            })
-            .catch((err) => {
-                setArtists([]);
-                setErrorArtists(err?.message ?? String(err));
-                setLoadingArtists(false);
-            });
-    }, []);
+
+         api.get('/artists')
+    .then((res) => {
+      setArtists(Array.isArray(res.data) ? res.data : []);
+      setLoadingArtists(false);
+    })
+    .catch((err) => {
+      setArtists([]);
+      setErrorArtists(err?.response?.data?.message || err.message);
+      setLoadingArtists(false);
+    });
+}, []);
 
     const fetchAlbums = useCallback(() => {
         setLoadingAlbums(true);
         setErrorAlbums(null);
-        fetch('http://localhost:5000/albums')
+
+        api.get('/albums')
             .then((res) => {
-                if (!res.ok) throw new Error('Tìm Album Không Ra');
-                return res.json();
-            })
-            .then((data) => {
-                setAlbums(Array.isArray(data) ? data : []);
+                setAlbums(Array.isArray(res.data) ? res.data : []);
                 setLoadingAlbums(false);
             })
             .catch((err) => {
                 setAlbums([]);
-                setErrorAlbums(err?.message ?? String(err));
+                setErrorAlbums(err?.response?.data?.message ?? String(err));
                 setLoadingAlbums(false);
             });
     }, []);
@@ -60,18 +55,15 @@ export default function useMatchingInfo() {
     const fetchGenres = useCallback(() => {
         setLoadingGenres(true);
         setErrorGenres(null);
-        fetch('http://localhost:5000/genres')
-            .then((res) => {
-                if (!res.ok) throw new Error('Tìm Thể Loại Không Ra');
-                return res.json();
-            })
-            .then((data) => {
-                setGenres(Array.isArray(data) ? data : []);
+
+        api.get('/genres')
+                .then((res) => {
+                setGenres(Array.isArray(res.data) ? res.data : []);
                 setLoadingGenres(false);
             })
             .catch((err) => {
                 setGenres([]);
-                setErrorGenres(err?.message ?? String(err));
+                setErrorGenres(err?.response?.data?.message ?? String(err));
                 setLoadingGenres(false);
             });
     }, []);

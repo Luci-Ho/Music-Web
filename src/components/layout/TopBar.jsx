@@ -6,6 +6,8 @@ import { useNavigate } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 import use10Clicks from '../../hooks/use10Clicks';
 
+import api from '../../services/api';
+
 const TopBar = () => {
   const navigate = useNavigate();
   const { user, isLoggedIn } = useAuth();
@@ -27,26 +29,43 @@ const TopBar = () => {
   // Fetch songs and artists once
   useEffect(() => {
     const fetchData = async () => {
-      const [songsRes, artistsRes] = await Promise.all([
-        fetch('http://localhost:5000/api/songs'),
-        fetch('http://localhost:5000/api/artists')
-      ]);
-      setSongs(await songsRes.json());
-      setArtists(await artistsRes.json());
+      try {
+        const [songsRes, artistsRes] = await Promise.all([
+          api.get('/songs', { params: { limit: 1000 } }),
+          api.get('/artists', { params: { limit: 1000 } })
+        ]);
+
+        setSongs(songsRes.data.data || []);
+        setArtists(artistsRes.data.data || []);
+      } catch (error) {
+        console.error('TopBar fetch error:', error);
+      }
     };
+
     fetchData();
   }, []);
 
+
   // Join artist name into songs
   const songsWithArtistName = useMemo(() => {
-    return songs.map(song => {
-      const artist = artists.find(a => a._id === song.artistId);
-      return {
-        ...song,
-        artist: artist?.name || ''
-      };
-    });
-  }, [songs, artists]);
+  return songs.map(song => {
+    const artistId =
+      typeof song.artistId === 'object'
+        ? song.artistId._id
+        : song.artistId;
+
+    const artist = artists.find(
+      a => a._id === artistId || a.legacyId === artistId
+    );
+
+    return {
+      ...song,
+      id: song._id,
+      artist: song.artistId?.name || artist?.name || 'Unknown Artist'
+    };
+  });
+}, [songs, artists]);
+
 
   // Normalize keyword
   const normalizedKeyword = useMemo(() => {
@@ -109,7 +128,7 @@ const TopBar = () => {
         <p>Premium</p>
       </div> */}
       <div className="text-4xl font-bold bg-gradient-to-r from-[#ff6b6b] to-[#45b7d1] bg-clip-text text-transparent flex items-center">
-          <small>{user ? `Hi, ${user.username}! 🎶` : 'Melodies – Where music connects emotions'}</small>
+        <small>{user ? `Hi, ${user.username}! 🎶` : 'Melodies – Where music connects emotions'}</small>
       </div>
 
       <div className="TopBar-Menu">
