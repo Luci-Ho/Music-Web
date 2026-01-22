@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import useAuth from './useAuth';
-import { favoriteService } from '../services/favorite.service';
-
+import favoriteService from '../services/favorite.service';
 
 /**
  * Custom hook for managing user favorites
@@ -12,11 +11,20 @@ const useFavorites = () => {
   const { user, login, isLoggedIn } = useAuth();
   const [favorites, setFavorites] = useState([]);
 
+  // Load favorites từ backend khi user thay đổi
   useEffect(() => {
-    if (user && Array.isArray(user.favorites)) {
-      setFavorites(user.favorites);
-    }
-  }, [user]);
+    const fetchFavorites = async () => {
+      if (!isLoggedIn) return;
+      try {
+        const res = await favoriteService.getFavorites();
+        setFavorites(res.data); // backend trả về mảng favorites
+        login({ ...user, favorites: res.data });
+      } catch (err) {
+        toast.error('❌ Không thể tải danh sách yêu thích');
+      }
+    };
+    fetchFavorites();
+  }, [isLoggedIn, user, login]);
 
   const toggleFavorite = async (songId) => {
     if (!isLoggedIn) {
@@ -24,57 +32,53 @@ const useFavorites = () => {
       return;
     }
 
-    const isFav = favorites.includes(songId);
-    const updated = isFav 
-      ? favorites.filter(id => id !== songId) 
+    const isFav = favorites.some(fav => fav._id === songId || fav === songId);
+    const updated = isFav
+      ? favorites.filter(fav => (fav._id || fav) !== songId)
       : [...favorites, songId];
     const prev = favorites;
-    
+
     // Optimistic update
     setFavorites(updated);
-
-    // Update user
-    const updatedUser = { ...user, favorites: updated };
-    login(updatedUser);
+    login({ ...user, favorites: updated });
 
     try {
-      window.dispatchEvent(new Event('userUpdated'));
-    } catch (err) {
-      /* ignore */
-    }
+      const res = await favoriteService.toggleFavorite(songId);
 
-    // Update backend
-    try {
-      const res = await favoriteService.toggle(songId);
-
-      const serverFavorites = res.data.favorite;
-
+      const serverFavorites = res.data.favorites; // backend trả về { action, favorites }
       setFavorites(serverFavorites);
       login({ ...user, favorites: serverFavorites });
 
-      toast.success(isFav ? 'Đã xóa khỏi yêu thích' : 'Đã thêm vào yêu thích');
+      toast.success(res.data.action === 'added'
+        ? ' Đã thêm vào yêu thích'
+        : ' Đã xóa khỏi yêu thích'
+      );
     } catch (err) {
+      console.error("Toggle favorite failed:", err);
+
       // Rollback
       setFavorites(prev);
       const rollbackUser = { ...user, favorites: prev };
       login(rollbackUser);
-      
+
       try {
         window.dispatchEvent(new Event('userUpdated'));
       } catch (e) {
-        /* ignore */
+        console.error("Dispatch userUpdated failed:", e);
       }
-      
+
       toast.error('Không thể cập nhật yêu thích. Vui lòng thử lại.');
     }
+
   };
 
-  const isFavorite = (songId) => favorites.includes(songId);
+  const isFavorite = (songId) =>
+    favorites.some(fav => fav._id === songId || fav === songId);
 
   return {
     favorites,
     toggleFavorite,
-    isFavorite
+    isFavorite,
   };
 };
 
