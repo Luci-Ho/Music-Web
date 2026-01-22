@@ -28,9 +28,25 @@ const API_BASE = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api
 
 /** ---------- Helpers ---------- */
 const toId = (v) => {
-  if (!v) return "";
+  if (v === null || v === undefined) return "";
   if (typeof v === "string") return v;
-  if (typeof v === "object") return String(v._id || v.id || v.legacyId || "");
+  if (typeof v === "number") return String(v);
+
+  // handle Mongo EJSON: { $oid: "..." }
+  if (typeof v === "object") {
+    const obj = v;
+    if (obj.$oid) return String(obj.$oid);
+
+    // common id shapes (recursive)
+    return (
+      toId(obj._id) ||
+      toId(obj.id) ||
+      toId(obj.legacyId) ||
+      toId(obj.value) ||
+      ""
+    );
+  }
+
   return String(v);
 };
 
@@ -53,7 +69,7 @@ const normalizeArray = (json) => {
 };
 
 const displayId = (tag) =>
-  tag?.legacyId || tag?.id || (tag?._id ? String(tag._id).slice(-6) : "—");
+  tag?.legacyId || tag?.id || (toId(tag?._id) ? String(toId(tag?._id)).slice(-6) : "—");
 
 const songLabel = (song) => {
   const title = song?.title || "Untitled";
@@ -73,7 +89,7 @@ const songLabel = (song) => {
     song?.albumId?.title ||
     "";
 
-  // format như hình bạn gửi: Title • Artist • Genre • Album
+  // format: Title • Artist • Genre • Album
   const parts = [title, artist, genre, album].filter(Boolean);
   return parts.join(" • ");
 };
@@ -140,33 +156,56 @@ export default function TagsView() {
 
   /** ---------- Association logic (IMPORTANT) ---------- */
   const getSongTagId = (song, type) => {
-    if (type === "genre") return toId(song?.genreId?._id ? song.genreId : song?.genreId);
-    if (type === "artist") return toId(song?.artistId?._id ? song.artistId : song?.artistId);
-    if (type === "album") return toId(song?.albumId?._id ? song.albumId : song?.albumId);
+    if (!song) return "";
+
+    // ưu tiên xxxId, fallback xxx (populated)
+    const pick = (a, b) => (a !== undefined && a !== null ? a : b);
+
+    if (type === "genre") {
+      const v = pick(song?.genreId, song?.genre);
+      return toId(v);
+    }
+    if (type === "artist") {
+      const v = pick(song?.artistId, song?.artist);
+      return toId(v);
+    }
+    if (type === "album") {
+      const v = pick(song?.albumId, song?.album);
+      return toId(v);
+    }
     return "";
   };
 
+  const asLower = (v) => {
+    if (!v) return "";
+    if (typeof v === "string") return v.toLowerCase();
+    if (typeof v === "object") {
+      return String(v.title || v.name || v.label || "").toLowerCase();
+    }
+    return String(v).toLowerCase();
+  };
+
   const isSongBelongsToTag = (song, type, tag) => {
-    const tagId = toId(tag?._id);
+    const tagId = toId(tag);
     const songTagId = getSongTagId(song, type);
 
-    // primary match by ObjectId
+    // match bằng ObjectId
     if (tagId && songTagId && String(tagId) === String(songTagId)) return true;
 
     // fallback cho data legacy (nếu còn)
     if (type === "genre") {
-      const t = (tag?.title || "").toLowerCase();
-      const s = (song?.genre || "").toLowerCase();
+      const t = asLower(tag?.title);
+      const s = asLower(song?.genre) || asLower(song?.genreTitle);
       if (t && s && s === t) return true;
     }
     if (type === "artist") {
-      const t = (tag?.name || "").toLowerCase();
-      const s = (song?.artist || song?.artistName || "").toLowerCase();
+      const t = asLower(tag?.name);
+      const s = asLower(song?.artist) || asLower(song?.artistName);
       if (t && s && s === t) return true;
     }
     if (type === "album") {
-      const t = (tag?.title || "").toLowerCase();
-      const s = (song?.album || song?.albumTitle || "").toLowerCase();
+      const t = asLower(tag?.title);
+      const s = asLower(song?.album) || asLower(song?.albumTitle);
       if (t && s && s === t) return true;
     }
 
@@ -180,7 +219,7 @@ export default function TagsView() {
 
     ["genre", "artist", "album"].forEach((type) => {
       all.forEach((song) => {
-        const sid = toId(song?._id);
+        const sid = toId(song?._id || song?.id || song?.legacyId);
         if (!sid) return;
 
         const tagId = getSongTagId(song, type);
@@ -196,7 +235,7 @@ export default function TagsView() {
   }, [songs]);
 
   const getAssociatedSongs = (type, tag) => {
-    const tid = String(toId(tag?._id));
+    const tid = String(toId(tag));
     const list = songsOfTag?.[type]?.get(tid) || [];
 
     // fallback scan nếu chưa map được (data legacy)
@@ -215,7 +254,7 @@ export default function TagsView() {
       form.setFieldsValue(item);
 
       const associated = getAssociatedSongs(type, item);
-      const ids = associated.map((s) => String(s._id)).filter(Boolean);
+      const ids = associated.map((s) => toId(s?._id || s?.id || s?.legacyId)).filter(Boolean);
       setSelectedSongs(ids);
     } else {
       form.resetFields();
@@ -256,7 +295,7 @@ export default function TagsView() {
 
       if (editingItem) {
         // update tag info
-        const res = await fetch(`${ep}/${editingItem._id}`, {
+        const res = await fetch(`${ep}/${toId(editingItem)}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ ...editingItem, ...values }),
@@ -279,15 +318,17 @@ export default function TagsView() {
 
       // update song associations (add + remove)
       const currentlyAssociatedIds = editingItem
-        ? getAssociatedSongs(modalType, editingItem).map((s) => String(s._id))
+        ? getAssociatedSongs(modalType, editingItem)
+            .map((s) => toId(s?._id || s?.id || s?.legacyId))
+            .filter(Boolean)
         : [];
 
-      const nextIds = selectedSongs.map(String);
+      const nextIds = selectedSongs.map(String).filter(Boolean);
 
       const toAdd = nextIds.filter((id) => !currentlyAssociatedIds.includes(id));
       const toRemove = currentlyAssociatedIds.filter((id) => !nextIds.includes(id));
 
-      const tagId = savedTag._id;
+      const tagId = toId(savedTag);
 
       // what to set in song
       const setBody =
@@ -297,7 +338,6 @@ export default function TagsView() {
           ? { artistId: tagId, isHidden: false }
           : { albumId: tagId, isHidden: false };
 
-      // remove: set null + hide to go undefined list
       const removeBody =
         modalType === "genre"
           ? { genreId: null, isHidden: true }
@@ -324,7 +364,7 @@ export default function TagsView() {
       const ep = endpointForType(type);
 
       const associated = getAssociatedSongs(type, item);
-      const ids = associated.map((s) => String(s._id));
+      const ids = associated.map((s) => toId(s?._id || s?.id || s?.legacyId)).filter(Boolean);
 
       const removeBody =
         type === "genre"
@@ -335,7 +375,7 @@ export default function TagsView() {
 
       await Promise.all(ids.map((id) => patchSong(id, removeBody)));
 
-      await fetch(`${ep}/${item._id}`, { method: "DELETE" });
+      await fetch(`${ep}/${toId(item)}`, { method: "DELETE" });
 
       message.success(`${type} deleted. ${ids.length} songs moved to undefined/hidden.`);
       loadData();
@@ -357,7 +397,7 @@ export default function TagsView() {
 
     return {
       items: associated.slice(0, 30).map((s) => ({
-        key: String(s._id),
+        key: toId(s?._id || s?.id || s?.legacyId),
         label: s.title || "(untitled)",
       })),
     };
@@ -370,41 +410,46 @@ export default function TagsView() {
       key: "id",
       width: 120,
       align: "center",
-      render: (_, record) => <span style={{ fontFamily: "monospace" }}>{displayId(record)}</span>,
+      render: (_, record) => (
+        <span style={{ fontFamily: "monospace" }}>{displayId(record)}</span>
+      ),
     },
     {
-      title: type === "artist" ? "Name" : "Title",
+      title: type === "artist" ? "Artist Name" : "Title",
+      dataIndex: tagNameField(type),
       key: "name",
-      width: 240,
-      ellipsis: true,
-      render: (_, record) => record?.[type === "artist" ? "name" : "title"] || "—",
+      render: (v) => <b>{v || "—"}</b>,
     },
     {
       title: "Songs Count",
-      key: "songsCount",
-      width: 140,
+      key: "count",
+      width: 130,
       align: "center",
       render: (_, record) => {
         const count = getAssociatedSongs(type, record).length;
-        return <Tag color={count === 0 ? "red" : "blue"}>{count}</Tag>;
+        return <Tag color={count >= 3 ? "green" : "orange"}>{count}</Tag>;
       },
+    },
+    {
+      title: "View",
+      key: "view",
+      width: 150,
+      align: "center",
+      render: (_, record) => (
+        <Dropdown menu={getSongsDropdown(type, record)} trigger={["click"]}>
+          <Button icon={<EyeOutlined />} size="small">
+            View <DownOutlined />
+          </Button>
+        </Dropdown>
+      ),
     },
     {
       title: "Actions",
       key: "actions",
-      width: 280,
+      width: 240,
+      align: "center",
       render: (_, record) => (
-        <Space size="small">
-          <Dropdown
-            menu={getSongsDropdown(type, record)}
-            trigger={["click"]}
-            placement="bottomLeft"
-          >
-            <Button icon={<EyeOutlined />} size="small">
-              View <DownOutlined />
-            </Button>
-          </Dropdown>
-
+        <Space>
           {(isAdmin() || isModerator()) && (
             <Button
               icon={<EditOutlined />}
@@ -420,7 +465,6 @@ export default function TagsView() {
               title={`Delete this ${type}?`}
               description="Associated songs will be moved to undefined/hidden."
               okText="Yes"
-              نشان
               cancelText="No"
               onConfirm={() => deleteItem(type, record)}
             >
@@ -447,7 +491,11 @@ export default function TagsView() {
         <Card>
           {isAdmin() && (
             <div className="mb-4 flex justify-end">
-              <Button type="primary" icon={<PlusOutlined />} onClick={() => showModal("genre")}>
+              <Button
+                type="primary"
+                icon={<PlusOutlined />}
+                onClick={() => showModal("genre")}
+              >
                 Add Genre
               </Button>
             </div>
@@ -455,7 +503,7 @@ export default function TagsView() {
           <Table
             columns={getColumns("genre")}
             dataSource={genres}
-            rowKey={(r) => r._id}
+            rowKey={(r) => toId(r?._id || r?.id || r?.legacyId || r)}
             loading={loading}
             pagination={{ pageSize: 10, showSizeChanger: false }}
             scroll={{ x: 700 }}
@@ -471,7 +519,11 @@ export default function TagsView() {
         <Card>
           {isAdmin() && (
             <div className="mb-4 flex justify-end">
-              <Button type="primary" icon={<PlusOutlined />} onClick={() => showModal("album")}>
+              <Button
+                type="primary"
+                icon={<PlusOutlined />}
+                onClick={() => showModal("album")}
+              >
                 Add Album
               </Button>
             </div>
@@ -479,7 +531,7 @@ export default function TagsView() {
           <Table
             columns={getColumns("album")}
             dataSource={albums}
-            rowKey={(r) => r._id}
+            rowKey={(r) => toId(r?._id || r?.id || r?.legacyId || r)}
             loading={loading}
             pagination={{ pageSize: 10, showSizeChanger: false }}
             scroll={{ x: 700 }}
@@ -495,7 +547,11 @@ export default function TagsView() {
         <Card>
           {isAdmin() && (
             <div className="mb-4 flex justify-end">
-              <Button type="primary" icon={<PlusOutlined />} onClick={() => showModal("artist")}>
+              <Button
+                type="primary"
+                icon={<PlusOutlined />}
+                onClick={() => showModal("artist")}
+              >
                 Add Artist
               </Button>
             </div>
@@ -503,7 +559,7 @@ export default function TagsView() {
           <Table
             columns={getColumns("artist")}
             dataSource={artists}
-            rowKey={(r) => r._id}
+            rowKey={(r) => toId(r?._id || r?.id || r?.legacyId || r)}
             loading={loading}
             pagination={{ pageSize: 10, showSizeChanger: false }}
             scroll={{ x: 700 }}
@@ -518,10 +574,13 @@ export default function TagsView() {
     <div className="p-6">
       <style>{`
         .white-tabs .ant-tabs-tab { color: white !important; transition: all .3s ease; }
-        .white-tabs .ant-tabs-tab:hover { color: #EE10B0 !important; text-shadow: 0 0 8px #EE10B0, 0 0 16px #EE10B0; transform: translateY(-2px); }
-        .white-tabs .ant-tabs-tab-active,
-        .white-tabs .ant-tabs-tab-active .ant-tabs-tab-btn { color: #EE10B0 !important; text-shadow: 0 0 10px #EE10B0, 0 0 20px #EE10B0; }
-        .white-tabs .ant-tabs-ink-bar { background: linear-gradient(90deg, #EE10B0, #ff69b4) !important; box-shadow: 0 0 10px #EE10B0; height: 3px !important; }
+        .white-tabs .ant-tabs-tab-active .ant-tabs-tab-btn { color: white !important; font-weight: 700; }
+        .white-tabs .ant-tabs-ink-bar { background: white !important; }
+        .ant-card { background: rgba(255,255,255,.08) !important; border: 1px solid rgba(255,255,255,.16) !important; }
+        .ant-table { background: transparent !important; }
+        .ant-table-thead > tr > th { background: rgba(255,255,255,.06) !important; color: rgba(255,255,255,.92) !important; }
+        .ant-table-tbody > tr > td { background: transparent !important; color: rgba(255,255,255,.88) !important; }
+        .ant-table-tbody > tr:hover > td { background: rgba(255,255,255,.06) !important; }
       `}</style>
 
       <h2 className="text-2xl font-bold mb-2">Tags Management</h2>
@@ -539,61 +598,44 @@ export default function TagsView() {
 
       {/* Modal */}
       <Modal
-        title={`${editingItem ? "Edit" : "Add"} ${modalType}`}
+        title={`${editingItem ? "Edit" : "Create"} ${modalType}`}
         open={isModalVisible}
         onOk={handleModalOk}
         onCancel={closeModal}
-        width={800}
-        okText={editingItem ? "Update" : "Create"}
+        okText={editingItem ? "Save" : "Create"}
+        cancelText="Cancel"
+        width={720}
       >
         <Form form={form} layout="vertical">
           <Form.Item
-            label={modalType === "artist" ? "Name" : "Title"}
-            name={modalType === "artist" ? "name" : "title"}
-            rules={[{ required: true, message: "Please input the name!" }]}
+            label={modalType === "artist" ? "Artist Name" : "Title"}
+            name={tagNameField(modalType)}
+            rules={[{ required: true, message: "Required" }]}
           >
-            <Input />
-          </Form.Item>
-
-          {modalType === "album" && (
-            <Form.Item
-              label="Artist"
-              name="artistId"
-              rules={[{ required: true, message: "Please select an artist!" }]}
-            >
-              <Select placeholder="Select an artist">
-                {artists.map((a) => (
-                  <Option key={a._id} value={a._id}>
-                    {a.name}
-                  </Option>
-                ))}
-              </Select>
-            </Form.Item>
-          )}
-
-          <Form.Item label="Image URL" name="img">
-            <Input placeholder="https://example.com/image.jpg" />
+            <Input placeholder={modalType === "artist" ? "e.g. Sơn Tùng M-TP" : "e.g. Indie Track"} />
           </Form.Item>
 
           <Form.Item
-            label={`Select Songs (${editingItem ? `current: ${selectedSongs.length}` : "minimum 3 required"})`}
-            required={!editingItem}
+            label="Assign Songs (at least 3 for creating)"
+            tooltip="Songs not selected will be moved to undefined/hidden when removed"
           >
             <Select
               mode="multiple"
-              placeholder="Select songs"
+              placeholder="Select songs..."
               value={selectedSongs}
-              onChange={(v) => setSelectedSongs(v)}
-              optionFilterProp="children"
-              maxTagCount={5}
-              className="w-full"
+              onChange={setSelectedSongs}
+              style={{ width: "100%" }}
               showSearch
+              optionFilterProp="children"
               filterOption={(input, option) =>
                 String(option?.children || "").toLowerCase().includes(input.toLowerCase())
               }
             >
               {availableSongs.map((s) => (
-                <Option key={String(s._id)} value={String(s._id)}>
+                <Option
+                  key={toId(s?._id || s?.id || s?.legacyId)}
+                  value={toId(s?._id || s?.id || s?.legacyId)}
+                >
                   {songLabel(s)}
                 </Option>
               ))}
