@@ -25,7 +25,7 @@ const EditSongModal = ({ visible, onCancel, onSubmit, onSuccess, editingRecord, 
     // Update song directly via API
     const updateSongDirectly = async (songData) => {
         try {
-            const API_BASE = process.env.REACT_APP_API_BASE || 'http://localhost:5000/api';
+            const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';
             // Try PATCH first (partial update)
             let response = await fetch(`${API_BASE}/songs/${songData._id}`, {
                 method: 'PATCH',
@@ -102,7 +102,7 @@ const EditSongModal = ({ visible, onCancel, onSubmit, onSuccess, editingRecord, 
                         img: "https://via.placeholder.com/150?text=New+Artist"
                     };
 
-                    const API_BASE = process.env.REACT_APP_API_BASE || 'http://localhost:5000/api';
+                    const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5000/api';
                     const response = await fetch(`${API_BASE}/artists`, {
                         method: 'POST',
                         headers: {

@@ -1,129 +1,84 @@
-import React, { useState, useEffect } from 'react';
-import { Table, Space, Button, Tag, Select, message } from 'antd';
-import { useAuth } from '../context/AuthContext';
+import React, { useState } from "react";
+import { Table, Space, Button, Tag, Select, message } from "antd";
+import { useAuth } from "../context/AuthContext";
+import { adminUpdateUser } from "../api/admin.user.api";
 
-export default function UsersTable({ users, onUserUpdate }) {
-    const { canManageUsers } = useAuth();
-    const [levels, setLevels] = useState([]);
-    const [updating, setUpdating] = useState({});
-    
-    // Fetch levels from backend (Mongoose-based API)
-    useEffect(() => {
-        fetchLevels();
-    }, []);
+export default function UsersTable({ users = [], onUserUpdate }) {
+  const { canManageUsers } = useAuth();
+  const [updating, setUpdating] = useState({});
 
-    const API_BASE = process.env.REACT_APP_API_BASE || 'http://localhost:5000/api';
+  const roleTag = (role) => {
+    switch (role) {
+      case "admin": return <Tag color="red">Admin</Tag>;
+      case "moderator": return <Tag color="orange">Moderator</Tag>;
+      default: return <Tag color="blue">User</Tag>;
+    }
+  };
 
-    const fetchLevels = async () => {
-        try {
-            const response = await fetch(`${API_BASE}/levels`);
-            if (!response.ok) throw new Error(`Failed to load levels: ${response.status}`);
-            const levelsData = await response.json();
-            setLevels(levelsData);
-        } catch (error) {
-            console.error('Error fetching levels:', error);
-        }
-    };
+  const handleRoleChange = async (userId, newRole) => {
+    setUpdating((p) => ({ ...p, [userId]: true }));
+    try {
+      await adminUpdateUser(userId, { role: newRole });
+      message.success("User role updated!");
+      onUserUpdate?.();
+    } catch (e) {
+      console.error(e);
+      message.error("Failed to update user role");
+    } finally {
+      setUpdating((p) => ({ ...p, [userId]: false }));
+    }
+  };
 
-    // Map level to role name and color using API data
-    const getLevelRole = (levelId) => {
-        const level = levels.find(l => l._id === levelId);
-        if (!level) return { text: 'Unknown', color: 'gray' };
-        
-        switch (level.name) {
-            case 'Admin': return { text: 'Admin', color: 'red' };
-            case 'Moderator': return { text: 'Moderator', color: 'orange' };
-            case 'User': return { text: 'User', color: 'blue' };
-            default: return { text: level.name, color: 'gray' };
-        }
-    };
+  const columns = [
+    {
+      title: "ID",
+      dataIndex: "_id",
+      width: 140,
+      render: (id) => (
+        <span style={{ fontFamily: "monospace" }} title={id}>
+          {id ? String(id).slice(-8) : "—"}
+        </span>
+      ),
+    },
+    { title: "Username", dataIndex: "username" },
+    { title: "Email", dataIndex: "email" },
+    { title: "Phone", dataIndex: "phone" },
+    {
+      title: "Role",
+      dataIndex: "role",
+      render: (role) => roleTag(role),
+    },
+    {
+      title: "Action",
+      width: 260,
+      render: (_, record) => (
+        <Space>
+          <Button size="small" type="primary">View</Button>
 
-    // Check if current user is admin (assuming we get this from context or props)
-    const isCurrentUserAdmin = () => {
-        return canManageUsers();
-    };
+          {canManageUsers() && (
+            <Select
+              size="small"
+              value={record.role}
+              style={{ width: 130 }}
+              onChange={(value) => handleRoleChange(record._id, value)}
+              loading={!!updating[record._id]}
+            >
+              <Select.Option value="admin">admin</Select.Option>
+              <Select.Option value="moderator">moderator</Select.Option>
+              <Select.Option value="user">user</Select.Option>
+            </Select>
+          )}
+        </Space>
+      ),
+    },
+  ];
 
-    // Handle promotion (level change)
-    const handlePromotion = async (userId, newLevelId) => {
-        setUpdating(prev => ({ ...prev, [userId]: true }));
-        
-        try {
-            const response = await fetch(`${API_BASE}/users/${userId}`, {
-                method: 'PATCH',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ level: newLevelId })
-            });
-
-            if (response.ok) {
-                message.success('User level updated successfully!');
-                if (onUserUpdate) onUserUpdate();
-            } else {
-                message.error('Failed to update user level');
-            }
-        } catch (error) {
-            console.error('Error updating user level:', error);
-            message.error('Error updating user level');
-        } finally {
-            setUpdating(prev => ({ ...prev, [userId]: false }));
-        }
-    };
-
-    // Get action buttons based on user level and permissions
-    const getActionButtons = (record) => {
-        const isAdmin = isCurrentUserAdmin();
-        
-        return (
-            <Space>
-                <Button size="small" type="primary">View</Button>
-                {isAdmin && (
-                    <Select
-                        size="small"
-                        value={record.level}
-                        style={{ width: 100 }}
-                        onChange={(value) => handlePromotion(record._id, value)}
-                        loading={updating[record._id]}
-                        placeholder="Promote"
-                    >
-                        {levels.map(level => (
-                            <Select.Option key={level._id} value={level._id}>
-                                {level.name}
-                            </Select.Option>
-                        ))}
-                    </Select>
-                )}
-                {isAdmin && record.level !== 'l1' && (
-                    <Button 
-                        size="small" 
-                        danger
-                        loading={updating[record._id]}
-                    >
-                        Delete
-                    </Button>
-                )}
-            </Space>
-        );
-    };
-
-    const columns = [
-        { title: 'ID', dataIndex: 'id', width: 80 },
-        { title: 'Username', dataIndex: 'username' },
-        { title: 'Email', dataIndex: 'email' },
-        { 
-            title: 'Role', 
-            dataIndex: 'level',
-            render: (level) => {
-                const roleInfo = getLevelRole(level);
-                return <Tag color={roleInfo.color}>{roleInfo.text}</Tag>;
-            }
-        },
-        {
-            title: 'Action', 
-            render: (_, record) => getActionButtons(record),
-            width: 250
-        }
-    ];
-
-    return <Table columns={columns} dataSource={users} rowKey="id" pagination={{ pageSize: 8 }} />;
+  return (
+    <Table
+      columns={columns}
+      dataSource={Array.isArray(users) ? users : []}
+      rowKey={(r) => r._id}
+      pagination={{ pageSize: 8 }}
+    />
+  );
 }

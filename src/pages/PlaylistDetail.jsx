@@ -86,7 +86,7 @@ const PlaylistDetail = () => {
   // 🎵 Fetch thông tin bài hát từ songsList
   const fetchSongsData = async (songIds) => {
     try {
-      const response = await fetch('http://localhost:5000/songsList');
+      const response = await fetch('http://localhost:5000/songs');
       if (!response.ok) throw new Error('Failed to fetch songs');
       
       const allSongs = await response.json();

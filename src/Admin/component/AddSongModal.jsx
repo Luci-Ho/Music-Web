@@ -1,352 +1,298 @@
-import React, { useState } from 'react';
-import { Modal, Form, Input, Select, AutoComplete, message } from 'antd';
+import React, { useState } from "react";
+import { Modal, Form, Input, Select, AutoComplete, message, Upload, Button } from "antd";
+import { UploadOutlined } from "@ant-design/icons";
+import client from "../api/client"; // ✅ axios client chung
 
-const AddSongModal = ({ visible, onCancel, onSubmit, onSuccess, artists, genres, loading, suggestions = { artists: [], albums: [], genres: [] } }) => {
-    const [form] = Form.useForm();
-    const [submitting, setSubmitting] = useState(false);
+const CLOUD_NAME = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
+const UPLOAD_PRESET = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
+const CLOUD_FOLDER = import.meta.env.VITE_CLOUDINARY_FOLDER || "melody/audio";
 
-    // Validate and clean artist name
-    const validateArtistName = (name) => {
-        if (!name || typeof name !== 'string') {
-            return null;
-        }
-        
-        // Remove extra whitespace and special characters that might cause issues
-        const cleaned = name.trim().replace(/[<>"/\\|?*:]/g, '');
-        
-        // Check length
-        if (cleaned.length < 1 || cleaned.length > 100) {
-            return null;
-        }
-        
-        return cleaned;
-    };
+export default function AddSongModal({
+  visible,
+  onCancel,
+  onSubmit,     // ✅ bắt buộc: parent sẽ POST /songs
+  onSuccess,
+  artists = [],
+  genres = [],
+  loading = false,
+  suggestions = { artists: [], albums: [], genres: [] },
+}) {
+  const [form] = Form.useForm();
+  const [submitting, setSubmitting] = useState(false);
 
-    // Create song directly via API
-    const createSongDirectly = async (songData) => {
-        try {
-            const API_BASE = process.env.REACT_APP_API_BASE || 'http://localhost:5000/api';
-            const response = await fetch(`${API_BASE}/songs`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(songData),
-            });
+  // MP3 state
+  const [audioFile, setAudioFile] = useState(null);
+  const [audioUploading, setAudioUploading] = useState(false);
+  const [audioUrl, setAudioUrl] = useState("");
 
-            if (!response.ok) {
-                const errorData = await response.text();
-                throw new Error(`Failed to create song: ${response.statusText} - ${errorData}`);
-            }
+  const validateArtistName = (name) => {
+    if (!name || typeof name !== "string") return null;
+    const cleaned = name.trim().replace(/[<>"/\\|?*:]/g, "");
+    if (cleaned.length < 1 || cleaned.length > 100) return null;
+    return cleaned;
+  };
 
-            const createdSong = await response.json();
-            console.log('Successfully created song:', createdSong);
-            return createdSong;
-        } catch (error) {
-            console.error('Error creating song:', error);
-            throw error;
-        }
-    };
+  // ✅ Create Artist via backend: POST /api/artists
+  async function createArtist(name) {
+    const res = await client.post("/artists", {
+      name,
+      img: "https://via.placeholder.com/150?text=New+Artist",
+    });
+    return res.data;
+  }
 
-    // Find or create multiple artists
-    const findOrCreateArtists = async (artistNames) => {
-        const artistIds = [];
-        const validNames = [];
-        
-        // First validate all artist names
-        for (const rawName of artistNames) {
-            const cleanName = validateArtistName(rawName);
-            if (cleanName) {
-                validNames.push(cleanName);
-            } else {
-                console.warn(`Invalid artist name skipped: "${rawName}"`);
-                message.warning(`Skipped invalid artist name: "${rawName}"`);
-            }
-        }
-        
-        if (validNames.length === 0) {
-            message.error('No valid artist names provided');
-            return { artistIds: [], validNames: [] };
-        }
-        
-        for (const artistName of validNames) {
-            // Check if artist already exists
-            const existingArtist = artists.find(a => 
-                a.name.toLowerCase() === artistName.toLowerCase() ||
-                a.name.toLowerCase().includes(artistName.toLowerCase()) ||
-                artistName.toLowerCase().includes(a.name.toLowerCase())
-            );
-            
-            if (existingArtist) {
-                artistIds.push(existingArtist._id);
-            } else {
-                // Create new artist
-                try {
-                    const newArtistId = `a${Date.now().toString(36)}_${Math.random().toString(36).substr(2, 5)}`;
-                    const newArtist = {
-                        id: newArtistId,
-                        name: artistName,
-                        img: "https://via.placeholder.com/150?text=New+Artist"
-                    };
+  async function findOrCreatePrimaryArtistId(rawName) {
+    const name = validateArtistName(rawName);
+    if (!name) return null;
 
-                    const API_BASE = process.env.REACT_APP_API_BASE || 'http://localhost:5000/api';
-                    const response = await fetch(`${API_BASE}/artists`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(newArtist),
-                    });
-
-                    if (response.ok) {
-                        const createdArtist = await response.json();
-                        message.success(`Created new artist: ${artistName}`);
-                        artistIds.push(newArtistId);
-                        console.log('Successfully created artist:', createdArtist);
-                    } else {
-                        const errorData = await response.text();
-                        console.error(`Failed to create artist "${artistName}":`, response.status, errorData);
-                        message.error(`Failed to create artist "${artistName}": ${response.statusText}`);
-                        // Still continue with other artists, don't break the entire process
-                    }
-                } catch (error) {
-                    console.error(`Error creating artist "${artistName}":`, error);
-                    message.error(`Network error while creating artist "${artistName}": ${error.message}`);
-                    // Still continue with other artists, don't break the entire process
-                }
-            }
-        }
-        
-        return { artistIds, validNames };
-    };
-
-    const handleSubmit = async () => {
-        try {
-            setSubmitting(true);
-            const values = await form.validateFields();
-            
-            // Handle multiple artists
-            const artistNames = Array.isArray(values.artists) ? values.artists : [values.artists];
-            console.log('Input artist names:', artistNames);
-            
-            const { artistIds, validNames } = await findOrCreateArtists(artistNames);
-            console.log('Found/created artists:', { artistIds, validNames });
-            
-            if (artistIds.length === 0) {
-                message.error('Failed to create/find any artists. Please check your input and try again.');
-                return;
-            }
-
-            // Show warning if some artists couldn't be created
-            if (artistIds.length < artistNames.length) {
-                const failedCount = artistNames.length - artistIds.length;
-                message.warning(`${failedCount} artist(s) could not be created. Proceeding with ${artistIds.length} artist(s).`);
-            }
-
-            // Handle multiple genres
-            const selectedGenres = Array.isArray(values.genres) ? values.genres : [values.genres];
-            const genreIds = selectedGenres.map(genreName => {
-                const genre = genres.find(g => g.title === genreName);
-                return genre?._id || 'g101'; // fallback to default genre
-            });
-            
-            const newSong = {
-                id: `s${Date.now().toString(36)}_${Math.random().toString(36).substr(2, 5)}`,
-                title: values.title,
-                // Primary artist (first one)
-                artistId: artistIds[0],
-                artist: validNames[0],
-                // All artists (for display and search) - only include those that were successfully created/found
-                artists: validNames.slice(0, artistIds.length),
-                artistIds: artistIds,
-                // Primary genre (first one)
-                genreId: genreIds[0],
-                genre: selectedGenres[0],
-                // All genres
-                genres: selectedGenres,
-                genreIds: genreIds,
-                // Album
-                albumId: values.album || 'al_default',
-                album: values.album || 'Single',
-                duration: "3:30",
-                releaseYear: new Date().getFullYear(),
-                release_date: new Date().toISOString().split('T')[0],
-                img: "https://via.placeholder.com/300?text=New+Song",
-                cover_url: "https://via.placeholder.com/300?text=New+Song",
-                viewCount: 0,
-                views: 0,
-                streaming_links: {
-                    audio_url: "https://res.cloudinary.com/da4y5zf5k/video/upload/v1761576977/Lily_Allen_Somewhere_Only_We_Know_ika4ga.mp3"
-                },
-                isHidden: false,
-                created_at: new Date().toISOString()
-            };
-
-            console.log('Attempting to create song with data:', newSong);
-            
-            // Check if we have onSubmit (from parent component that handles API)
-            if (onSubmit) {
-                await onSubmit(newSong);
-            } else if (onSuccess) {
-                // For backward compatibility - handle the song creation here
-                await createSongDirectly(newSong);
-                onSuccess();
-            } else {
-                throw new Error('No handler provided for song creation');
-            }
-            
-            message.success(`Successfully added song "${values.title}" with ${artistIds.length} artist(s)`);
-            handleCancel();
-        } catch (error) {
-            console.error('Error in handleSubmit:', error);
-            if (error.name === 'ValidationError') {
-                message.error('Please fill in all required fields correctly');
-            } else {
-                message.error(`Failed to add song: ${error.message || 'Unknown error'}`);
-            }
-        } finally {
-            setSubmitting(false);
-        }
-    };
-
-    const handleCancel = () => {
-        form.resetFields();
-        onCancel();
-    };
-
-    return (
-        <Modal
-            title="Add New Song"
-            open={visible}
-            onOk={handleSubmit}
-            onCancel={handleCancel}
-            width={600}
-            confirmLoading={submitting}
-            okText="Add Song"
-            cancelText="Cancel"
-        >
-            <Form
-                form={form}
-                layout="vertical"
-                requiredMark={false}
-            >
-                <Form.Item
-                    label="Title"
-                    name="title"
-                    rules={[
-                        { required: true, message: 'Please enter song title!' },
-                        { min: 1, max: 100, message: 'Title must be between 1 and 100 characters' }
-                    ]}
-                >
-                    <Input 
-                        placeholder="Enter song title" 
-                        disabled={submitting}
-                        style={{
-                            borderColor: '#EE10B0',
-                            boxShadow: '0 0 0 2px rgba(238, 16, 176, 0.1)'
-                        }}
-                    />
-                </Form.Item>
-
-                <Form.Item
-                    label="Artist(s)"
-                    name="artists"
-                    rules={[
-                        { required: true, message: 'Please select at least one artist!' }
-                    ]}
-                    extra="You can select multiple artists or add new ones"
-                >
-                    <Select
-                        mode="tags"
-                        placeholder="Enter or select artists"
-                        disabled={submitting}
-                        style={{ 
-                            width: '100%'
-                        }}
-                        dropdownStyle={{
-                            border: '1px solid #EE10B0',
-                            borderRadius: '6px'
-                        }}
-                        tokenSeparators={[',']}
-                        maxTagCount={5}
-                        maxTagTextLength={20}
-                    >
-                        {suggestions.artists.map(artist => (
-                            <Select.Option key={artist._id} value={artist.value}>
-                                {artist.label}
-                            </Select.Option>
-                        ))}
-                    </Select>
-                </Form.Item>
-
-                <Form.Item
-                    label="Album"
-                    name="album"
-                    rules={[
-                        { max: 100, message: 'Album name must be less than 100 characters' }
-                    ]}
-                >
-                    <AutoComplete
-                        placeholder="Enter or select album name (optional)"
-                        disabled={submitting}
-                        options={suggestions.albums}
-                        filterOption={(inputValue, option) =>
-                            option.label.toLowerCase().includes(inputValue.toLowerCase())
-                        }
-                        style={{ 
-                            width: '100%'
-                        }}
-                        dropdownStyle={{
-                            border: '1px solid #EE10B0',
-                            borderRadius: '6px'
-                        }}
-                    />
-                </Form.Item>
-
-                <Form.Item
-                    label="Genre(s)"
-                    name="genres"
-                    rules={[{ required: true, message: 'Please select at least one genre!' }]}
-                    extra="You can select multiple genres"
-                >
-                    <Select
-                        mode="multiple"
-                        placeholder="Enter or select genres"
-                        disabled={submitting || loading}
-                        style={{ 
-                            width: '100%'
-                        }}
-                        dropdownStyle={{
-                            border: '1px solid #EE10B0',
-                            borderRadius: '6px'
-                        }}
-                        maxTagCount={3}
-                        maxTagTextLength={15}
-                        showSearch
-                        filterOption={(input, option) =>
-                            option.children.toLowerCase().includes(input.toLowerCase())
-                        }
-                    >
-                        {suggestions.genres.map(genre => (
-                            <Select.Option key={genre._id} value={genre.value}>
-                                {genre.label}
-                            </Select.Option>
-                        ))}
-                    </Select>
-                </Form.Item>
-
-                <div className="text-sm text-gray-500 mt-4 p-3 bg-gray-50 rounded">
-                    <strong>Note:</strong> 
-                    <ul className="mt-2 ml-4">
-                        <li>• You can select multiple artists and genres</li>
-                        <li>• First artist and genre will be used as primary</li>
-                        <li>• New artists will be created automatically if they don't exist</li>
-                        <li>• Date will be set to current year ({new Date().getFullYear()})</li>
-                    </ul>
-                </div>
-            </Form>
-        </Modal>
+    const existing = (artists || []).find(
+      (a) => (a?.name || "").toLowerCase() === name.toLowerCase()
     );
-};
+    if (existing?._id) return existing._id;
 
-export default AddSongModal;
+    const created = await createArtist(name);
+    if (!created?._id) throw new Error("Artist created but missing _id");
+    message.success(`Created new artist: ${name}`);
+    return created._id;
+  }
+
+  // ✅ Upload MP3 to Cloudinary (Unsigned preset)
+  async function uploadAudioToCloudinary(file) {
+    if (!CLOUD_NAME || !UPLOAD_PRESET) {
+      throw new Error("Missing Cloudinary env: VITE_CLOUDINARY_CLOUD_NAME or VITE_CLOUDINARY_UPLOAD_PRESET");
+    }
+
+    // audio -> dùng video/upload
+    const url = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/video/upload`;
+
+    const fd = new FormData();
+    fd.append("file", file);
+    fd.append("upload_preset", UPLOAD_PRESET);
+    fd.append("folder", CLOUD_FOLDER);
+
+    const res = await fetch(url, { method: "POST", body: fd });
+    if (!res.ok) throw new Error(await res.text());
+    const data = await res.json();
+
+    if (!data?.secure_url) throw new Error("Cloudinary upload ok but missing secure_url");
+    return data.secure_url;
+  }
+
+  async function handleUploadAudio() {
+    if (!audioFile) {
+      message.warning("Please choose an MP3 file first.");
+      return;
+    }
+    try {
+      setAudioUploading(true);
+      const url = await uploadAudioToCloudinary(audioFile);
+      setAudioUrl(url);
+      message.success("MP3 uploaded successfully!");
+    } catch (err) {
+      console.error(err);
+      message.error(err?.message || "Upload MP3 failed");
+    } finally {
+      setAudioUploading(false);
+    }
+  }
+
+  const handleSubmit = async () => {
+    try {
+      setSubmitting(true);
+      const values = await form.validateFields();
+
+      const title = values.title?.trim();
+      if (!title) throw new Error("Missing title");
+
+      // Primary artist
+      const artistNames = Array.isArray(values.artists) ? values.artists : [values.artists];
+      const primaryArtistName = artistNames?.[0];
+      const artistId = await findOrCreatePrimaryArtistId(primaryArtistName);
+      if (!artistId) throw new Error("Invalid artist name");
+
+      // Primary genre (optional nếu BE cho phép null, nhưng UI đang required)
+      const selectedGenres = Array.isArray(values.genres) ? values.genres : [values.genres];
+      const primaryGenreTitle = selectedGenres?.[0] || null;
+
+      const genreDoc = (genres || []).find((g) => (g?.title || g?.name) === primaryGenreTitle);
+      const genreId = genreDoc?._id || null;
+
+      // Album: hiện bạn đang để text -> BE cần ObjectId, tạm null
+      const albumId = null;
+
+      // nếu muốn bắt buộc phải upload mp3 trước khi add:
+      // if (!audioUrl) throw new Error("Please upload an MP3 first.");
+
+      // ✅ Payload đúng schema BE
+      const payload = {
+        title,
+        artistId,
+        albumId,
+        genreId,
+        moodId: null,
+
+        releaseDate: new Date(),
+        duration: "3:30",
+        lyrics: "",
+
+        media: {
+          image: "https://via.placeholder.com/300?text=New+Song",
+          audioUrl: audioUrl || "",
+          videoUrl: "",
+          videoThumbnail: "",
+        },
+
+        isActive: true,
+        isFeatured: false,
+        viewCount: 0,
+      };
+
+      if (!onSubmit) throw new Error("Missing onSubmit prop in AddSongModal");
+
+      await onSubmit(payload);
+
+      message.success(`Added song "${title}"`);
+      form.resetFields();
+      setAudioFile(null);
+      setAudioUrl("");
+      onSuccess?.();
+      onCancel?.();
+    } catch (err) {
+      console.error(err);
+      message.error(err?.message || "Failed to add song");
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const handleCancel = () => {
+    form.resetFields();
+    setAudioFile(null);
+    setAudioUrl("");
+    onCancel?.();
+  };
+
+  return (
+    <Modal
+      title="Add New Song"
+      open={visible}
+      onOk={handleSubmit}
+      onCancel={handleCancel}
+      width={650}
+      confirmLoading={submitting}
+      okText="Add Song"
+      cancelText="Cancel"
+    >
+      <Form form={form} layout="vertical" requiredMark={false}>
+        <Form.Item
+          label="Title"
+          name="title"
+          rules={[
+            { required: true, message: "Please enter song title!" },
+            { min: 1, max: 100, message: "Title must be between 1 and 100 characters" },
+          ]}
+        >
+          <Input placeholder="Enter song title" disabled={submitting} />
+        </Form.Item>
+
+        <Form.Item
+          label="Artist (primary)"
+          name="artists"
+          rules={[{ required: true, message: "Please select at least one artist!" }]}
+          extra="First artist will be used as primary (artistId). New artist will be created if not exists."
+        >
+          <Select mode="tags" placeholder="Enter or select artists" disabled={submitting} tokenSeparators={[","]}>
+            {(suggestions?.artists || []).map((a) => (
+              <Select.Option key={a._id || a.value} value={a.value || a.name}>
+                {a.label || a.name}
+              </Select.Option>
+            ))}
+          </Select>
+        </Form.Item>
+
+        <Form.Item
+          label="Album (optional text)"
+          name="album"
+          rules={[{ max: 100, message: "Album name must be less than 100 characters" }]}
+          extra="Backend expects albumId(ObjectId). Current UI sends albumId = null."
+        >
+          <AutoComplete
+            placeholder="Enter or select album name (optional)"
+            disabled={submitting}
+            options={suggestions?.albums || []}
+            filterOption={(inputValue, option) =>
+              (option?.label || "").toLowerCase().includes(inputValue.toLowerCase())
+            }
+          />
+        </Form.Item>
+
+        <Form.Item
+          label="Genre"
+          name="genres"
+          rules={[{ required: true, message: "Please select at least one genre!" }]}
+        >
+          <Select mode="multiple" placeholder="Select genres" disabled={submitting || loading}>
+            {(suggestions?.genres || []).map((g) => (
+              <Select.Option key={g._id || g.value} value={g.value || g.title}>
+                {g.label || g.title}
+              </Select.Option>
+            ))}
+          </Select>
+        </Form.Item>
+
+        {/* MP3 Upload */}
+        <Form.Item
+          label="MP3 File (upload to Cloudinary)"
+          extra="Using Cloudinary unsigned upload preset (frontend upload)."
+        >
+          <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
+            <Upload
+              beforeUpload={(file) => {
+                const isMp3 = file.type === "audio/mpeg" || file.name.toLowerCase().endsWith(".mp3");
+                if (!isMp3) {
+                  message.error("Only MP3 files are allowed!");
+                  return Upload.LIST_IGNORE;
+                }
+                setAudioFile(file);
+                setAudioUrl("");
+                return false;
+              }}
+              maxCount={1}
+              showUploadList={{ showRemoveIcon: true }}
+              onRemove={() => {
+                setAudioFile(null);
+                setAudioUrl("");
+              }}
+            >
+              <Button icon={<UploadOutlined />} disabled={submitting}>
+                Choose MP3
+              </Button>
+            </Upload>
+
+            <Button
+              type="primary"
+              onClick={handleUploadAudio}
+              loading={audioUploading}
+              disabled={!audioFile || submitting}
+            >
+              Upload MP3
+            </Button>
+          </div>
+
+          {audioUrl ? (
+            <div style={{ marginTop: 8 }}>
+              ✅ Uploaded URL:{" "}
+              <a href={audioUrl} target="_blank" rel="noreferrer">
+                {audioUrl}
+              </a>
+            </div>
+          ) : (
+            <div style={{ marginTop: 8, color: "#999" }}>
+              {audioFile ? `Selected: ${audioFile.name}` : "No MP3 selected yet."}
+            </div>
+          )}
+        </Form.Item>
+      </Form>
+    </Modal>
+  );
+}

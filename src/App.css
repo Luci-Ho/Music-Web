@@ -1,11 +1,12 @@
- :root {
+@import "tailwindcss";
+:root {
   --primary-bg: rgba(65, 44, 58, 1);
   --text-color: #f0f0f0;
   --light-text-color: #b0b0b0;
   --accent-color: #667eea;
 }
 
-@import "tailwindcss";
+
 
 * {
   box-sizing: border-box;

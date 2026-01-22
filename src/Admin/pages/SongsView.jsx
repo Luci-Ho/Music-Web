@@ -1,211 +1,142 @@
-import React, { useEffect, useState } from 'react';
-import { Button, Card, message } from 'antd';
-import SongsTable from '../component/SongTable';
-import { getSongs, deleteSong, updateSong, addSong } from '../api/db';
+import React, { useEffect, useState } from "react";
+import { Button, Card, message } from "antd";
+import SongsTable from "../component/SongTable";
+import { adminGetSongs, adminDeleteSong, adminUpdateSong, adminCreateSong } from "../api/admin.song.api";
 
-const API_BASE = process.env.REACT_APP_API_BASE || 'http://localhost:5000/api';
+const API_BASE = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
 
 export default function SongsView() {
-    const [songs, setSongs] = useState([]);
-    const [showUndefined, setShowUndefined] = useState(false);
-    const [suggestions, setSuggestions] = useState({
-        artists: [],
-        albums: [],
-        genres: []
-    });
+  const [songs, setSongs] = useState([]);
+  const [showUndefined, setShowUndefined] = useState(false);
 
-    useEffect(() => { 
-        load(); 
-        loadSuggestions();
-    }, []);
+  const [artists, setArtists] = useState([]);
+  const [albums, setAlbums] = useState([]);
+  const [genres, setGenres] = useState([]);
 
-    async function loadSuggestions() {
-        try {
-            const [artistsRes, albumsRes, genresRes] = await Promise.all([
-                fetch(`${API_BASE}/artists`),
-                fetch(`${API_BASE}/albums`),
-                fetch(`${API_BASE}/genres`)
-            ]);
+  const [suggestions, setSuggestions] = useState({ artists: [], albums: [], genres: [] });
 
-            const artists = await artistsRes.json();
-            const albums = await albumsRes.json();
-            const genres = await genresRes.json();
+  useEffect(() => {
+    load();
+    loadSuggestions();
+  }, []);
 
-            setSuggestions({
-                artists: artists.map(artist => ({
-                    value: artist.name,
-                    id: artist._id,
-                    label: artist.name
-                })),
-                albums: albums.map(album => ({
-                    value: album.title,
-                    id: album._id,
-                    label: album.title
-                })),
-                genres: genres.map(genre => ({
-                    value: genre.title,
-                    id: genre._id,
-                    label: genre.title
-                }))
-            });
-        } catch (error) {
-            console.error('Failed to load suggestions:', error);
-        }
+  async function load() {
+    try {
+      const list = await adminGetSongs();
+      console.log("[SongsView] songs =", list);
+      setSongs(Array.isArray(list) ? list : []);
+    } catch (e) {
+      console.error(e);
+      setSongs([]);
     }
+  }
 
-    async function load() { 
-        const s = await getSongs(); 
-        console.log('SongsView - loaded songs:', s);
-        setSongs(s); 
+  async function loadSuggestions() {
+    try {
+      const [artistsRes, albumsRes, genresRes] = await Promise.all([
+        fetch(`${API_BASE}/artists`),
+        fetch(`${API_BASE}/albums`),
+        fetch(`${API_BASE}/genres`),
+      ]);
+
+      const a = (await artistsRes.json()) || [];
+      const al = (await albumsRes.json()) || [];
+      const g = (await genresRes.json()) || [];
+
+      setArtists(Array.isArray(a) ? a : []);
+      setAlbums(Array.isArray(al) ? al : []);
+      setGenres(Array.isArray(g) ? g : []);
+
+      setSuggestions({
+        artists: (Array.isArray(a) ? a : []).map((x) => ({ value: x.name, _id: x._id, label: x.name })),
+        albums: (Array.isArray(al) ? al : []).map((x) => ({ value: x.title || x.name, _id: x._id, label: x.title || x.name })),
+        genres: (Array.isArray(g) ? g : []).map((x) => ({ value: x.title || x.name, _id: x._id, label: x.title || x.name })),
+      });
+    } catch (e) {
+      console.error(e);
+      setSuggestions({ artists: [], albums: [], genres: [] });
     }
+  }
 
+  async function handleDelete(_id) {
+    await adminDeleteSong(_id);
+    message.success("Deleted");
+    load();
+  }
 
-    async function handleDelete(id) {
-        await deleteSong(id);
-        message.success('Deleted');
-        load();
+  async function handleEdit(song) {
+    try {
+      const payload = { ...song };
+
+      // bỏ các field chỉ để display
+      delete payload.artist;
+      delete payload.album;
+      delete payload.genre;
+      delete payload.listens;
+      delete payload.date;
+      delete payload.songId;
+
+      await adminUpdateSong(song._id, payload);
+      message.success("Updated");
+      load();
+    } catch (e) {
+      console.error(e);
+      message.error("Update failed (check BE PATCH /api/songs/:id)");
     }
+  }
 
-
-    async function handleEdit(song) {
-        try {
-            console.log('SongsView handleEdit called with:', song);
-            const result = await updateSong(song._id, song);
-            console.log('Update result:', result);
-            message.success('Updated');
-            load(); // Reload the songs list
-        } catch (error) {
-            console.error('Error in handleEdit:', error);
-            message.error('Failed to update song');
-        }
+  async function handleAdd(payload) {
+    try {
+      await adminCreateSong(payload);
+      message.success("Song added");
+      load();
+    } catch (e) {
+      console.error(e);
+      message.error("Create failed (check BE POST /api/songs)");
+      throw e;
     }
+  }
 
-    async function handleAdd(newSong) {
-        try {
-            // Generate unique ID
-            const id = `song_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-            
-            // Create song object with proper structure
-            const songToAdd = {
-                id,
-                title: newSong.title || 'New Song',
-                artist: newSong.artist || 'Unknown Artist',
-                album: newSong.album || 'Single',
-                genre: newSong.genre || 'Pop',
-                duration: newSong.duration || '3:00',
-                release_date: newSong.release_date || new Date().toISOString().split('T')[0],
-                views: 0,
-                viewCount: 0,
-                streaming_links: {
-                    audio_url: newSong.audio_url || ''
-                },
-                cover_url: newSong.cover_url || '',
-                img: newSong.img || newSong.cover_url || '',
-                // Set IDs based on suggestions
-                artistId: newSong.artistId || findSuggestionId('artists', newSong.artist),
-                albumId: newSong.albumId || findSuggestionId('albums', newSong.album),
-                genreId: newSong.genreId || findSuggestionId('genres', newSong.genre),
-                isHidden: false,
-                created_at: new Date().toISOString()
-            };
+  const filteredSongs = showUndefined
+    ? songs.filter((s) => s?.isActive === false || s?.isHidden || !s?.artistId || !s?.genreId)
+    : songs.filter((s) => s?.isHidden !== true && s?.isActive !== false);
 
-            // Add to songsList endpoint
-            const response = await fetch(`${API_BASE}/songs`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(songToAdd),
-            });
-            
-            if (response.ok) {
-                message.success('Song added successfully');
-                load();
-                return true;
-            } else {
-                throw new Error('Failed to add song');
-            }
-        } catch (error) {
-            message.error('Failed to add song');
-            throw error;
-        }
+  const restoreHiddenSong = async (songId) => {
+    try {
+      await adminUpdateSong(songId, { isHidden: false, isActive: true });
+      message.success("Restored");
+      load();
+    } catch (e) {
+      console.error(e);
+      message.error("Restore failed (check BE PATCH /api/songs/:id)");
     }
+  };
 
-    // Helper function to find suggestion ID by value
-    function findSuggestionId(type, value) {
-        if (!value) return null;
-        const suggestion = suggestions[type]?.find(item => 
-            item.value.toLowerCase() === value.toLowerCase()
-        );
-        return suggestion ? suggestion._id : null;
-    }
+  return (
+    <section>
+      <div className="flex items-center justify-between mb-4">
+        <h2>Songs Management</h2>
+        <div style={{ display: "flex", gap: 8 }}>
+          <Button type={showUndefined ? "default" : "primary"} onClick={() => setShowUndefined(false)}>
+            Active Songs ({songs.filter((s) => s?.isHidden !== true && s?.isActive !== false).length})
+          </Button>
+          <Button type={showUndefined ? "primary" : "default"} onClick={() => setShowUndefined(true)} danger={showUndefined}>
+            Undefined/Hidden ({songs.filter((s) => s?.isHidden || s?.isActive === false || !s?.artistId || !s?.genreId).length})
+          </Button>
+        </div>
+      </div>
 
-    async function handleCreate() {
-        const newSong = { title: 'New Song', artist: 'Unknown', album: 'Single', listens: 0, date: '2025-10-29' };
-        await addSong(newSong);
-            message.success('Created');
-            load();
-    }
-
-    // Filter songs based on undefined/hidden status
-    const filteredSongs = showUndefined 
-        ? songs.filter(song => song.isHidden || song.genreId === 'undefined' || song.artistId === 'undefined' || song.albumId === 'undefined')
-        : songs.filter(song => !song.isHidden);
-
-    const restoreHiddenSong = async (songId) => {
-        try {
-            await fetch(`${API_BASE}/songs/${songId}`, {
-                method: 'PATCH',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ 
-                    isHidden: false,
-                    genreId: null,
-                    artistId: null,
-                    albumId: null,
-                    genre: '',
-                    artist: '',
-                    album: ''
-                })
-            });
-            message.success('Song restored');
-            load();
-        } catch (error) {
-            message.error('Failed to restore song');
-        }
-    };
-
-
-    return (
-        <section>
-            <div className="flex items-center justify-between mb-4">
-                <h2>Songs Management</h2>
-                <div style={{ display: 'flex', gap: '8px' }}>
-                    <Button 
-                        type={showUndefined ? "default" : "primary"}
-                        onClick={() => setShowUndefined(false)}
-                    >
-                        Active Songs ({songs.filter(song => !song.isHidden).length})
-                    </Button>
-                    <Button 
-                        type={showUndefined ? "primary" : "default"}
-                        onClick={() => setShowUndefined(true)}
-                        danger={showUndefined}
-                    >
-                        Undefined/Hidden ({songs.filter(song => song.isHidden || song.genreId === 'undefined' || song.artistId === 'undefined' || song.albumId === 'undefined').length})
-                    </Button>
-                </div>
-            </div>
-            <Card>
-                <SongsTable 
-                    songs={filteredSongs} 
-                    onEdit={handleEdit} 
-                    onDelete={handleDelete} 
-                    onAdd={handleAdd}
-                    showUndefined={showUndefined}
-                    onRestore={restoreHiddenSong}
-                    suggestions={suggestions}
-                />
-            </Card>
-        </section>
-    );
+      <Card>
+        <SongsTable
+          songs={filteredSongs}
+          onEdit={handleEdit}
+          onDelete={handleDelete}
+          onAdd={handleAdd}
+          showUndefined={showUndefined}
+          onRestore={restoreHiddenSong}
+          suggestions={suggestions}
+        />
+      </Card>
+    </section>
+  );
 }

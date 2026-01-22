@@ -1,160 +1,140 @@
-import React, { useEffect, useState } from 'react';
-import { Card, Table, Tag } from 'antd';
-import StartCard from '../component/StartCard';
-import ChartBar from '../component/ChartBar';
-import ChartPie from '../component/ChartPie';
-import ChartLine from '../component/ChartLine';
-import { useAuth } from '../context/AuthContext';
-import formatTimes from '../../hooks/formatTimes';
+import React, { useEffect, useMemo, useState } from "react";
+import { Card } from "antd";
+import StartCard from "../component/StartCard";
+import ChartBar from "../component/ChartBar";
+import ChartPie from "../component/ChartPie";
+import ChartLine from "../component/ChartLine";
+import formatTimes from "../../hooks/formatTimes";
 
-const API_BASE = process.env.REACT_APP_API_BASE || 'http://localhost:5000/api';
+const API_BASE = import.meta.env.VITE_API_BASE_URL || "http://localhost:5000/api";
 
+// --- safe fetch: luôn trả về array ---
+async function safeFetchArray(url) {
+  const res = await fetch(url, { cache: "no-store" });
+  const text = await res.text();
+
+  // backend trả HTML (Cannot GET...) => []
+  if (text.trim().startsWith("<")) return [];
+
+  try {
+    const json = JSON.parse(text);
+    const arr =
+      Array.isArray(json) ? json :
+      Array.isArray(json?.data) ? json.data :
+      Array.isArray(json?.songs) ? json.songs :
+      Array.isArray(json?.users) ? json.users :
+      Array.isArray(json?.artists) ? json.artists :
+      [];
+    return Array.isArray(arr) ? arr : [];
+  } catch {
+    return [];
+  }
+}
 
 export default function DashboardView() {
-    const { userLevel, isAdmin, isModerator, isUser, canEditSongs, canDeleteSongs, canAddSongs, canManageUsers } = useAuth();
-    const [songsCount, setSongsCount] = useState(0);
-    const [usersCount, setUsersCount] = useState(0);
-    const [artistsCount, setArtistsCount] = useState(0);
-    const [streamingCount, setStreamingCount] = useState(0);
+  const [songs, setSongs] = useState([]);
+  const [users, setUsers] = useState([]);
+  const [artists, setArtists] = useState([]);
 
-    useEffect(() => {
-        async function load() {
-            const songs = await fetch(`${API_BASE}/songs`).then(res => res.json());
-            const users = await fetch(`${API_BASE}/users`).then(res => res.json());
-            const artists = await fetch(`${API_BASE}/artists`).then(res => res.json());
-            const streaming = 4512500; // Giả sử giá trị tĩnh cho tổng số lượt phát
-            setStreamingCount(streaming);
-            setSongsCount(songs.length);
-            setUsersCount(users.length);
-            setArtistsCount(artists.length);
-        }
-        load();
-        
-    }, []);
+  useEffect(() => {
+    (async () => {
+      const [songsArr, usersArr, artistsArr] = await Promise.all([
+        safeFetchArray(`${API_BASE}/songs`),
+        safeFetchArray(`${API_BASE}/users`),
+        safeFetchArray(`${API_BASE}/artists`),
+      ]);
 
-    const getLevelName = (level) => {
-        switch (level) {
-            case 'l1': return 'Admin';
-            case 'l2': return 'Moderator';
-            case 'l3': return 'User';
-            default: return 'Unknown';
-        }
-    };
+      setSongs(songsArr);
+      setUsers(usersArr);
+      setArtists(artistsArr);
+    })();
+  }, []);
 
-    const getLevelColor = (level) => {
-        switch (level) {
-            case 'l1': return 'red';
-            case 'l2': return 'orange';
-            case 'l3': return 'blue';
-            default: return 'gray';
-        }
-    };
+  // --- derived values ---
+  const songsCount = songs.length;
+  const usersCount = users.length;
+  const artistsCount = artists.length;
 
-    // Permissions data for display
-    const permissionsData = [
-        {
-            key: '1',
-            action: 'View Songs',
-            permission: '✅',
-            description: 'Can view all songs in the system'
-        },
-        {
-            key: '2',
-            action: 'Edit Songs',
-            permission: canEditSongs() ? '✅' : '❌',
-            description: 'Can modify song information'
-        },
-        {
-            key: '3',
-            action: 'Delete Songs',
-            permission: canDeleteSongs() ? '✅' : '❌',
-            description: 'Can remove songs from the system'
-        },
-        {
-            key: '4',
-            action: 'Add Songs',
-            permission: canAddSongs() ? '✅' : '❌',
-            description: 'Can add new songs to the system'
-        },
-        {
-            key: '5',
-            action: 'Manage Users',
-            permission: canManageUsers() ? '✅' : '❌',
-            description: 'Can promote/demote user levels'
-        }
-    ];
+  // streamingCount: tạm tính theo tổng viewCount (hoặc đổi theo logic bạn muốn)
+  const totalStreamings = useMemo(() => {
+    return songs.reduce((sum, s) => sum + (Number(s?.viewCount) || 0), 0);
+  }, [songs]);
 
-    const permissionColumns = [
-        {
-            title: 'Action',
-            dataIndex: 'action',
-            key: 'action',
-        },
-        {
-            title: 'Permission',
-            dataIndex: 'permission',
-            key: 'permission',
-            width: 100,
-            align: 'center'
-        },
-        {
-            title: 'Description',
-            dataIndex: 'description',
-            key: 'description',
-        }
-    ];
+  // Top 10 songs by viewCount
+  const top10Songs = useMemo(() => {
+    return [...songs]
+      .sort((a, b) => (Number(b?.viewCount) || 0) - (Number(a?.viewCount) || 0))
+      .slice(0, 10)
+      .map((s, idx) => ({
+        key: s._id || `${idx}`,
+        rank: idx + 1,
+        title: s.title || "—",
+        duration: s.duration || "—",
+        listens: Number(s?.viewCount) || 0,
+      }));
+  }, [songs]);
 
-const stats = [
-    { id: 1, title: 'Total Songs', value: songsCount },
-    { id: 2, title: 'Total Users', value: usersCount },
-    { id: 3, title: 'Total Streaming', value: formatTimes(streamingCount, { unit: 's' }) },
-    { id: 4, title: 'Total Artists', value: artistsCount },
-];
+  // Stats cards
+  const stats = useMemo(() => ([
+    { id: 1, title: "Total Songs", value: songsCount },
+    { id: 2, title: "Total Users", value: usersCount },
+    // Nếu bạn muốn hiển thị “time listened” thì phải có data duration * viewCount.
+    // Hiện tại mình giữ “Total Streaming” = tổng viewCount, formatTimes theo seconds sẽ không hợp.
+    // Nên mình để trực tiếp số:
+    { id: 3, title: "Total Streaming", value: totalStreamings },
+    { id: 4, title: "Total Artists", value: artistsCount },
+  ]), [songsCount, usersCount, totalStreamings, artistsCount]);
 
+  // Mock chart data (bạn có thể thay bằng data thật sau)
+  const listensByDay = useMemo(() => ([
+    { day: "Mon", listens: 1200 },
+    { day: "Tue", listens: 2500 },
+    { day: "Wed", listens: 2000 },
+    { day: "Thu", listens: 3000 },
+    { day: "Fri", listens: 4500 },
+    { day: "Sat", listens: 6000 },
+    { day: "Sun", listens: 5200 },
+  ]), []);
 
-const listensByDay = [
-    { day: 'Mon', listens: 1200 }, 
-    { day: 'Tue', listens: 2500 }, 
-    { day: 'Wed', listens: 2000 }, 
-    { day: 'Thu', listens: 3000 }, 
-    { day: 'Fri', listens: 4500 }, 
-    { day: 'Sat', listens: 6000 }, 
-    { day: 'Sun', listens: 5200 }
-];
+  const userActivity = useMemo(() => ([
+    { date: "2025-10-23", users: 1200 },
+    { date: "2025-10-24", users: 1350 },
+    { date: "2025-10-25", users: 1600 },
+    { date: "2025-10-26", users: 1500 },
+    { date: "2025-10-27", users: 1800 },
+    { date: "2025-10-28", users: 2200 },
+    { date: "2025-10-29", users: 2100 },
+  ]), []);
 
+  return (
+    <section>
+      <div className="grid grid-cols-4 gap-4 mb-6">
+        {stats.map((s) => (
+          <StartCard key={s.id} title={s.title} value={s.value} />
+        ))}
+      </div>
 
-const userActivity = [ 
-    { date: '2025-10-23', users: 1200 }, 
-    { date: '2025-10-24', users: 1350 }, 
-    { date: '2025-10-25', users: 1600 }, 
-    { date: '2025-10-26', users: 1500 }, 
-    { date: '2025-10-27', users: 1800 }, 
-    { date: '2025-10-28', users: 2200 }, 
-    { date: '2025-10-29', users: 2100 } 
-];
+      <div className="grid grid-cols-3 gap-6 mb-6">
+        <Card className="col-span-2">
+          <h3>Listens by day</h3>
+          <ChartBar data={listensByDay} />
+        </Card>
 
+        <Card>
+          <h3>Top 10 Bài Hát Được Nghe Nhiều Nhất</h3>
 
-    return (
-        <section>
-            <div className="grid grid-cols-4 gap-4 mb-6 ">
-                {stats.map(s => <StartCard key={s._id} title={s.title} value={s.value} />)}
-            </div>
+          {/* Nếu ChartPie của bạn hiện đang là Table/Chart riêng thì truyền props vào */}
+          {/* Option A: nếu ChartPie hỗ trợ data */}
+          <ChartPie data={top10Songs} />
 
-            <div className="grid grid-cols-3 gap-6 mb-6">
-            <Card className="col-span-2">
-                <h3>Listens by day</h3>
-                <ChartBar data={listensByDay} />
-            </Card>
-            <Card>
-                <h3>Top 10 Bài Hát Được Nghe Nhiều Nhất</h3>
-                <ChartPie />
-            </Card>
-            </div>
+          {/* Option B: nếu ChartPie chưa nhận data -> bạn đổi ChartPie thành Table (mình viết giúp nếu bạn dán ChartPie.jsx) */}
+        </Card>
+      </div>
 
-            <Card>
-                <h3>User activity (weekly)</h3>
-                <ChartLine data={userActivity} />
-            </Card>
-        </section>
-    );
+      <Card>
+        <h3>User activity (weekly)</h3>
+        <ChartLine data={userActivity} />
+      </Card>
+    </section>
+  );
 }

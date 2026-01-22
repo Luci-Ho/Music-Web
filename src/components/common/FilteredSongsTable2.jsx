@@ -22,7 +22,7 @@ const FilteredSongsTable2 = ({ filterType = 'genre', filterId, title }) => {
   useEffect(() => {
     const fetchData = async () => {
       const [songsRes, artistsRes, albumsRes, genresRes, moodsRes] = await Promise.all([
-        fetch('http://localhost:5000/songsList'),
+        fetch('http://localhost:5000/songs'),
         fetch('http://localhost:5000/artists'),
         fetch('http://localhost:5000/albums'),
         fetch('http://localhost:5000/genres'),
