@@ -1,5 +1,4 @@
 import React from 'react';
-import Dashboard from '../layout/Dashboard';
 import TopBar from '../layout/TopBar';
 import Footer from '../layout/Footer';
 
@@ -12,7 +11,6 @@ const LoadingPage = ({ message = 'Đang tải...' }) => {
   return (
     <div className="body">
       <div style={{ display: 'flex', width: '100%' }}>
-        <Dashboard />
         <div className="container">
           <TopBar />
           <div className="content">

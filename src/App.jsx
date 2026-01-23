@@ -22,7 +22,6 @@ import BrowseRedirect from './components/layout/BrowseRedirect';
 import MusicPlayer from './components/layout/MusicPlayer';
 import Dashboard from './components/layout/Dashboard';
 import SearchPage from './pages/SearchPage';
-import ListPage2 from './pages/ListPage2';
 import AllSongsPage from './pages/AllSongsPage';
 import VideoPlayerPage from './pages/VideoPlayerPage';
 import ViewAllPage from './pages/ViewAllPage';

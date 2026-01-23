@@ -15,13 +15,6 @@ import "../style/Layout.css";
 import "../style/VA.css";
 import "../style/AlbumsPage.css";
 
-const toId = (v) => {
-  if (!v) return "";
-  if (typeof v === "string") return v;
-  if (typeof v === "object") return v._id || v.id || v.legacyId || "";
-  return String(v);
-};
-
 const AlbumsPage = () => {
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState("");
@@ -32,45 +25,42 @@ const AlbumsPage = () => {
   const { getImageWithFallback, handleImageError } = useImageFallback();
 
   const albumsWithStats = useMemo(() => {
-    return (albums || [])
-      .map((album) => {
-        const albumId = toId(album?._id);
-        const albumSongIds = Array.isArray(album?.songs)
-          ? album.songs.map(toId)
-          : [];
+    return (albums || []).map((album) => {
+      const albumId = toId(album?._id);
 
-        const artistName = artistMap[toId(album?.artistId)] || "Unknown Artist";
+      const albumSongIds = Array.isArray(album?.songs) ? album.songs.map(toId) : [];
+      const artistName = artistMap[toId(album?.artistId)] || album?.artist?.name || "Unknown Artist";
 
-        const albumSongs = (allSongs || []).filter((song) => {
-          const sid = toId(song?._id);
-          const songAlbumId = toId(song?.albumId);
-          return (albumId && songAlbumId === albumId) || albumSongIds.includes(sid);
-        });
+      const albumSongs = (allSongs || []).filter((song) => {
+        const sid = toId(song?._id);
+        const songAlbumId = toId(song?.albumId);
+        // match theo albumId hoặc theo album.songs[]
+        return (albumId && songAlbumId === albumId) || (albumSongIds.length && albumSongIds.includes(sid));
+      });
 
-        const totalViews = albumSongs.reduce(
-          (sum, song) => sum + (Number(song?.viewCount) || 0),
-          0
-        );
+      const totalViews = albumSongs.reduce((sum, s) => sum + (Number(s?.viewCount) || 0), 0);
 
-        const releaseYear =
-          albumSongs.length > 0
-            ? Math.min(
-                ...albumSongs.map((song) =>
-                  new Date(song.release_date || song.releaseDate || "2024").getFullYear()
-                )
+      const songCount = albumSongs.length || albumSongIds.length || 0;
+
+      const releaseYear =
+        albumSongs.length > 0
+          ? Math.min(
+              ...albumSongs.map((song) =>
+                new Date(song.release_date || song.releaseDate || "2024").getFullYear()
               )
-            : null;
+            )
+          : null;
 
-        return {
-          ...album,
-          artistName,
-          songCount: albumSongs.length,
-          totalViews,
-          releaseYear,
-          songs: albumSongs,
-        };
-      })
-      .filter((a) => a.songCount > 0);
+      return {
+        ...album,
+        artistName,
+        songCount,
+        totalViews,
+        releaseYear,
+        songs: albumSongs, // để detail page dùng luôn
+      };
+    });
+    // ❌ KHÔNG lọc songCount > 0 nữa (vì dễ lọc bay hết)
   }, [albums, allSongs, artistMap]);
 
   const filteredAlbums = useMemo(() => {
@@ -79,9 +69,9 @@ const AlbumsPage = () => {
     if (searchTerm.trim()) {
       const q = searchTerm.trim().toLowerCase();
       filtered = filtered.filter(
-        (album) =>
-          (album.title || "").toLowerCase().includes(q) ||
-          (album.artistName || "").toLowerCase().includes(q)
+        (a) =>
+          (a.title || "").toLowerCase().includes(q) ||
+          (a.artistName || "").toLowerCase().includes(q)
       );
     }
 
@@ -102,11 +92,22 @@ const AlbumsPage = () => {
     return filtered;
   }, [albumsWithStats, searchTerm, sortBy]);
 
+  function toId(v) {
+    if (!v) return "";
+    if (typeof v === "string") return v;
+    if (typeof v === "object") return v._id || v.id || v.legacyId || "";
+    return String(v);
+  }
+
+
   const handleAlbumClick = (album) => {
-    navigate(`/album/${album._id}`, {
+    const albumId = toId(album);
+    if (!albumId) return;
+    navigate(`/album/${albumId}`, {
       state: { album, songs: album.songs || [] },
     });
   };
+
 
   if (loading) return <LoadingPage message="Đang tải danh sách albums..." />;
 
@@ -115,9 +116,7 @@ const AlbumsPage = () => {
       <TopBar />
       <div
         className="content albums-content"
-        style={{
-          background: "linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%)",
-        }}
+        style={{ background: "linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%)" }}
       >
         <div className="bluebox">
           <div className="TopPart albums-header">
@@ -175,11 +174,7 @@ const AlbumsPage = () => {
             ) : (
               <div className="albums-grid">
                 {filteredAlbums.map((album) => (
-                  <div
-                    key={album._id}
-                    className="album-card"
-                    onClick={() => handleAlbumClick(album)}
-                  >
+                  <div key={album._id} className="album-card" onClick={() => handleAlbumClick(album)}>
                     <div className="album-image-container">
                       <div className="album-image-wrapper">
                         <img
@@ -199,8 +194,8 @@ const AlbumsPage = () => {
                     <p className="album-artist">{album.artistName}</p>
 
                     <div className="album-stats">
-                      <span>{album.songCount} bài hát</span>
-                      <span>{formatViews(album.totalViews)} lượt nghe</span>
+                      <span>{album.songCount || 0} bài hát</span>
+                      <span>{formatViews(album.totalViews || 0)} lượt nghe</span>
                     </div>
 
                     <div className="album-actions">
@@ -211,14 +206,8 @@ const AlbumsPage = () => {
                         }}
                         className="w-full px-4 py-2 rounded-lg font-semibold text-white transition-colors text-sm"
                         style={{ background: "linear-gradient(135deg, #EE10B0, #EE10B0)" }}
-                        onMouseEnter={(e) =>
-                          (e.currentTarget.style.background =
-                            "linear-gradient(135deg, #d60e9e, #d60e9e)")
-                        }
-                        onMouseLeave={(e) =>
-                          (e.currentTarget.style.background =
-                            "linear-gradient(135deg, #EE10B0, #EE10B0)")
-                        }
+                        onMouseEnter={(e) => (e.currentTarget.style.background = "linear-gradient(135deg, #d60e9e, #d60e9e)")}
+                        onMouseLeave={(e) => (e.currentTarget.style.background = "linear-gradient(135deg, #EE10B0, #EE10B0)")}
                       >
                         <PlayCircleOutlined /> Xem tất cả
                       </button>

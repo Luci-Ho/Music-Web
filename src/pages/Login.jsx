@@ -72,6 +72,9 @@ const Login = () => {
       }
 
       authService.setSession({ accessToken, refreshToken, user });
+      localStorage.setItem("accessToken", accessToken);
+      localStorage.setItem("accesstoken", accessToken); 
+
 
       toast.success("Chào mừng bạn đến với Melodies!");
       navigate(redirectTo);
