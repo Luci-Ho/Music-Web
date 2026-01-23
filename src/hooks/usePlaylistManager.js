@@ -3,6 +3,15 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import useAuth from '../hooks/useAuth';
 
+// import các hàm từ playlist.service
+import {
+    getUserPlaylists,
+    createPlaylist,
+    updatePlaylist,
+    addSongToPlaylist,
+    removeSongFromPlaylist,
+} from '../services/playlist.service.js';
+
 export default function usePlaylistManager() {
     const { user, login, isLoggedIn } = useAuth();
     const navigate = useNavigate();
@@ -43,6 +52,8 @@ export default function usePlaylistManager() {
     // ➕ Thêm bài hát vào playlist
     const addToPlaylist = async (songId, playlistId) => {
         try {
+            await addSongToPlaylist(playlistId, songId);
+
             const updatedPlaylists = userPlaylists.map((playlist) => {
                 if (playlist._id === playlistId && !playlist.songs.includes(songId)) {
                     return { ...playlist, songs: [...playlist.songs, songId] };
@@ -53,16 +64,12 @@ export default function usePlaylistManager() {
             setUserPlaylists(updatedPlaylists);
             login({ ...user, playlists: updatedPlaylists });
 
-            await fetch(`http://localhost:5000/users/${user._id}`, {
-                method: 'PATCH',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ playlists: updatedPlaylists }),
-            });
-
             const playlistName = updatedPlaylists.find(p => p._id === playlistId)?.name || 'playlist';
             toast.success(`✅ Đã thêm bài hát vào "${playlistName}"`);
             closePopup();
         } catch (err) {
+            console.log("Song object:", song);
+
             toast.error('❌ Không thể thêm vào playlist. Vui lòng thử lại.');
         }
     };
@@ -76,21 +83,15 @@ export default function usePlaylistManager() {
 
         try {
             const newPlaylist = {
-                id: `pl_${Date.now()}`,
                 name: newPlaylistName.trim(),
                 songs: [songId],
-                createdAt: new Date().toISOString()
             };
 
-            const updatedPlaylists = [...userPlaylists, newPlaylist];
+            const res = await createPlaylist(newPlaylist);
+
+            const updatedPlaylists = [...userPlaylists, res.data];
             setUserPlaylists(updatedPlaylists);
             login({ ...user, playlists: updatedPlaylists });
-
-            await fetch(`http://localhost:5000/users/${user._id}`, {
-                method: 'PATCH',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ playlists: updatedPlaylists }),
-            });
 
             toast.success(`🎉 Đã tạo playlist "${newPlaylistName}" và thêm bài hát`);
             closePopup();
