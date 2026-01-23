@@ -33,10 +33,13 @@ const getSongImg = (song) =>
   song?.img || song?.cover_url || song?.cover || 'https://via.placeholder.com/48?text=No+Image';
 
 const getSongId = (song) => {
-  // ưu tiên _id (mongo), nếu buffer => normalizeId sẽ biến thành hex string
-  const id = normalizeId(song?._id) || normalizeId(song?.id) || normalizeId(song?.legacyId);
+  const id =
+    normalizeId(song?.legacyId) ||
+    normalizeId(song?._id) ||
+    normalizeId(song?.id);
   return id;
 };
+
 
 const getAnyId = (v) => normalizeId(v?._id) || normalizeId(v?.id) || normalizeId(v);
 

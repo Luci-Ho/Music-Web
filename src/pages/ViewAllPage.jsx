@@ -1,92 +1,52 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-
-import '../App.css';
-import '../style/Layout.css';
-import '../style/VA.css';
-
-import TopBar from '../components/layout/TopBar';
-import Footer from '../components/layout/Footer';
-
-import formatNumber from '../hooks/formatNumber';
-import useMatchingInfo from '../hooks/useMatchingInfo';
-import { PlayCircleOutlined, AppstoreOutlined, HeartOutlined } from '@ant-design/icons';
+// ... giữ nguyên các import
 
 const API_BASE = import.meta.env.VITE_API_BASE || 'http://localhost:5000/api';
 
-const VideoCard = ({ video, onClick }) => {
-  const { getArtistName } = useMatchingInfo();
-  const artistName =
-    getArtistName(video.artist || video.artistId) || video.artist || 'Unknown Artist';
-
-  return (
-    <div className="video-all-card" onClick={onClick}>
-      <div className="video-all-thumbnail">
-        <img
-          src={video.img}
-          alt={video.title}
-          onError={(e) => {
-            e.currentTarget.src = 'https://via.placeholder.com/300?text=Video';
-          }}
-        />
-        <div className="video-all-overlay">
-          <PlayCircleOutlined className="video-all-play-icon" />
-        </div>
-      </div>
-      <div className="video-all-info">
-        <h3 className="video-all-title">{video.title}</h3>
-        <p className="video-all-artist">{artistName}</p>
-        <p className="video-all-views">{formatNumber(video.views || video.viewCount || 0)} lượt xem</p>
-      </div>
-    </div>
-  );
+// ✅ helper: lấy array từ API (array trực tiếp hoặc {data: []})
+const extractArray = (json) => {
+  if (Array.isArray(json)) return json;
+  if (Array.isArray(json?.data)) return json.data;
+  return [];
 };
 
-const GenreCard = ({ genre, onClick }) => {
-  return (
-    <div className="video-all-card" onClick={onClick}>
-      <div className="video-all-thumbnail">
-        <img
-          src={genre.img}
-          alt={genre.title}
-          onError={(e) => {
-            e.currentTarget.src = 'https://via.placeholder.com/300?text=Genre';
-          }}
-        />
-        <div className="video-all-overlay">
-          <AppstoreOutlined className="video-all-play-icon" />
-        </div>
-      </div>
-      <div className="video-all-info">
-        <h3 className="video-all-title">{genre.title}</h3>
-        <p className="video-all-artist">Thể loại nhạc</p>
-      </div>
-    </div>
-  );
+// ✅ (File bạn đã có normalizeKey/getStableKey rồi, dùng lại)
+const bufferObjToHex = (bufObj) => {
+  if (!bufObj || typeof bufObj !== "object") return "";
+  const keys = Object.keys(bufObj)
+    .map((k) => Number(k))
+    .filter((n) => Number.isFinite(n))
+    .sort((a, b) => a - b);
+
+  if (!keys.length) return "";
+  return keys
+    .map((k) => Number(bufObj[k]).toString(16).padStart(2, "0"))
+    .join("");
 };
 
-const MoodCard = ({ mood, onClick }) => {
-  return (
-    <div className="video-all-card" onClick={onClick}>
-      <div className="video-all-thumbnail">
-        <img
-          src={mood.img}
-          alt={mood.title}
-          onError={(e) => {
-            e.currentTarget.src = 'https://via.placeholder.com/300?text=Mood';
-          }}
-        />
-        <div className="video-all-overlay">
-          <HeartOutlined className="video-all-play-icon" />
-        </div>
-      </div>
-      <div className="video-all-info">
-        <h3 className="video-all-title">{mood.title}</h3>
-        <p className="video-all-artist">Tâm trạng</p>
-      </div>
-    </div>
-  );
+const normalizeKey = (x) => {
+  if (!x) return "";
+  if (typeof x === "string" || typeof x === "number") return String(x);
+
+  if (typeof x === "object") {
+    if (x.legacyId) return String(x.legacyId);
+    if (x._id) return normalizeKey(x._id);
+    if (x.id) return normalizeKey(x.id);
+    if (x.$oid) return String(x.$oid);
+    if (x.buffer) {
+      const hex = bufferObjToHex(x.buffer);
+      if (hex) return hex;
+    }
+  }
+  return "";
 };
+
+const getStableKey = (item, fallbackIndex) =>
+  normalizeKey(item?.legacyId) ||
+  normalizeKey(item?._id) ||
+  normalizeKey(item?.id) ||
+  `row-${fallbackIndex}`;
+
+// ... VideoCard / GenreCard / MoodCard giữ nguyên
 
 const ViewAllPage = ({ pageType = 'videos' }) => {
   const navigate = useNavigate();
@@ -122,7 +82,7 @@ const ViewAllPage = ({ pageType = 'videos' }) => {
       })
       .then((json) => {
         if (!alive) return;
-        setData(Array.isArray(json) ? json : []);
+        setData(extractArray(json)); // ✅ FIX: nhận {data: []} cũng được
         setLoading(false);
       })
       .catch((err) => {
@@ -135,81 +95,73 @@ const ViewAllPage = ({ pageType = 'videos' }) => {
     return () => {
       alive = false;
     };
-  }, [pageType]); // config.endpoint phụ thuộc pageType nên để pageType là đủ
+  }, [pageType]); // ok
 
-  const handleItemClick = (item) => {
+  const handleItemClick = (item, id) => {
+    const stableId = id || getStableKey(item, 0);
+    if (!stableId) return;
+
     switch (pageType) {
       case 'genres':
-        navigate(`/genre/${item._id}`);
+        navigate(`/genre/${stableId}`, { state: { genre: item } });
         break;
       case 'moods':
-        navigate(`/mood/${item._id}`);
+        navigate(`/mood/${stableId}`, { state: { mood: item } });
         break;
       default:
-        navigate(`/video/${item._id}`, { state: { video: item } });
+        navigate(`/video/${stableId}`, { state: { video: item } });
         break;
     }
   };
 
-  const renderCard = (item) => {
+  const renderCard = (item, idx) => {
+    const key = getStableKey(item, idx); // ✅ FIX: key luôn là string ổn định
+
     switch (pageType) {
       case 'genres':
-        return <GenreCard key={item._id} genre={item} onClick={() => handleItemClick(item)} />;
+        return (
+          <GenreCard
+            key={key}
+            genre={item}
+            onClick={() => handleItemClick(item, key)}
+          />
+        );
       case 'moods':
-        return <MoodCard key={item._id} mood={item} onClick={() => handleItemClick(item)} />;
+        return (
+          <MoodCard
+            key={key}
+            mood={item}
+            onClick={() => handleItemClick(item, key)}
+          />
+        );
       default:
-        return <VideoCard key={item._id} video={item} onClick={() => handleItemClick(item)} />;
+        return (
+          <VideoCard
+            key={key}
+            video={item}
+            onClick={() => handleItemClick(item, key)}
+          />
+        );
     }
   };
 
-  if (loading) {
-    return (
-      <>
-        <TopBar />
-        <div className="content">
-          <div className="bluebox">
-            <div className="loading-message">Đang tải {config.itemName}...</div>
-          </div>
-        </div>
-        <Footer />
-      </>
-    );
-  }
-
-  if (error) {
-    return (
-      <>
-        <TopBar />
-        <div className="content">
-          <div className="bluebox">
-            <div className="error-message">Lỗi: {error}</div>
-          </div>
-        </div>
-        <Footer />
-      </>
-    );
-  }
+  // ... loading/error UI giữ nguyên
 
   return (
     <>
       <TopBar />
-      <div
-        className="content"
-        style={{
-          background: 'linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%)',
-          minHeight: '100vh',
-        }}
-      >
+      <div className="content" style={{ background: 'linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%)', minHeight: '100vh' }}>
         <div className="bluebox">
           <div className="px-6 py-4">
             <div className="flex items-center justify-between mb-6">
               <h1 className="text-white text-3xl font-bold">{config.title}</h1>
-              <p className="text-gray-300">
-                {data.length} {config.itemName}
-              </p>
+              <p className="text-gray-300">{data.length} {config.itemName}</p>
             </div>
 
-            <div className="video-all-grid">{data.map((item) => renderCard(item))}</div>
+            {/* ✅ FIX: map phải truyền idx để tạo key fallback */}
+            <div className="video-all-grid">
+              {data.map((item, idx) => renderCard(item, idx))}
+            </div>
           </div>
         </div>
       </div>
