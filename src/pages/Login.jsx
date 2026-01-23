@@ -72,8 +72,10 @@ const Login = () => {
       }
 
       authService.setSession({ accessToken, refreshToken, user });
-      localStorage.setItem("accessToken", accessToken);
-      localStorage.setItem("accesstoken", accessToken); 
+        localStorage.setItem("accessToken", accessToken); // ✅ đúng key mà api.js đọc
+        // (tuỳ bạn) giữ tương thích nếu code cũ còn đọc accesstoken:
+        localStorage.setItem("accesstoken", accessToken);
+
 
 
       toast.success("Chào mừng bạn đến với Melodies!");

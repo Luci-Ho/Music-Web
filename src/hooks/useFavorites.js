@@ -1,45 +1,50 @@
-import { useState, useEffect, useCallback } from "react";
+// src/hooks/useFavorites.js
+import { useEffect, useMemo, useState, useCallback } from "react";
 import { toast } from "react-toastify";
 import useAuth from "./useAuth";
-import favoriteService from "../services/favorite.service";
+import favoriteService from "../services/favorite.service"; // ✅ đúng folder src/services
 
-export const normalizeId = (v) => {
-  if (!v) return "";
-  if (typeof v === "string") return v;
-  if (typeof v === "object") return String(v._id || v.id || v.legacyId || "");
-  return String(v);
+// ✅ normalize id (vì data của bạn có thể là string, object, hoặc populated doc)
+const toId = (x) => {
+  if (!x) return "";
+  if (typeof x === "string" || typeof x === "number") return String(x);
+  if (typeof x === "object") {
+    // populated song doc
+    if (x._id) return toId(x._id);
+    // mongo style {$oid:"..."}
+    if (x.$oid) return String(x.$oid);
+  }
+  return String(x);
 };
 
-const useFavorites = () => {
+export const useFavorites = () => {
   const { user, login, isLoggedIn } = useAuth();
-  const [favorites, setFavorites] = useState([]);
+  const [favorites, setFavorites] = useState(() =>
+    Array.isArray(user?.favorites) ? user.favorites : []
+  );
 
-  const hydrateFromUser = useCallback((u) => {
-    const fav = Array.isArray(u?.favorites) ? u.favorites : [];
-    setFavorites(fav);
-  }, []);
+  const favoriteSet = useMemo(() => {
+    const arr = Array.isArray(favorites) ? favorites : [];
+    return new Set(arr.map(toId));
+  }, [favorites]);
 
-  // init favorites từ user local trước
-  useEffect(() => {
-    hydrateFromUser(user);
-  }, [user, hydrateFromUser]);
-
-  // load favorites từ backend khi đã login
+  // Load favorites từ backend khi login
   useEffect(() => {
     const fetchFavorites = async () => {
       if (!isLoggedIn) return;
+
       try {
         const res = await favoriteService.getFavorites();
-        const favArr = Array.isArray(res.data) ? res.data : [];
-        setFavorites(favArr);
+        // backend trả về mảng favorites (có thể populated song objects)
+        const serverFavs = Array.isArray(res.data) ? res.data : [];
+        setFavorites(serverFavs);
 
-        // update user local (giữ nguyên fields khác)
-        const updatedUser = { ...(user || {}), favorites: favArr };
-        login(updatedUser);
-
+        // ✅ update user trong localStorage
+        const nextUser = { ...(user || {}), favorites: serverFavs };
+        login(nextUser);
         try {
           window.dispatchEvent(new Event("userUpdated"));
-        } catch {}
+        } catch (_) {}
       } catch (err) {
         toast.error("❌ Không thể tải danh sách yêu thích");
       }
@@ -49,59 +54,50 @@ const useFavorites = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoggedIn]);
 
-  const isFavorite = (songId) => {
-    const sid = String(songId);
-    return favorites.some((fav) => toId(fav) === sid);
-  };
+  const isFavorite = useCallback(
+    (songId) => favoriteSet.has(toId(songId)),
+    [favoriteSet]
+  );
 
-  const toggleFavorite = async (songId) => {
-    if (!isLoggedIn) {
-      toast.error("Bạn cần đăng nhập để thêm vào yêu thích!");
-      return;
-    }
+  const toggleFavorite = useCallback(
+    async (songId) => {
+      if (!isLoggedIn) {
+        toast.error("Bạn cần đăng nhập để thêm vào yêu thích!");
+        return;
+      }
 
-    const sid = String(songId);
-    const prev = favorites;
+      const sid = toId(songId);
+      const prev = Array.isArray(favorites) ? favorites : [];
 
-    // optimistic
-    const next = isFavorite(sid)
-      ? prev.filter((fav) => toId(fav) !== sid)
-      : [...prev, sid];
+      // optimistic update (store IDs only in UI set, but keep array mixed ok)
+      const isFavNow = favoriteSet.has(sid);
+      const optimistic = isFavNow
+        ? prev.filter((f) => toId(f) !== sid)
+        : [...prev, sid];
 
-    setFavorites(next);
-    login({ ...(user || {}), favorites: next });
-    try {
-      window.dispatchEvent(new Event("userUpdated"));
-    } catch {}
+      setFavorites(optimistic);
+      login({ ...(user || {}), favorites: optimistic });
 
-    try {
-      const res = await favoriteService.toggleFavorite(sid);
-      const serverFavorites = Array.isArray(res.data?.favorites)
-        ? res.data.favorites
-        : [];
-
-      setFavorites(serverFavorites);
-      login({ ...(user || {}), favorites: serverFavorites });
       try {
-        window.dispatchEvent(new Event("userUpdated"));
-      } catch {}
+        const res = await favoriteService.toggleFavorite(sid);
+        // backend trả { action, favorites } và favorites là populated array :contentReference[oaicite:4]{index=4}
+        const serverFavs = res.data?.favorites ?? [];
+        setFavorites(serverFavs);
+        login({ ...(user || {}), favorites: serverFavs });
 
-      toast.success(
-        res.data?.action === "added"
-          ? "Đã thêm vào yêu thích"
-          : "Đã xóa khỏi yêu thích"
-      );
-    } catch (err) {
-      // rollback
-      setFavorites(prev);
-      login({ ...(user || {}), favorites: prev });
-      try {
-        window.dispatchEvent(new Event("userUpdated"));
-      } catch {}
-
-      toast.error("Không thể cập nhật yêu thích. Vui lòng thử lại.");
-    }
-  };
+        toast.success(res.data?.action === "added" ? "Đã thêm vào yêu thích" : "Đã xóa khỏi yêu thích");
+        try {
+          window.dispatchEvent(new Event("userUpdated"));
+        } catch (_) {}
+      } catch (err) {
+        // rollback
+        setFavorites(prev);
+        login({ ...(user || {}), favorites: prev });
+        toast.error("Không thể cập nhật yêu thích. Vui lòng thử lại.");
+      }
+    },
+    [favorites, favoriteSet, isLoggedIn, login, user]
+  );
 
   return { favorites, toggleFavorite, isFavorite };
 };
